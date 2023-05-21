@@ -6,14 +6,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Category extends Model
+class PostFile extends Model
 {
     use HasFactory, SoftDeletes;
 
     protected $guarded = false;
-    protected $table = 'categories';
-
-    public function topics(){
-        return $this->hasMany(Topic::class);
-    }
+    protected $table = 'post_files';
 }

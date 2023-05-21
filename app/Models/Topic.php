@@ -12,4 +12,16 @@ class Topic extends Model
 
     protected $guarded = false;
     protected $table = 'topics';
+
+    public function category(){
+        return $this->belongsTo(Category::class, 'categoryId', 'id');
+    }
+
+    public function tags(){
+        return $this->belongsToMany(Tag::class, 'topic_tags', 'topicId', 'tagId');
+    }
+
+    public function author(){
+        return $this->belongsTo(User::class, 'userId', 'id');
+    }
 }

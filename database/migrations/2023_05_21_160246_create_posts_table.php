@@ -13,11 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('topics', function (Blueprint $table) {
+        Schema::create('posts', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->foreignId('categoryId')->index()->constrained('categories');
+            $table->foreignId('topicId')->index()->constrained('topics');
+            $table->boolean('mainPost')->default(0);
             $table->foreignId('userId')->index()->constrained('users');
+            $table->unsignedBigInteger('replyId')->default(0);
+            $table->longText('description');
+
             $table->timestamps();
         });
     }
@@ -29,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('topics');
+        Schema::dropIfExists('posts');
     }
 };

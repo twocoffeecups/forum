@@ -13,12 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('topics', function (Blueprint $table) {
+        Schema::create('user_bookmarks', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->foreignId('categoryId')->index()->constrained('categories');
             $table->foreignId('userId')->index()->constrained('users');
+            $table->foreignId('postId')->index()->constrained('posts');
             $table->timestamps();
+
+            $table->softDeletes();
         });
     }
 
@@ -29,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('topics');
+        Schema::dropIfExists('user_bookmarks');
     }
 };
