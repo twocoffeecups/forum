@@ -24,8 +24,4 @@ class Topic extends Model
     public function author(){
         return $this->belongsTo(User::class, 'userId', 'id');
     }
-
-    public function views(){
-        return $this->hasMany(TopicView::class, 'ещзшсId', 'id');
-    }
 }

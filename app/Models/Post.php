@@ -34,7 +34,7 @@ class Post extends Model
     }
 
     public function views(){
-        return $this->hasMany(TopicView::class, 'postId', 'id');
+        return $this->hasMany(PostView::class, 'postId', 'id');
     }
 
 }

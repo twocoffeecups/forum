@@ -13,9 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('topic_views', function (Blueprint $table) {
+        Schema::create('post_views', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('topicId')->index()->constrained('topics');
+            $table->foreignId('postId')->index()->constrained('posts');
             $table->ipAddress('ipAddress')->unique();
             $table->timestamps();
 
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('topic_views');
+        Schema::dropIfExists('post_views');
     }
 };
