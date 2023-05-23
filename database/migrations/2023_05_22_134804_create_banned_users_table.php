@@ -13,15 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('post_files', function (Blueprint $table) {
+        Schema::create('banned_users', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('postId')->index()->constrained('posts');
             $table->foreignId('userId')->index()->constrained('users');
-            $table->string('fileName');
-            $table->string('fileType');
-            $table->string('filePath');
-            $table->bigInteger('numOfDownloads')->default(0);
-            $table->timestamps();
+            $table->foreignId('banTypeId')->index()->constrained('ban_types');
+            $table->boolean('status')->default(0);
+            $table->timestamp('startDate');
+            $table->time('expDate');
+            //$table->timestamps();
+
+            $table->softDeletes();
         });
     }
 
@@ -32,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('post_files');
+        Schema::dropIfExists('banned_users');
     }
 };

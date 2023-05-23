@@ -13,15 +13,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('post_files', function (Blueprint $table) {
+        Schema::create('reports', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('reportTypeId')->index()->constrained('report_types');
             $table->foreignId('postId')->index()->constrained('posts');
             $table->foreignId('userId')->index()->constrained('users');
-            $table->string('fileName');
-            $table->string('fileType');
-            $table->string('filePath');
-            $table->bigInteger('numOfDownloads')->default(0);
+            $table->foreignId('senderId')->index()->constrained('users');
+            $table->tinyInteger('processed')->default(0);
+            $table->string('message')->nullable();
             $table->timestamps();
+
+            $table->softDeletes();
         });
     }
 
@@ -32,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('post_files');
+        Schema::dropIfExists('reports');
     }
 };

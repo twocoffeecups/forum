@@ -33,5 +33,8 @@ class Post extends Model
         return $this->hasMany(PostImage::class);
     }
 
+    public function views(){
+        return $this->hasMany(TopicView::class, 'postId', 'id');
+    }
 
 }

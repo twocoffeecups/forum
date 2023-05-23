@@ -13,15 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('post_files', function (Blueprint $table) {
+        Schema::create('topic_views', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('postId')->index()->constrained('posts');
-            $table->foreignId('userId')->index()->constrained('users');
-            $table->string('fileName');
-            $table->string('fileType');
-            $table->string('filePath');
-            $table->bigInteger('numOfDownloads')->default(0);
+            $table->foreignId('topicId')->index()->constrained('topics');
+            $table->ipAddress('ipAddress')->unique();
             $table->timestamps();
+
+            $table->softDeletes();
         });
     }
 
@@ -32,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('post_files');
+        Schema::dropIfExists('topic_views');
     }
 };
