@@ -33,8 +33,5 @@ class Post extends Model
         return $this->hasMany(PostImage::class);
     }
 
-    public function views(){
-        return $this->hasMany(PostView::class, 'postId', 'id');
-    }
 
 }

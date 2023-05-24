@@ -4,7 +4,7 @@ namespace App\Http\Requests\API\Client;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class TopicRequest extends FormRequest
+class PostRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class TopicRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,10 +24,9 @@ class TopicRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|max:255|string',
-            'categoryId' => 'required|integer|exists:categories,id',
-            'userId' => 'required|integer|exists:users,id',
-            'tags' => 'array',
+            'message' => 'required',
+            'userId' => '',
+            'mainPost' => 'integer'
         ];
     }
 }
