@@ -13,14 +13,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 // , 'middleware' => 'auth'
-Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function (){
-    Route::get('/', [\App\Http\Controllers\Admin\MainController::class, 'index'])->name('admin.main');
-    Route::get('/store', [\App\Http\Controllers\Admin\MainController::class, 'store']);
+Route::group(['prefix' => 'admin'], function (){
+    //Route::get('/', [\App\Http\Controllers\admin\MainController::class, 'index'])->name('admin.main');
+    Route::get('/{page}', [\App\Http\Controllers\Admin\MainController::class, 'index'])->where('page', '(.*)');
+    Route::get('/category', [\App\Http\Controllers\Admin\CategoryController::class, 'index'])->name('category.index');
 });
 
-Auth::routes();
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+//Auth::routes();
+//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('{page}', [\App\Http\Controllers\Api\Client\MainController::class, 'index'])->where('page', '.*');
+Route::get('{page}', [\App\Http\Controllers\Api\Client\MainController::class, 'index'])->where('page', '(.*)');
 
 

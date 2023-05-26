@@ -9,6 +9,6 @@ class MainController extends Controller
 {
     public function index(){
         //dd('client forum template');
-        return view('default');
+        return view('layouts.client');
     }
 }

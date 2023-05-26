@@ -16,20 +16,14 @@
           integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
 
-    @vite(['resources/css/admin/app.css', 'resources/js/admin/app.js'])
+    @vite(['resources/sass/app.scss', 'resources/js/client/app.js'])
 
 </head>
-<body class="hold-transition sidebar-mini">
+<body>
 
-    <div id="admin-app">
+    <div id="app">
 
     </div>
 
-{{--<!-- jQuery -->--}}
-{{--<script src="{{ asset('assets/adminlte/js/jquery.min.js') }}"></script>--}}
-{{--<!-- Bootstrap 4 -->--}}
-{{--<script src="{{ asset('assets/adminlte/js/bootstrap.bundle.min.js') }}"></script>--}}
-{{--<!-- AdminLTE App -->--}}
-{{--<script src="{{ asset('assets/adminlte/js/adminlte.min.js') }}"></script>--}}
 </body>
 </html>

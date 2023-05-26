@@ -1,14 +1,12 @@
 <template>
     <div>
-        <h2>Vue spa</h2>
-
-        <button class="btn btn-primary">Button</button>
+        <h2>Client header</h2>
     </div>
 </template>
 
 <script>
 export default {
-    name: "App"
+    name: "Header"
 }
 </script>
 

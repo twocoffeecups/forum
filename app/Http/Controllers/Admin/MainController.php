@@ -9,10 +9,12 @@ class MainController extends Controller
 {
     public function index(){
         //dd('admin main controller');
-        return view('admin.main.index');
+        //return view('admin.main.index');
+        return view('layouts.admin');
+
     }
 
-    public function store(){
-        dd('adin store');
-    }
+//    public function dashboard(){
+//        return view('admin.main.index');
+//    }
 }
