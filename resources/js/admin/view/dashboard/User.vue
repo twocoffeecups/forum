@@ -51,8 +51,8 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="d-flex justify-content-start mb-3">
-                            <button class="btn btn-success mx-1">+ ADD ROLE</button>
-                            <button class="btn btn-primary mx-1">+ ADD USER</button>
+<!--                            <button class="btn btn-primary mx-1">+ ADD USER</button>-->
+                            <CreateUserModal />
                         </div>
                     </div>
                 </div>
@@ -113,9 +113,10 @@
 
 <script>
 import Breadcrumbs from "../../component/Breadcrumbs.vue";
+import CreateUserModal from "../../component/CreateUserModal.vue";
 export default {
     name: "User",
-    components: {Breadcrumbs}
+    components: {CreateUserModal, Breadcrumbs}
 }
 </script>
 

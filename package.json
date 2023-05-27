@@ -16,6 +16,8 @@
     },
     "dependencies": {
         "@vitejs/plugin-vue": "^4.2.3",
+        "@vuelidate/core": "^2.0.2",
+        "@vuelidate/validators": "^2.0.2",
         "vue": "^3.2.36",
         "vue-loader": "^17.0.1",
         "vue-router": "^4.0.13",

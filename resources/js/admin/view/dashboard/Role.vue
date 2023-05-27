@@ -38,13 +38,29 @@
                                         <td>321</td>
                                         <td>Admin</td>
                                         <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                                        <td>Action</td>
+                                        <td class="d-flex justify-content-around">
+                                            <span role="button" class="text-primary" title="Edit">
+                                                <i class="fas fa-edit"></i>
+                                            </span>
+
+                                            <span role="button" class="text-danger" title="Remove">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </span>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>122</td>
                                         <td>User</td>
                                         <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                                        <td>Action</td>
+                                        <td class="d-flex justify-content-around">
+                                            <span role="button" class="text-primary" title="Edit">
+                                                <i class="fas fa-edit"></i>
+                                            </span>
+
+                                            <span role="button" class="text-danger" title="Remove">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </span>
+                                        </td>
                                     </tr>
                                     </tbody>
                                 </table>
