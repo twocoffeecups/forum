@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="container mt-5 mx-auto">
         <h2>Client main view</h2>
         <div>
             <button class="btn btn-primary">Send</button>

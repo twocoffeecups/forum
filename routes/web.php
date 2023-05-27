@@ -16,7 +16,6 @@ use Illuminate\Support\Facades\Route;
 Route::group(['prefix' => 'admin'], function (){
     //Route::get('/', [\App\Http\Controllers\admin\MainController::class, 'index'])->name('admin.main');
     Route::get('/{page}', [\App\Http\Controllers\Admin\MainController::class, 'index'])->where('page', '(.*)');
-    Route::get('/category', [\App\Http\Controllers\Admin\CategoryController::class, 'index'])->name('category.index');
 });
 
 //Auth::routes();

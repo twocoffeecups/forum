@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="container mt-5 mx-auto">
         <h2>Not found. 404</h2>
     </div>
 </template>
