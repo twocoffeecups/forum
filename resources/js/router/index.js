@@ -24,13 +24,23 @@ const router = createRouter({
                 },
                 {
                     path: 'role',
-                    name: 'admin.role',
+                    name: 'user.role',
                     component: () => import('../admin/view/dashboard/Role.vue')
                 },
                 {
                     path: 'user',
-                    name: 'admin.users',
+                    name: 'user.users',
                     component: () => import('../admin/view/dashboard/User.vue')
+                },
+                {
+                    path: 'banned-users',
+                    name: 'user.banned',
+                    component: () => import('../admin/view/dashboard/BannedUsers.vue')
+                },
+                {
+                    path: 'reports',
+                    name: 'report.index',
+                    component: () => import('../admin/view/dashboard/Reports.vue')
                 },
             ]
         },
