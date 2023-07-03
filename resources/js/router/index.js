@@ -28,7 +28,7 @@ const router = createRouter({
                     component: () => import('../admin/view/dashboard/Role.vue')
                 },
                 {
-                    path: 'user',
+                    path: 'users',
                     name: 'user.users',
                     component: () => import('../admin/view/dashboard/User.vue')
                 },
@@ -41,6 +41,26 @@ const router = createRouter({
                     path: 'reports',
                     name: 'report.index',
                     component: () => import('../admin/view/dashboard/Reports.vue')
+                },
+                {
+                    path: 'categories',
+                    name: 'forum.category',
+                    component: () => import('../admin/view/dashboard/Category.vue')
+                },
+                {
+                    path: 'tags',
+                    name: 'forum.tag',
+                    component: () => import('../admin/view/dashboard/Tag.vue')
+                },
+                {
+                    path: 'topics',
+                    name: 'forum.topic',
+                    component: () => import('../admin/view/dashboard/Topic.vue')
+                },
+                {
+                    path: 'posts',
+                    name: 'forum.post',
+                    component: () => import('../admin/view/dashboard/Post.vue')
                 },
             ]
         },

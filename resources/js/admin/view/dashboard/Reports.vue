@@ -1,5 +1,6 @@
 <template>
     <div class="content-wrapper">
+import AddReportTypeModal from "../../component/AddReportTypeModal.vue";
         <!-- Breadcrumbs -->
         <Breadcrumbs />
         <!-- /. Breadcrumbs -->
@@ -47,9 +48,7 @@
 
                 <div class="row">
                     <div class="col-12">
-                        <div class="d-flex justify-content-start mb-3">
-                            <button class="btn btn-primary mx-1">+ ADD REPORT TYPE</button>
-                        </div>
+                        <AddReportTypeModal />
                     </div>
                 </div>
 
@@ -109,9 +108,10 @@
 
 <script>
 import Breadcrumbs from "../../component/Breadcrumbs.vue";
+import AddReportTypeModal from "../../component/AddReportTypeModal.vue";
 export default {
     name: "Reports",
-    components: {Breadcrumbs}
+    components: { Breadcrumbs, AddReportTypeModal, }
 }
 </script>
 

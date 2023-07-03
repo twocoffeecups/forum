@@ -46,41 +46,41 @@
                         </router-link>
                     </li>
 
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="fab fa-forumbee nav-icon"></i>
-                            <p>
-                                Forum
-                                <i class="fas fa-angle-left right"></i>
-                            </p>
-                        </a>
-                        <ul ref="utree" class="nav nav-treeview" style="display: none; height: 129.6px; padding-top: 0px; margin-top: 0px; padding-bottom: 0px; margin-bottom: 0px;">
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="fas fa-tag nav-icon"></i>
-                                    <p>Categories</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="fas fa-hashtag nav-icon"></i>
-                                    <p>Tags</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Topics</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="fas fa-comment nav-icon"></i>
-                                    <p>Posts</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
+<!--                    <li class="nav-item">-->
+<!--                        <a href="#" class="nav-link">-->
+<!--                            <i class="fab fa-forumbee nav-icon"></i>-->
+<!--                            <p>-->
+<!--                                Forum-->
+<!--                                <i class="fas fa-angle-left right"></i>-->
+<!--                            </p>-->
+<!--                        </a>-->
+<!--                        <ul ref="utree" class="nav nav-treeview" style="display: none; height: 129.6px; padding-top: 0px; margin-top: 0px; padding-bottom: 0px; margin-bottom: 0px;">-->
+<!--                            <li class="nav-item">-->
+<!--                                <a href="#" class="nav-link">-->
+<!--                                    <i class="fas fa-tag nav-icon"></i>-->
+<!--                                    <p>Categories</p>-->
+<!--                                </a>-->
+<!--                            </li>-->
+<!--                            <li class="nav-item">-->
+<!--                                <a href="#" class="nav-link">-->
+<!--                                    <i class="fas fa-hashtag nav-icon"></i>-->
+<!--                                    <p>Tags</p>-->
+<!--                                </a>-->
+<!--                            </li>-->
+<!--                            <li class="nav-item">-->
+<!--                                <a href="#" class="nav-link">-->
+<!--                                    <i class="far fa-circle nav-icon"></i>-->
+<!--                                    <p>Topics</p>-->
+<!--                                </a>-->
+<!--                            </li>-->
+<!--                            <li class="nav-item">-->
+<!--                                <a href="#" class="nav-link">-->
+<!--                                    <i class="fas fa-comment nav-icon"></i>-->
+<!--                                    <p>Posts</p>-->
+<!--                                </a>-->
+<!--                            </li>-->
+<!--                        </ul>-->
+<!--                    </li>-->
 
 
 
@@ -127,16 +127,37 @@ export default {
                         {
                             label: 'Banned users',
                             path:'user.banned',
-                            icon: 'fas fa-users-slash'
+                            icon: 'fas fa-user-slash'
                         },
-                    ],
 
+                    ],
                 },
-                // {
-                //     label:'Reports',
-                //     path:'report.index',
-                //     icon: 'fas fa-file'
-                // },
+                {
+                    label:'Forum',
+                    icon:'fab fa-forumbee',
+                    pages:[
+                        {
+                            label: 'Categories',
+                            path: 'forum.category',
+                            icon: 'fas fa-tag'
+                        },
+                        {
+                            label: 'Tags',
+                            path: 'forum.tag',
+                            icon: 'fas fa-hashtag'
+                        },
+                        {
+                            label: 'Topics',
+                            path: 'forum.topic',
+                            icon: 'fas fa-circle'
+                        },
+                        {
+                            label: 'Posts',
+                            path: 'forum.post',
+                            icon: 'fas fa-comment'
+                        },
+                    ]
+                },
             ]
         }
     }
