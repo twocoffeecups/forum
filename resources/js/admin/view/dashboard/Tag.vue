@@ -10,9 +10,7 @@
 
                 <div class="row">
                     <div class="col-12">
-                        <div class="d-flex justify-content-start mb-3">
-                            <button class="btn btn-primary mx-1">+ CREATE TAG</button>
-                        </div>
+                        <CreateTagModal />
                     </div>
                 </div>
 
@@ -68,10 +66,10 @@
 
 <script>
 import Breadcrumbs from "../../component/Breadcrumbs.vue";
-
+import CreateTagModal from "../../component/CreateTagModal.vue";
 export default{
     name:'Tag',
-    components: {Breadcrumbs},
+    components: {CreateTagModal, Breadcrumbs},
 }
 </script>
 

@@ -10,9 +10,7 @@
 
                 <div class="row">
                     <div class="col-12">
-                        <div class="d-flex justify-content-start mb-3">
-                            <button class="btn btn-primary mx-1">+ CREATE CATEGORY</button>
-                        </div>
+                        <CreateCategoryModal />
                     </div>
                 </div>
 
@@ -72,10 +70,11 @@
 
 <script>
 import Breadcrumbs from "../../component/Breadcrumbs.vue";
+import CreateCategoryModal from "../../component/CreateCategoryModal.vue";
 
 export default {
     name:"Category",
-    components: {Breadcrumbs},
+    components: {CreateCategoryModal, Breadcrumbs},
 }
 </script>
 

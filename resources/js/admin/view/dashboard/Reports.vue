@@ -1,6 +1,5 @@
 <template>
     <div class="content-wrapper">
-import AddReportTypeModal from "../../component/AddReportTypeModal.vue";
         <!-- Breadcrumbs -->
         <Breadcrumbs />
         <!-- /. Breadcrumbs -->

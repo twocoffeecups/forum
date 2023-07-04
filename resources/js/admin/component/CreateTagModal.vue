@@ -1,13 +1,13 @@
 <template>
     <div class="d-flex justify-content-start mb-3">
-        <button class="btn btn-primary mx-1" data-bs-toggle="modal" data-bs-target="#create-report-type-modal">+ CRETE REPORT TYPE</button>
+        <button class="btn btn-primary mx-1" data-bs-toggle="modal" data-bs-target="#create-tag-modal">+ CRETE TAG</button>
     </div>
 
-    <div class="modal fade" id="create-report-type-modal" tabindex="-1" aria-labelledby="create-report-type-modal" aria-hidden="true">
+    <div class="modal fade" id="create-tag-modal" tabindex="-1" aria-labelledby="create-tag-modal" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5">Add report type</h1>
+                    <h1 class="modal-title fs-5">Create tag</h1>
                 </div>
                 <div class="modal-body">
 
@@ -35,7 +35,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button @click="createReportType" type="button" class="btn btn-primary">Create</button>
+                    <button @click="createTag" type="button" class="btn btn-primary">Create</button>
                 </div>
             </div>
         </div>
@@ -45,8 +45,8 @@
 <script>
 import { useVuelidate } from '@vuelidate/core';
 import { required, minLength, maxLength, } from '@vuelidate/validators';
-export default{
-    name: "AddReportTypeModal",
+export default {
+    name: "CreateTagModal",
 
     setup(){
         return{
@@ -63,22 +63,21 @@ export default{
 
     validations(){
         return{
-            name: {required, minLength:minLength(3), maxLength:maxLength(32)},
-            description: {required, minLength:minLength(50), maxLength:maxLength(255)},
+            name:{required, minLength:minLength(2), maxLength:maxLength(12),},
+            description:{required, minLength:minLength(32), maxLength:maxLength(120),},
         }
     },
 
     methods:{
-        createReportType(){
+        createTag(){
             this.v$.$validate();
             if(!this.v$.$error){
-                console.log('Add!');
+                console.log('Created tag.')
             }else{
-                console.log('error');
+                console.log('Error');
             }
         }
-    },
-
+    }
 }
 </script>
 
