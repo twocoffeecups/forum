@@ -1,13 +1,13 @@
 <template>
-    <div class="d-flex justify-content-start mb-3">
-        <button class="btn btn-primary mx-1" data-bs-toggle="modal" data-bs-target="#create-category-modal">+ CRETE CATEGORY</button>
-    </div>
+    <span role="button" class="text-primary" data-bs-toggle="modal" :data-bs-target="`#edit-category-${id}-modal`" title="Edit">
+        <i class="fas fa-edit"></i>
+    </span>
 
-    <div class="modal fade" id="create-category-modal" tabindex="-1" aria-labelledby="create-category-modal" aria-hidden="true">
+    <div class="modal fade" :id="`edit-category-${id}-modal`" tabindex="-1" :aria-labelledby="`edit-category-${id}-modal`" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5">Create category</h1>
+                    <h1 class="modal-title fs-5">Edit category</h1>
                 </div>
                 <div class="modal-body">
 
@@ -28,7 +28,7 @@
 
                     <div v-if="isChild" class="mb-3 form-group">
                         <select @change="changeCategory($event)" class="form-control">
-                            <CategoryOptionTree v-for="category in categories" :is-selected="selectedCategory" :name="category.name" :id="category.id" :children="category.children" :indent="0" />
+                            <CategoryOptionTree v-for="category in categories" :is-selected="parentId" :name="category.name" :id="category.id" :children="category.children" :indent="0" />
                         </select>
                     </div>
 
@@ -42,11 +42,10 @@
                         </div>
                     </div>
 
-
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button @click="createCategory" data-bs-dismiss="modal" type="button" class="btn btn-primary">Create</button>
+                    <button @click="updateCategory" data-bs-dismiss="modal" type="button" class="btn btn-primary">Update</button>
                 </div>
             </div>
         </div>
@@ -58,8 +57,10 @@ import { useVuelidate } from '@vuelidate/core';
 import { required, minLength, maxLength, } from '@vuelidate/validators';
 import CategoryOptionTree from "./CategoryOptionTree.vue";
 export default {
-    name: "CreateCategoryModal",
-    components: {CategoryOptionTree,},
+    name: "EditCategoryModal",
+    components: {CategoryOptionTree},
+    props:['id','name', 'parentId', 'description'],
+
     setup(){
         return{
             v$: useVuelidate()
@@ -68,13 +69,8 @@ export default {
 
     data(){
         return{
-            name:null,
-            isChild: false,
-            description: null,
-
-            isSelected: null,
-            showCategory: null,
-            selectedCategory: null,
+            isChild: !!this.parentId,
+            selectedCategory: this.parentId,
             categories:[
                 {
                     id: 1,
@@ -151,32 +147,33 @@ export default {
         }
     },
 
+
     methods:{
-        createCategory(){
+        updateCategory(){
             this.v$.$validate();
-            let parentId = this.isChild ? this.selectedCategory : 0
             if(!this.v$.$error){
-                axios.post('/api/admin/forum/category/store', {
-                    parentId : parentId,
+                axios.patch(`/api/admin/forum/category/${this.id}`, {
                     name: this.name,
-                    description: this.description
+                    description: this.description,
+                    parentId: this.selectedCategory ?? this.parentId,
                 })
-                .then(res => {
-                    console.log(res)
+                .then(res =>{
+                    console.log(res.data)
                 })
                 .catch(error => {
                     console.log(error)
                 })
             }else{
-                console.log('Error!');
+                console.log('errors')
             }
+
         },
 
         changeCategory(e){
             console.log('change category', e.target.value)
             this.selectedCategory = e.target.value
         },
-    }
+    },
 }
 </script>
 

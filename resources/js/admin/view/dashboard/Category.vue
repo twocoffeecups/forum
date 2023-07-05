@@ -36,8 +36,8 @@
                                     <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th>Parent</th>
                                         <th>Name</th>
+                                        <th>Parent category</th>
                                         <th>Description</th>
                                         <th>Topics</th>
                                         <th>Posts</th>
@@ -45,15 +45,24 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr v-for="category in 5">
-                                        <td>183</td>
-                                        <td>23</td>
-                                        <td>Test child category</td>
-                                        <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</td>
-                                        <td>9</td>
-                                        <td>63</td>
-                                        <td>Buttons</td>
-                                    </tr>
+                                    <template  v-for="category in categories">
+                                        <tr>
+                                            <td>#{{ category.id }}</td>
+                                            <td>{{ category.name }}</td>
+                                            <td>{{ '-' }}</td>
+                                            <td>{{ category.description.substr(0, 140)+'...' }}</td>
+                                            <td>9</td>
+                                            <td>63</td>
+                                            <td class="d-flex justify-content-around">
+                                                <EditCategoryModal :id="category.id" :parent-id="category.parentId" :name="category.name" :description="category.description" />
+
+                                                <span @click="deleteCategory(category.id)" role="button" class="text-danger" title="Remove">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </template>
+
                                     </tbody>
                                 </table>
                             </div>
@@ -64,17 +73,50 @@
             </div>
         </div>
         <!-- /.content -->
-
     </div>
 </template>
 
 <script>
 import Breadcrumbs from "../../component/Breadcrumbs.vue";
 import CreateCategoryModal from "../../component/CreateCategoryModal.vue";
+import EditCategoryModal from "../../component/EditCategoryModal.vue";
 
 export default {
     name:"Category",
-    components: {CreateCategoryModal, Breadcrumbs},
+    components: {EditCategoryModal, CreateCategoryModal, Breadcrumbs},
+
+    mounted() {
+      this.getCategories()
+    },
+
+    data(){
+        return{
+            categories:[],
+        }
+    },
+
+    methods:{
+        getCategories(){
+            axios.get('/api/admin/forum/category')
+            .then(res => {
+                this.categories = res.data.categories
+                console.log(this.categories)
+            })
+            .catch(error => {
+                console.log(error)
+            })
+        },
+
+        deleteCategory(id){
+            axios.delete(`/api/admin/forum/category/${id}`)
+            .then(res => {
+                console.log(res)
+            })
+            .catch(error => {
+                console.log(error);
+            })
+        }
+    }
 }
 </script>
 
