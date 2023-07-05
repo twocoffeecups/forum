@@ -24,11 +24,19 @@ Route::group(['prefix' => 'admin'], function(){
     Route::group(['prefix' => 'forum'], function(){
 
         Route::group(['prefix' => 'category'], function(){
-            Route::get('/', [\App\Http\Controllers\Admin\Category\CategoryController::class, 'index']);
-            Route::post('/store', [\App\Http\Controllers\Admin\Category\CategoryController::class, 'store']);
-            Route::get('/{category}', [\App\Http\Controllers\Admin\Category\CategoryController::class, 'show']);
-            Route::patch('/{category}', [\App\Http\Controllers\Admin\Category\CategoryController::class, 'update']);
-            Route::delete('/{category}', [\App\Http\Controllers\Admin\Category\CategoryController::class, 'delete']);
+            Route::get('/', [\App\Http\Controllers\Admin\Forum\CategoryController::class, 'index']);
+            Route::post('/store', [\App\Http\Controllers\Admin\Forum\CategoryController::class, 'store']);
+            Route::get('/{category}', [\App\Http\Controllers\Admin\Forum\CategoryController::class, 'show']);
+            Route::patch('/{category}', [\App\Http\Controllers\Admin\Forum\CategoryController::class, 'update']);
+            Route::delete('/{category}', [\App\Http\Controllers\Admin\Forum\CategoryController::class, 'delete']);
+        });
+
+        Route::group(['prefix' => 'tag'], function(){
+            Route::get('/', [\App\Http\Controllers\Admin\Forum\TagController::class, 'index']);
+            Route::post('/store', [\App\Http\Controllers\Admin\Forum\TagController::class, 'store']);
+            Route::get('/{tag}', [\App\Http\Controllers\Admin\Forum\TagController::class, 'show']);
+            Route::patch('/{tag}', [\App\Http\Controllers\Admin\Forum\TagController::class, 'update']);
+            Route::delete('/{tag}', [\App\Http\Controllers\Admin\Forum\TagController::class, 'delete']);
         });
 
     });

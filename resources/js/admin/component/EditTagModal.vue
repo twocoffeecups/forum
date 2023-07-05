@@ -1,13 +1,14 @@
 <template>
-    <div class="d-flex justify-content-start mb-3">
-        <button class="btn btn-primary mx-1" data-bs-toggle="modal" data-bs-target="#create-tag-modal">+ CRETE TAG</button>
-    </div>
 
-    <div class="modal fade" id="create-tag-modal" tabindex="-1" aria-labelledby="create-tag-modal" aria-hidden="true">
+    <span role="button" class="text-primary" data-bs-toggle="modal" :data-bs-target="`#edit-tag-${id}-modal`" title="Edit">
+        <i class="fas fa-edit"></i>
+    </span>
+
+    <div class="modal fade" :id="`edit-tag-${id}-modal`" tabindex="-1" :aria-labelledby="`edit-tag-${id}-modal`" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5">Create tag</h1>
+                    <h1 class="modal-title fs-5">Edit tag</h1>
                 </div>
                 <div class="modal-body">
 
@@ -35,7 +36,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button @click="createTag" data-bs-dismiss="modal" type="button" class="btn btn-primary">Create</button>
+                    <button @click="updateTag" data-bs-dismiss="modal" type="button" class="btn btn-primary">Update</button>
                 </div>
             </div>
         </div>
@@ -44,9 +45,10 @@
 
 <script>
 import { useVuelidate } from '@vuelidate/core';
-import { required, minLength, maxLength, } from '@vuelidate/validators';
+import {maxLength, minLength, required} from "@vuelidate/validators";
 export default {
-    name: "CreateTagModal",
+    name: "EditTagModal",
+    props:['id','name','description'],
 
     setup(){
         return{
@@ -56,8 +58,7 @@ export default {
 
     data(){
         return{
-            name:null,
-            description:null,
+
         }
     },
 
@@ -69,22 +70,19 @@ export default {
     },
 
     methods:{
-        createTag(){
+        updateTag(){
             this.v$.$validate();
             if(!this.v$.$error){
-                //console.log('Created tag.')
-                axios.post('/api/admin/forum/tag/store', {
+                // console.log('name', this.name)
+                // console.log('description', this.description)
+                // console.log('tage created')
+
+                axios.patch(`/api/admin/forum/tag/${this.id}`, {
                     name: this.name,
                     description: this.description
                 })
-                .then(res => {
-                    console.log(res);
-                })
-                .catch(error => {
-                    console.log(error);
-                })
             }else{
-                console.log('Error');
+                console.log('error');
             }
         }
     }

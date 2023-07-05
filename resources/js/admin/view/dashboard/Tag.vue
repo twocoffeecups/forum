@@ -43,13 +43,19 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr v-for="category in 5">
-                                        <td>183</td>
-                                        <td>Test tag</td>
-                                        <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</td>
-                                        <td>63</td>
-                                        <td>Buttons</td>
-                                    </tr>
+                                        <tr v-for="tag in tags">
+                                            <td>#{{ tag.id }}</td>
+                                            <td>{{ tag.name }}</td>
+                                            <td>{{ tag.description.substr(0, 140)+'...' }}</td>
+                                            <td>63</td>
+                                            <td class="d-flex justify-content-around">
+                                                <EditTagModal :id="tag.id" :name="tag.name" :description="tag.description" />
+
+                                                <span @click="deleteTag(tag.id)" role="button" class="text-danger" title="Remove">
+                                                   <i class="fas fa-trash-alt"></i>
+                                                </span>
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -67,9 +73,43 @@
 <script>
 import Breadcrumbs from "../../component/Breadcrumbs.vue";
 import CreateTagModal from "../../component/CreateTagModal.vue";
+import EditTagModal from "../../component/EditTagModal.vue";
 export default{
     name:'Tag',
-    components: {CreateTagModal, Breadcrumbs},
+    components: {EditTagModal, CreateTagModal, Breadcrumbs},
+
+    data(){
+        return{
+            tags:[],
+        }
+    },
+
+    mounted() {
+        this.getTags()
+    },
+
+    methods:{
+        getTags(){
+            axios.get('/api/admin/forum/tag/')
+            .then(res => {
+                this.tags = res.data.tags
+                console.log(this.tags);
+            })
+            .catch(error => {
+                console.log(error);
+            })
+        },
+
+        deleteTag(id){
+            axios.delete(`/api/admin/forum/tag/${id}`)
+            .then(res => {
+                console.log(res);
+            })
+            .catch(error => {
+                console.log(error);
+            })
+        },
+    }
 }
 </script>
 

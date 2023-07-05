@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Resources\Admin;
+namespace App\Http\Resources\Admin\Forum;
 
-use App\Models\Category;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CategoryResourse extends JsonResource
+class CategoryResource extends JsonResource
 {
     /**
      * Transform the resource into an array.

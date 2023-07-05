@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Category;
+namespace App\Http\Controllers\Admin\Forum;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\CategoryRequest;
-use App\Http\Resources\Admin\CategoryResourse;
+use App\Http\Resources\Admin\Forum\CategoryResource;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -12,7 +12,7 @@ class CategoryController extends Controller
 {
 
     public function index(){
-        $categories = CategoryResourse::collection(Category::all());
+        $categories = CategoryResource::collection(Category::all());
         return response()->json(['categories' => $categories]);
     }
 
@@ -23,7 +23,7 @@ class CategoryController extends Controller
     }
 
     public function show(Category $category){
-        return response()->json(['category' => new CategoryResourse($category)]);
+        return response()->json(['category' => new CategoryResource($category)]);
     }
 
     public function update(CategoryRequest $request, Category $category){
@@ -38,7 +38,6 @@ class CategoryController extends Controller
 
     public function delete(Category $category){
         $category->delete();
-        $category->save();
         return response()->json(['message' => 'Category deleted successfully!']);
     }
 }
