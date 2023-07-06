@@ -36,54 +36,15 @@
 
                     <SidebarNavItem v-for="item in navItems" :label="item.label" :icon="item.icon" :path="item.path" :pages="item.pages" />
 
-                    <li class="nav-item">
-                        <router-link :to="{name:'report.index'}" class="nav-link">
-                            <i class="nav-icon fas fa-file"></i>
-                            <p>
-                                Reports
-                                <span class="right badge badge-danger">5</span>
-                            </p>
-                        </router-link>
-                    </li>
-
 <!--                    <li class="nav-item">-->
-<!--                        <a href="#" class="nav-link">-->
-<!--                            <i class="fab fa-forumbee nav-icon"></i>-->
+<!--                        <router-link :to="{name:'report.index'}" class="nav-link">-->
+<!--                            <i class="nav-icon fas fa-file"></i>-->
 <!--                            <p>-->
-<!--                                Forum-->
-<!--                                <i class="fas fa-angle-left right"></i>-->
+<!--                                Reports-->
+<!--                                <span class="right badge badge-danger">5</span>-->
 <!--                            </p>-->
-<!--                        </a>-->
-<!--                        <ul ref="utree" class="nav nav-treeview" style="display: none; height: 129.6px; padding-top: 0px; margin-top: 0px; padding-bottom: 0px; margin-bottom: 0px;">-->
-<!--                            <li class="nav-item">-->
-<!--                                <a href="#" class="nav-link">-->
-<!--                                    <i class="fas fa-tag nav-icon"></i>-->
-<!--                                    <p>Categories</p>-->
-<!--                                </a>-->
-<!--                            </li>-->
-<!--                            <li class="nav-item">-->
-<!--                                <a href="#" class="nav-link">-->
-<!--                                    <i class="fas fa-hashtag nav-icon"></i>-->
-<!--                                    <p>Tags</p>-->
-<!--                                </a>-->
-<!--                            </li>-->
-<!--                            <li class="nav-item">-->
-<!--                                <a href="#" class="nav-link">-->
-<!--                                    <i class="far fa-circle nav-icon"></i>-->
-<!--                                    <p>Topics</p>-->
-<!--                                </a>-->
-<!--                            </li>-->
-<!--                            <li class="nav-item">-->
-<!--                                <a href="#" class="nav-link">-->
-<!--                                    <i class="fas fa-comment nav-icon"></i>-->
-<!--                                    <p>Posts</p>-->
-<!--                                </a>-->
-<!--                            </li>-->
-<!--                        </ul>-->
+<!--                        </router-link>-->
 <!--                    </li>-->
-
-
-
                 </ul>
             </nav>
             <!-- /.sidebar-menu -->
@@ -158,6 +119,23 @@ export default {
                         },
                     ]
                 },
+                {
+                    label:'Reports',
+                    icon:'fas fa-flag',
+                    pages:[
+                        {
+                            label: 'All reports',
+                            path: 'report.index',
+                            icon: 'fas fa-tag'
+                        },
+                        {
+                            label: 'Report management',
+                            path: 'report.management',
+                            icon: 'fas fa-hashtag'
+                        },
+                    ]
+                },
+
             ]
         }
     }

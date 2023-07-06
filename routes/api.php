@@ -40,4 +40,18 @@ Route::group(['prefix' => 'admin'], function(){
         });
 
     });
+
+    Route::group(['prefix' => 'report'], function(){
+
+        Route::group(['prefix' => 'report-type'], function(){
+            Route::get('/', [\App\Http\Controllers\Admin\Report\ReportTypeController::class, 'index']);
+            Route::post('/store', [\App\Http\Controllers\Admin\Report\ReportTypeController::class, 'store']);
+            Route::get('/{reportType}', [\App\Http\Controllers\Admin\Report\ReportTypeController::class, 'show']);
+            Route::patch('/{reportType}', [\App\Http\Controllers\Admin\Report\ReportTypeController::class, 'update']);
+            Route::delete('/{reportType}', [\App\Http\Controllers\Admin\Report\ReportTypeController::class, 'delete']);
+        });
+
+    });
+
+
 });

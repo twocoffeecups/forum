@@ -47,12 +47,6 @@
 
                 <div class="row">
                     <div class="col-12">
-                        <AddReportTypeModal />
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-12">
                         <div class="card">
                             <div class="card-header">
                                 <h2 class="card-title text-bold">REPORTS</h2>
@@ -82,7 +76,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr v-for="user in 7">
+                                    <tr v-for="report in 7">
                                         <td>183</td>
                                         <td>11-7-2014</td>
                                         <td>John Doe</td>

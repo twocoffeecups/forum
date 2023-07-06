@@ -43,6 +43,11 @@ const router = createRouter({
                     component: () => import('../admin/view/dashboard/Reports.vue')
                 },
                 {
+                    path: 'report-management',
+                    name: 'report.management',
+                    component: () => import('../admin/view/dashboard/ReportManagement.vue')
+                },
+                {
                     path: 'categories',
                     name: 'forum.category',
                     component: () => import('../admin/view/dashboard/Category.vue')

@@ -1,14 +1,13 @@
 <template>
+    <div class="d-flex justify-content-start mb-3">
+        <button class="btn btn-primary mx-1" data-bs-toggle="modal" data-bs-target="#create-report-type-modal">+ CRETE REPORT TYPE</button>
+    </div>
 
-    <span role="button" class="text-primary" data-bs-toggle="modal" :data-bs-target="`#edit-tag-${id}-modal`" title="Edit">
-        <i class="fas fa-edit"></i>
-    </span>
-
-    <div class="modal fade" :id="`edit-tag-${id}-modal`" tabindex="-1" :aria-labelledby="`edit-tag-${id}-modal`" aria-hidden="true">
+    <div class="modal fade" id="create-report-type-modal" tabindex="-1" aria-labelledby="create-report-type-modal" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5">Edit tag</h1>
+                    <h1 class="modal-title fs-5">Create report type</h1>
                 </div>
                 <div class="modal-body">
 
@@ -36,7 +35,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button @click="updateTag" data-bs-dismiss="modal" type="button" class="btn btn-primary">Update</button>
+                    <button @click="createReportType" type="button" class="btn btn-primary">Create</button>
                 </div>
             </div>
         </div>
@@ -45,10 +44,10 @@
 
 <script>
 import { useVuelidate } from '@vuelidate/core';
-import {maxLength, minLength, required} from "@vuelidate/validators";
-export default {
-    name: "EditTagModal",
-    props:['id','name','description'],
+import { required, minLength, maxLength, } from '@vuelidate/validators';
+import axios from "axios";
+export default{
+    name: "CreateReportTypeModal",
 
     setup(){
         return{
@@ -58,27 +57,31 @@ export default {
 
     data(){
         return{
-
+            name:null,
+            description:null,
         }
     },
 
     validations(){
         return{
-            name:{required, minLength:minLength(2), maxLength:maxLength(24),},
-            description:{required, minLength:minLength(32), maxLength:maxLength(255),},
+            name: {required, minLength:minLength(3), maxLength:maxLength(32)},
+            description: {required, minLength:minLength(50), maxLength:maxLength(255)},
         }
     },
 
     methods:{
-        updateTag(){
+        createReportType(){
             this.v$.$validate();
             if(!this.v$.$error){
-                axios.patch(`/api/admin/forum/tag/${this.id}`, {
+                // console.log('name', this.name)
+                // console.log('description', this.description)
+                // console.log('Add!');
+                axios.post('/api/admin/report/report-type/store',{
                     name: this.name,
                     description: this.description
                 })
                 .then(res => {
-                    console.log(res)
+                    console.log(res);
                 })
                 .catch(error => {
                     console.log(error);
@@ -87,7 +90,8 @@ export default {
                 console.log('error');
             }
         }
-    }
+    },
+
 }
 </script>
 
