@@ -19,6 +19,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
+// Admin dashboard routes
 Route::group(['prefix' => 'admin'], function(){
 
     Route::group(['prefix' => 'forum'], function(){
@@ -41,16 +42,24 @@ Route::group(['prefix' => 'admin'], function(){
 
     });
 
-    Route::group(['prefix' => 'report'], function(){
+//    Route::group(['prefix' => 'report'], function(){
+//
+//    });
 
-        Route::group(['prefix' => 'report-type'], function(){
-            Route::get('/', [\App\Http\Controllers\Admin\Report\ReportTypeController::class, 'index']);
-            Route::post('/store', [\App\Http\Controllers\Admin\Report\ReportTypeController::class, 'store']);
-            Route::get('/{reportType}', [\App\Http\Controllers\Admin\Report\ReportTypeController::class, 'show']);
-            Route::patch('/{reportType}', [\App\Http\Controllers\Admin\Report\ReportTypeController::class, 'update']);
-            Route::delete('/{reportType}', [\App\Http\Controllers\Admin\Report\ReportTypeController::class, 'delete']);
-        });
+    Route::group(['prefix' => 'report-type'], function(){
+        Route::get('/', [\App\Http\Controllers\Admin\Report\ReportTypeController::class, 'index']);
+        Route::post('/store', [\App\Http\Controllers\Admin\Report\ReportTypeController::class, 'store']);
+        Route::get('/{reportType}', [\App\Http\Controllers\Admin\Report\ReportTypeController::class, 'show']);
+        Route::patch('/{reportType}', [\App\Http\Controllers\Admin\Report\ReportTypeController::class, 'update']);
+        Route::delete('/{reportType}', [\App\Http\Controllers\Admin\Report\ReportTypeController::class, 'delete']);
+    });
 
+    Route::group(['prefix' => 'role'], function(){
+        Route::get('/', [\App\Http\Controllers\Admin\User\RoleController::class, 'index']);
+        Route::post('/store', [\App\Http\Controllers\Admin\User\RoleController::class, 'store']);
+        Route::get('/{role}', [\App\Http\Controllers\Admin\User\RoleController::class, 'show']);
+        Route::patch('/{role}', [\App\Http\Controllers\Admin\User\RoleController::class, 'update']);
+        Route::delete('/{role}', [\App\Http\Controllers\Admin\User\RoleController::class, 'delete']);
     });
 
 

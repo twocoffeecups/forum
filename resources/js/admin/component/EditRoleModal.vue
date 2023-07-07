@@ -1,13 +1,13 @@
 <template>
-    <div class="d-flex justify-content-start mb-3">
-        <button class="btn btn-success mx-1" data-bs-toggle="modal" data-bs-target="#add-role-modal">+ ADD ROLE</button>
-    </div>
+    <span role="button" class="text-primary" data-bs-toggle="modal" :data-bs-target="`#edit-role-${id}-modal`" title="Edit">
+        <i class="fas fa-edit"></i>
+    </span>
 
-    <div class="modal fade" id="add-role-modal" tabindex="-1" aria-labelledby="add-role-modal" aria-hidden="true">
+    <div class="modal fade" :id="`edit-role-${id}-modal`" tabindex="-1" :aria-labelledby="`edit-role-${id}-modal`" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="add-role-label">Add role</h1>
+                    <h1 class="modal-title fs-5" id="add-role-label">Edit role</h1>
                 </div>
                 <div class="modal-body">
 
@@ -24,7 +24,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button @click="addRole" type="button" class="btn btn-primary">Add</button>
+                    <button @click="updateRole" type="button" class="btn btn-primary">Add</button>
                 </div>
             </div>
         </div>
@@ -36,16 +36,11 @@ import { useVuelidate } from '@vuelidate/core'
 import { required, minLength, maxLength, } from '@vuelidate/validators'
 import axios from "axios";
 export default {
-    name: "AddRoleModal",
+    name: "EditRoleModal",
+    props:['id', 'name'],
 
     setup () {
         return { v$: useVuelidate() }
-    },
-
-    data(){
-        return {
-            name: null,
-        }
     },
 
     validations(){
@@ -55,11 +50,10 @@ export default {
     },
 
     methods:{
-        addRole(){
+        updateRole(){
             this.v$.$validate();
             if(!this.v$.$error){
-                //console.log('add role')
-                axios.post('/api/admin/role/store', {
+                axios.patch(`/api/admin/role/${this.id}`, {
                     name: this.name
                 })
                 .then(res => {
@@ -71,7 +65,6 @@ export default {
             }else{
                 console.log('errors')
             }
-
         }
     }
 }
