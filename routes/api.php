@@ -20,7 +20,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 // Admin dashboard routes
-Route::group(['prefix' => 'admin'], function(){
+Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function(){
 
     Route::group(['prefix' => 'forum'], function(){
 
@@ -62,5 +62,23 @@ Route::group(['prefix' => 'admin'], function(){
         Route::delete('/{role}', [\App\Http\Controllers\Admin\User\RoleController::class, 'delete']);
     });
 
+
+});
+
+Route::group(['prefix' => 'client'], function(){
+
+    Route::group(['prefix' => 'auth'], function(){
+        Route::post('/sign-up', \App\Http\Controllers\Api\Client\Auth\RegisterController::class);
+        Route::post('/sign-in', \App\Http\Controllers\Api\Client\Auth\LoginController::class);
+
+//        Route::group(['middleware' => 'auth:sanctum'], function(){
+//            Route::post('/logout', [\App\Http\Controllers\Api\Client\Auth\LogoutController::class]);
+//        });
+
+
+        Route::group(['middleware'=>'auth:sanctum'], function(){
+            Route::post('/logout', \App\Http\Controllers\Api\Client\Auth\LogoutController::class);
+        });
+    });
 
 });

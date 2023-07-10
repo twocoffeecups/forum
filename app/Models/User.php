@@ -68,4 +68,12 @@ class User extends Authenticatable
     public function notifications(){
         return $this->hasMany(Notification::class, 'userId', 'id');
     }
+
+    /**
+     * @return bool
+     * check admin role
+     */
+    public function admin():bool{
+        return $this->roleId === 1;
+    }
 }
