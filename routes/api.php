@@ -20,11 +20,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 // Admin dashboard routes
-Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function(){
+Route::group(['prefix' => 'admin'], function(){
 
     Route::group(['prefix' => 'forum'], function(){
 
-        Route::group(['prefix' => 'category'], function(){
+        Route::group(['prefix' => 'category', 'middleware' => 'auth:sanctum'], function(){
             Route::get('/', [\App\Http\Controllers\Admin\Forum\CategoryController::class, 'index']);
             Route::post('/store', [\App\Http\Controllers\Admin\Forum\CategoryController::class, 'store']);
             Route::get('/{category}', [\App\Http\Controllers\Admin\Forum\CategoryController::class, 'show']);
@@ -67,17 +67,13 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function(){
 
 Route::group(['prefix' => 'client'], function(){
 
+
+    // auth for rest api
     Route::group(['prefix' => 'auth'], function(){
-        Route::post('/sign-up', \App\Http\Controllers\Api\Client\Auth\RegisterController::class);
-        Route::post('/sign-in', \App\Http\Controllers\Api\Client\Auth\LoginController::class);
-
-//        Route::group(['middleware' => 'auth:sanctum'], function(){
-//            Route::post('/logout', [\App\Http\Controllers\Api\Client\Auth\LogoutController::class]);
-//        });
-
-
+        Route::post('/sign-up', \App\Http\Controllers\Api\Auth\RegisterController::class);
+        Route::post('/sign-in', \App\Http\Controllers\Api\Auth\LoginController::class);
         Route::group(['middleware'=>'auth:sanctum'], function(){
-            Route::post('/logout', \App\Http\Controllers\Api\Client\Auth\LogoutController::class);
+            Route::post('/logout', \App\Http\Controllers\Api\Auth\LogoutController::class);
         });
     });
 

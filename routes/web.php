@@ -18,9 +18,9 @@ Route::group(['prefix' => 'admin'], function (){
     Route::get('/{page}', [\App\Http\Controllers\Admin\MainController::class, 'index'])->where('page', '(.*)');
 });
 
-//Auth::routes();
+Auth::routes();
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('{page}', [\App\Http\Controllers\Api\Client\MainController::class, 'index'])->where('page', '(.*)');
+Route::get('{page}', [\App\Http\Controllers\Client\MainController::class, 'index'])->where('page', '(.*)');
 
 
