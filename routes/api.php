@@ -20,11 +20,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 // Admin dashboard routes
-Route::group(['prefix' => 'admin'], function(){
+Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum','admin']], function(){
 
     Route::group(['prefix' => 'forum'], function(){
 
-        Route::group(['prefix' => 'category', 'middleware' => 'auth:sanctum'], function(){
+        Route::group(['prefix' => 'category'], function(){
             Route::get('/', [\App\Http\Controllers\Admin\Forum\CategoryController::class, 'index']);
             Route::post('/store', [\App\Http\Controllers\Admin\Forum\CategoryController::class, 'store']);
             Route::get('/{category}', [\App\Http\Controllers\Admin\Forum\CategoryController::class, 'show']);
@@ -42,16 +42,16 @@ Route::group(['prefix' => 'admin'], function(){
 
     });
 
-//    Route::group(['prefix' => 'report'], function(){
-//
-//    });
-
     Route::group(['prefix' => 'report-type'], function(){
         Route::get('/', [\App\Http\Controllers\Admin\Report\ReportTypeController::class, 'index']);
         Route::post('/store', [\App\Http\Controllers\Admin\Report\ReportTypeController::class, 'store']);
         Route::get('/{reportType}', [\App\Http\Controllers\Admin\Report\ReportTypeController::class, 'show']);
         Route::patch('/{reportType}', [\App\Http\Controllers\Admin\Report\ReportTypeController::class, 'update']);
         Route::delete('/{reportType}', [\App\Http\Controllers\Admin\Report\ReportTypeController::class, 'delete']);
+    });
+
+    Route::group(['prefix' => 'user'], function(){
+        Route::post('/register', [\App\Http\Controllers\Admin\User\UserController::class, 'register']);
     });
 
     Route::group(['prefix' => 'role'], function(){
@@ -65,13 +65,14 @@ Route::group(['prefix' => 'admin'], function(){
 
 });
 
+// Client routes
 Route::group(['prefix' => 'client'], function(){
-
 
     // auth for rest api
     Route::group(['prefix' => 'auth'], function(){
         Route::post('/sign-up', \App\Http\Controllers\Api\Auth\RegisterController::class);
         Route::post('/sign-in', \App\Http\Controllers\Api\Auth\LoginController::class);
+
         Route::group(['middleware'=>'auth:sanctum'], function(){
             Route::post('/logout', \App\Http\Controllers\Api\Auth\LogoutController::class);
         });

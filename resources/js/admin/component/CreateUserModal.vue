@@ -12,30 +12,10 @@
                 <div class="modal-body">
 
                     <div class="mb-3">
-                        <div :class="{ error: v$.login.$errors.length }">
+                        <div :class="{ error: v$.registrationForm.login.$errors.length }">
                             <label for="login" class="col-form-label">Login:</label>
-                            <input @blur="v$.login.$touch" type="text" v-model="login" class="form-control" id="login">
-                            <div class="input-errors" v-for="error of v$.login.$errors" :key="error.$uid">
-                                <div class="error-msg text-danger">{{ error.$message }}</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="mb-3">
-                        <div :class="{ error: v$.firstName.$errors.length }">
-                            <label for="firstName" class="col-form-label">First name:</label>
-                            <input @blur="v$.firstName.$touch" type="text" v-model="firstName" class="form-control" id="firstName">
-                            <div class="input-errors" v-for="error of v$.firstName.$errors" :key="error.$uid">
-                                <div class="error-msg text-danger">{{ error.$message }}</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="mb-3">
-                        <div :class="{ error: v$.lastName.$errors.length }">
-                            <label for="login" class="col-form-label">Last name:</label>
-                            <input @blur="v$.lastName.$touch" type="text" v-model="lastName" class="form-control" id="lastName">
-                            <div class="input-errors" v-for="error of v$.lastName.$errors" :key="error.$uid">
+                            <input @blur="v$.registrationForm.login.$touch" type="text" v-model="registrationForm.login" class="form-control" id="login">
+                            <div class="input-errors" v-for="error of v$.registrationForm.login.$errors" :key="error.$uid">
                                 <div class="error-msg text-danger">{{ error.$message }}</div>
                             </div>
                         </div>
@@ -50,10 +30,10 @@
                     </div>
 
                     <div class="mb-3">
-                        <div :class="{ error: v$.email.$errors.length }">
+                        <div :class="{ error: v$.registrationForm.email.$errors.length }">
                             <label for="login" class="col-form-label">Email:</label>
-                            <input @blur="v$.email.$touch" type="email" v-model="email" class="form-control" id="email">
-                            <div class="input-errors" v-for="error of v$.email.$errors" :key="error.$uid">
+                            <input @blur="v$.registrationForm.email.$touch" type="email" v-model="registrationForm.email" class="form-control" id="email">
+                            <div class="input-errors" v-for="error of v$.registrationForm.email.$errors" :key="error.$uid">
                                 <div class="error-msg text-danger">{{ error.$message }}</div>
                             </div>
                         </div>
@@ -73,6 +53,7 @@
 <script>
 import { useVuelidate } from '@vuelidate/core'
 import { required, minLength, maxLength, email, sameAs } from '@vuelidate/validators'
+import axios from "axios";
 export default {
     name: "CreateUserModal",
 
@@ -84,20 +65,24 @@ export default {
 
     data(){
         return{
-            login: null,
-            firstName: null,
-            lastName: null,
-            email: null,
-            role: null,
+            registrationForm:{
+                login: null,
+                // firstName: null,
+                // lastName: null,
+                email: null,
+                role: 2,
+            },
         }
     },
 
     validations(){
         return{
-            login: {required, minLength:minLength(5), maxLength:maxLength(32)},
-            firstName: {required, minLength:minLength(5), maxLength:maxLength(64)},
-            lastName: {required, minLength:minLength(5), maxLength:maxLength(64)},
-            email: {required, email, minLength:minLength(7), maxLength:maxLength(32)},
+            registrationForm:{
+                login: {required, minLength:minLength(5), maxLength:maxLength(32)},
+                // firstName: {minLength:minLength(2), maxLength:maxLength(64)},
+                // lastName: {minLength:minLength(2), maxLength:maxLength(64)},
+                email: {required, email, minLength:minLength(7), maxLength:maxLength(32)},
+            },
         }
     },
 
@@ -105,9 +90,17 @@ export default {
         createUser(){
             this.v$.$validate();
             if(!this.v$.$error){
-                console.log('create user');
-            }else{
-                console.log('errors');
+                let data = new FormData();
+                for(let [key, value] of Object.entries(this.registrationForm)){
+                    data.append(key, value)
+                }
+                axios.post('/api/admin/user/register', data)
+                .then(res => {
+                    console.log(res)
+                })
+                .catch(error => {
+                    console.log(error);
+                })
             }
         }
     }

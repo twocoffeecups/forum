@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class IsAdminMiddleware
+class AdminMiddleware
 {
     /**
      * Handle an incoming request.
@@ -16,8 +16,8 @@ class IsAdminMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        //dd(auth());
-        if(!auth()->check() || !auth()->user()->admin){
+        //dd(auth()->user());
+        if(!auth()->check() || !auth()->user()->admin()){
             abort(403, 'User is not a admin.');
         }
 
