@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,15 +13,12 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-// , 'middleware' => 'auth'
+Auth::routes(['verify'=>true]);
+//Auth::routes();
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
 Route::group(['prefix' => 'admin'], function (){
-    //Route::get('/', [\App\Http\Controllers\admin\MainController::class, 'index'])->name('admin.main');
     Route::get('/{page}', [\App\Http\Controllers\Admin\MainController::class, 'index'])->where('page', '(.*)');
 });
 
-Auth::routes();
-//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
 Route::get('{page}', [\App\Http\Controllers\Client\MainController::class, 'index'])->where('page', '(.*)');
-
-
