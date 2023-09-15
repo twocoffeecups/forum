@@ -4,7 +4,7 @@ namespace App\Http\Requests\Api\Client\Account;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PasswordResetRequest extends FormRequest
+class ResendMailRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +24,7 @@ class PasswordResetRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => 'required|email|min:6|max:64',
-            'token' => 'required|string',
-            'password' => 'string|min:8|max:64',
-            'passwordConfirmation' => 'string|min:8|max:64|same:password'
+            'email' => 'required|email|exists:users',
         ];
     }
 }

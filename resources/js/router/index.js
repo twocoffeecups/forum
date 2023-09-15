@@ -10,6 +10,32 @@ const router = createRouter({
             name: 'main',
             component: () => import('../client/view/Main.vue'),
         },
+        {
+            path: '/personal',
+            name: 'personal',
+            component: () => import('../client/view/Personal.vue'),
+        },
+        {
+            path: '/sign-in',
+            name: 'sign-in',
+            component: () => import('../client/view/SignIn.vue'),
+        },
+        {
+            path: '/sign-up',
+            name: 'sign-up',
+            component: () => import('../client/view/SignUp.vue'),
+        },
+        {
+            path: '/forgot-password',
+            name: 'password.forgot',
+            component: () => import('../client/view/ForgotPassword.vue'),
+        },
+        {
+            path: '/password-reset/:hash',
+            name: 'password.reset',
+            component: () => import('../client/view/PasswordReset.vue'),
+        },
+
 
         // admin routes
         {
@@ -68,16 +94,6 @@ const router = createRouter({
                     component: () => import('../admin/view/dashboard/Post.vue')
                 },
             ]
-        },
-        {
-            path: '/admin/login',
-            name: 'admin.login',
-            component: () => import('../admin/view/auth/Login.vue')
-        },
-        {
-            path: '/admin/registration',
-            name: 'admin.registration',
-            component: () => import('../admin/view/auth/Register.vue')
         },
         {
             path: '/:pathMatch(.*)*',

@@ -21,6 +21,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 // Admin dashboard routes
 Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum','admin']], function(){
+//Route::group(['prefix' => 'admin'], function(){
 
     Route::group(['prefix' => 'forum'], function(){
 
@@ -52,6 +53,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum','admin']], fu
 
     Route::group(['prefix' => 'user'], function(){
         Route::post('/register', [\App\Http\Controllers\Admin\User\UserController::class, 'register']);
+
     });
 
     Route::group(['prefix' => 'role'], function(){
@@ -68,14 +70,22 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum','admin']], fu
 // Client routes
 Route::group(['prefix' => 'client'], function(){
 
-    // auth for rest api
-    Route::group(['prefix' => 'auth'], function(){
-        Route::post('/sign-up', \App\Http\Controllers\Api\Auth\RegisterController::class);
-        Route::post('/sign-in', \App\Http\Controllers\Api\Auth\LoginController::class);
 
-        Route::group(['middleware'=>'auth:sanctum'], function(){
-            Route::post('/logout', \App\Http\Controllers\Api\Auth\LogoutController::class);
-        });
+});
+
+// auth for rest api
+Route::group(['prefix' => 'auth'], function(){
+
+    Route::post('/sign-up', \App\Http\Controllers\Api\Auth\RegisterController::class);
+    Route::post('/sign-in', \App\Http\Controllers\Api\Auth\LoginController::class);
+    Route::group(['middleware'=>'auth:sanctum'], function(){
+        Route::post('/logout', \App\Http\Controllers\Api\Auth\LogoutController::class);
     });
+
+    Route::get('/email/verify/{id}/{hash}', [\App\Http\Controllers\Api\Auth\VerificationController::class, 'verify'])->name('email.verify');
+    Route::get('/email/resend', [\App\Http\Controllers\Api\Auth\VerificationController::class, 'resend']);
+    Route::post('/password/forgot', \App\Http\Controllers\Api\Auth\ForgotPasswordController::class);
+    Route::post('/password/reset', \App\Http\Controllers\Api\Auth\ResetPasswordController::class);
+
 
 });

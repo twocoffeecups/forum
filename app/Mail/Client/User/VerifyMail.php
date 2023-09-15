@@ -9,22 +9,23 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class PasswordMail extends Mailable implements ShouldQueue
+class VerifyMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $password;
-    public $login;
+    public string $url;
+    public string $login;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($password, $login)
+    public function __construct($id, $login, $hash)
     {
         $this->login = $login;
-        $this->password = $password;
+        //$this->url = route('verification.verify', ['id'=>$id, 'hash'=>$hash]);
+        $this->url = route('email.verify', ['id'=>$id, 'hash'=>$hash]);
     }
 
     /**
@@ -35,7 +36,7 @@ class PasswordMail extends Mailable implements ShouldQueue
     public function envelope()
     {
         return new Envelope(
-            subject: 'Password Mail',
+            subject: 'Verify Mail',
         );
     }
 
@@ -47,7 +48,7 @@ class PasswordMail extends Mailable implements ShouldQueue
     public function content()
     {
         return new Content(
-            markdown: 'mail.client.user.password',
+            markdown: 'mail.client.user.verify-mail',
         );
     }
 
