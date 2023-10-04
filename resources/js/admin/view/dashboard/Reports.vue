@@ -101,10 +101,10 @@
 
 <script>
 import Breadcrumbs from "../../component/Breadcrumbs.vue";
-import AddReportTypeModal from "../../component/AddReportTypeModal.vue";
+import CreateReportTypeModal from "../../component/CreateReportTypeModal.vue";
 export default {
     name: "Reports",
-    components: { Breadcrumbs, AddReportTypeModal, }
+    components: { Breadcrumbs, CreateReportTypeModal, }
 }
 </script>
 

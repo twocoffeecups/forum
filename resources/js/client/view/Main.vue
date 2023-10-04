@@ -41,13 +41,13 @@ export default {
         signUp(){
             let data = new FormData();
 
-            data.append('login', 'aximand2');
+            data.append('login', 'aximand');
             data.append('lastName', 'Horus2');
             data.append('firstName', 'Aximand2');
-            data.append('email', 'aximand1234@gmail.ru');
+            data.append('email', 'aximand@gmail.ru');
             data.append('password', '12345678');
             data.append('passwordConfirmation', '12345678');
-            data.append('phone', '+7889122316');
+            data.append('phone', '+7889122319');
 
             axios.get('/sanctum/csrf-cookie')
                 .then(response => {

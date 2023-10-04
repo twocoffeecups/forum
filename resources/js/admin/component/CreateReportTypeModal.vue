@@ -35,7 +35,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button @click="createReportType" type="button" class="btn btn-primary">Create</button>
+                    <button @click="createReportType" type="button" class="btn btn-primary" data-bs-dismiss="modal">Create</button>
                 </div>
             </div>
         </div>
@@ -73,10 +73,7 @@ export default{
         createReportType(){
             this.v$.$validate();
             if(!this.v$.$error){
-                // console.log('name', this.name)
-                // console.log('description', this.description)
-                // console.log('Add!');
-                axios.post('/api/admin/report/report-type/store',{
+                axios.post('/api/admin/report-type/store',{
                     name: this.name,
                     description: this.description
                 })

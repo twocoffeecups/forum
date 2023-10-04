@@ -90,7 +90,7 @@ export default {
 
     methods:{
         getReportTypes(){
-            axios.get('/api/admin/report/report-type/')
+            axios.get('/api/admin/report-type')
             .then(res => {
                 console.log(res)
                 this.reportTypes = res.data.reportTypes
@@ -104,6 +104,7 @@ export default {
             axios.delete(`/api/admin/report/report-type/${id}`)
             .then(res => {
                 console.log(res);
+                this.getReportTypes();
             })
             .catch(error => {
                 console.log(error);

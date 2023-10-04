@@ -66,10 +66,7 @@ export default {
         updateReportType(){
             this.v$.$validate();
             if(!this.v$.$error){
-                // console.log('name', this.name);
-                // console.log('description', this.description)
-
-                axios.patch(`/api/admin/report/report-type/${this.id}`, {
+                axios.patch(`/api/admin/report-type/${this.id}`, {
                     name: this.name,
                     description: this.description
                 })
