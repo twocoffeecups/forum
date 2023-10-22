@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('topic_tags', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('topicId')->index()->constrained('topics');
-            $table->foreignId('tagId')->index()->constrained('tags');
+            $table->foreignId('topicId')->index('topicIdx')->constrained('topics')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('tagId')->index('tagIdx')->constrained('tags')->cascadeOnUpdate()->cascadeOnDelete();
             $table->timestamps();
 
             $table->softDeletes();

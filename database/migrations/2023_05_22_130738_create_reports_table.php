@@ -15,11 +15,12 @@ return new class extends Migration
     {
         Schema::create('reports', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('reportTypeId')->index()->constrained('report_types');
-            $table->foreignId('postId')->index()->constrained('posts');
-            $table->foreignId('userId')->index()->constrained('users');
-            $table->foreignId('senderId')->index()->constrained('users');
-            $table->tinyInteger('processed')->default(0);
+            $table->foreignId('reasonId')->index('reportReasonIdx')->constrained('report_reasons')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('postId')->index('postIdx')->constrained('posts')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('userId')->index('userIdx')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('senderId')->index('senderIdx')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->unsignedTinyInteger('status')->default(0);
+            $table->unsignedTinyInteger('reportClosed')->default(0);
             $table->string('message')->nullable();
             $table->timestamps();
 

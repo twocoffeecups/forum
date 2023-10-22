@@ -15,11 +15,11 @@ return new class extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('topicId')->index()->constrained('topics');
-            $table->boolean('mainPost')->default(0);
-            $table->foreignId('userId')->index()->constrained('users');
+            $table->foreignId('topicId')->index()->constrained('topics')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->unsignedTinyInteger('mainPost')->default(0);
+            $table->foreignId('userId')->index()->constrained('users')->cascadeOnUpdate()->nullOnDelete();
             $table->unsignedBigInteger('replyId')->default(0);
-            $table->longText('description');
+            $table->text('message');
 
             $table->timestamps();
         });

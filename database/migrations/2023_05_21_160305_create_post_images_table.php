@@ -15,13 +15,12 @@ return new class extends Migration
     {
         Schema::create('post_images', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('postId')->index()->constrained('posts');
-            $table->foreignId('userId')->index()->constrained('users');
+            $table->foreignId('postId')->index('postIdx')->constrained('posts')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('userId')->index('userIdx')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
             $table->string('imagePath');
             $table->string('imageUrl');
+            $table->unsignedTinyInteger('status')->default(0);
             $table->timestamps();
-
-            $table->softDeletes();
         });
     }
 

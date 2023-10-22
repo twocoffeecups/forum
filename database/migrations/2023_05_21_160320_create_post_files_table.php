@@ -15,12 +15,14 @@ return new class extends Migration
     {
         Schema::create('post_files', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('postId')->index()->constrained('posts');
-            $table->foreignId('userId')->index()->constrained('users');
+            $table->foreignId('postId')->index('postIdx')->constrained('posts')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('userId')->index('userIdx')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
             $table->string('fileName');
             $table->string('fileType');
             $table->string('filePath');
-            $table->bigInteger('numOfDownloads')->default(0);
+            $table->string('fileUrl');
+            $table->string('status')->default(0);
+            $table->unsignedBigInteger('numOfDownloads')->default(0);
             $table->timestamps();
         });
     }

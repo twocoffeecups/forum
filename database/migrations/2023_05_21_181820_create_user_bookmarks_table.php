@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('user_bookmarks', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('userId')->index()->constrained('users');
-            $table->foreignId('postId')->index()->constrained('posts');
+            $table->foreignId('userId')->index('userIdx')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('postId')->index('postIdx')->constrained('posts')->cascadeOnUpdate()->cascadeOnDelete();
             $table->timestamps();
 
             $table->softDeletes();

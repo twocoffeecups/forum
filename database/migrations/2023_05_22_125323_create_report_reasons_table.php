@@ -13,11 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('report_reasons', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('parentId')->default(0);
             $table->string('name');
             $table->string('description');
+            $table->unsignedTinyInteger('status')->default(0);
+            $table->foreignId('authorId')->index('authorIdx')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
             $table->timestamps();
 
             $table->softDeletes();
@@ -31,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('report_reasons');
     }
 };

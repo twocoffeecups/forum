@@ -13,10 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('ban_types', function (Blueprint $table) {
+        Schema::create('forums', function (Blueprint $table) {
             $table->id();
+            $table->unsignedTinyInteger('type')->default(0);
+            $table->foreignId('parentId')->nullable()->index('parentIdx')->constrained('forum_trees')->cascadeOnUpdate()->cascadeOnDelete();
             $table->string('name');
             $table->string('description');
+            $table->unsignedTinyInteger('status');
+            $table->foreignId('authorId')->index('authorIdx')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
             $table->timestamps();
 
             $table->softDeletes();
@@ -30,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ban_types');
+        Schema::dropIfExists('forums');
     }
 };

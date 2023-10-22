@@ -13,10 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('notifications', function (Blueprint $table) {
+        Schema::create('topic_likes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('userId')->index()->constrained('users');
-            $table->json('content');
+            $table->foreignId('topicId')->index('topicIdx')->constrained('topics')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('userId')->index('userIdx')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
+
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('notifications');
+        Schema::dropIfExists('topic_likes');
     }
 };

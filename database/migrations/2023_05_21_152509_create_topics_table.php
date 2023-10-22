@@ -16,9 +16,13 @@ return new class extends Migration
         Schema::create('topics', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->foreignId('categoryId')->index()->constrained('categories');
-            $table->foreignId('userId')->index()->constrained('users');
+            $table->foreignId('forumId')->index('forumIdx')->constrained('categories')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('userId')->index('userIdx')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->text('content');
+            $table->unsignedTinyInteger('status')->default(0);
             $table->timestamps();
+
+            $table->softDeletes();
         });
     }
 
