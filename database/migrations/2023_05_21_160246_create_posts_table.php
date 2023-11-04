@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('topicId')->index()->constrained('topics')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('topicId')->index('topicIdx')->constrained('topics')->cascadeOnUpdate()->cascadeOnDelete();
             $table->unsignedTinyInteger('mainPost')->default(0);
-            $table->foreignId('userId')->index()->constrained('users')->cascadeOnUpdate()->nullOnDelete();
+            $table->foreignId('userId')->index('userIdx')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
             $table->unsignedBigInteger('replyId')->default(0);
             $table->text('message');
 

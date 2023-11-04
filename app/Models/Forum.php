@@ -28,4 +28,5 @@ class Forum extends Model
     protected function isCategory(){
         return $this->type === 0 && $this->parent === null ;
     }
+
 }

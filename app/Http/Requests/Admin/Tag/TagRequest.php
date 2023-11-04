@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Admin;
+namespace App\Http\Requests\Admin\Tag;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CategoryRequest extends FormRequest
+class TagRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,8 @@ class CategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'parentId' => 'required|integer',
-            'name' => 'required|min:3|max:64',
-            'description' => 'min:32|max:255'
+            'name' => 'required|max:255',
+            'description' => 'required|max:255',
         ];
     }
 }

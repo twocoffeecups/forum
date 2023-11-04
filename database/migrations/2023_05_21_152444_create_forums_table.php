@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('forums', function (Blueprint $table) {
             $table->id();
             $table->unsignedTinyInteger('type')->default(0);
-            $table->foreignId('parentId')->nullable()->index('parentIdx')->constrained('forum_trees')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('parentId')->nullable()->index('parentIdx')->constrained('forums')->cascadeOnUpdate()->cascadeOnDelete();
             $table->string('name');
             $table->string('description');
             $table->unsignedTinyInteger('status');

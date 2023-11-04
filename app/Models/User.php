@@ -76,6 +76,6 @@ class User extends Authenticatable implements MustVerifyEmail
      * check admin role
      */
     public function admin():bool{
-        return $this->roleId === 1;
+        return $this->roleId === 2;
     }
 }

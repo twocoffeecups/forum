@@ -14,33 +14,28 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+//Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//    return $request->user();
+//});
 
-
-// Admin dashboard routes
-Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum','admin']], function(){
-//Route::group(['prefix' => 'admin'], function(){
+// admin routes
+//Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum','admin']], function(){
+Route::group(['prefix' => 'admin'], function(){
 
     Route::group(['prefix' => 'forum'], function(){
+        Route::get('/', [\App\Http\Controllers\Admin\Forum\ForumController::class, 'index']);
+        Route::post('/', [\App\Http\Controllers\Admin\Forum\ForumController::class, 'store']);
+        Route::get('/{forum}', [\App\Http\Controllers\Admin\Forum\ForumController::class, 'show']);
+        Route::patch('/{forum}', [\App\Http\Controllers\Admin\Forum\ForumController::class, 'update']);
+        Route::delete('/{forum}', [\App\Http\Controllers\Admin\Forum\ForumController::class, 'delete']);
+    });
 
-        Route::group(['prefix' => 'category'], function(){
-            Route::get('/', [\App\Http\Controllers\Admin\Forum\CategoryController::class, 'index']);
-            Route::post('/store', [\App\Http\Controllers\Admin\Forum\CategoryController::class, 'store']);
-            Route::get('/{category}', [\App\Http\Controllers\Admin\Forum\CategoryController::class, 'show']);
-            Route::patch('/{category}', [\App\Http\Controllers\Admin\Forum\CategoryController::class, 'update']);
-            Route::delete('/{category}', [\App\Http\Controllers\Admin\Forum\CategoryController::class, 'delete']);
-        });
-
-        Route::group(['prefix' => 'tag'], function(){
-            Route::get('/', [\App\Http\Controllers\Admin\Forum\TagController::class, 'index']);
-            Route::post('/store', [\App\Http\Controllers\Admin\Forum\TagController::class, 'store']);
-            Route::get('/{tag}', [\App\Http\Controllers\Admin\Forum\TagController::class, 'show']);
-            Route::patch('/{tag}', [\App\Http\Controllers\Admin\Forum\TagController::class, 'update']);
-            Route::delete('/{tag}', [\App\Http\Controllers\Admin\Forum\TagController::class, 'delete']);
-        });
-
+    Route::group(['prefix' => 'tag'], function(){
+        Route::get('/', [\App\Http\Controllers\Admin\Forum\TagController::class, 'index']);
+        Route::post('/store', [\App\Http\Controllers\Admin\Forum\TagController::class, 'store']);
+        Route::get('/{tag}', [\App\Http\Controllers\Admin\Forum\TagController::class, 'show']);
+        Route::patch('/{tag}', [\App\Http\Controllers\Admin\Forum\TagController::class, 'update']);
+        Route::delete('/{tag}', [\App\Http\Controllers\Admin\Forum\TagController::class, 'delete']);
     });
 
     Route::group(['prefix' => 'report-type'], function(){
@@ -58,10 +53,11 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum','admin']], fu
 
     Route::group(['prefix' => 'role'], function(){
         Route::get('/', [\App\Http\Controllers\Admin\User\RoleController::class, 'index']);
-        Route::post('/store', [\App\Http\Controllers\Admin\User\RoleController::class, 'store']);
+        Route::post('/', [\App\Http\Controllers\Admin\User\RoleController::class, 'store']);
         Route::get('/{role}', [\App\Http\Controllers\Admin\User\RoleController::class, 'show']);
         Route::patch('/{role}', [\App\Http\Controllers\Admin\User\RoleController::class, 'update']);
         Route::delete('/{role}', [\App\Http\Controllers\Admin\User\RoleController::class, 'delete']);
+        Route::post('/{role}/status', [\App\Http\Controllers\Admin\User\RoleController::class, 'status']);
     });
 
 

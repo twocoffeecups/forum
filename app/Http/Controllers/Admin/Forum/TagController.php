@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\Admin\Forum;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\TagRequest;
+use App\Http\Requests\Admin\Tag\TagRequest;
 use App\Http\Resources\Admin\Forum\TagResource;
 use App\Models\Tag;
-use Illuminate\Http\Request;
 
 class TagController extends Controller
 {
