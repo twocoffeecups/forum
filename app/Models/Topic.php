@@ -13,8 +13,8 @@ class Topic extends Model
     protected $guarded = false;
     protected $table = 'topics';
 
-    public function category(){
-        return $this->belongsTo(Category::class, 'categoryId', 'id');
+    public function forum(){
+        return $this->belongsTo(Forum::class, 'forumId', 'id');
     }
 
     public function tags(){

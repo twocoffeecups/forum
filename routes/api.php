@@ -68,6 +68,13 @@ Route::group(['prefix' => 'admin'], function(){
 // Client routes
 Route::group(['prefix' => 'client'], function(){
 
+    Route::group(['prefix' => 'topic'], function(){
+        Route::get('/', [\App\Http\Controllers\Client\Topic\TopicController::class, 'index']);
+        Route::post('/', [\App\Http\Controllers\Client\Topic\TopicController::class, 'store']);
+        Route::get('/{topic}', [\App\Http\Controllers\Client\Topic\TopicController::class, 'show']);
+        Route::patch('/{topic}', [\App\Http\Controllers\Client\Topic\TopicController::class, 'update']);
+        Route::delete('/{topic}', [\App\Http\Controllers\Client\Topic\TopicController::class, 'delete']);
+    });
 
 });
 
