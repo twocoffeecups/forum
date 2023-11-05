@@ -12,4 +12,14 @@ class Tag extends Model
 
     protected $guarded = false;
     protected $table = 'tags';
+
+    protected function author()
+    {
+        return $this->belongsTo(User::class, 'authorId', 'id');
+    }
+
+    protected function forum()
+    {
+        return $this->belongsTo(Forum::class, 'forumId', 'id');
+    }
 }

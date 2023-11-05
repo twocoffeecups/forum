@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Admin;
+namespace App\Http\Requests\Admin\Report;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ReportTypeRequest extends FormRequest
+class ReportReasonUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,9 @@ class ReportTypeRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|max:32',
-            'description' => 'required|max:255',
+            'name' => 'max:32',
+            'description' => 'max:255',
+            'authorId' => 'integer',
         ];
     }
 }

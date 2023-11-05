@@ -4,7 +4,7 @@ namespace App\Http\Requests\Admin\Forum;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ForumRequest extends FormRequest
+class ForumUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,11 +24,11 @@ class ForumRequest extends FormRequest
     public function rules()
     {
         return [
-            'type' => '',
+            'type' => 'integer',
             'parentId' => '',
-            'name' => '',
-            'description' => '',
-            'authorId' => '',
+            'name' => 'string',
+            'description' => 'string',
+            'authorId' => 'integer',
         ];
     }
 }

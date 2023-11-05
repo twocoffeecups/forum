@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin\Forum;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\Forum\ForumRequest;
+use App\Http\Requests\Admin\Forum\ForumStoreRequest;
 use App\Models\Forum;
 
 class ForumController extends Controller
@@ -20,7 +20,7 @@ class ForumController extends Controller
         return response()->json(['forum' => $forum]);
     }
 
-    protected function store(ForumRequest $request)
+    protected function store(ForumStoreRequest $request)
     {
         $data = $request->validated();
         if($data['type']==0 && $data['parentId']!=0){
@@ -30,7 +30,7 @@ class ForumController extends Controller
         return response()->json(['message' => 'Forum created!']);
     }
 
-    protected function update(Forum $forum, ForumRequest $request)
+    protected function update(Forum $forum, ForumStoreRequest $request)
     {
         $data = $request->validated();
         foreach($data as $key => $value){

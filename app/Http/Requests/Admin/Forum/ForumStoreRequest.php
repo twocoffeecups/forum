@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Admin;
+namespace App\Http\Requests\Admin\Forum;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class RoleRequest extends FormRequest
+class ForumStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,11 @@ class RoleRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|max:12',
-            'description' => 'nullable',
+            'type' => 'required|integer',
+            'parentId' => '',
+            'name' => 'required|string',
+            'description' => 'string',
+            'authorId' => 'required|integer',
         ];
     }
 }

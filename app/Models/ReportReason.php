@@ -12,4 +12,9 @@ class ReportReason extends Model
 
     protected $guarded = false;
     protected $table = 'report_reasons';
+
+    protected function author()
+    {
+        return $this->belongsTo(User::class, 'authorId', 'id');
+    }
 }

@@ -32,18 +32,20 @@ Route::group(['prefix' => 'admin'], function(){
 
     Route::group(['prefix' => 'tag'], function(){
         Route::get('/', [\App\Http\Controllers\Admin\Forum\TagController::class, 'index']);
-        Route::post('/store', [\App\Http\Controllers\Admin\Forum\TagController::class, 'store']);
+        Route::post('/', [\App\Http\Controllers\Admin\Forum\TagController::class, 'store']);
         Route::get('/{tag}', [\App\Http\Controllers\Admin\Forum\TagController::class, 'show']);
         Route::patch('/{tag}', [\App\Http\Controllers\Admin\Forum\TagController::class, 'update']);
         Route::delete('/{tag}', [\App\Http\Controllers\Admin\Forum\TagController::class, 'delete']);
+        Route::post('/{tag}/status', [\App\Http\Controllers\Admin\Forum\TagController::class, 'status']);
     });
 
-    Route::group(['prefix' => 'report-type'], function(){
-        Route::get('/', [\App\Http\Controllers\Admin\Report\ReportTypeController::class, 'index']);
-        Route::post('/store', [\App\Http\Controllers\Admin\Report\ReportTypeController::class, 'store']);
-        Route::get('/{reportType}', [\App\Http\Controllers\Admin\Report\ReportTypeController::class, 'show']);
-        Route::patch('/{reportType}', [\App\Http\Controllers\Admin\Report\ReportTypeController::class, 'update']);
-        Route::delete('/{reportType}', [\App\Http\Controllers\Admin\Report\ReportTypeController::class, 'delete']);
+    Route::group(['prefix' => 'report-reason'], function(){
+        Route::get('/', [\App\Http\Controllers\Admin\Report\ReportReasonController::class, 'index']);
+        Route::post('/', [\App\Http\Controllers\Admin\Report\ReportReasonController::class, 'store']);
+        Route::get('/{reportReason}', [\App\Http\Controllers\Admin\Report\ReportReasonController::class, 'show']);
+        Route::patch('/{reportReason}', [\App\Http\Controllers\Admin\Report\ReportReasonController::class, 'update']);
+        Route::delete('/{reportReason}', [\App\Http\Controllers\Admin\Report\ReportReasonController::class, 'delete']);
+        Route::post('/{reportReason}/status', [\App\Http\Controllers\Admin\Report\ReportReasonController::class, 'status']);
     });
 
     Route::group(['prefix' => 'user'], function(){
