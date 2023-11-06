@@ -39,6 +39,21 @@ Route::group(['prefix' => 'admin'], function(){
         Route::post('/{tag}/status', [\App\Http\Controllers\Admin\Forum\TagController::class, 'status']);
     });
 
+    Route::group(['prefix' => 'topic'], function (){
+        Route::get('/{topic}/approved', [\App\Http\Controllers\Admin\Topic\TopicController::class, 'approved']);
+        Route::post('/{topic}/do-not-approved', [\App\Http\Controllers\Admin\Topic\TopicController::class, 'doNotApprove']);
+        Route::delete('/{topic}', [\App\Http\Controllers\Admin\Topic\TopicController::class, 'delete']);
+    });
+
+    Route::group(['prefix' => 'unapproved-reason'], function (){
+        Route::get('/', [\App\Http\Controllers\Admin\UnApprovedReason\UnApprovedReasonController::class, 'index']);
+        Route::post('/', [\App\Http\Controllers\Admin\UnApprovedReason\UnApprovedReasonController::class, 'store']);
+        Route::get('/{reason}', [\App\Http\Controllers\Admin\UnApprovedReason\UnApprovedReasonController::class, 'show']);
+        Route::patch('/{reason}', [\App\Http\Controllers\Admin\UnApprovedReason\UnApprovedReasonController::class, 'update']);
+        Route::delete('/{reason}', [\App\Http\Controllers\Admin\UnApprovedReason\UnApprovedReasonController::class, 'delete']);
+        Route::get('/{reason}/status', [\App\Http\Controllers\Admin\UnApprovedReason\UnApprovedReasonController::class, 'status']);
+    });
+
     Route::group(['prefix' => 'report-reason'], function(){
         Route::get('/', [\App\Http\Controllers\Admin\Report\ReportReasonController::class, 'index']);
         Route::post('/', [\App\Http\Controllers\Admin\Report\ReportReasonController::class, 'store']);
