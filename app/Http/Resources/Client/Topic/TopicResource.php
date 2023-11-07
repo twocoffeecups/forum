@@ -18,10 +18,12 @@ class TopicResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'content' => $this->content,
+            'status' => $this->status,
+            'rating' => $this->likes->count(),
+            'likes' => $this->likes,
             'forum' => $this->forum,
             'tags' => $this->tags,
             'author' => $this->author,
-            'status' => $this->status,
             'created_at' => $this->created_at,
         ];
     }

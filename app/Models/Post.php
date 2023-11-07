@@ -21,6 +21,11 @@ class Post extends Model
         return $this->belongsTo(Topic::class, 'topicId', 'id');
     }
 
+    public function likes()
+    {
+        return $this->belongsToMany(User::class, 'post_likes', 'postId', 'userId');
+    }
+
     public function rating(){
         return $this->hasMany(PostLike::class)->count();
     }

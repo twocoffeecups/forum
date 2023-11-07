@@ -7,6 +7,7 @@ use App\Http\Requests\Api\Client\Topic\TopicStoreRequest;
 use App\Http\Requests\Api\Client\Topic\TopicUpdateRequest;
 use App\Http\Resources\Client\Topic\TopicResource;
 use App\Models\Topic;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class TopicController extends Controller
@@ -49,6 +50,13 @@ class TopicController extends Controller
         }
         $topic->delete();
         return response()->json(['message' => 'Topic deleted.']);
+    }
+
+    protected function like(Topic $topic, User $user)
+    {
+        //dd($topic->likes);
+        $topic->likes()->toggle($user->id);
+        return response()->json(['message' => 'Change topic like.']);
     }
 
 }

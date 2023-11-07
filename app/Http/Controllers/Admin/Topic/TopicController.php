@@ -38,6 +38,10 @@ class TopicController extends Controller
 
     protected function delete(Topic $topic)
     {
+        $unApprovedTopic = UnApprovedTopic::where('topicId', '=', $topic->id)->first();
+        if($unApprovedTopic){
+            $unApprovedTopic->delete();
+        }
         $topic->delete();
         return response()->json(['message' => 'The topic deleted.']);
     }

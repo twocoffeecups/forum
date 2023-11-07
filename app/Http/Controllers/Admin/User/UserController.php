@@ -13,7 +13,18 @@ use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
-    public function register(RegisterRequest $request)
+
+    protected function index()
+    {
+        return response()->json(['users' => User::all()]);
+    }
+
+    protected function show(User $user)
+    {
+        return response()->json(['user' => $user]);
+    }
+
+    protected function register(RegisterRequest $request)
     {
         $data = $request->validated();
         $password = Str::random(12);

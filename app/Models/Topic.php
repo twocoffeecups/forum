@@ -24,4 +24,10 @@ class Topic extends Model
     public function author(){
         return $this->belongsTo(User::class, 'userId', 'id');
     }
+
+    public function likes()
+    {
+        return $this->belongsToMany(User::class, 'topic_likes', 'topicId', 'userId');
+    }
+
 }

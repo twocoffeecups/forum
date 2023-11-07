@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('topicId')->index('topicIdx')->constrained('topics')->cascadeOnUpdate()->cascadeOnDelete();
             $table->unsignedTinyInteger('mainPost')->default(0);
             $table->foreignId('userId')->index('userIdx')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
-            $table->unsignedBigInteger('replyId')->default(0);
+            $table->foreignId('replyId')->nullable()->index('replyIdx')->constrained('posts')->cascadeOnUpdate()->noActionOnDelete();
             $table->text('message');
 
             $table->timestamps();

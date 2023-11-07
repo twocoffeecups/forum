@@ -64,7 +64,9 @@ Route::group(['prefix' => 'admin'], function(){
     });
 
     Route::group(['prefix' => 'user'], function(){
+        Route::get('/', [\App\Http\Controllers\Admin\User\UserController::class, 'index']);
         Route::post('/register', [\App\Http\Controllers\Admin\User\UserController::class, 'register']);
+        Route::get('/{}', [\App\Http\Controllers\Admin\User\UserController::class, 'show']);
 
     });
 
@@ -89,6 +91,15 @@ Route::group(['prefix' => 'client'], function(){
         Route::get('/{topic}', [\App\Http\Controllers\Client\Topic\TopicController::class, 'show']);
         Route::patch('/{topic}', [\App\Http\Controllers\Client\Topic\TopicController::class, 'update']);
         Route::delete('/{topic}', [\App\Http\Controllers\Client\Topic\TopicController::class, 'delete']);
+        Route::get('/{topic}/{user}/like', [\App\Http\Controllers\Client\Topic\TopicController::class, 'like']);
+
+
+    });
+
+    Route::group(['prefix' => 'post'], function (){
+        Route::post('/{user}', [\App\Http\Controllers\Client\Post\PostController::class, 'store']);
+        Route::get('/{post}/{user}/bookmarks', [\App\Http\Controllers\Client\Post\PostController::class, 'bookmarks']);
+        Route::get('/{post}/{user}/like', [\App\Http\Controllers\Client\Post\PostController::class, 'like']);
     });
 
 });
