@@ -1,12 +1,14 @@
 <?php
 
-namespace App\Http\Resources\Client\Topic;
+namespace App\Http\Resources\Client\Post;
 
 use App\Http\Resources\Client\Forum\TopicTagResource;
-use App\Http\Resources\Client\Post\PostResource;
+use App\Http\Resources\Client\Topic\TopicAuthorResource;
+use App\Http\Resources\Client\Topic\TopicForumResource;
+use App\Http\Resources\Client\Topic\TopicLikeResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class TopicResource extends JsonResource
+class PostResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -18,17 +20,13 @@ class TopicResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'title' => $this->title,
-            'content' => $this->content,
+            'message' => $this->message,
             'rating' => $this->likes->count(),
             'likes' => TopicLikeResource::collection($this->likes),
             'views' => 1,
-            'forum' => new TopicForumResource($this->forum),
-            'tags' => TopicTagResource::collection($this->tags),
             'author' => new TopicAuthorResource($this->author),
             'images' => $this->images,
             'files' => $this->files,
-            'posts' => PostResource::collection($this->posts),
             'created_at' => date('d.m.Y H:i', strtotime($this->created_at)),
             'updated_at' => date('d.m.Y H:i', strtotime($this->updated_at)),
         ];

@@ -28,6 +28,8 @@ class PostStoreRequest extends FormRequest
             'message' => 'required|string',
             'replyId' => 'integer|exists:posts,id',
             'userId' => 'exists:users,id',
+            'files' => '',
+            'images' => '',
         ];
     }
 }

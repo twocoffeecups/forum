@@ -14,20 +14,25 @@ class Forum extends Model
     protected $guarded = false;
     protected $table = 'forums';
 
-    protected function topics(){
-        return $this->hasMany(Topic::class);
+    public function topics(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Topic::class, 'forumId', 'id');
     }
 
-    protected function parent(){
+    public function parent(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
         return $this->belongsTo(Forum::class, 'parentId', 'id');
     }
 
-    protected function children(){
+    public function children(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
         return $this->hasMany(Forum::class, 'parentId', 'id');
     }
 
-    protected function isCategory(){
+    public function isCategory(): bool
+    {
         return $this->type === 0 && $this->parent === null ;
     }
+
 
 }

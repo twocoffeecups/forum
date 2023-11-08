@@ -25,7 +25,9 @@ class PostUpdateRequest extends FormRequest
     {
         return [
             'message' => 'string',
-            'replyId' => 'integer|exists:posts,id',
+            'files' => '',
+            'images' => '',
+            //'replyId' => 'integer|exists:posts,id',
         ];
     }
 }

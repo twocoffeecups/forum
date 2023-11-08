@@ -85,21 +85,42 @@ Route::group(['prefix' => 'admin'], function(){
 // Client routes
 Route::group(['prefix' => 'client'], function(){
 
+    Route::group(['prefix' => 'forum'], function (){
+
+        Route::get('/', [\App\Http\Controllers\Client\Forum\ForumCategoryController::class, 'index']);
+
+        Route::group(['prefix' => '{forum}'], function (){
+            Route::get('/', [\App\Http\Controllers\Client\Forum\ForumController::class, 'show']);
+        });
+
+    });
+
+
     Route::group(['prefix' => 'topic'], function(){
+
         Route::get('/', [\App\Http\Controllers\Client\Topic\TopicController::class, 'index']);
         Route::post('/', [\App\Http\Controllers\Client\Topic\TopicController::class, 'store']);
-        Route::get('/{topic}', [\App\Http\Controllers\Client\Topic\TopicController::class, 'show']);
-        Route::patch('/{topic}', [\App\Http\Controllers\Client\Topic\TopicController::class, 'update']);
-        Route::delete('/{topic}', [\App\Http\Controllers\Client\Topic\TopicController::class, 'delete']);
-        Route::get('/{topic}/{user}/like', [\App\Http\Controllers\Client\Topic\TopicController::class, 'like']);
 
+        Route::group(['prefix' => '{topic}'], function(){
+            Route::get('/', [\App\Http\Controllers\Client\Topic\TopicController::class, 'show']);
+            Route::patch('/', [\App\Http\Controllers\Client\Topic\TopicController::class, 'update']);
+            Route::delete('/', [\App\Http\Controllers\Client\Topic\TopicController::class, 'delete']);
+            Route::get('/{user}/like', [\App\Http\Controllers\Client\Topic\TopicController::class, 'like']);
 
+            Route::group(['prefix' => 'posts'], function(){
+                Route::get('/', [\App\Http\Controllers\Client\Topic\TopicPostController::class, 'index']);
+            });
+
+        });
     });
 
     Route::group(['prefix' => 'post'], function (){
         Route::post('/{user}', [\App\Http\Controllers\Client\Post\PostController::class, 'store']);
-        Route::get('/{post}/{user}/bookmarks', [\App\Http\Controllers\Client\Post\PostController::class, 'bookmarks']);
-        Route::get('/{post}/{user}/like', [\App\Http\Controllers\Client\Post\PostController::class, 'like']);
+        Route::group(['prefix' => '{post}'], function (){
+            Route::patch('/', [\App\Http\Controllers\Client\Post\PostController::class, 'update']);
+            Route::get('/{user}/bookmarks', [\App\Http\Controllers\Client\Post\PostController::class, 'bookmarks']);
+            Route::get('/{user}/like', [\App\Http\Controllers\Client\Post\PostController::class, 'like']);
+        });
     });
 
 });

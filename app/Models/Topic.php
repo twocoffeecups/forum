@@ -13,21 +13,34 @@ class Topic extends Model
     protected $guarded = false;
     protected $table = 'topics';
 
-    public function forum(){
+    public function forum(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
         return $this->belongsTo(Forum::class, 'forumId', 'id');
     }
 
-    public function tags(){
+    public function tags(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
         return $this->belongsToMany(Tag::class, 'topic_tags', 'topicId', 'tagId');
     }
 
-    public function author(){
+    public function author(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
         return $this->belongsTo(User::class, 'userId', 'id');
     }
 
-    public function likes()
+    public function likes(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(User::class, 'topic_likes', 'topicId', 'userId');
+    }
+
+    public function posts(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Post::class, 'topicId', 'id');
+    }
+
+    public function latestPost()
+    {
+        return $this->posts()->latest('updated_at')->first();
     }
 
 }

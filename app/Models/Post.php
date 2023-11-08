@@ -13,29 +13,29 @@ class Post extends Model
     protected $guarded = false;
     protected $table = 'posts';
 
-    public function author(){
+    public function author(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
         return $this->belongsTo(User::class, 'userId', 'id');
     }
 
-    public function topic(){
+    public function topic(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
         return $this->belongsTo(Topic::class, 'topicId', 'id');
     }
 
-    public function likes()
+    public function likes(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(User::class, 'post_likes', 'postId', 'userId');
     }
 
-    public function rating(){
-        return $this->hasMany(PostLike::class)->count();
+    public function images(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(PostImage::class, 'postId', 'id');
     }
 
-    public function likesCount(){
-        return $this->hasMany(PostLike::class)->sum('postId');
-    }
-
-    public function images(){
-        return $this->hasMany(PostImage::class);
+    public function files(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(PostFile::class, 'postId', 'id');
     }
 
 

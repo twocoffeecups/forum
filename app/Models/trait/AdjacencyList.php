@@ -5,7 +5,7 @@ namespace App\Models\trait;
 trait AdjacencyList
 {
 
-    public function descendantsTree()
+    public function descendantsTree(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(self::class, 'parentId', 'id')->with('descendantsTree');
     }
@@ -40,7 +40,7 @@ trait AdjacencyList
      * @param $forum
      * @return mixed
      */
-    public static function allDescendants($forum)
+    public static function allDescendants($forum): mixed
     {
         $descendants = $forum->children()->get();
         foreach($descendants as $descendant){
@@ -56,7 +56,7 @@ trait AdjacencyList
      * @param $forum
      * @return mixed
      */
-    public static function allDescendantsAndMe($forum)
+    public static function allDescendantsAndMe($forum): mixed
     {
         $descendants = $forum->children()->get();
         foreach($descendants as $descendant){
