@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Api\Client\Account;
+namespace App\Http\Requests\Api\Client\Profile;
 
 use Illuminate\Foundation\Http\FormRequest;
 

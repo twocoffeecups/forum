@@ -85,6 +85,38 @@ Route::group(['prefix' => 'admin'], function(){
 // Client routes
 Route::group(['prefix' => 'client'], function(){
 
+
+    // User auth api routes
+    Route::group(['prefix' => '{user}'], function (){
+
+        // Edit profile
+        Route::group(['prefix' => 'profile'], function (){
+            Route::patch('/profile-update', [\App\Http\Controllers\Client\Profile\ProfileController::class, 'update']);
+            Route::patch('/edit-password', [\App\Http\Controllers\Client\Profile\ProfileController::class, 'update']);
+            Route::patch('/edit-avatar', [\App\Http\Controllers\Client\Profile\ProfileController::class, 'update']);
+        });
+
+        // Post
+        Route::group(['prefix' => 'post'], function (){
+
+            Route::group(['prefix' => '{post}'], function (){
+                Route::post('/', [\App\Http\Controllers\Client\Post\PostController::class, 'store']);
+                Route::patch('/', [\App\Http\Controllers\Client\Post\PostController::class, 'update']);
+                Route::get('/bookmarks', [\App\Http\Controllers\Client\Post\PostController::class, 'bookmarks']);
+                Route::get('/like', [\App\Http\Controllers\Client\Post\PostController::class, 'like']);
+            });
+        });
+
+        // Topic
+        Route::group(['prefix' => 'topic/{topic}'], function (){
+            Route::get('/like', [\App\Http\Controllers\Client\Topic\TopicController::class, 'like']);
+
+        });
+
+    });
+
+
+    // Forum api routes
     Route::group(['prefix' => 'forum'], function (){
 
         Route::get('/', [\App\Http\Controllers\Client\Forum\ForumCategoryController::class, 'index']);
@@ -105,8 +137,6 @@ Route::group(['prefix' => 'client'], function(){
             Route::get('/', [\App\Http\Controllers\Client\Topic\TopicController::class, 'show']);
             Route::patch('/', [\App\Http\Controllers\Client\Topic\TopicController::class, 'update']);
             Route::delete('/', [\App\Http\Controllers\Client\Topic\TopicController::class, 'delete']);
-            Route::get('/{user}/like', [\App\Http\Controllers\Client\Topic\TopicController::class, 'like']);
-
             Route::group(['prefix' => 'posts'], function(){
                 Route::get('/', [\App\Http\Controllers\Client\Topic\TopicPostController::class, 'index']);
             });
@@ -114,14 +144,7 @@ Route::group(['prefix' => 'client'], function(){
         });
     });
 
-    Route::group(['prefix' => 'post'], function (){
-        Route::post('/{user}', [\App\Http\Controllers\Client\Post\PostController::class, 'store']);
-        Route::group(['prefix' => '{post}'], function (){
-            Route::patch('/', [\App\Http\Controllers\Client\Post\PostController::class, 'update']);
-            Route::get('/{user}/bookmarks', [\App\Http\Controllers\Client\Post\PostController::class, 'bookmarks']);
-            Route::get('/{user}/like', [\App\Http\Controllers\Client\Post\PostController::class, 'like']);
-        });
-    });
+
 
 });
 

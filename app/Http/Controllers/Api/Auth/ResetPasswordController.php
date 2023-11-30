@@ -4,7 +4,7 @@
 namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\Client\Account\PasswordResetRequest;
+use App\Http\Requests\Api\Client\Profile\PasswordResetRequest;
 use App\Models\PasswordReset;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;

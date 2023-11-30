@@ -4,7 +4,7 @@
 namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\Client\Account\ForgotPasswordRequest;
+use App\Http\Requests\Api\Client\Profile\ForgotPasswordRequest;
 use App\Mail\Client\User\ResetPasswordMail;
 use App\Models\PasswordReset;
 use App\Models\User;

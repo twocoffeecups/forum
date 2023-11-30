@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Api\Client\Account;
+namespace App\Http\Requests\Api\Client\Profile;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ForgotPasswordRequest extends FormRequest
+class PasswordResetRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,10 @@ class ForgotPasswordRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => 'required|email|min:7|max:64',
+            'email' => 'required|email|min:6|max:64',
+            'token' => 'required|string',
+            'password' => 'string|min:8|max:64',
+            'passwordConfirmation' => 'string|min:8|max:64|same:password'
         ];
     }
 }

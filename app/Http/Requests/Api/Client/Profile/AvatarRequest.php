@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Api\Client\Account;
+namespace App\Http\Requests\Api\Client\Profile;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class LoginRequest extends FormRequest
+class AvatarRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,7 @@ class LoginRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => 'required|email|min:7|max:64',
-            'password' => 'required|min:8|max:64',
+            'avatar' => 'required|file',
         ];
     }
 }

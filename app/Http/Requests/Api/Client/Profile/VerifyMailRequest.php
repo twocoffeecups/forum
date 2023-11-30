@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Api\Client\Account;
+namespace App\Http\Requests\Api\Client\Profile;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AvatarRequest extends FormRequest
+class VerifyMailRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,7 @@ class AvatarRequest extends FormRequest
     public function rules()
     {
         return [
-            'avatar' => 'required|file'
+            'email' => 'required|email|exists:users',
         ];
     }
 }
