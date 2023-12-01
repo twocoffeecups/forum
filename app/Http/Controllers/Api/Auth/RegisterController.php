@@ -19,8 +19,6 @@ class RegisterController extends Controller
     public function __invoke(RegisterRequest $request)
     {
         $data = $request->validated();
-
-        //dd($data);
         $data['password'] = Hash::make($data['password']);
         $user = User::firstOrCreate(['login'=>$data['login']],$data);
         $token = $user->createToken('authToken')->plainTextToken;

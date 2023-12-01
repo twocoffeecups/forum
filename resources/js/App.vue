@@ -1,11 +1,7 @@
 <template>
-    <div class="container mb-4">
-        <h2>Forum template</h2>
-    </div>
 
-    <div class="container">
-        <RouterView />
-    </div>
+    <Component :is="$route.meta.layout || 'div'" />
+
 </template>
 
 <script>

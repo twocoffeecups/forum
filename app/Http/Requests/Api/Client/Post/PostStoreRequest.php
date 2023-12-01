@@ -24,10 +24,8 @@ class PostStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'topicId' => 'required|integer|exists:topics,id',
             'message' => 'required|string',
-            'replyId' => 'integer|exists:posts,id',
-            'userId' => 'exists:users,id',
+            'replyId' => 'integer|nullable|exists:posts,id',
             'files' => '',
             'images' => '',
         ];

@@ -1,0 +1,166 @@
+{
+    "component":{
+        "header":{
+            "main": "Main",
+            "forum": "Forum",
+            "topic": "Topic",
+            "search": "Search"
+        },
+        "activeTopics" : "Active topics",
+        "accountNavigation":{
+            "profile": "Profile",
+            "editProfile": "Edit profile",
+            "notifications": "Notifications",
+            "other": "Other"
+        },
+        "createTopic":{
+            "btn": "Create topic"
+        },
+        "filterTopics":{
+            "filterBy":{
+                "filterBy": "Filter by",
+                "votes": "Votes",
+                "replys": "Replys",
+                "views": "Views"
+            }
+        },
+        "forgotPassword":{
+            "forgotPassword": "Forgot password",
+            "email": "Email address",
+            "signUp": "Sign up",
+            "createNewAcc":"for create new account.",
+            "signIn": "Sign In",
+            "forgot": "Forgot"
+        },
+        "forumItem": {
+            "posts": "Posts"
+        },
+        "notificationsList":{
+            "youHave" : "You have",
+            "unreadMess" : "new unread message.",
+            "viewAll": "viewAll",
+            "notifications": "Notifications"
+        },
+        "pagination":{
+            "previous": "Previous",
+            "next": "Next"
+        },
+        "post":{
+            "registerDate": "Registration date",
+            "messages": "Messages",
+            "report": "Repost",
+            "reply": "Reply",
+            "edit": "Edit"
+        },
+        "postCreationForm":{
+            "addPostForm": "Add post form",
+            "replyPost": "Reply for post",
+            "addPost": "Add post"
+        },
+        "profileDropdown": {
+            "profile": "Profile",
+            "signIn": "Sign In",
+            "signUp": "Sign up",
+            "logout": "Logout"
+        },
+        "reportForm":{
+            "report": "Report",
+            "reportCategory": "Select report category",
+            "message": "Message",
+            "close": "Close",
+            "sent": "Sent"
+        },
+        "signIn":{
+            "signIn": "Sign In",
+            "email": "Email",
+            "password": "Password",
+            "ctrateNew": "Create new",
+            "forgotYouPass": "Forgot you pass?",
+            "signUp": "Sign up"
+        },
+        "signUp":{
+            "signUp":"Sign up",
+            "login": "Login",
+            "email": "Email",
+            "firstName": "First name",
+            "lastName": "Last name",
+            "phone": "Phone",
+            "password": "Password",
+            "confirmPass": "Confirm password",
+            "forgotPass": "Forgot you pass?"
+        },
+        "stats":{
+            "stats": "Stats",
+            "topics": "Topics",
+            "posts": "Posts",
+            "members": "Members",
+            "newMember": "Newest Member"
+        },
+        "topic":{
+            "created": "Created",
+            "votes": "Votes",
+            "posts": "Posts",
+            "views": "Views",
+            "pages": "Pages",
+            "topics": "Topics"
+        },
+        "childForum": {
+            "categories": "Categories",
+            "posts": "Posts",
+            "views": "Views"
+        },
+        "topicFooter":{
+            "usersOnline": "Users viewing this topic:"
+        },
+        "topicHeader":{
+            "byCategory": "by category",
+            "created": "Created date"
+        }
+    },
+
+    "view":{
+        "accountDetail":{
+            "profile": "Profile info",
+            "accountStats": "Account stats",
+            "topics": "Topics",
+            "posts": "Posts",
+            "carma": "Carma",
+            "bookmarks": "Bookmarks",
+            "notifications": "Notifications"
+        },
+        "createTopic":{
+            "create": "Create topic",
+            "title": "Title",
+            "category": "Category",
+            "tags": "Tags",
+            "description": "Description",
+            "images": "Images",
+            "files": "Files",
+            "preview": "Preview"
+        },
+        "forum":{
+            "filters": "Filters"
+        },
+        "main":{
+            "totalPosts": "Total posts"
+        },
+        "resetPassword":{
+            "resetPass": "Reset password",
+            "creteNewPass": "Create new password",
+            "email": "Email",
+            "newPass": "New password",
+            "confirmPass": "Confirm password",
+            "create": "Create"
+        },
+        "editAccount":{
+            "avatar": "Avatar",
+            "newImg": "Upload new image",
+            "deleteAcc": "Delete account",
+            "save": "Save change",
+            "changePass": "Сhange Password",
+            "currentPass": "Current password",
+            "newPass": "New password",
+            "confirmPass": "Confirm password"
+        }
+    }
+}

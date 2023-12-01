@@ -1,0 +1,166 @@
+{
+    "component":{
+        "header":{
+            "main": "Главная",
+            "forum": "Обсуждения",
+            "topic": "Топик",
+            "search": "Поиск"
+        },
+        "activeTopics" : "Последние сообщения",
+        "accountNavigation":{
+            "profile": "Профиль",
+            "editProfile": "Изменить профиль",
+            "notifications": "Уведомления",
+            "other": "Другое"
+        },
+        "createTopic":{
+            "btn": "Создать тему"
+        },
+        "filterTopics":{
+            "filterBy":{
+                "filterBy": "Отфильтровать по",
+                "votes": "Рейтенгу",
+                "replys": "Ответам",
+                "views": "Просмотрам"
+            }
+        },
+        "forgotPassword":{
+            "forgotPassword": "Вспомнить пароль",
+            "email": "Email",
+            "signUp": "Зарегистрируйтесь",
+            "createNewAcc":"чтобы создать новый аккаунт.",
+            "signIn": "Войти",
+            "forgot": "Забыли пароль?"
+        },
+        "forumItem": {
+            "posts": "Сообщения"
+        },
+        "notificationsList":{
+            "youHave" : "У вас",
+            "unreadMess" : "новых сообщений.",
+            "viewAll": "Смотреть все",
+            "notifications": "Уведомления"
+        },
+        "pagination":{
+            "previous": "Назад",
+            "next": "Вперёд"
+        },
+        "post":{
+            "registerDate": "Дата регистрации",
+            "messages": "Всего сообщен й",
+            "report": "Пожалоба",
+            "reply": "Ответить",
+            "edit": "Изменить"
+        },
+        "postCreationForm":{
+            "addPostForm": "Добавить новый пост",
+            "replyPost": "Ответ на пост",
+            "addPost": "Добавить"
+        },
+        "profileDropdown": {
+            "profile": "Профиль",
+            "signIn": "Войти",
+            "signUp": "Зарегистрироваться",
+            "logout": "Выйти"
+        },
+        "reportForm":{
+            "report": "Пожаловаться",
+            "reportCategory": "Выбрать причину",
+            "message": "Сообщение",
+            "close": "Закрыть",
+            "sent": "Отправить"
+        },
+        "signIn":{
+            "signIn": "Войти",
+            "email": "Email",
+            "password": "Пароль",
+            "ctrateNew": "Новый пароль",
+            "forgotYouPass": "Забыли свой пароль?",
+            "signUp": "Зарегистрироваться"
+        },
+        "signUp":{
+            "signUp":"Зарегистрироваться",
+            "login": "Логин",
+            "email": "Email",
+            "firstName": "Имя",
+            "lastName": "Фамилия",
+            "phone": "Телефон",
+            "password": "Пароль",
+            "confirmPass": "Подтвердите пароль",
+            "forgotPass": "Забыли пароль?"
+        },
+        "stats":{
+            "stats": "Статистика",
+            "topics": "Темы",
+            "posts": "Сообщения",
+            "members": "Пользователи",
+            "newMember": "Новый пользователь"
+        },
+        "topic":{
+            "created": "Создан",
+            "votes": "Голосов",
+            "posts": "Сообщений",
+            "views": "Просмотры",
+            "pages": "Страниц",
+            "topics": "Тем"
+        },
+        "childForum": {
+            "categories": "Категорий",
+            "posts": "Сообщений",
+            "views": "Просмотры"
+        },
+        "topicFooter":{
+            "usersOnline": "Пользователи просматривающие тему:"
+        },
+        "topicHeader":{
+            "byCategory": "категории",
+            "created": "Создан"
+        }
+    },
+
+    "view":{
+        "accountDetail":{
+            "profile": "Профиль",
+            "accountStats": "Статистика аккаунта",
+            "topics": "Обсуждения",
+            "posts": "Сообщения",
+            "carma": "Рейтинг",
+            "bookmarks": "Закладки",
+            "notifications": "Уведомления"
+        },
+        "createTopic":{
+            "create": "Создать обсуждение",
+            "title": "Название",
+            "category": "Категория",
+            "tags": "Теги",
+            "description": "Описание",
+            "images": "Изображения",
+            "files": "Файлы",
+            "preview": "Предварительный просмотр"
+        },
+        "forum":{
+            "filters": "Фильтры"
+        },
+        "main":{
+            "totalPosts": "Всего сообщений"
+        },
+        "resetPassword":{
+            "resetPass": "Сброс пароля",
+            "creteNewPass": "Создайте новый пароль",
+            "email": "Email",
+            "newPass": "Новый пароль",
+            "confirmPass": "Подтвердите пароль",
+            "create": "Создать"
+        },
+        "editAccount":{
+            "avatar": "Аватар",
+            "newImg": "Загрузить изображение",
+            "deleteAcc": "Удалить аккаунт",
+            "save": "Сохранить изменения",
+            "changePass": "Сменить пароль",
+            "currentPass": "Текущий пароль",
+            "newPass": "Новый пароль",
+            "confirmPass": "Подтвердите пароль"
+        }
+    }
+}

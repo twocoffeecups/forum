@@ -25,7 +25,7 @@ class PasswordResetRequest extends FormRequest
     {
         return [
             'email' => 'required|email|min:6|max:64',
-            'token' => 'required|string',
+            'hash' => 'required|string',
             'password' => 'string|min:8|max:64',
             'passwordConfirmation' => 'string|min:8|max:64|same:password'
         ];

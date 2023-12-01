@@ -24,11 +24,11 @@ class UpdateProfileRequest extends FormRequest
     public function rules()
     {
         return [
-            'login' => 'min:3|max:64|unique:users',
+            'login' => 'min:6|max:64|unique:users',
             'firstName' => 'min:3|max:64|string',
             'lastName' => 'min:3|max:64|string',
             'email' => 'email|unique:users|min:7|max:64',
-            'phone' => 'nullable|string',
+            'phone' => 'nullable|string|min:10|max:14',
         ];
     }
 }

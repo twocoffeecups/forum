@@ -16,12 +16,30 @@
           integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
 
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'], ['resources/js/assets/admin.css'], ['resources/js/assets/main.css'])
+
+    <style>
+        /*html,body{*/
+        /*    height: 100%;*/
+        /*    width: 100%;*/
+        /*    margin: 0;*/
+        /*    padding: 0;*/
+        /*}*/
+
+        /*.client-bg{*/
+        /*    height: 100%;*/
+        /*    overflow-y: scroll;*/
+        /*    background: url('../../js/assets/img/background.jpg');*/
+        /*    background-size: cover;*/
+
+        /*}*/
+
+    </style>
 
 </head>
 <body>
 
-<div id="app">
+<div id="app" style="height: 100%">
 
 </div>
 

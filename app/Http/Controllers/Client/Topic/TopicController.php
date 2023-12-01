@@ -18,10 +18,18 @@ class TopicController extends Controller
         return response()->json(['topics' => TopicResource::collection(Topic::all())]);
     }
 
-    protected function store(TopicStoreRequest $request)
+    protected function store(TopicStoreRequest $request, User $user)
     {
         $data = $request->validated();
+        $data['userId'] = $user->id;
+        $images = $data['images']; unset($data['images']);
+        $tags = $data['tags']; unset($data['tags']);
+        //dd($data, $tags, $images);
+
         $topic = Topic::create($data);
+
+        $topic->tags()->toggle($tags);
+
         return response()->json([
             'message' => 'Topic created',
             'topic' => new TopicResource($topic),

@@ -16,6 +16,8 @@ class ResetPasswordController extends Controller
     {
         $data = $request->validated();
 
+        dd($data);
+
         $passwordReset = PasswordReset::where('email', $data['email'])->first();
         $user = User::where('email', $data['email'])->first();
 
@@ -26,7 +28,7 @@ class ResetPasswordController extends Controller
 //        if(!$passwordReset || !Hash::check($data['token'], $passwordReset->token)){
 //            return response()->json(['message' => 'Invalid credentials.']);
 //        }
-        if(!$passwordReset || !hash_equals((string) $data['token'], (string) $passwordReset->token)){
+        if(!$passwordReset || !hash_equals((string) $data['hash'], (string) $passwordReset->token)){
             return response()->json(['message' => 'Invalid credentials.']);
         }
 
