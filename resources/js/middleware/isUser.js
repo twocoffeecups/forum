@@ -1,5 +1,5 @@
 export default function ({next, store}){
-    if(!store.getters.auth.loginIn || !store.getters.isUser){
+    if(!store.getters.auth.isLoggedIn || !store.getters.isUser){
         return next({ name:'auth.signIn' });
     }
 

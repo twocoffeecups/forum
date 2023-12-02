@@ -44,12 +44,12 @@ const routes = [
         component: () => import('../views/client/Profile.vue'),
         meta: {
             layout: Client,
-            //middleware: [Middleware.auth],
+            // middleware: [Middleware.auth],
         },
         children: [
             {path: '', name: 'profile.detail', component: () => import('../views/client/ProfileDetail.vue')},
             {
-                path: '/notification',
+                path: 'notification',
                 name: 'profile.notification',
                 component: () => import('../views/client/ProfileNotification.vue'),
             },
@@ -65,9 +65,10 @@ const routes = [
     {
         path: '/admin',
         name: 'admin',
+        component: () => import('../views/admin/Main.vue'),
         meta: {
             layout: Admin,
-            middleware: [Middleware.isAdmin]
+            // middleware: [Middleware.isAdmin]
         },
         children: [
             {path: '', name: 'admin.index', component: () => import('../views/admin/Main.vue')},

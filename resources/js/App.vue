@@ -7,6 +7,16 @@
 <script>
 export default {
     name: "App",
+
+    created() {
+        this.checkUserInState();
+    },
+
+    methods:{
+        checkUserInState(){
+            this.$store.dispatch('setLoggedInstate');
+        },
+    },
 }
 </script>
 

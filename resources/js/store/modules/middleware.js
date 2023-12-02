@@ -1,9 +1,9 @@
 export default {
     state:{
         user:{
-            loginIn: false,
+            loggedIn: false,
             isUser: false,
-            isAdmin: false,
+            isAdmin: true,
             userIsBanned: false,
 
         },
@@ -20,7 +20,7 @@ export default {
             return state.user.isUser;
         },
 
-        loginIn(state){
+        loggedIn(state){
             return this.state.token == null;
         },
 

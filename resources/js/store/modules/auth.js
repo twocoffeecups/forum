@@ -1,13 +1,13 @@
 import axios from "axios";
 import {useToast} from "vue-toastification";
+import router from '../../router';
 
 const toast = useToast();
 
 export default {
     state:{
         userDetails:{},
-        isLoginIn: false,
-        online: false,
+        isLoggedIn: false,
     },
 
     getters:{
@@ -15,13 +15,10 @@ export default {
             return state.userDetails;
         },
 
-        isLoginIn(state){
-            return state.isLoginIn;
+        isLoggedIn(state){
+            return state.isLoggedIn;
         },
 
-        isOnline(state){
-            return state.online;
-        }
     },
 
     actions:{
@@ -34,7 +31,7 @@ export default {
                 axios.post('/api/auth/sign-up', data)
                     .then(res => {
                         if(res.data){
-                            this.$router.push({name:'auth.signIn'});
+                            router.push({name:'auth.signIn'});
                             toast.success('You have successfully registered!');
                             resolve(res);
                         }else {
@@ -50,7 +47,7 @@ export default {
 
         },
 
-        login({dispatch}, user){
+        login({dispatch, commit}, user){
             return new Promise((resolve, reject) => {
                 axios.post('/api/auth/sign-in', {
                     email: user.email,
@@ -59,8 +56,9 @@ export default {
                     .then(res => {
                         if(res.data){
                             toast.success('Login successfully!');
-                            this.$router.push({name:'main'});
                             localStorage.setItem('access-token', res.data.accessToken);
+                            commit('setLoggedIn', true);
+                            router.push({name:'main'});
                             resolve(res);
                         }else{
                             reject(res);
@@ -82,7 +80,7 @@ export default {
                 })
                     .then(res => {
                         if(res.data){
-                            this.$router.push({name:'main'});
+                            router.push({name:'main'});
                             toast.info('An email was sent to the specified email address with a link to create a new password.');
                             resolve(res);
                         }else{
@@ -107,7 +105,7 @@ export default {
                     .then(res => {
                         if(res.data){
                             toast.info('Password has been successfully changed. Sign in to your account.');
-                            this.$router.push({name:'main'});
+                            router.push({name:'main'});
                             resolve(res);
                         }else{
                             reject(res);
@@ -120,13 +118,19 @@ export default {
             });
         },
 
-        logout({dispatch}){
+        logout({dispatch, commit }){
             return new Promise((resolve, reject) => {
-                axios.post('/api/auth/logout')
+                axios.post('/api/auth/logout',{}, {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('access-token')}`
+                    }
+                })
                     .then(res => {
                         if(res.data){
-                            this.$router.push({name:'main'});
                             localStorage.removeItem('access-token');
+                            commit('setLoggedIn', false);
+                            toast.success("You have successfully logout.")
+                            router.push({name:'main'});
                             resolve(res);
                         }else{
                             reject(res)
@@ -137,6 +141,25 @@ export default {
                     })
             });
         },
-    }
+
+        setLoggedInstate(ctx){
+            return new Promise((resolve,reject) => {
+                if(localStorage.getItem('access-token')){
+                    ctx.commit('setLoggedIn', true);
+                    router.push({name:'main'});
+                    resolve(true);
+                }else{
+                    ctx.commit('setLoggedIn', false);
+                    resolve(false);
+                }
+            });
+        },
+    },
+
+    mutations:{
+        setLoggedIn(state, payload){
+            state.isLoggedIn = payload;
+        },
+    },
 
 }

@@ -162,6 +162,7 @@ Route::group(['prefix' => 'auth'], function () {
 
     Route::post('/sign-up', \App\Http\Controllers\Api\Auth\RegisterController::class);
     Route::post('/sign-in', \App\Http\Controllers\Api\Auth\LoginController::class);
+    //Route::post('/logout', \App\Http\Controllers\Api\Auth\LogoutController::class);
     Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::post('/logout', \App\Http\Controllers\Api\Auth\LogoutController::class);
     });

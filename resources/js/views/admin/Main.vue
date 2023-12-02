@@ -207,7 +207,7 @@
 import AddRoleModal from "../../components/admin/AddRoleModal.vue";
 export default {
   name: "Main",
-  components: {AddRoleModal}
+  components: {AddRoleModal,}
 }
 </script>
 

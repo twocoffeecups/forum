@@ -1,43 +1,41 @@
 <template>
 
 
+    <div class="container">
+        <div class="row">
+            <!-- Main content -->
+            <div class="col-lg-9 mb-3">
 
-  <div class="container">
-    <div class="row">
-      <!-- Main content -->
-      <div class="col-lg-9 mb-3">
+
+                <div class="container px-4 mt-2">
+                    <!--  Profile navigation-->
+                    <ProfileNavigation/>
+
+                    <hr class="mt-0 mb-4">
+
+                    <router-view/>
+                </div>
 
 
-        <div class="container px-4 mt-2">
-          <!--  Profile navigation-->
-          <ProfileNavigation />
+            </div>
 
-          <hr class="mt-0 mb-4">
+            <!-- Sidebar content -->
+            <div class="col-lg-3 ml-3 mb-4 mb-lg-0 px-lg-0 mt-lg-0">
+                <Sidebar/>
+            </div>
 
-          <router-view />
+
         </div>
-
-
-
-      </div>
-
-      <!-- Sidebar content -->
-      <div class="col-lg-3 ml-3 mb-4 mb-lg-0 px-lg-0 mt-lg-0">
-        <Sidebar />
-      </div>
-
-
     </div>
-  </div>
 </template>
 
 <script>
 import ProfileNavigation from '../../components/client/AccountNavigation.vue';
 import Sidebar from "../../components/client/Sidebar.vue";
 
-export default{
+export default {
     name: "Account",
-    components: {Sidebar, ProfileNavigation }
+    components: {Sidebar, ProfileNavigation}
 }
 </script>
 
@@ -45,24 +43,30 @@ export default{
 .img-account-profile {
     height: 10rem;
 }
+
 .rounded-circle {
     border-radius: 50% !important;
 }
+
 .card {
     box-shadow: 0 0.15rem 1.75rem 0 rgb(33 40 50 / 15%);
 }
+
 .card .card-header {
     font-weight: 500;
 }
+
 .card-header:first-child {
     border-radius: 0.35rem 0.35rem 0 0;
 }
+
 .card-header {
     padding: 1rem 1.35rem;
     margin-bottom: 0;
     background-color: rgba(33, 40, 50, 0.03);
     border-bottom: 1px solid rgba(33, 40, 50, 0.125);
 }
+
 .form-control, .dataTable-input {
     display: block;
     width: 100%;
@@ -85,6 +89,7 @@ export default{
     color: #0061f2;
     border-bottom-color: #0061f2;
 }
+
 .nav-borders .nav-link {
     color: #69707a;
     border-bottom-width: 0.125rem;

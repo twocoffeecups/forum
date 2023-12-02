@@ -1,5 +1,5 @@
 <template>
-    <div v-if="user" class="container-fluid mt-100 mb-2">
+    <div v-if="isLoggedIn" class="container-fluid mt-100 mb-2">
         <div class="card">
             <div class="card-header">
                 {{ $t('component.postCreationForm.addPostForm') }}
@@ -26,7 +26,7 @@
         </div>
     </div>
 
-    <div v-if="!user" class="container-fluid mt-100 mb-2">
+    <div v-if="!isLoggedIn" class="container-fluid mt-100 mb-2">
         <div class="card">
             <div class="card-body">
                 <h4>Войдите в аккаунт или зарегистрируйтесь чтобы оставлять сообщения.</h4>
@@ -38,10 +38,17 @@
 
 <script>
 import {useToast} from "vue-toastification";
+import {mapGetters} from "vuex";
 
 export default {
     name: "PostCreationForm",
     props: ['replyId', 'topicId'],
+
+    computed:{
+        ...mapGetters({
+            isLoggedIn: 'isLoggedIn',
+        }),
+    },
 
     setup() {
         return {
