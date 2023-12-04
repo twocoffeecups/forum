@@ -1,12 +1,12 @@
 <template>
-  <div class="client-bg">
-    <RouterView />
-  </div>
+    <div class="client-bg">
+        <RouterView/>
+    </div>
 </template>
 
 <script>
 export default {
-  name: "Auth"
+    name: "Auth"
 }
 </script>
 

@@ -24,7 +24,7 @@ class ResetPasswordMail extends Mailable
     {
         //
         $this->login = $login;
-        $this->url = url('password-reset', ['hash' => $hash]);
+        $this->url = url('reset-password', ['hash' => $hash]);
     }
 
     /**

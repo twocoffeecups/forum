@@ -31,7 +31,7 @@ class ProfileController extends Controller
         }
         $user->password = Hash::make($data['password']);
         $user->save();
-        return response()->json(['message' => 'You password updated!']);
+        return response()->json(['message' => 'You password updated!'], 200);
     }
 
     protected function updateAvatar(User $user, AvatarRequest $request)

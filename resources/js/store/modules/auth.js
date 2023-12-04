@@ -11,7 +11,7 @@ export default {
     },
 
     getters:{
-        user(state){
+        userDetails(state){
             return state.userDetails;
         },
 
@@ -40,7 +40,7 @@ export default {
 
                     })
                     .catch(error => {
-                        this.t$.error(error.message);
+                        this.t$.error(error.response.data.message ?? 'Error!');
                         reject(error)
                     })
             })
@@ -58,6 +58,9 @@ export default {
                             toast.success('Login successfully!');
                             localStorage.setItem('access-token', res.data.accessToken);
                             commit('setLoggedIn', true);
+                            commit('setUserDetails', res.data.userDetails);
+                            localStorage.setItem('user-details', JSON.stringify(res.data.userDetails));
+                            console.log(res.data.userDetails)
                             router.push({name:'main'});
                             resolve(res);
                         }else{
@@ -66,7 +69,8 @@ export default {
 
                     })
                     .catch(error => {
-                        toast.error(error.message);
+                        console.log('error', error);
+                        toast.error(error.response.data.message ?? 'Error!');
                         reject(error);
                     })
             });
@@ -88,7 +92,7 @@ export default {
                         }
                     })
                     .catch(error => {
-                        toast.error(error.message);
+                        toast.error(error.response.data.message ?? 'Error!');
                         reject(error);
                     })
             });
@@ -105,14 +109,14 @@ export default {
                     .then(res => {
                         if(res.data){
                             toast.info('Password has been successfully changed. Sign in to your account.');
-                            router.push({name:'main'});
+                            router.push({name:'auth.signIn'});
                             resolve(res);
                         }else{
                             reject(res);
                         }
                     })
                     .catch(error => {
-                        toast.error('Error!');
+                        toast.error(error.response.data.message ?? 'Error!');
                         reject(error);
                     })
             });
@@ -128,6 +132,7 @@ export default {
                     .then(res => {
                         if(res.data){
                             localStorage.removeItem('access-token');
+                            localStorage.removeItem('user-details');
                             commit('setLoggedIn', false);
                             toast.success("You have successfully logout.")
                             router.push({name:'main'});
@@ -159,6 +164,10 @@ export default {
     mutations:{
         setLoggedIn(state, payload){
             state.isLoggedIn = payload;
+        },
+
+        setUserDetails(state, payload){
+            state.userDetails = payload;
         },
     },
 

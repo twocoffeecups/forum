@@ -22,7 +22,7 @@ export default {
                         }
                     })
                     .catch(error => {
-                        toast.error('Error!');
+                        toast.error(error.response.data.message ?? 'Error!');
                         reject(error);
                     })
             });
@@ -45,7 +45,7 @@ export default {
                         }
                     })
                     .catch(error =>{
-                        toast.error('Error!');
+                        toast.error(error.response.data.message ?? 'Error!');
                         reject(error)
                     })
 
@@ -69,7 +69,7 @@ export default {
 
                     })
                     .catch(error => {
-                        toast.error("Error!");
+                        toast.error(error.response.data.message ?? 'Error!');
                         reject(error);
                     })
             });

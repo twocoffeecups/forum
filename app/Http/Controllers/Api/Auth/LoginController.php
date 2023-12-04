@@ -29,7 +29,7 @@ class LoginController extends Controller
 
         return response()->json([
             'message' => 'Login in!',
-            'user' => new UserResource($user),
+            'userDetails' => new UserResource($user),
             'accessToken' => $token,
         ]);
     }

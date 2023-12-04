@@ -53,7 +53,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function topics(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(Topic::class);
+        return $this->hasMany(Topic::class, 'userId', 'io');
     }
 
     public function posts(): \Illuminate\Database\Eloquent\Relations\HasMany
@@ -72,17 +72,20 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsToMany(Post::class, 'user_bookmarks', 'userId', 'postId');
     }
 
-    public function notifications(): \Illuminate\Database\Eloquent\Relations\HasMany
-    {
-        return $this->hasMany(Notification::class, 'userId', 'id');
-    }
-
     /**
      * @return bool
      * check admin role
      */
-    public function admin():bool
+    public function admin(): bool
     {
         return $this->roleId === 2;
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function role(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Role::class, 'roleId', 'id');
     }
 }

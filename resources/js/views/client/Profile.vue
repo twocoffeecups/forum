@@ -35,7 +35,7 @@ import Sidebar from "../../components/client/Sidebar.vue";
 
 export default {
     name: "Account",
-    components: {Sidebar, ProfileNavigation}
+    components: {Sidebar, ProfileNavigation},
 }
 </script>
 
