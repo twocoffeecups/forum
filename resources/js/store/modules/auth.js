@@ -151,7 +151,6 @@ export default {
             return new Promise((resolve,reject) => {
                 if(localStorage.getItem('access-token')){
                     ctx.commit('setLoggedIn', true);
-                    router.push({name:'main'});
                     resolve(true);
                 }else{
                     ctx.commit('setLoggedIn', false);

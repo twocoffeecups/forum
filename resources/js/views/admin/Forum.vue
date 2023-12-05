@@ -133,7 +133,7 @@ export default {
   name: "Forum",
   components: {EditForumModal, CreateForumModal},
   mounted() {
-    //this.getForums();
+    this.getForums();
   },
 
   data(){
@@ -157,7 +157,17 @@ export default {
   methods:{
 
     getForums(){
-
+        axios.get('/api/admin/forum/', {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('access-token')}`
+            }
+        })
+            .then(res => {
+                console.log(res);
+            })
+            .catch(error => {
+                console.log(error);
+            })
     },
 
     changeVisibility(event, forumId){

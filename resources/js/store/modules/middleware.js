@@ -1,8 +1,7 @@
 export default {
     state:{
         user:{
-            loggedIn: false,
-            isUser: false,
+            loggedIn: true,
             isAdmin: true,
             userIsBanned: false,
 
@@ -15,10 +14,7 @@ export default {
         auth(state){
             return state.user;
         },
-
-        isUser(state){
-            return state.user.isUser;
-        },
+        
 
         loggedIn(state){
             return this.state.token == null;
@@ -31,5 +27,9 @@ export default {
         isUserBanned(state){
             return state.user.userIsBanned;
         },
+
+        token(state){
+            return state.token ?? null;
+        }
     }
 }

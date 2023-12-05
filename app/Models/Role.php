@@ -13,4 +13,14 @@ class Role extends Model
     protected $guarded = false;
     protected $table = 'roles';
 
+
+    public function permissions()
+    {
+        return $this->belongsToMany(Permission::class, 'role_permissions', 'roleId', 'permissionId');
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(Permission::class, 'user_roles', 'roleId', 'userId');
+    }
 }

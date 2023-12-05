@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 //});
 
 // admin routes
-//Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum','admin']], function(){
+//Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum','role:admin,moderator']], function(){
 Route::group(['prefix' => 'admin'], function () {
 
     Route::group(['prefix' => 'forum'], function () {
@@ -71,12 +70,21 @@ Route::group(['prefix' => 'admin'], function () {
     });
 
     Route::group(['prefix' => 'role'], function () {
-        Route::get('/', [\App\Http\Controllers\Admin\User\RoleController::class, 'index']);
-        Route::post('/', [\App\Http\Controllers\Admin\User\RoleController::class, 'store']);
-        Route::get('/{role}', [\App\Http\Controllers\Admin\User\RoleController::class, 'show']);
-        Route::patch('/{role}', [\App\Http\Controllers\Admin\User\RoleController::class, 'update']);
-        Route::delete('/{role}', [\App\Http\Controllers\Admin\User\RoleController::class, 'delete']);
-        Route::post('/{role}/status', [\App\Http\Controllers\Admin\User\RoleController::class, 'status']);
+        Route::get('/', [\App\Http\Controllers\Admin\Role\RoleController::class, 'index']);
+        Route::post('/', [\App\Http\Controllers\Admin\Role\RoleController::class, 'store']);
+        Route::get('/{role}', [\App\Http\Controllers\Admin\Role\RoleController::class, 'show']);
+        Route::patch('/{role}', [\App\Http\Controllers\Admin\Role\RoleController::class, 'update']);
+        Route::delete('/{role}', [\App\Http\Controllers\Admin\Role\RoleController::class, 'delete']);
+        Route::post('/{role}/status', [\App\Http\Controllers\Admin\Role\RoleController::class, 'status']);
+    });
+
+    Route::group(['prefix' => 'permission'], function () {
+        Route::get('/', [\App\Http\Controllers\Admin\Permission\PermissionController::class, 'index']);
+        Route::post('/', [\App\Http\Controllers\Admin\Permission\PermissionController::class, 'store']);
+        Route::get('/{permission}', [\App\Http\Controllers\Admin\Permission\PermissionController::class, 'show']);
+        Route::patch('/{permission}', [\App\Http\Controllers\Admin\Permission\PermissionController::class, 'update']);
+        Route::delete('/{permission}', [\App\Http\Controllers\Admin\Permission\PermissionController::class, 'delete']);
+        Route::post('/{permission}/status', [\App\Http\Controllers\Admin\Permission\PermissionController::class, 'status']);
     });
 
 

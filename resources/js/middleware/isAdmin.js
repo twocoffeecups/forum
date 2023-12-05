@@ -1,9 +1,7 @@
 export default function ({next, store}) {
-    if(!store.getters.isAdmin || !store.getters.auth.token){
+    if(!store.getters.auth.isAdmin && !store.getters.token){
         return next({ name:'404' });
     }
-
-    console.log("You not Admin!");
 
     return next();
 }

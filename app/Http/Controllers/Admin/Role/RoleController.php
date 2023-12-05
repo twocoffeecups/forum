@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Admin\User;
+namespace App\Http\Controllers\Admin\Role;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\User\RoleRequest;
+use App\Http\Requests\Admin\Role\RoleRequest;
 use App\Http\Resources\Admin\User\RoleResource;
 use App\Models\Role;
 
