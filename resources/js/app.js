@@ -1,14 +1,5 @@
 import './bootstrap';
 
-// import {createApp} from "vue";
-// import App from "./App.vue";
-// import router from "./router";
-//
-// const app = createApp(App);
-//
-// app.use(router);
-// app.mount('#app');
-
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
@@ -16,13 +7,6 @@ import router from './router'
 
 // vuex store
 import store from "./store";
-
-// Fortawesome
-// import { library } from '@fortawesome/fontawesome-svg-core'
-// import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-// import { faHeartCirclePlus, faBookmark, faHeart, faHeartBroken } from '@fortawesome/free-solid-svg-icons'
-// library.add(faHeartCirclePlus, faBookmark, faHeart, faHeartBroken)
-
 
 // Quill
 import { QuillEditor } from '@vueup/vue-quill'

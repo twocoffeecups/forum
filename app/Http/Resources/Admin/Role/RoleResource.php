@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources\Admin\User;
+namespace App\Http\Resources\Admin\Role;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -17,6 +17,13 @@ class RoleResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'slug' => $this->slug,
+            'description' => $this->description,
+            'status' => $this->status,
+            'created_at' => $this->created_at->format('Y-m-d'),
+            'usersCount' => $this->users->count(),
+            'users' => $this->users,
+            'permissions' => RolePermissionResource::collection($this->permissions),
         ];
     }
 }

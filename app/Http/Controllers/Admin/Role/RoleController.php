@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin\Role;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Role\RoleRequest;
-use App\Http\Resources\Admin\User\RoleResource;
+use App\Http\Resources\Admin\Role\RoleResource;
 use App\Models\Role;
 
 class RoleController extends Controller
@@ -18,6 +18,7 @@ class RoleController extends Controller
     public function store(RoleRequest $request)
     {
         $data = $request->validated();
+        $data['slug'] = str_replace(' ', '-', strtolower($data['name']));
         $role = Role::firstOrCreate($data);
         return response()->json(['message' => 'Role created!']);
     }
@@ -30,7 +31,10 @@ class RoleController extends Controller
     public function update(RoleRequest $request, Role $role)
     {
         $data = $request->validated();
-        $role->name = $data['name'];
+        $data['slug'] = str_replace(' ', '-', strtolower($data['name']));
+        foreach ($data as $key => $value){
+            $role->$key = $value;
+        }
         $role->save();
         return response()->json(['message' => 'Role updated!']);
     }

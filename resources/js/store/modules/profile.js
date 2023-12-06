@@ -1,10 +1,28 @@
 import axios from "axios";
 import {useToast} from "vue-toastification";
+import api from "../../api/api";
 
 const toast = useToast();
 
 export default {
     actions:{
+        getUserDetails({dispatch}){
+            return new Promise((resolve, reject) => {
+                const id = JSON.parse(localStorage.getItem('user-details')).id
+                api.get(`/api/client/profile`)
+                    .then(res => {
+                        if(res.data){
+                            resolve(res);
+                        }else {
+                            reject(res);
+                        }
+                    })
+                    .catch(error => {
+                        reject(error);
+                    })
+            });
+        },
+
         updateProfile({dispatch}, user){
             return new Promise((resolve, reject) => {
                 let data = new FormData();

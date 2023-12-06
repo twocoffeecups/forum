@@ -6,14 +6,31 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Client\Profile\AvatarRequest;
 use App\Http\Requests\Api\Client\Profile\UpdatePasswordRequest;
 use App\Http\Requests\Api\Client\Profile\UpdateProfileRequest;
+use App\Http\Resources\Client\Profile\UserResource;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
-    protected function update(User $user, UpdateProfileRequest $request)
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function index(Request $request): \Illuminate\Http\JsonResponse
+    {
+        $user = $request->user();
+        return response()->json(['userDetails' => new UserResource($user)]);
+    }
+
+    /**
+     * @param User $user
+     * @param UpdateProfileRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function update(User $user, UpdateProfileRequest $request): \Illuminate\Http\JsonResponse
     {
         $data = $request->validated();
         foreach ($data as $key => $value){
@@ -23,7 +40,12 @@ class ProfileController extends Controller
         return response()->json(['message' => 'You profile updated!']);
     }
 
-    protected function updatePassword(User $user, UpdatePasswordRequest $request)
+    /**
+     * @param User $user
+     * @param UpdatePasswordRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function updatePassword(User $user, UpdatePasswordRequest $request): \Illuminate\Http\JsonResponse
     {
         $data = $request->validated();
         if(!Hash::check($user->password, $data['oldPassword'])){
@@ -34,7 +56,12 @@ class ProfileController extends Controller
         return response()->json(['message' => 'You password updated!'], 200);
     }
 
-    protected function updateAvatar(User $user, AvatarRequest $request)
+    /**
+     * @param User $user
+     * @param AvatarRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function updateAvatar(User $user, AvatarRequest $request): \Illuminate\Http\JsonResponse
     {
         $data = $request->validated();
         // if user avatar exists

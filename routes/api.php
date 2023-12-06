@@ -100,9 +100,12 @@ Route::group(['prefix' => 'admin'], function () {
 // Client routes
 Route::group(['prefix' => 'client'], function () {
 
+    Route::get('/profile', [\App\Http\Controllers\Client\Profile\ProfileController::class, 'index'])->middleware('auth:sanctum');
 
     // User auth api routes
     Route::group(['prefix' => '{user}'], function () {
+        // Get user profile details
+        Route::get('/profile-details', [\App\Http\Controllers\Client\Profile\ProfileController::class, 'index'])->middleware('auth:sanctum');
 
         // Edit profile
         Route::group(['prefix' => 'profile'], function () {

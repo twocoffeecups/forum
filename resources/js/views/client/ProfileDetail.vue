@@ -254,17 +254,21 @@ import {mapGetters} from "vuex";
 export default {
     name: 'ProfileAccount',
 
-    // computed: {
-    //     ...mapGetters({
-    //         userDetails: "userDetails",
-    //     }),
-    // },
+    mounted() {
+        this.getUserDetails();
+    },
 
     data(){
         return{
             userDetails: JSON.parse(localStorage.getItem('user-details')),
         }
     },
+
+    methods:{
+        getUserDetails(){
+            this.$store.dispatch('getUserDetails');
+        }
+    }
 }
 </script>
 
