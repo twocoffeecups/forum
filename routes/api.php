@@ -23,10 +23,13 @@ Route::group(['prefix' => 'admin'], function () {
 
     Route::group(['prefix' => 'forum'], function () {
         Route::get('/', [\App\Http\Controllers\Admin\Forum\ForumController::class, 'index']);
-        Route::post('/', [\App\Http\Controllers\Admin\Forum\ForumController::class, 'store']);
+        Route::post('/{user}/store', [\App\Http\Controllers\Admin\Forum\ForumController::class, 'store']);
         Route::get('/{forum}', [\App\Http\Controllers\Admin\Forum\ForumController::class, 'show']);
         Route::patch('/{forum}', [\App\Http\Controllers\Admin\Forum\ForumController::class, 'update']);
         Route::delete('/{forum}', [\App\Http\Controllers\Admin\Forum\ForumController::class, 'delete']);
+        Route::patch('/{forum}/change-status', [\App\Http\Controllers\Admin\Forum\ForumController::class, 'status']);
+
+        Route::get('/forum-tree', [\App\Http\Controllers\Admin\Forum\ForumController::class, 'forumFormTree']);
     });
 
     Route::group(['prefix' => 'tag'], function () {
@@ -71,7 +74,6 @@ Route::group(['prefix' => 'admin'], function () {
             Route::patch('/{role}/change-role', \App\Http\Controllers\Admin\User\RoleController::class);
             Route::post('/change-permissions', [\App\Http\Controllers\Admin\User\PermissionController::class, 'changePermission']);
         });
-
 
 
     });
@@ -135,8 +137,6 @@ Route::group(['prefix' => 'client'], function () {
                     Route::patch('/', [\App\Http\Controllers\Client\Post\PostController::class, 'update']);
                 });
             });
-
-
 
 
         });

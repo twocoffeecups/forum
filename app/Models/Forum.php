@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Forum extends Model
 {
-    use HasFactory, SoftDeletes, AdjacencyList;
+    use HasFactory, AdjacencyList;
 
     protected $guarded = false;
     protected $table = 'forums';
@@ -17,6 +17,16 @@ class Forum extends Model
     public function topics(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Topic::class, 'forumId', 'id');
+    }
+
+    public function posts()
+    {
+        return $this->hasManyThrough(Post::class, Topic::class, 'forumId', 'topicId', 'id', 'id');
+    }
+
+    public function author()
+    {
+        return $this->belongsTo(User::class, 'authorId', 'id');
     }
 
     public function parent(): \Illuminate\Database\Eloquent\Relations\BelongsTo

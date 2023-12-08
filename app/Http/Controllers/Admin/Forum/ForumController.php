@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Admin\Forum;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Forum\ForumStoreRequest;
+use App\Http\Resources\Admin\Forum\CreateForumFormResource;
+use App\Http\Resources\Admin\Forum\ForumResource;
 use App\Models\Forum;
+use App\Models\User;
 
 class ForumController extends Controller
 {
@@ -12,7 +15,7 @@ class ForumController extends Controller
     protected function index()
     {
         $forums = Forum::all();
-        return response()->json(['forums' => $forums]);
+        return response()->json(['forums' => ForumResource::collection($forums)]);
     }
 
     protected function show(Forum $forum)
@@ -20,12 +23,13 @@ class ForumController extends Controller
         return response()->json(['forum' => $forum]);
     }
 
-    protected function store(ForumStoreRequest $request)
+    protected function store(ForumStoreRequest $request, User $user)
     {
         $data = $request->validated();
         if($data['type']==0 && $data['parentId']!=0){
             unset($data['parentId']);
         }
+        $data['authorId'] = $user->id;
         $forum = Forum::firstOrCreate($data);
         return response()->json(['message' => 'Forum created!']);
     }
@@ -57,8 +61,15 @@ class ForumController extends Controller
     public function status(Forum $forum)
     {
         $forum->status = !$forum->status;
+        //dd($forum);
         $forum->save();
         return response()->json(['message' => 'Forum status changed!']);
+    }
+
+    public function forumFormTree()
+    {
+        $forums = Forum::all();
+        return response()->json(['forums' => CreateForumFormResource::collection($forums)]);
     }
 
 }

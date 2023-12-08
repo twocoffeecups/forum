@@ -21,14 +21,22 @@
                         </div>
                     </div>
 
+                    <div class="mb-3 form-group">
+                        <label class="form-check-label" for="type">Type</label>
+                        <select @change="this.forumType = $event.target.value" class="form-control">
+                            <option value="0">Forum category</option>
+                            <option value="1">Forum</option>
+                        </select>
+                    </div>
+
                     <div class="mb-3 form-check">
-                        <input v-model="isChild" type="checkbox" class="form-check-input" id="is-child">
+                        <input v-model="isChild" type="checkbox" :disabled="forumType==0" class="form-check-input" id="is-child">
                         <label class="form-check-label" for="is-child">Child category</label>
                     </div>
 
                     <div v-if="isChild" class="mb-3 form-group">
                         <select @change="changeForum($event)" class="form-control">
-                            <CategoryOptionTree v-for="forum in forums" :is-selected="selectedForum" :name="forum.name" :id="forum.id" :children="forum.children" :indent="0" />
+                            <ForumOptionTree v-for="forum in forums" :is-selected="selectedForum" :name="forum.name" :id="forum.id" :children="forum.children" :indent="0" />
                         </select>
                     </div>
 
@@ -46,7 +54,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button @click="createCategory" data-bs-dismiss="modal" type="button" class="btn btn-primary">Create</button>
+                    <button @click="createForum" data-bs-dismiss="modal" type="button" class="btn btn-primary">Create</button>
                 </div>
             </div>
         </div>
@@ -56,10 +64,16 @@
 <script>
 import { useVuelidate } from '@vuelidate/core';
 import { required, minLength, maxLength, } from '@vuelidate/validators';
-import CategoryOptionTree from "./CategoryOptionTree.vue";
+import ForumOptionTree from "./ForumOptionTree.vue";
 export default {
     name: "CreateForumModal",
-    components: {CategoryOptionTree,},
+    components: {ForumOptionTree,},
+    props:['forums'],
+
+    mounted() {
+        this.getForums();
+    },
+
     setup(){
         return{
             v$: useVuelidate()
@@ -71,76 +85,12 @@ export default {
             name:null,
             isChild: false,
             description: null,
+            forumType: 0,
 
             isSelected: null,
             showCategory: null,
             selectedForum: null,
-            forums:[
-                {
-                    id: 1,
-                    name: 'Root category 1',
-                    children:[
-                        {
-                            id: 2,
-                            name: 'Parent category 1',
-                            children:[
-                                {
-                                    id: 3,
-                                    name: 'Child category 1.1',
-                                },
-                                {
-                                    id: 4,
-                                    name: 'Child category 1.2',
-                                },
-                            ],
-                        },
-                        {
-                            id: 5,
-                            name: 'Parent category 2',
-                            children:[
-                                {
-                                    id: 6,
-                                    name: 'Child category 2.1',
-                                    children:[
-                                        {
-                                            id: 7,
-                                            name: 'Child category 2.1.1',
-                                        },
-                                    ],
-                                },
-                                {
-                                    id: 8,
-                                    name: 'Child category 2.2',
-                                },
-                                {
-                                    id: 9,
-                                    name: 'Child category 2.3',
-                                },
-                            ],
-                        },
-                    ],
-                },
-                {
-                    id: 10,
-                    name: 'Root category 2',
-                    children:[
-                        {
-                            id: 11,
-                            name: 'Parent category 3',
-                            children:[
-                                {
-                                    id: 12,
-                                    name: 'Child category 3.1',
-                                },
-                                {
-                                    id: 13,
-                                    name: 'Child category 3.2',
-                                },
-                            ],
-                        },
-                    ],
-                }
-            ],
+            forums: []
         }
     },
 
@@ -154,12 +104,14 @@ export default {
     methods:{
         createForum(){
             this.v$.$validate();
-            let parentId = this.isChild ? this.selectedForum : 0
+            let parentId = this.isChild && this.type!=0 ? this.selectedForum : null;
+            const userId = JSON.parse(localStorage.getItem('user-details')).id;
             if(!this.v$.$error){
-                axios.post('/api/admin/forum/category/store', {
+                axios.post(`/api/admin/forum/${userId}/store`, {
                     parentId : parentId,
                     name: this.name,
-                    description: this.description
+                    description: this.description,
+                    type: this.forumType,
                 })
                 .then(res => {
                     console.log(res)
@@ -167,14 +119,22 @@ export default {
                 .catch(error => {
                     console.log(error)
                 })
-            }else{
-                console.log('Error!');
             }
         },
 
+        getForums(){
+            axios.get(`/api/admin/forum`)
+                .then(res => {
+                    this.forums = res.data.forums
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+        },
+
         changeForum(e){
-            console.log('change category', e.target.value)
-            this.selectedCategory = e.target.value
+            //console.log('change category', e.target.value)
+            this.selectedForum = e.target.value
         },
     }
 }

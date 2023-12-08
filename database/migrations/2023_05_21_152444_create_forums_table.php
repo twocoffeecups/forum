@@ -22,8 +22,6 @@ return new class extends Migration
             $table->unsignedTinyInteger('status');
             $table->foreignId('authorId')->index('authorIdx')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
             $table->timestamps();
-
-            $table->softDeletes();
         });
     }
 
