@@ -51,6 +51,17 @@ trait UserRolesAndPermissions
         return $this->role->slug === $role;
     }
 
+    public function hasRoles(string|array $roles): bool
+    {
+        foreach ($roles as $role){
+            if($this->role->slug === $role){
+                return true;
+            }
+        }
+        return false;
+    }
+
+
     /**
      * @param string $permission
      * @return bool

@@ -1,10 +1,13 @@
 import axios from "axios";
 import {useToast} from "vue-toastification";
 import router from '../../router';
+import api from "../../api/api";
 
 const toast = useToast();
 
 export default {
+    namespaced:true,
+
     state:{
         userDetails:{},
         isLoggedIn: false,
@@ -18,6 +21,18 @@ export default {
         isLoggedIn(state){
             return state.isLoggedIn;
         },
+
+        isAdmin(state){
+            return state.userDetails.role === 'admin';
+        },
+
+        role(state){
+            return state.userDetails.role;
+        },
+
+        permissions(state){
+            return state.userDetails.permissions;
+        }
 
     },
 
@@ -122,7 +137,7 @@ export default {
             });
         },
 
-        logout({dispatch, commit }){
+        logout({dispatch, commit}){
             return new Promise((resolve, reject) => {
                 axios.post('/api/auth/logout',{}, {
                     headers: {
@@ -134,6 +149,7 @@ export default {
                             localStorage.removeItem('access-token');
                             localStorage.removeItem('user-details');
                             commit('setLoggedIn', false);
+                            commit('setUserDetails', {});
                             toast.success("You have successfully logout.")
                             router.push({name:'main'});
                             resolve(res);
@@ -158,6 +174,7 @@ export default {
                 }
             });
         },
+
     },
 
     mutations:{

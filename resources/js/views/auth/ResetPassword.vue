@@ -130,7 +130,7 @@ export default {
         async resetPassword() {
             this.v$.$validate()
             if (!this.v$.$error) {
-                this.$store.dispatch('resetPassword', this.user);
+                this.$store.dispatch('auth/resetPassword', this.user);
             }
         },
     }

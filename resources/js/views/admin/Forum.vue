@@ -7,7 +7,7 @@
                 <div class="card-header">
                     <div class="d-flex justify-content-between my-2">
                         <h4>All Forums</h4>
-                        <div>
+                        <div v-if="checkHasPermissions([AccessPermissions.CAN_CREATE_FORUM])">
                             <CreateForumModal :forums="this.forums"/>
                         </div>
                     </div>
@@ -89,7 +89,7 @@
                                     </span>
 
 
-                                    <span @click="deleteForum(forum.id)" role="button" class="text-danger mx-2"
+                                    <span v-if="checkHasPermissions([AccessPermissions.CAN_DELETE_FORUM])" @click="deleteForum(forum.id)" role="button" class="text-danger mx-2"
                                           title="Edit">
                                       <i class="fas fa-trash"></i>
                                   </span>
@@ -137,10 +137,20 @@
 <script>
 import CreateForumModal from "../../components/admin/CreateForumModal.vue";
 import EditForumModal from "../../components/admin/EditForumModal.vue";
+import {checkHasPermissions} from "../../access/service";
+import AccessPermissions from "../../access/permissions";
 
 export default {
     name: "Forum",
     components: {EditForumModal, CreateForumModal},
+
+    setup(){
+        return{
+            checkHasPermissions,
+            AccessPermissions,
+        }
+    },
+
     mounted() {
         this.getForums();
     },

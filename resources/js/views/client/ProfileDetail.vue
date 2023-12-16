@@ -254,21 +254,27 @@ import {mapGetters} from "vuex";
 export default {
     name: 'ProfileAccount',
 
-    mounted() {
-        this.getUserDetails();
+    // mounted() {
+    //     this.getUserDetails();
+    // },
+
+    computed:{
+        ...mapGetters({
+            userDetails: 'auth/userDetails',
+        }),
     },
 
-    data(){
-        return{
-            userDetails: JSON.parse(localStorage.getItem('user-details')),
-        }
-    },
+    // data(){
+    //     return{
+    //         //userDetails: JSON.parse(localStorage.getItem('user-details')),
+    //     }
+    // },
 
-    methods:{
-        getUserDetails(){
-            this.$store.dispatch('getUserDetails');
-        }
-    }
+    // methods:{
+    //     getUserDetails(){
+    //         this.$store.dispatch('profile/getUserDetails');
+    //     }
+    // }
 }
 </script>
 

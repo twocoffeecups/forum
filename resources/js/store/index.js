@@ -6,6 +6,8 @@ import post from "./modules/post";
 import topic from "./modules/topic"
 
 const store =  createStore({
+    //namespaced: true,
+
     modules:{
         middleware,
         auth,

@@ -131,12 +131,12 @@ export default {
         signIn() {
             this.v$.$validate();
             if (!this.v$.$error) {
-                this.$store.dispatch('login', this.user)
+                this.$store.dispatch('auth/login', this.user)
             }
         },
 
         checkUserInState(){
-            this.$store.dispatch('setLoggedInstate', this.user);
+            this.$store.dispatch('auth/setLoggedInstate', this.user);
         },
 
     }

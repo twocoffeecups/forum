@@ -6,10 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Client\Profile\AvatarRequest;
 use App\Http\Requests\Api\Client\Profile\UpdatePasswordRequest;
 use App\Http\Requests\Api\Client\Profile\UpdateProfileRequest;
+use App\Http\Resources\Client\Profile\UserPermissionsResource;
 use App\Http\Resources\Client\Profile\UserResource;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
@@ -22,7 +24,9 @@ class ProfileController extends Controller
     public function index(Request $request): \Illuminate\Http\JsonResponse
     {
         $user = $request->user();
-        return response()->json(['userDetails' => new UserResource($user)]);
+        return response()->json([
+            'userDetails' => new UserResource($user),
+        ]);
     }
 
     /**

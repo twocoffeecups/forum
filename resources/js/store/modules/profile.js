@@ -5,15 +5,18 @@ import api from "../../api/api";
 const toast = useToast();
 
 export default {
-    actions:{
-        getUserDetails({dispatch}){
+    namespaced: true,
+
+    actions: {
+        getUserDetails({dispatch, commit}) {
             return new Promise((resolve, reject) => {
                 const id = JSON.parse(localStorage.getItem('user-details')).id
                 api.get(`/api/client/profile`)
                     .then(res => {
-                        if(res.data){
+                        if (res.data) {
                             resolve(res);
-                        }else {
+                            commit('auth/setUserDetails', res.data.userDetails, {root: true});
+                        } else {
                             reject(res);
                         }
                     })
@@ -23,19 +26,19 @@ export default {
             });
         },
 
-        updateProfile({dispatch}, user){
+        updateProfile({dispatch}, user) {
             return new Promise((resolve, reject) => {
                 let data = new FormData();
                 data.append('_method', 'put')
-                for(let [key, value] of Object.entries(user)){
+                for (let [key, value] of Object.entries(user)) {
                     data.append(key, value);
                 }
-                axios.post(`/api/client/${1}/profile/profile-update`, data)
+                api.post(`/api/client/${1}/profile/profile-update`, data)
                     .then(res => {
-                        if(res.data){
+                        if (res.data) {
                             toast.success('You have successfully registered!');
                             resolve(res);
-                        }else{
+                        } else {
                             reject(res);
                         }
                     })
@@ -46,23 +49,23 @@ export default {
             });
         },
 
-        createNewPassword({dispatch}, user){
+        createNewPassword({dispatch}, user) {
             return new Promise((resolve, reject) => {
                 let data = new FormData();
                 data.append('_method', 'put')
-                for(let [key, value] of Object.entries(user)){
+                for (let [key, value] of Object.entries(user)) {
                     data.append(key, value);
                 }
                 axios.post(`/api/client/${1}/profile/edit-password`, data)
                     .then(res => {
-                        if(res.data){
+                        if (res.data) {
                             toast.success('Password update successfully!');
                             resolve(res);
-                        }else{
+                        } else {
                             reject(res);
                         }
                     })
-                    .catch(error =>{
+                    .catch(error => {
                         toast.error(error.response.data.message ?? 'Error!');
                         reject(error)
                     })
@@ -71,17 +74,17 @@ export default {
             });
         },
 
-        updateAvatar({dispatch}, avatar){
+        updateAvatar({dispatch}, avatar) {
             return new Promise((resolve, reject) => {
                 let data = new FormData();
                 data.append('avatar', avatar);
                 data.append('_method', 'patch');
                 axios.post(`/api/client/${1}/profile/update-avatar`, data)
                     .then(res => {
-                        if(res.data){
+                        if (res.data) {
                             toast.success(res.data.message);
                             resolve(res);
-                        }else{
+                        } else {
                             reject(res);
                         }
 

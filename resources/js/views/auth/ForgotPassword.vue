@@ -95,7 +95,7 @@ export default {
         forgotPassword() {
             this.v$.$validate();
             if (!this.v$.$error) {
-                this.$store.dispatch('forgotPassword', this.email);
+                this.$store.dispatch('auth/forgotPassword', this.email);
             }
         }
 

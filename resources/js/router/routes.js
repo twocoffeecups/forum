@@ -68,8 +68,9 @@ const routes = [
         component: () => import('../views/admin/Dashboard.vue'),
         meta: {
             layout: Admin,
-            middleware: [Middleware.isAdmin]
+            middleware: [Middleware.auth],
         },
+
         children: [
             {path: '', name: 'admin.index', component: () => import('../views/admin/Main.vue')},
             {
@@ -170,8 +171,8 @@ const routes = [
     },
     {
         path: '/:pathMatch(.*)*',
-        component: () => import('../views/auth/404.vue'),
         name: '404',
+        component: () => import('../views/auth/404.vue'),
         meta: {
             layout: Auth,
         },

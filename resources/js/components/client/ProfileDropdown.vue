@@ -35,7 +35,7 @@ export default {
 
     computed:{
         ...mapGetters({
-            isLoggedIn: 'isLoggedIn',
+            isLoggedIn: 'auth/isLoggedIn',
         }),
     },
 
@@ -47,7 +47,7 @@ export default {
 
     methods:{
         logout(){
-            this.$store.dispatch('logout');
+            this.$store.dispatch('auth/logout');
         },
     },
 }

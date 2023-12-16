@@ -101,7 +101,6 @@ Route::group(['prefix' => 'admin'], function () {
 
 // Client routes
 Route::group(['prefix' => 'client'], function () {
-
     Route::get('/profile', [\App\Http\Controllers\Client\Profile\ProfileController::class, 'index'])->middleware('auth:sanctum');
 
     // User auth api routes

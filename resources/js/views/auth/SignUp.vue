@@ -196,7 +196,7 @@ export default {
         signUp() {
             this.v$.$validate();
             if (!this.v$.$error) {
-                this.$store.dispatch('register', this.signUpForm);
+                this.$store.dispatch('auth/register', this.signUpForm);
             }
         },
     }
