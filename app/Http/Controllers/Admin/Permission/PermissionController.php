@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Permission;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Permission\PermissionRequest;
+use App\Http\Resources\Admin\Role\RolePermissionResource;
 use App\Models\Permission;
 
 class PermissionController extends Controller
@@ -11,7 +12,8 @@ class PermissionController extends Controller
 
     public function index()
     {
-        return response()->json(['permissions' => Permission::all()]);
+        $permissions = Permission::all();
+        return response()->json(['permissions' => RolePermissionResource::collection($permissions)]);
     }
 
     public function store(PermissionRequest $request)

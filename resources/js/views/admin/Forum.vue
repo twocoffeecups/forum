@@ -83,7 +83,7 @@
                                                     :forum-description="forum.description"/>
 
                                     <span class="text-primary mx-2" title="Show">
-                                        <router-link :to="{ name:'admin.forumDetail', params:{id:1} }">
+                                        <router-link :to="{ name:'admin.forum.details', params:{id:forum.id} }">
                                           <i class="fas fa-eye"></i>
                                         </router-link>
                                     </span>

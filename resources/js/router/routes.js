@@ -89,6 +89,11 @@ const routes = [
                 component: () => import('../views/admin/Role.vue'),
             },
             {
+                path: 'role/:id',
+                name: 'admin.role.details',
+                component: () => import('../views/admin/RoleDetail.vue'),
+            },
+            {
                 path: 'forum',
                 name: 'admin.forum',
                 component: () => import('../views/admin/Forum.vue'),
@@ -100,7 +105,7 @@ const routes = [
             },
             {
                 path: 'forum/:id',
-                name: 'admin.forumDetail',
+                name: 'admin.forum.details',
                 component: () => import('../views/admin/ForumDetail.vue'),
             },
             {
@@ -125,7 +130,7 @@ const routes = [
             },
             {
                 path: 'reports/:id',
-                name: 'admin.reportDetail',
+                name: 'admin.report.details',
                 component: () => import('../views/admin/ReportDetail.vue'),
             },
         ],

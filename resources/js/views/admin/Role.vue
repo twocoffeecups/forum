@@ -38,7 +38,6 @@
                         <th scope="col">Name</th>
                         <th scope="col">Users count</th>
                         <th scope="col">Permissions</th>
-                        <th scope="col">Status</th>
                         <th scope="col">Created AT</th>
                         <th scope="col">Actions</th>
                     </tr>
@@ -48,28 +47,19 @@
                         <th scope="row">{{ role.id }}</th>
                         <td>{{ role.name }}</td>
                         <td>{{ role.usersCount }}</td>
-                        <td>
-                            <VueMultiselect
-                                id="tags"
-                                v-model="role.permissions"
-                                :options="permissions"
-                                :multiple="true"
-                                :close-on-select="false"
-                                placeholder="Add user permissions"
-                                label="option"
-                                track-by="option"
-                            />
+                        <td class="flex-row d-flex">
+                            <span class="d-flex mx-1 p-1 bg-success bg-gradient text-white rounded-1" v-for="permission in role.permissions">{{ permission.option }}</span>
                         </td>
-                        <td>{{ role.status }}</td>
                         <td>{{ role.created_at }}</td>
                         <td>
-
-                            <EditRoleModal :id="role.id" :name="role.name" :description="role.description"/>
-
-                            <span @click="deleteRole(role.id)" role="button" class="text-danger mx-2" title="Edit">
-                    <i class="fas fa-trash"></i>
-              </span>
-
+                            <span class="text-primary mx-2" title="Show">
+                                <router-link :to="{ name:'admin.role.details', params:{id:role.id} }">
+                                    <i class="fas fa-eye"></i>
+                                </router-link>
+                            </span>
+                            <span @click="deleteRole(role.id)" role="button" class="text-danger mx-2" title="Delete">
+                                <i class="fas fa-trash"></i>
+                            </span>
                         </td>
                     </tr>
                     </tbody>
@@ -108,13 +98,20 @@
 
 <script>
 import AddRoleModal from "../../components/admin/AddRoleModal.vue";
-import EditRoleModal from "../../components/admin/EditRoleModal.vue";
 import axios from "axios";
+import api from "../../api/api";
 import VueMultiselect from "vue-multiselect";
+import {useToast} from "vue-toastification";
 
 export default {
     name: "Role",
-    components: {VueMultiselect, EditRoleModal, AddRoleModal},
+    components: {VueMultiselect, AddRoleModal},
+
+    setup(){
+        return{
+            t$: useToast(),
+        }
+    },
 
     mounted() {
         this.getRoles();
@@ -123,22 +120,15 @@ export default {
     data() {
         return {
             roles: [],
-            selectedPermissions: [],
-            permissions: [
-                {option: 'create-forum', value: 1},
-                {option: 'update-forum', value: 2},
-                {option: 'create-post', value: 3},
-                {option: 'update-post', value: 4},
-            ],
         }
     },
 
 
     methods: {
-        getRoles(){
+        getRoles() {
             axios.get('/api/admin/role')
                 .then(res => {
-                    console.log(res);
+                    console.log("ROLES:", res);
                     this.roles = res.data.roles;
                 })
                 .catch(error => {
@@ -146,17 +136,16 @@ export default {
                 })
         },
 
-
         deleteRole(id) {
-            console.log('deleted');
-            // axios.delete(`/api/admin/role/${this.id}/`)
-            //   .then(res => {
-            //     console.log(res);
-            //   })
-            //   .catch(error => {
-            //     console.log(error);
-            //   })
-        }
+            api.delete(`/api/admin/role/${id}/`)
+                .then(res => {
+                    this.t$.success("Role delete successfully.")
+                    this.$router.push({name:'admin.roles'})
+                })
+                .catch(error => {
+                    this.t$.error("Error!");
+                })
+        },
     }
 }
 </script>

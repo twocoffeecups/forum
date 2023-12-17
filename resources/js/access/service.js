@@ -1,6 +1,6 @@
 import store from "../store";
 
-const userPermissions = store.getters['auth/permissions'];
+const userPermissions = store.getters['auth/permissions'] ?? null;
 
 function checkHasPermissions(permissions) {
     if(userPermissions === null) return false;

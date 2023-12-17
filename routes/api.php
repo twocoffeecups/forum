@@ -85,6 +85,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::patch('/{role}', [\App\Http\Controllers\Admin\Role\RoleController::class, 'update']);
         Route::delete('/{role}', [\App\Http\Controllers\Admin\Role\RoleController::class, 'delete']);
         Route::post('/{role}/status', [\App\Http\Controllers\Admin\Role\RoleController::class, 'status']);
+        Route::put('/{role}/change-permissions', [\App\Http\Controllers\Admin\Role\RoleController::class, 'changePermissions']);
     });
 
     Route::group(['prefix' => 'permission'], function () {
