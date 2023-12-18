@@ -90,6 +90,7 @@ Route::group(['prefix' => 'admin'], function () {
 
     Route::group(['prefix' => 'permission'], function () {
         Route::get('/', [\App\Http\Controllers\Admin\Permission\PermissionController::class, 'index']);
+        Route::get('/permission-for-form', [\App\Http\Controllers\Admin\Permission\PermissionController::class, 'getPermissionsForForm']);
         Route::post('/', [\App\Http\Controllers\Admin\Permission\PermissionController::class, 'store']);
         Route::get('/{permission}', [\App\Http\Controllers\Admin\Permission\PermissionController::class, 'show']);
         Route::patch('/{permission}', [\App\Http\Controllers\Admin\Permission\PermissionController::class, 'update']);

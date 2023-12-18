@@ -58,7 +58,7 @@
                 <router-link :to="{ name:'admin.roles' }" class="nav-link sidebar_nav_link px-0"> <i class="fas fa-hashtag"></i> Roles </router-link>
               </li>
               <li class="w-100">
-                <a href="#" class="nav-link sidebar_nav_link px-0"> <i class="fas fa-hashtag"></i> Permissions </a>
+                <router-link :to="{ name: 'admin.permission' }" class="nav-link sidebar_nav_link px-0"> <i class="fas fa-hashtag"></i> Permissions </router-link>
               </li>
             </ul>
           </div>

@@ -2,11 +2,9 @@
     <div class="card">
         <div class="card-header">
             <div class="d-flex justify-content-between my-2">
-                <h4>All Roles</h4>
+                <h4>All Permissions</h4>
                 <div class="d-flex">
-                    <CreatePermissionModal />
-
-                    <AddRoleModal/>
+                    <CreatePermissionModal/>
                 </div>
             </div>
         </div>
@@ -38,28 +36,24 @@
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Name</th>
-                        <th scope="col">Users count</th>
-                        <th scope="col">Permissions</th>
+                        <th scope="col">Slug</th>
+                        <th scope="col">Roles</th>
                         <th scope="col">Created AT</th>
                         <th scope="col">Actions</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr v-for="role in roles">
-                        <th scope="row">{{ role.id }}</th>
-                        <td>{{ role.name }}</td>
-                        <td>{{ role.usersCount }}</td>
+                    <tr v-for="permission in permissions">
+                        <th scope="row">{{ permission.id }}</th>
+                        <td contenteditable @focusout.prevent="renamePermission($event, permission.id, permission.name)">{{ permission.name }}</td>
+                        <td>{{ permission.slug }}</td>
                         <td class="flex-row d-flex">
-                            <span class="d-flex mx-1 p-1 bg-success bg-gradient text-white rounded-1" v-for="permission in role.permissions">{{ permission.option }}</span>
+                            <span class="d-flex mx-1 p-1 bg-primary bg-gradient text-white rounded-1" v-for="role in permission.roles">{{ role.name }}</span>
                         </td>
-                        <td>{{ role.created_at }}</td>
+                        <td>{{ permission.created_at }}</td>
                         <td>
-                            <span class="text-primary mx-2" title="Show">
-                                <router-link :to="{ name:'admin.role.details', params:{id:role.id} }">
-                                    <i class="fas fa-eye"></i>
-                                </router-link>
-                            </span>
-                            <span @click="deleteRole(role.id)" role="button" class="text-danger mx-2" title="Delete">
+                            <span @click="deletePermission(permission.id)" role="button" class="text-danger mx-2"
+                                  title="Delete">
                                 <i class="fas fa-trash"></i>
                             </span>
                         </td>
@@ -108,51 +102,70 @@ import CreatePermissionModal from "../../components/admin/CreatePermissionModal.
 
 export default {
     name: "Role",
-    components: {CreatePermissionModal, VueMultiselect, AddRoleModal},
+    components: {CreatePermissionModal,},
 
-    setup(){
-        return{
+    setup() {
+        return {
             t$: useToast(),
         }
     },
 
     mounted() {
-        this.getRoles();
+        this.getPermissions();
     },
 
     data() {
         return {
-            roles: [],
+            permissions: [],
         }
     },
 
 
     methods: {
-        getRoles() {
-            axios.get('/api/admin/role')
+        getPermissions() {
+            api.get('/api/admin/permission')
                 .then(res => {
-                    console.log("ROLES:", res);
-                    this.roles = res.data.roles;
+                    console.log("Permissions:", res);
+                    this.permissions = res.data.permissions;
                 })
                 .catch(error => {
                     console.log(error);
                 })
         },
 
-        deleteRole(id) {
-            api.delete(`/api/admin/role/${id}/`)
+        renamePermission(event, id, permissionName) {
+            let name = event.target.innerText;
+            if (name == permissionName) return;
+            if (name.length < 6) {
+                this.t$.error("Min length 6.");
+                return;
+            }
+            api.patch(`/api/admin/permission/${id}`, {
+                name: name,
+            })
                 .then(res => {
-                    this.t$.success("Role delete successfully.")
-                    this.$router.push({name:'admin.roles'})
+                    this.t$.success("Permission rename successfully.")
                 })
                 .catch(error => {
+                    console.log(error)
                     this.t$.error("Error!");
+                })
+        },
+
+        deletePermission(id) {
+            api.delete(`/api/admin/permission/${id}`)
+                .then(res => {
+                    this.t$.success("Permission delete successfully.");
+                    this.getPermissions();
+                })
+                .catch(error => {
+                    this.t$.error(error.response.data.message ?? "Error!");
                 })
         },
     }
 }
 </script>
 
-<style src="vue-multiselect/dist/vue-multiselect.css">
+<style>
 
 </style>

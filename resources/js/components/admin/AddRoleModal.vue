@@ -1,6 +1,6 @@
 <template>
     <div class="d-flex justify-content-start mb-3">
-        <button class="btn btn-success mx-1" data-bs-toggle="modal" data-bs-target="#add-role-modal">+ ADD ROLE</button>
+        <button class="btn btn-primary bg-gradient mx-1" data-bs-toggle="modal" data-bs-target="#add-role-modal">+ ADD ROLE</button>
     </div>
 
     <div class="modal fade" id="add-role-modal" tabindex="-1" aria-labelledby="add-role-modal" aria-hidden="true">
@@ -117,7 +117,7 @@ export default {
         },
 
         getPermissions() {
-            api.get('/api/admin/permission')
+            api.get('/api/admin/permission/permission-for-form')
                 .then(res => {
                     this.permissions = res.data.permissions
                 })

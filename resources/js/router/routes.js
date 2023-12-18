@@ -94,6 +94,11 @@ const routes = [
                 component: () => import('../views/admin/RoleDetail.vue'),
             },
             {
+                path: 'permission',
+                name: 'admin.permission',
+                component: () => import('../views/admin/Permission.vue'),
+            },
+            {
                 path: 'forum',
                 name: 'admin.forum',
                 component: () => import('../views/admin/Forum.vue'),

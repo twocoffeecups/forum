@@ -22,6 +22,7 @@
                             label="option"
                             track-by="option"
                             @close="changePermissions"
+                            @remove="changePermissions"
                         />
                     </dd>
                     <dt class="col-sm-4">Created AT</dt>
@@ -171,7 +172,7 @@ export default {
         },
 
         getPermissions() {
-            api.get('/api/admin/permission')
+            api.get('/api/admin/permission/permission-for-form')
                 .then(res => {
                     this.permissions = res.data.permissions
                 })
