@@ -7,20 +7,33 @@ use App\Http\Requests\Admin\Tag\TagStoreRequest;
 use App\Http\Requests\Admin\Tag\TagUpdateRequest;
 use App\Http\Resources\Admin\Forum\TagResource;
 use App\Models\Tag;
+use Illuminate\Support\Facades\Auth;
+use Laravel\Sanctum\PersonalAccessToken;
 
 class TagController extends Controller
 {
 
-    public function index()
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function index(): \Illuminate\Http\JsonResponse
     {
-        $tags = TagResource::collection(Tag::all());
+        $tags = Tag::all();
         return response()->json(['tags' => TagResource::collection($tags)]);
     }
 
-    public function store(TagStoreRequest $request)
+    /**
+     * @param TagStoreRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function store(TagStoreRequest $request): \Illuminate\Http\JsonResponse
     {
         $data = $request->validated();
-        //dd($data);
+        // get user be sanctum token
+        $hashedToken = $request->bearerToken();
+        $token = PersonalAccessToken::findToken($hashedToken)->first();
+        $user = $token->tokenable;
+        $data['authorId'] = $user->id;
         $tag = Tag::firstOrCreate($data);
         return response()->json([
             'message' => 'Tag created!',
@@ -28,7 +41,11 @@ class TagController extends Controller
         ]);
     }
 
-    public function show(Tag $tag)
+    /**
+     * @param Tag $tag
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function show(Tag $tag): \Illuminate\Http\JsonResponse
     {
         return response()->json(['tag' => new TagResource($tag)]);
     }
@@ -36,6 +53,7 @@ class TagController extends Controller
     public function update(TagUpdateRequest $request, Tag $tag)
     {
         $data = $request->validated();
+        //dd($data);
         foreach($data as $key => $value){
             $tag->$key = $value;
         }
@@ -43,13 +61,22 @@ class TagController extends Controller
         return response()->json(['message' => 'Tag updated!']);
     }
 
-    public function delete(Tag $tag)
+    /**
+     * @param Tag $tag
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function delete(Tag $tag): \Illuminate\Http\JsonResponse
     {
         $tag->delete();
         return response()->json(['message' => 'Tag deleted successfully!']);
     }
 
-    public function status(Tag $tag)
+    /**
+     * @param Tag $tag
+     * @return \Illuminate\Http\JsonResponse
+     * Change tag status(visiblity)
+     */
+    public function status(Tag $tag): \Illuminate\Http\JsonResponse
     {
         $tag->status = !$tag->status;
         $tag->save();

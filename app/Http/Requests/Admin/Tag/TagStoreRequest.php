@@ -24,10 +24,8 @@ class TagStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|max:255',
-            'description' => 'required|max:255',
-            'authorId' => 'required|integer',
-            'forumId' => 'nullable|integer',
+            'name' => 'required|min:4|max:64',
+            'description' => 'nullable|string|max:255',
         ];
     }
 }

@@ -38,7 +38,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/{tag}', [\App\Http\Controllers\Admin\Forum\TagController::class, 'show']);
         Route::patch('/{tag}', [\App\Http\Controllers\Admin\Forum\TagController::class, 'update']);
         Route::delete('/{tag}', [\App\Http\Controllers\Admin\Forum\TagController::class, 'delete']);
-        Route::post('/{tag}/status', [\App\Http\Controllers\Admin\Forum\TagController::class, 'status']);
+        Route::patch('/{tag}/status', [\App\Http\Controllers\Admin\Forum\TagController::class, 'status']);
     });
 
     Route::group(['prefix' => 'topic'], function () {

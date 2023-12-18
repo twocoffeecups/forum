@@ -1,7 +1,7 @@
 <template>
     <div class="d-flex justify-content-start mb-3">
         <button class="btn btn-primary bg-gradient mx-1" data-bs-toggle="modal" data-bs-target="#create-tag-modal">
-          <i class="fas fa-plus mx-1"></i>Add tag
+            <i class="fas fa-plus mx-1"></i>Add tag
         </button>
     </div>
 
@@ -26,7 +26,8 @@
                     <div class="mb-3">
                         <div :class="{ error: v$.description.$errors.length }">
                             <label for="description" class="col-form-label">Description:</label>
-                            <textarea @blur="v$.description.$touch" class="form-control" v-model="description" id="description"></textarea>
+                            <textarea @blur="v$.description.$touch" class="form-control" v-model="description"
+                                      id="description"></textarea>
                             <div class="input-errors" v-for="error of v$.description.$errors" :key="error.$uid">
                                 <div class="error-msg text-danger">{{ error.$message }}</div>
                             </div>
@@ -37,7 +38,9 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary bg-gradient" data-bs-dismiss="modal">Close</button>
-                    <button @click="createTag" data-bs-dismiss="modal" type="button" class="btn btn-primary bg-gradient">Create</button>
+                    <button @click="createTag" data-bs-dismiss="modal" type="button"
+                            class="btn btn-primary bg-gradient">Create
+                    </button>
                 </div>
             </div>
         </div>
@@ -45,47 +48,49 @@
 </template>
 
 <script>
-import { useVuelidate } from '@vuelidate/core';
-import { required, minLength, maxLength, } from '@vuelidate/validators';
-import axios from "axios";
+import {useVuelidate} from '@vuelidate/core';
+import {required, minLength, maxLength,} from '@vuelidate/validators';
+import api from "../../api/api";
+import {useToast} from "vue-toastification";
+
 export default {
     name: "CreateTagModal",
 
-    setup(){
-        return{
-            v$: useVuelidate()
+    setup() {
+        return {
+            v$: useVuelidate(),
+            t$: useToast(),
         }
     },
 
-    data(){
-        return{
-            name:null,
-            description:null,
+    data() {
+        return {
+            name: null,
+            description: null,
         }
     },
 
-    validations(){
-        return{
-            name:{required, minLength:minLength(2), maxLength:maxLength(24),},
-            description:{required, minLength:minLength(32), maxLength:maxLength(255),},
+    validations() {
+        return {
+            name: {required, minLength: minLength(2), maxLength: maxLength(36),},
+            description: {minLength: minLength(32), maxLength: maxLength(255),},
         }
     },
 
-    methods:{
-        createTag(){
+    methods: {
+        createTag() {
             this.v$.$validate();
-            if(!this.v$.$error){
-                //console.log('Created tag.')
-                axios.post('/api/admin/forum/tag/store', {
+            if (!this.v$.$error) {
+                api.post('/api/admin/tag', {
                     name: this.name,
                     description: this.description
                 })
-                .then(res => {
-                    console.log(res);
-                })
-                .catch(error => {
-                    console.log(error);
-                })
+                    .then(res => {
+                        this.t$.success("Tag create successfully");
+                    })
+                    .catch(error => {
+                        this.t$.error(error.response.data.message ?? "Error!");
+                    })
             }
         }
     }
