@@ -12,7 +12,7 @@ class PermissionController extends Controller
     public function changePermission(AddUserPermissionsRequest $request, User $user)
     {
         $data = $request->validated();
-        $user->permissions()->toggle($data['permissions']);
+        $user->permissions()->sync($data['permissions']);
         $user->save();
         return response()->json(['message' => "The user's permissions has been successfully changed"]);
     }

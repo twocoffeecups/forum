@@ -54,7 +54,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function topics(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(Topic::class, 'userId', 'io');
+        return $this->hasMany(Topic::class, 'userId', 'id');
     }
 
     public function posts(): \Illuminate\Database\Eloquent\Relations\HasMany

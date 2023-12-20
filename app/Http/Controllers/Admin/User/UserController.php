@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\User;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\User\RegisterRequest;
+use App\Http\Resources\Admin\User\UserResource;
 use App\Mail\Client\User\PasswordMail;
 use App\Mail\Client\User\VerifyMail;
 use App\Models\User;
@@ -14,14 +15,18 @@ use Illuminate\Support\Str;
 class UserController extends Controller
 {
 
-    protected function index()
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function index(): \Illuminate\Http\JsonResponse
     {
-        return response()->json(['users' => User::all()]);
+        $users = User::all();
+        return response()->json(['users' => UserResource::collection($users)]);
     }
 
     protected function show(User $user)
     {
-        return response()->json(['user' => $user]);
+        return response()->json(['user' => new UserResource($user)]);
     }
 
     protected function register(RegisterRequest $request)
@@ -29,9 +34,9 @@ class UserController extends Controller
         $data = $request->validated();
         $password = Str::random(12);
         $data['password'] = Hash::make($password);
-        $user = User::firstOrCreate(['login'=>$data['login']],$data);
+        $user = User::firstOrCreate(['login' => $data['login']], $data);
         //$user->sendEmailVerificationNotification();
-        Mail::to($user->email)->send(new VerifyMail($user->id, $user->login,sha1($user->getEmailForVerification())));
+        Mail::to($user->email)->send(new VerifyMail($user->id, $user->login, sha1($user->getEmailForVerification())));
         Mail::to($user->email)->send(new PasswordMail($password, $user->getEmailForVerification()));
         return response()->json([
             'message' => 'New user register successfully!',

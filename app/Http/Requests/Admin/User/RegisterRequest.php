@@ -25,9 +25,10 @@ class RegisterRequest extends FormRequest
     {
         return [
             'login' => 'required|min:3|max:64|unique:users',
-            'firstName' => 'min:3|max:64|string',
-            'lastName' => 'min:3|max:64|string',
+            'firstName' => 'min:3|max:64|string|nullable',
+            'lastName' => 'min:3|max:64|string|nullable',
             'email' => 'required|email|unique:users|min:7|max:64',
+            'roleId' => 'integer|exists:roles,id|nullable',
         ];
     }
 }

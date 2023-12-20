@@ -11,7 +11,7 @@
                                  src="http://bootdey.com/img/Content/avatar/avatar1.png" alt="">
 
                             <div class="w-100 ms-3">
-                                <h4 class="my-0">{{ userDetails.name }}</h4>
+                                <h4 class="my-0">{{ userDetails.name ?? userDetails.login }}</h4>
                                 <p class="text-muted">{{ userDetails.email }}</p>
                             </div>
                         </div>

@@ -13,7 +13,7 @@
                     <dt class="col-sm-4">Permissions</dt>
                     <dd class="col-sm-8">
                         <VueMultiselect
-                            id="tags"
+                            id="permissions"
                             v-model="selectedPermissions"
                             :options="permissions"
                             :multiple="true"

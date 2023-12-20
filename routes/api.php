@@ -68,11 +68,11 @@ Route::group(['prefix' => 'admin'], function () {
     Route::group(['prefix' => 'user'], function () {
         Route::get('/', [\App\Http\Controllers\Admin\User\UserController::class, 'index']);
         Route::post('/register', [\App\Http\Controllers\Admin\User\UserController::class, 'register']);
-        Route::get('/{}', [\App\Http\Controllers\Admin\User\UserController::class, 'show']);
+        Route::get('/{user}', [\App\Http\Controllers\Admin\User\UserController::class, 'show']);
 
         Route::group(['prefix' => '{user}'], function () {
             Route::patch('/{role}/change-role', \App\Http\Controllers\Admin\User\RoleController::class);
-            Route::post('/change-permissions', [\App\Http\Controllers\Admin\User\PermissionController::class, 'changePermission']);
+            Route::put('/change-permissions', [\App\Http\Controllers\Admin\User\PermissionController::class, 'changePermission']);
         });
 
 
