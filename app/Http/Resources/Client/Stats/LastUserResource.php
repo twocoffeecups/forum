@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Http\Resources\Client\ForumCategory;
+namespace App\Http\Resources\Client\Stats;
 
+use App\Http\Resources\Client\Forum\ChildrenForumResource;
+use App\Http\Resources\Client\Forum\TopicResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ForumResource extends JsonResource
+class LastUserResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,13 +17,7 @@ class ForumResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->id,
-            'name' => $this->name,
-            'rating' => 14,
-            'posts' => 31,
-            'views' => 3,
-            'latestPost' => 'Post text...',
-            'created_at' => $this->created_at,
+            'name' => $name = $this->firstName ." ".$this->lastName ?? $this->login,
         ];
     }
 }

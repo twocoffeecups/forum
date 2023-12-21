@@ -11,7 +11,7 @@
                         <!-- Forum head -->
                         <div class="">
                             <div class="row">
-                                <h4>Forum title</h4>
+                                <h4>{{ forum.name }}</h4>
                             </div>
 
                             <div class="row">
@@ -30,17 +30,17 @@
 
 
                         <!-- Child categories -->
-                        <div class="card mt-2 mb-2">
-                            <ForumItem v-for="childForum in 6"/>
+                        <div v-if="childrenForums.length !== 0" class="card mt-2 mb-2">
+                            <ForumItem v-for="childForum in childrenForums" :forum="childForum"/>
                         </div>
                         <!-- End child -->
 
                         <!-- Topic -->
-                        <div class="card m-sm-0 mt-1 mb-2">
+                        <div v-if="topics.length !== 0" class="card m-sm-0 mt-1 mb-2">
                             <div class="card-header">
                                 <div class="row">
                                     <div class="d-flex justify-content-between">
-                                        <h4>Forums</h4>
+                                        <h4>Topics</h4>
                                         <div class="d-flex">
                                             <h2 class="accordion-header" id="flush-headingOne">
                                                 <button class="filter-btn accordion-button collapsed p-2" type="button"
@@ -65,14 +65,22 @@
 
                             <!-- Topics -->
                             <div class="card-body p-0 bg-body-tertiary bg-gradient">
-                                <template v-for="topic in 20">
-                                    <Topic/>
+                                <template v-for="topic in topics">
+                                    <Topic :topic="topic" />
                                 </template>
+
                             </div>
                         </div>
 
                         <!-- Pagination -->
-                        <Pagination/>
+                        <Pagination v-if="childrenForums.length !==0" />
+
+                        <div class="m-sm-0 mt-1 mb-2">
+                            <div class="mx-3 p-1 text-center" v-if="topics.length === 0">
+                                <h4>There is not a single topics on this forum. Create first!</h4>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 
@@ -101,64 +109,40 @@ export default {
     name: "Forum",
     components: {Sidebar, FilterTopics, Topic, Pagination, ForumItem},
 
+    created() {
+        this.getForums(this.$route.params.id);
+    },
+
     data() {
         return {
-            categories: [
-                {
-                    id: 1,
-                    title: 'Lorem ipsum dolor sit amet',
-                    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.',
-                    icon: 'fas fa-shield-alt',
-                    views: 1216,
-                    topics: 238,
-                    posts: 140,
-                },
-                {
-                    id: 1,
-                    title: 'Lorem ipsum dolor sit amet',
-                    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.',
-                    icon: 'fa fa-bolt',
-                    views: 1216,
-                    topics: 238,
-                    posts: 140,
-                },
-                {
-                    id: 1,
-                    title: 'Lorem ipsum dolor sit amet',
-                    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.',
-                    icon: 'fa fa-calendar',
-                    views: 1216,
-                    topics: 238,
-                    posts: 140,
-                },
-                {
-                    id: 1,
-                    title: 'Lorem ipsum dolor sit amet',
-                    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.',
-                    icon: 'fa fa-star',
-                    views: 1216,
-                    topics: 238,
-                    posts: 140,
-                },
-                {
-                    id: 1,
-                    title: 'Lorem ipsum dolor sit amet',
-                    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.',
-                    icon: 'fa fa-bomb',
-                    views: 1216,
-                    topics: 238,
-                    posts: 140,
-                },
-                {
-                    id: 1,
-                    title: 'Lorem ipsum dolor sit amet',
-                    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.',
-                    icon: 'fa fa-ambulance',
-                    views: 1216,
-                    topics: 238,
-                    posts: 140,
-                },
-            ],
+            forum: [],
+            childrenForums: [],
+            topics: [],
+        }
+    },
+
+    watch: {
+        '$route.params.id': {
+            immediate: true,
+            handler(){
+                this.getForums(this.$route.params.id);
+            },
+        },
+    },
+
+    methods: {
+        getForums(id){
+            axios.get(`/api/client/forum/${id}`)
+                .then(res => {
+                    console.log(res.data);
+                    this.forum = res.data.forum
+                    this.childrenForums = res.data.forum.children;
+                    this.topics = res.data.forum.topics;
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+
         }
     }
 

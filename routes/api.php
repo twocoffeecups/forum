@@ -153,9 +153,10 @@ Route::group(['prefix' => 'client'], function () {
         Route::group(['prefix' => '{forum}'], function () {
             Route::get('/', [\App\Http\Controllers\Client\Forum\ForumController::class, 'show']);
         });
-
     });
 
+
+    Route::get('/forum-stats', \App\Http\Controllers\Client\Forum\ForumStatsController::class);
 
     Route::group(['prefix' => 'topic'], function () {
 

@@ -13,7 +13,7 @@ class ForumCategoryController extends Controller
     {
         $forumCategories = Forum::all()->where('type', '=', 0);
         //dd($forumCategories->toArray());
-        return response()->json(['forumCategories' => ForumCategoryResource::collection($forumCategories)]);
+        return response()->json(['forums' => ForumCategoryResource::collection($forumCategories)]);
     }
 
     protected function show(Forum $forumCategories)

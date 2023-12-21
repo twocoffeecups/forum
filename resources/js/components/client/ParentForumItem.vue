@@ -48,16 +48,9 @@
 <script>
 
 export default {
-    name: "ForumItem",
+    name: "ParentForumItem",
 
     props: ['forum'],
-
-    data() {
-        return {
-            forum: this.forum,
-        }
-    },
-
 }
 </script>
 
