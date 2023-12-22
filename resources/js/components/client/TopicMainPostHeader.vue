@@ -5,7 +5,7 @@
                 <div class="d-flex">
                 <h5 class="card-text">{{ topicTitle }}</h5> <small class="mx-2 p-1" style="font-size: 0.8em">{{ $t('component.topicHeader.byCategory') }} {{ categoryTitle }}</small>
                 </div>
-                <span class="card-text d-flex">{{ $t('component.topicHeader.created') }}: 01/01/2023</span>
+                <span class="card-text d-flex">{{ $t('component.topicHeader.created') }}: {{ createdAt }}</span>
             </div>
         </div>
     </div>
@@ -15,7 +15,7 @@
 export default{
     name:'TopicMainPostHeader',
 
-    props:['topicTitle', 'categoryTitle',]
+    props:['topicTitle', 'categoryTitle', 'createdAt']
 }
 </script>
 

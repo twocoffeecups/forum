@@ -19,7 +19,7 @@ class TopicAuthorResource extends JsonResource
             'id' => $this->id,
             'name' => $this->firstName." ".$this->lastName,
             'status' => 'offline',
-            'avatar' => $this->avatar,
+            'avatar' => url($this->avatar),
             'totalPosts' => $this->posts->count(),
             'register_at' => date('d.m.Y H:i', strtotime($this->created_at)),
         ];

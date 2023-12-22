@@ -8,9 +8,13 @@
             <div class="card-body">
                 <div class="mb-2">
                     <div class="mb-3">
-                        <span v-if="replyId" class="form-label">{{
-                                $t('component.postCreationForm.replyPost')
-                            }} {{ replyId }}</span>
+                        <div v-if="reply.length!==0" style="border: 1px solid #ccc4af; border-left: 5px solid #706a5a; font-style: italic">
+                            <div class="d-flex justify-content-between mb-0" style="background-color: #ccc4af">
+                                <p class="mx-1">{{ $t('component.postCreationForm.replyPost')+ reply.id }}</p>
+                                <span title="Cancel reply" @click="cancelReply" role="button" class="m-2"><i class="far fa-times-circle"></i></span>
+                            </div>
+                            <p class="m-1" v-html="reply.message"></p>
+                        </div>
                     </div>
                     <div>
                         <QuillEditor v-model:content="post.message" toolbar="essential" contentType="html" id="description"
@@ -42,11 +46,12 @@ import {mapGetters} from "vuex";
 
 export default {
     name: "PostCreationForm",
-    props: ['replyId', 'topicId'],
+    props: ['reply', 'replyId', 'topicId'],
+    emits: ['cancelReply'],
 
     computed:{
         ...mapGetters({
-            isLoggedIn: 'isLoggedIn',
+            isLoggedIn: 'auth/isLoggedIn',
         }),
     },
 
@@ -66,18 +71,20 @@ export default {
     data() {
         return {
             post: {
-                topicId: this.topicId,
+                topicId: this.$route.params.id,
                 replyId: this.replyId,
                 message: null,
-
             },
-            user: true,
         }
     },
 
     methods: {
         creationPost() {
             this.$store.dispatch('createPost', this.post);
+        },
+
+        cancelReply() {
+            this.$emit('cancelReply');
         }
     }
 }
