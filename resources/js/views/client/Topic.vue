@@ -112,7 +112,7 @@ export default {
                     this.author = res.data.topic.author;
                     this.posts = res.data.topic.posts;
                     this.topicId = this.topic.id
-                    console.log(this.topicId);
+                    console.log(res.data.topic.posts);
 
                 })
                 .catch(error => {

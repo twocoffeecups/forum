@@ -78,7 +78,7 @@ class ProfileController extends Controller
         $avatarName = md5(Carbon::now() . '_' . $data['avatar']->getClientOriginalName()) . '.' . $data['avatar']->getClientOriginalExtension();
         $avatarPath = Storage::disk('public')->putFileAs('/users/avatars', $data['avatar'], $avatarName);
 
-        $user->avatar = $avatarPath;
+        $user->avatar = url('/storage/' . $avatarPath);
         $user->save();
 
         return response()->json(['message'=>'New avatar saved.']);

@@ -73,9 +73,8 @@
             <div class="row g-0">
                 <div class="col-md-3">
                     <div class="card-header h-100">
-                        <div class="media flex-wrap w-100 align-items-center"><img
-                            :src="post.author.avatar"
-                            width="64" class="d-block ui-w-40 rounded-circle" alt="">
+                        <div class="media flex-wrap w-100 align-items-center">
+                            <img :src="avatar" width="64" class="d-block ui-w-40 rounded-circle" alt="">
                             <div class="media-body ml-3"><a href="javascript:void(0)" data-abc="true">{{ post.author.name }}</a>
                                 <div class="text-muted small">Offline</div>
                             </div>
@@ -89,12 +88,20 @@
                 <div class="col-md-9">
                     <div class="card-body">
                         <p class="card-text text-muted"><small class="text-muted">Last updated: {{ post.updated_at }}</small></p>
+
+                        <!-- Reply post -->
+                        <div v-if="post.replyPost!==null" style="border: 1px solid #ccc4af; border-left: 5px solid #706a5a; font-style: italic">
+                            <div class="d-flex justify-content-between mb-0" style="background-color: #ccc4af">
+                                <p class="mx-1">Reply: {{ post.replyPost.author +' @ '+post.replyPost.created_at  }}</p>
+                            </div>
+                            <p class="m-1" v-html="post.replyPost.message"></p>
+                        </div>
+
                         <p class="card-text" v-html="post.message">
 
                         </p>
-<!--                        <p>-->
-<!--                            {{ post.author.name }}-->
-<!--                        </p>-->
+
+                        <!-- Images -->
                         <div v-if="post.images.length!==0" class="card">
                             <div class="card-header img-card-header" @click="toggleImageContainer(post.id)"
                                  style="background-color: #bab5a9">
@@ -104,14 +111,15 @@
                                 <img src="/src/assets/img/nature.jpg" class="img-fluid mb-1">
                             </div>
                         </div>
+
                         <div class="mt-2 d-block d-md-flex d-lg-flex d-xl-flex justify-content-between">
                             <div class="flex-sm-row d-md-flex d-lg-flex d-xl-flex text-center">
                                 <button @click.prevent="likePost" class="btn btn-xs text-muted has-icon"><i
                                     class="far fa-heart"></i> {{ post.rating }}
                                 </button>
                                 <span class="text-muted d-inline-flex align-items-center align-middle ml-4">
-                        <i class="fa fa-eye text-muted fsize-3"></i>&nbsp; <span class="align-middle"> {{ post.views }}</span>
-                      </span>
+                                  <i class="fa fa-eye text-muted fsize-3"></i>&nbsp; <span class="align-middle"> {{ post.views }}</span>
+                                </span>
                             </div>
                             <div class="flex-sm-row d-md-flex d-lg-flex d-xl-flex text-center">
                                 <button @click.capture="report(post.id)" class="btn btn-sm btn-outline-danger mx-1"
@@ -138,11 +146,12 @@
 export default {
     name: "Post",
     props: ['post'],
-    emits: ['reply', 'report'],
+    emits: ['reply', 'report',],
 
     data() {
         return {
             postId: 1,
+            avatar: this.post.author.avatar,
         }
     },
 

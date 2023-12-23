@@ -6,9 +6,9 @@
             <div class="row g-0">
                 <div class="col-md-3">
                     <div class="card-header h-100">
-                        <div class="media flex-wrap w-100 align-items-center"><img
-                            src="https://i0.wp.com/www.celebrity-cutouts.com/wp-content/uploads/2018/11/todd-howard-smile-celebrity-mask.png?resize=450%2C450&ssl=1"
-                            width="64" class="d-block ui-w-40 rounded-circle" alt="">
+                        <div class="media flex-wrap w-100 align-items-center">
+                            <img :src="mainPost.author.avatar" width="64" class="d-block ui-w-40 rounded-circle" alt="">
+<!--                            src="https://i0.wp.com/www.celebrity-cutouts.com/wp-content/uploads/2018/11/todd-howard-smile-celebrity-mask.png?resize=450%2C450&ssl=1"-->
                             <div class="media-body ml-3"><a v-if="mainPost.author!==null" href="javascript:void(0)"
                                                             data-abc="true">{{ author.name }}</a>
                                 <div class="text-muted small">Offline</div>
@@ -28,6 +28,16 @@
 
                         </p>
 
+                        <div v-if="mainPost.images.length!==0" class="card">
+                            <div class="card-header img-card-header" @click="toggleImageContainer(mainPost.id)"
+                                 style="background-color: #bab5a9">
+                                <i>Images</i>
+                            </div>
+                            <div :id="`post-img-container-${mainPost.id}`" class="card-body hide">
+                                <img src="/src/assets/img/nature.jpg" class="img-fluid mb-1">
+                            </div>
+                        </div>
+
                         <div class="d-flex justify-content-start mt-1 mx-2 mb-1">
                             <div class="text-sm op-5">
                                 <span v-for="tag in mainPost.tags" class="text-black px-1 mr-2">#{{ tag.name }}</span>
@@ -40,10 +50,8 @@
                                     {{ mainPost.rating }}
                                 </button>
                                 <span class="text-muted d-inline-flex align-items-center align-middle ml-4">
-                        <i class="fa fa-eye text-muted fsize-3"></i>&nbsp; <span class="align-middle"> {{
-                                        mainPost.views
-                                    }}</span>
-                      </span>
+                                    <i class="fa fa-eye text-muted fsize-3"></i>&nbsp; <span class="align-middle"> {{ mainPost.views }}</span>
+                              </span>
                             </div>
                             <div class="flex-sm-row d-md-flex d-lg-flex d-xl-flex text-center">
                                 <button class="btn btn-sm btn-outline-danger mx-1" data-bs-toggle="modal"
@@ -73,10 +81,11 @@ export default {
     components: {TopicMainPostHeader},
     props: ['mainPost', 'author'],
 
-    // data() {
-    //     return {
-    //         author: this.mainPost.author,
-    //     }
-    // },
+    methods: {
+        toggleImageContainer(id) {
+            let elem = document.querySelector(`#post-img-container-${id}`)
+            elem.classList.toggle('hide');
+        },
+    }
 }
 </script>

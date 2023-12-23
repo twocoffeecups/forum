@@ -25,6 +25,7 @@ class PostResource extends JsonResource
             'likes' => TopicLikeResource::collection($this->likes),
             'views' => 1,
             'author' => new TopicAuthorResource($this->author),
+            'replyPost' => new ReplyPostResource($this->replyPost()),
             'images' => $this->images,
             'files' => $this->files,
             'created_at' => date('d.m.Y H:i', strtotime($this->created_at)),
