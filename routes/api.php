@@ -116,34 +116,28 @@ Route::group(['prefix' => 'client'], function () {
             Route::put('/edit-password', [\App\Http\Controllers\Client\Profile\ProfileController::class, 'updatePassword']);
             Route::patch('/update-avatar', [\App\Http\Controllers\Client\Profile\ProfileController::class, 'updateAvatar']);
         });
-
-
-        Route::group(['prefix' => 'post/{post}'], function () {
-            Route::post('/bookmarks', [\App\Http\Controllers\Client\Post\PostController::class, 'bookmarks']);
-            Route::post('/like', [\App\Http\Controllers\Client\Post\PostController::class, 'like']);
-        });
-
-
-        // Topic
-        Route::group(['prefix' => 'topic'], function () {
-
-            Route::post('/', [\App\Http\Controllers\Client\Topic\TopicController::class, 'store']);
-
-            Route::group(['prefix' => '{topic}'], function () {
-                Route::get('/like', [\App\Http\Controllers\Client\Topic\TopicController::class, 'like']);
-
-                // Post
-                Route::group(['prefix' => 'post'], function () {
-                    Route::post('/', [\App\Http\Controllers\Client\Post\PostController::class, 'store']);
-                    Route::patch('/', [\App\Http\Controllers\Client\Post\PostController::class, 'update']);
-                });
-            });
-
-
-        });
-
     });
 
+    // Topic
+    Route::group(['prefix' => 'topic'], function () {
+
+        Route::post('/', [\App\Http\Controllers\Client\Topic\TopicController::class, 'store']);
+
+        Route::group(['prefix' => '{topic}'], function () {
+            Route::get('/like', [\App\Http\Controllers\Client\Topic\TopicController::class, 'like']);
+
+            // Post
+            Route::group(['prefix' => 'post'], function () {
+                Route::post('/', [\App\Http\Controllers\Client\Post\PostController::class, 'store']);
+                Route::patch('/', [\App\Http\Controllers\Client\Post\PostController::class, 'update']);
+            });
+        });
+    });
+
+    Route::group(['prefix' => 'post/{post}'], function () {
+        Route::patch('/bookmarks', [\App\Http\Controllers\Client\Post\PostController::class, 'bookmarks']);
+        Route::patch('/like', [\App\Http\Controllers\Client\Post\PostController::class, 'like']);
+    });
 
     // Forum api routes
     Route::group(['prefix' => 'forum'], function () {

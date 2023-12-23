@@ -34,7 +34,7 @@
     <div class="forum-item py-2 px-3 mb-0 border-bottom ">
         <div class="row">
             <div class="col-md-7 col-lg-7 d-flex flex-column align-content-between">
-                <router-link :to="{name:'forum', params:{id: topic.id}}" class="forum-nav-link" style="font-size: 1.2em">
+                <router-link :to="{name:'topic', params:{id: topic.id}}" class="forum-nav-link" style="font-size: 1.2em">
                     {{ topic.title }}
                 </router-link>
                 <p class="text-sm"><span class="op-6">{{ $t('component.topic.created') }}</span>

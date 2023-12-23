@@ -22,7 +22,7 @@
                     </div>
                 </div>
                 <div class="mb-1">
-                    <button type="submit" @click.prevent="creationPost" class="btn btn-primary">
+                    <button type="submit" @click.prevent="createPost" class="btn btn-primary">
                         {{ $t('component.postCreationForm.addPost') }}
                     </button>
                 </div>
@@ -46,7 +46,7 @@ import {mapGetters} from "vuex";
 
 export default {
     name: "PostCreationForm",
-    props: ['reply', 'replyId', 'topicId'],
+    props: ['reply', 'replyId'],
     emits: ['cancelReply'],
 
     computed:{
@@ -79,7 +79,8 @@ export default {
     },
 
     methods: {
-        creationPost() {
+        createPost() {
+            //console.log(this.post)
             this.$store.dispatch('createPost', this.post);
         },
 

@@ -12,10 +12,17 @@
 </template>
 
 <script>
+import {mapGetters} from "vuex";
+
 export default{
     name:'TopicMainPostHeader',
+    props:['topicTitle', 'categoryTitle', 'createdAt'],
 
-    props:['topicTitle', 'categoryTitle', 'createdAt']
+    computed: {
+        ...mapGetters({
+            mainPost: 'topic/getMainPost',
+        }),
+    },
 }
 </script>
 

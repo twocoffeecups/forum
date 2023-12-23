@@ -37,14 +37,14 @@
                     </div>
                     <div class="card-body">
                         <!-- Topic main post -->
-                        <TopicMainPost :main-post="topic" :author="author"/>
+                        <TopicMainPost :main-post="topic"/>
 
                         <!-- Posts -->
                         <Post v-for="post in posts" :post="post" @report="report" @reply="reply"/>
                         <!-- ./ Posts-->
 
                         <!-- Create post form -->
-                        <PostCreationForm :topic-id="topicId" :reply="replyPost" :reply-id="replyPost.id" @cancelReply="cancelReply"/>
+                        <PostCreationForm :reply="replyPost" :reply-id="replyPost.id" @cancelReply="cancelReply"/>
 
                         <!-- Topic footer -->
                         <TopicFooter/>
@@ -76,23 +76,28 @@ import TopicMainPost from '../../components/client/TopicMainPost.vue';
 import Post from "../../components/client/Post.vue";
 import PostCreationForm from "../../components/client/PostCreationForm.vue";
 import ReportForm from "../../components/client/ReportForm.vue";
+import {mapGetters} from "vuex";
 
 export default {
     name: "Topic",
     components: {ReportForm, PostCreationForm, Post, Sidebar, TopicFooter, Pagination, TopicMainPost},
 
     created() {
-        this.getTopic(this.$route.params.id);
+        this.$store.dispatch('topic/getTopic', this.$route.params.id);
+    },
+
+    computed: {
+        ...mapGetters({
+            topic: 'topic/getTopic',
+            posts: 'topic/getPosts',
+        }),
     },
 
     data() {
         return {
             replyPost: [],
             reportId: null,
-            topic: [],
             author: [],
-            posts: [],
-            topicId: null,
         }
     },
 
@@ -100,27 +105,10 @@ export default {
         reply(data) {
             this.replyPost = data
         },
-
         report(data) {
             this.reportId = data
         },
-
-        getTopic(id) {
-            axios.get(`/api/client/topic/${id}`)
-                .then(res => {
-                    this.topic = res.data.topic;
-                    this.author = res.data.topic.author;
-                    this.posts = res.data.topic.posts;
-                    this.topicId = this.topic.id
-                    console.log(res.data.topic.posts);
-
-                })
-                .catch(error => {
-                    console.log(error);
-                })
-        },
-
-        cancelReply(){
+        cancelReply() {
             this.replyPost = [];
         }
     },

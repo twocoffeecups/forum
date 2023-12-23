@@ -7,15 +7,15 @@
                 <div class="col-md-3">
                     <div class="card-header h-100">
                         <div class="media flex-wrap w-100 align-items-center">
-                            <img :src="mainPost.author.avatar" width="64" class="d-block ui-w-40 rounded-circle" alt="">
+                            <img :src="topicAuthor.avatar" width="64" class="d-block ui-w-40 rounded-circle" alt="">
 <!--                            src="https://i0.wp.com/www.celebrity-cutouts.com/wp-content/uploads/2018/11/todd-howard-smile-celebrity-mask.png?resize=450%2C450&ssl=1"-->
-                            <div class="media-body ml-3"><a v-if="mainPost.author!==null" href="javascript:void(0)"
-                                                            data-abc="true">{{ author.name }}</a>
+                            <div class="media-body ml-3"><a href="javascript:void(0)"
+                                                            data-abc="true">{{ topicAuthor.name }}</a>
                                 <div class="text-muted small">Offline</div>
                             </div>
                             <div class="text-muted small ml-3">
-                                <div>{{ $t('component.post.registerDate') }} <strong>{{ author.register_at }}</strong></div>
-                                <div><strong>{{ author.totalPosts }}</strong> {{ $t('component.post.messages') }}</div>
+                                <div>{{ $t('component.post.registerDate') }} <strong>{{ topicAuthor.register_at }}</strong></div>
+                                <div><strong>{{ topicAuthor.totalPosts }}</strong> {{ $t('component.post.messages') }}</div>
                             </div>
                         </div>
                     </div>
@@ -28,7 +28,7 @@
 
                         </p>
 
-                        <div v-if="mainPost.images.length!==0" class="card">
+                        <div v-if="mainPost.images!==null" class="card">
                             <div class="card-header img-card-header" @click="toggleImageContainer(mainPost.id)"
                                  style="background-color: #bab5a9">
                                 <i>Images</i>
@@ -75,11 +75,18 @@
 
 <script>
 import TopicMainPostHeader from './TopicMainPostHeader.vue';
+import {mapGetters, mapState} from "vuex";
 
 export default {
     name: "TopicMainPost",
     components: {TopicMainPostHeader},
-    props: ['mainPost', 'author'],
+    props: ['mainPost'],
+
+    computed: {
+        ...mapGetters({
+            topicAuthor: 'topic/getTopicAuthor',
+        }),
+    },
 
     methods: {
         toggleImageContainer(id) {
