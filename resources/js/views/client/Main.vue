@@ -28,34 +28,21 @@ import Topic from '../../components/client/Topic.vue';
 import Pagination from "../../components/client/Pagination.vue";
 import ForumItem from "../../components/client/ForumItem.vue";
 import ForumSection from "../../components/client/ForumSection.vue";
+import { mapGetters } from "vuex";
 
 export default {
     name: "Main",
     components: {ForumSection, Pagination, Sidebar, Topic, FilterTopics, ForumItem},
 
-    data() {
-        return {
-            forumCategories: [],
-        }
+    computed: {
+        ...mapGetters({
+            forumCategories: 'forumCategory/getForumCategories',
+        })
     },
 
     mounted() {
-        this.getForumCategories();
+        this.$store.dispatch('forumCategory/getForumCategories');
     },
-
-    methods: {
-        getForumCategories() {
-            axios.get('/api/client/forum')
-                .then(res => {
-
-                    this.forumCategories = res.data.forums;
-                    console.log("Forum categories: ", this.forumCategories);
-                })
-                .catch(error => {
-                    console.log(error);
-                })
-        }
-    }
 }
 </script>
 

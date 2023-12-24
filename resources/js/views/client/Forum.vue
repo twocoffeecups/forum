@@ -5,7 +5,6 @@
             <!-- Main content -->
             <div class="col-lg-9 mb-3">
 
-
                 <div class="card">
                     <div class="card-header">
                         <!-- Forum head -->
@@ -84,14 +83,12 @@
                     </div>
                 </div>
 
-
             </div>
 
             <!-- Sidebar content -->
             <div class="col-lg-3 ml-3 mb-4 mb-lg-0 px-lg-0 mt-lg-0">
                 <Sidebar/>
             </div>
-
 
         </div>
     </div>
@@ -104,48 +101,32 @@ import Sidebar from '../../components/client/Sidebar.vue';
 import Topic from '../../components/client/Topic.vue';
 import Pagination from "../../components/client/Pagination.vue";
 import ForumItem from "../../components/client/ForumItem.vue";
+import { mapGetters } from "vuex";
 
 export default {
     name: "Forum",
     components: {Sidebar, FilterTopics, Topic, Pagination, ForumItem},
 
-    created() {
-        this.getForums(this.$route.params.id);
+    computed: {
+        ...mapGetters({
+            forum: 'forum/getForum',
+            childrenForums: 'forum/getChildrenForums',
+            topics: 'forum/getTopics',
+        }),
     },
 
-    data() {
-        return {
-            forum: [],
-            childrenForums: [],
-            topics: [],
-        }
+    mounted() {
+        this.$store.dispatch('forum/getForum', this.$route.params.id);
     },
 
     watch: {
         '$route.params.id': {
             immediate: true,
             handler(){
-                this.getForums(this.$route.params.id);
+                this.$store.dispatch('forum/getForum', this.$route.params.id);
             },
         },
     },
-
-    methods: {
-        getForums(id){
-            axios.get(`/api/client/forum/${id}`)
-                .then(res => {
-                    console.log(res.data);
-                    this.forum = res.data.forum
-                    this.childrenForums = res.data.forum.children;
-                    this.topics = res.data.forum.topics;
-                })
-                .catch(error => {
-                    console.log(error);
-                })
-
-        }
-    }
-
 }
 </script>
 

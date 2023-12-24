@@ -33,7 +33,7 @@ export default {
                 for (let [key, value] of Object.entries(user)) {
                     data.append(key, value);
                 }
-                api.post(`/api/client/${1}/profile/profile-update`, data)
+                api.post(`/api/client/profile/profile-update`, data)
                     .then(res => {
                         if (res.data) {
                             toast.success('You have successfully registered!');
@@ -56,7 +56,7 @@ export default {
                 for (let [key, value] of Object.entries(user)) {
                     data.append(key, value);
                 }
-                axios.post(`/api/client/${1}/profile/edit-password`, data)
+                api.post(`/api/client/profile/edit-password`, data)
                     .then(res => {
                         if (res.data) {
                             toast.success('Password update successfully!');
@@ -79,7 +79,7 @@ export default {
                 let data = new FormData();
                 data.append('avatar', avatar);
                 data.append('_method', 'patch');
-                axios.post(`/api/client/${1}/profile/update-avatar`, data)
+                api.post(`/api/client/${1}/profile/update-avatar`, data)
                     .then(res => {
                         if (res.data) {
                             toast.success(res.data.message);

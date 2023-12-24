@@ -48,7 +48,6 @@ export default {
                             commit('setTopic', response.data.topic);
                             commit('setTopicAuthor', response.data.topic.author);
                             commit('setPosts', response.data.topic.posts);
-                            console.log(response.data.topic)
                             resolve(response);
                         } else {
                             reject(response);

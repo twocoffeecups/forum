@@ -30,6 +30,8 @@ export default {
     name: "ForumSection",
     components: {ParentForumItem, ForumItem},
     props: ['forumCategory'],
+
+
 }
 </script>
 

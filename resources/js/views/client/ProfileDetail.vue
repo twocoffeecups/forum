@@ -8,7 +8,7 @@
                     <div class="card-body text-center">
                         <div class="d-flex flex-row">
                             <img class="img-account-profile rounded-circle mb-2"
-                                 src="http://bootdey.com/img/Content/avatar/avatar1.png" alt="">
+                                 :src="userDetails.avatar" alt="">
 
                             <div class="w-100 ms-3">
                                 <h4 class="my-0">{{ userDetails.name ?? userDetails.login }}</h4>

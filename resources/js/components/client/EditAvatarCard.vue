@@ -27,14 +27,12 @@
 </template>
 
 <script>
-import axios from "axios";
-
 export default {
     name: "EditAvatarCard",
 
     data() {
         return {
-            defaultAvatar: 'http://bootdey.com/img/Content/avatar/avatar1.png',
+            defaultAvatar: this.$store.getters['auth/avatar'],
             newAvatar: null,
             isFileUpload: null,
             userId: 1
@@ -70,7 +68,7 @@ export default {
         },
 
         removeAvatar() {
-            this.defaultAvatar = 'http://bootdey.com/img/Content/avatar/avatar1.png';
+            this.defaultAvatar = this.$store.getters['auth/avatar'];
             this.newAvatar = null;
             this.isFileUpload = null;
         }
