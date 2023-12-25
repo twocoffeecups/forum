@@ -150,7 +150,6 @@ export default {
 
     data() {
         return {
-            postId: 1,
             avatar: this.post.author.avatar,
         }
     },

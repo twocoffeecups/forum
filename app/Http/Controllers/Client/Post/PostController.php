@@ -24,10 +24,7 @@ class PostController extends Controller
     protected function store(PostStoreRequest $request, Topic $topic): \Illuminate\Http\JsonResponse
     {
 
-        $data = $request->validated();
-        $hashedToken = $request->bearerToken();
-        $token = PersonalAccessToken::findToken($hashedToken)->first();
-        $user = $token->tokenable;
+        $user = $this->getUserByToken($request);
         $data['userId'] = $user->id;
         $data['topicId'] = $topic->id;
         $post = Post::firstOrCreate($data);
@@ -62,9 +59,7 @@ class PostController extends Controller
      */
     protected function bookmarks(Request $request, Post $post): \Illuminate\Http\JsonResponse
     {
-        $hashedToken = $request->bearerToken();
-        $token = PersonalAccessToken::findToken($hashedToken)->first();
-        $user = $token->tokenable;
+        $user = $this->getUserByToken($request);
         $user->bookmarks()->toggle($post->id);
         return response()->json(['message' => 'Success.']);
     }
@@ -76,9 +71,7 @@ class PostController extends Controller
      */
     protected function like(Request $request, Post $post): \Illuminate\Http\JsonResponse
     {
-        $hashedToken = $request->bearerToken();
-        $token = PersonalAccessToken::findToken($hashedToken)->first();
-        $user = $token->tokenable;
+        $user = $this->getUserByToken($request);
         $user->likes()->toggle($post->id);
         return response()->json(['message' => 'Success.']);
     }

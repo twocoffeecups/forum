@@ -24,6 +24,7 @@ class ProfileController extends Controller
     public function index(Request $request): \Illuminate\Http\JsonResponse
     {
         $user = $request->user();
+        //$user = $this->getUserByToken($request);
         return response()->json([
             'userDetails' => new UserResource($user),
         ]);

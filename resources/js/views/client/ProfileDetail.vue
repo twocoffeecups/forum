@@ -55,9 +55,15 @@
                                 </button>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill"
+                                <button class="nav-link" id="pills-posts-tab" data-bs-toggle="pill"
                                         data-bs-target="#pills-post" type="button" role="tab" aria-controls="pills-post"
                                         aria-selected="false">{{ $t('view.accountDetail.posts') }}
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="pills-like-tab" data-bs-toggle="pill"
+                                        data-bs-target="#pills-like" type="button" role="tab" aria-controls="pills-like"
+                                        aria-selected="false"> Like
                                 </button>
                             </li>
                             <li class="nav-item" role="presentation">
@@ -65,6 +71,12 @@
                                         data-bs-target="#pills-bookmarks" type="button" role="tab"
                                         aria-controls="pills-notifications" aria-selected="false">
                                     {{ $t('view.accountDetail.bookmarks') }}
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="pills-post-bookmarks-tab" data-bs-toggle="pill"
+                                        data-bs-target="#pills-post-bookmarks" type="button" role="tab"
+                                        aria-controls="pills-post-bookmarks" aria-selected="false"> Post bookmarks
                                 </button>
                             </li>
                         </ul>
@@ -76,58 +88,26 @@
                             <!-- Topics -->
                             <div class="tab-pane fade" id="pills-topic" role="tabpanel"
                                  aria-labelledby="pills-topic-tab" tabindex="0">
-                                <!-- item -->
-                                <div class="forum-item py-3 px-3 mt-2 border">
-                                    <div class="row">
-                                        <div class="col-md-7 col-lg-7 d-flex flex-column align-content-between">
-                                            <router-link :to="{name:'forum', params:{id:1}}" class="forum-nav-link"
-                                                         style="font-size: 1.2em">Lorem ipsum dolor sit amet
-                                            </router-link>
-                                            <p class="text-sm"><span class="op-6">{{
-                                                    $t('component.topic.created')
-                                                }}</span> <a class="text-black" href="#">20 minutes</a>
-                                                <span class="op-6"> ago by</span> <a class="" href="#">Tod Howard</a>
-                                            </p>
-                                            <div class="text-sm op-5 my-auto">
-                                                <a class="text-black mr-2" href="#">#Java</a> <a class="text-black mr-2"
-                                                                                                 href="#"> #PHP</a>
-                                                <a class="text-black mr-2" href="#"> #JS</a>
-                                            </div>
-
-                                        </div>
-
-                                        <div class="col-md-2 col-lg-2 mt-3 mt-lg-0">
-                                            <h4 class="h6 font-weight-bold text-center d-none d-md-block d-lg-block">
-                                                Stats: </h4>
-                                            <div class="d-flex justify-content-between text-center op-7">
-                                                <div class="col px-1">
-                                                    <span><i class="fas fa-heart"
-                                                             :title="$t('component.topic.votes')"></i> 141</span>
-                                                </div>
-                                                <div class="col px-1">
-                                                    <span><i class="fas fa-comment"
-                                                             :title="$t('component.topic.posts')"></i> 122</span>
-                                                </div>
-                                                <div class="col px-1">
-                                                    <span><i class="fas fa-eye"
-                                                             :title="$t('component.topic.views')"></i> 290</span>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div
-                                            class="col-md-3 col-lg-3 mt-3 mt-lg-0 d-flex flex-row flex-md-column flex-lg-column">
-                                            <h4 class="h6 font-weight-bold">Latest comment: </h4>
-                                            <!--          <h6 class="h6 mb-0 font-weight-bold"><router-link :to="{name:'topic', params:{id:1}}">Post name</router-link></h6>-->
-                                            <div>by <a href="#0">Author name</a></div>
-                                            <div>05 Apr 2017, 20:07</div>
-                                        </div>
-                                    </div>
+                                <Topic  v-if="userDetails.topics.length!==0" v-for="topic in userDetails.topics" :topic="topic" />
+                                <div v-if="userDetails.topics.length===0" class="text-center m-1 p-1">
+                                    <h5>You haven't created any topics.</h5>
                                 </div>
                             </div>
 
-                            <!-- Liked Post -->
+                            <!-- Post -->
                             <div class="tab-pane fade" id="pills-post" role="tabpanel" aria-labelledby="pills-post-tab"
+                                 tabindex="0">
+
+                                <Post v-if="userDetails.posts.length!==0" v-for="post in userDetails.posts" :post="post" />
+
+                                <div v-if="userDetails.posts.length===0" class="text-center m-1 p-1">
+                                    <h5>You haven't written a post.</h5>
+                                </div>
+                            </div>
+
+                            <!-- TODO: доделать -->
+                            <!-- Liked  -->
+                            <div class="tab-pane fade" id="pills-like" role="tabpanel" aria-labelledby="pills-like-tab"
                                  tabindex="0">
                                 <div class="card">
                                     <div class="row g-0">
@@ -185,56 +165,24 @@
                                 </div>
                             </div>
 
-                            <!-- Bookmarks -->
+                            <!-- Topic Bookmarks -->
                             <div class="tab-pane fade" id="pills-bookmarks" role="tabpanel"
                                  aria-labelledby="pills-bookmarks-tab" tabindex="0">
+                                <Topic  v-if="userDetails.topicBookmarks.length!==0" v-for="topic in userDetails.topicBookmarks" :topic="topic" />
+                                <div v-if="userDetails.topicBookmarks.length===0" class="text-center m-1 p-1">
+                                    <h5>You haven't added any topics to your bookmarks list.</h5>
+                                </div>
+                            </div>
+
+                            <!-- Post Bookmarks -->
+                            <div class="tab-pane fade" id="pills-post-bookmarks" role="tabpanel"
+                                 aria-labelledby="pills-post-bookmarks-tab" tabindex="0">
                                 <!-- item -->
-                                <div class="forum-item py-3 px-3 mt-2 border">
-                                    <div class="row">
-                                        <div class="col-md-7 col-lg-7 d-flex flex-column align-content-between">
-                                            <router-link :to="{name:'forum', params:{id:1}}" class="forum-nav-link"
-                                                         style="font-size: 1.2em">Lorem ipsum dolor sit amet
-                                            </router-link>
-                                            <p class="text-sm"><span class="op-6">{{
-                                                    $t('component.topic.created')
-                                                }}</span> <a class="text-black" href="#">20 minutes</a>
-                                                <span class="op-6"> ago by</span> <a class="" href="#">Tod Howard</a>
-                                            </p>
-                                            <div class="text-sm op-5 my-auto">
-                                                <a class="text-black mr-2" href="#">#Java</a> <a class="text-black mr-2"
-                                                                                                 href="#"> #PHP</a>
-                                                <a class="text-black mr-2" href="#"> #JS</a>
-                                            </div>
-
-                                        </div>
-
-                                        <div class="col-md-2 col-lg-2 mt-3 mt-lg-0">
-                                            <h4 class="h6 font-weight-bold text-center d-none d-md-block d-lg-block">
-                                                Stats: </h4>
-                                            <div class="d-flex justify-content-between text-center op-7">
-                                                <div class="col px-1">
-                                                    <span><i class="fas fa-heart"
-                                                             :title="$t('component.topic.votes')"></i> 141</span>
-                                                </div>
-                                                <div class="col px-1">
-                                                    <span><i class="fas fa-comment"
-                                                             :title="$t('component.topic.posts')"></i> 122</span>
-                                                </div>
-                                                <div class="col px-1">
-                                                    <span><i class="fas fa-eye"
-                                                             :title="$t('component.topic.views')"></i> 290</span>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div
-                                            class="col-md-3 col-lg-3 mt-3 mt-lg-0 d-flex flex-row flex-md-column flex-lg-column">
-                                            <h4 class="h6 font-weight-bold">Latest comment: </h4>
-                                            <!--          <h6 class="h6 mb-0 font-weight-bold"><router-link :to="{name:'topic', params:{id:1}}">Post name</router-link></h6>-->
-                                            <div>by <a href="#0">Author name</a></div>
-                                            <div>05 Apr 2017, 20:07</div>
-                                        </div>
-                                    </div>
+                                <template v-if="userDetails.postBookmarks.length!==0" v-for="post in userDetails.postBookmarks">
+                                    <Post :post="post" />
+                                </template>
+                                <div v-if="userDetails.postBookmarks.length===0" class="text-center m-1 p-1">
+                                    <h5>You haven't added any posts to your bookmarks list.</h5>
                                 </div>
                             </div>
                         </div>
@@ -250,31 +198,17 @@
 
 <script>
 import {mapGetters} from "vuex";
-
+import Post from "../../components/client/Post.vue";
+import Topic from "../admin/Topic.vue";
 export default {
     name: 'ProfileAccount',
-
-    // mounted() {
-    //     this.getUserDetails();
-    // },
+    components: {Topic, Post},
 
     computed:{
         ...mapGetters({
             userDetails: 'auth/userDetails',
         }),
     },
-
-    // data(){
-    //     return{
-    //         //userDetails: JSON.parse(localStorage.getItem('user-details')),
-    //     }
-    // },
-
-    // methods:{
-    //     getUserDetails(){
-    //         this.$store.dispatch('profile/getUserDetails');
-    //     }
-    // }
 }
 </script>
 

@@ -29,10 +29,7 @@ class TagController extends Controller
     public function store(TagStoreRequest $request): \Illuminate\Http\JsonResponse
     {
         $data = $request->validated();
-        // get user be sanctum token
-        $hashedToken = $request->bearerToken();
-        $token = PersonalAccessToken::findToken($hashedToken)->first();
-        $user = $token->tokenable;
+        $user = $this->getUserByToken($request);
         $data['authorId'] = $user->id;
         $tag = Tag::firstOrCreate($data);
         return response()->json([
