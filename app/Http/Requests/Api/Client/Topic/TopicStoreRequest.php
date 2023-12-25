@@ -27,7 +27,6 @@ class TopicStoreRequest extends FormRequest
             'title' => 'required|max:255|string',
             'forumId' => 'required|integer|exists:forums,id',
             'content' => 'required|string',
-            //'userId' => 'required|integer|exists:users,id',
             'tags' => '',
             'images' => '',
             'files' => '',

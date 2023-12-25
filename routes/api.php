@@ -122,7 +122,7 @@ Route::group(['prefix' => 'client'], function () {
     // Topic
     Route::group(['prefix' => 'topic'], function () {
 
-        Route::post('/', [\App\Http\Controllers\Client\Topic\TopicController::class, 'store']);
+        Route::post('/', [\App\Http\Controllers\Client\Topic\TopicController::class, 'store'])->middleware('auth:sanctum');
 
         Route::group(['prefix' => '{topic}'], function () {
             Route::get('/like', [\App\Http\Controllers\Client\Topic\TopicController::class, 'like']);
@@ -133,6 +133,9 @@ Route::group(['prefix' => 'client'], function () {
                 Route::patch('/', [\App\Http\Controllers\Client\Post\PostController::class, 'update']);
             });
         });
+
+        Route::get('/form-resources', [\App\Http\Controllers\Client\Topic\TopicController::class, 'createFormResources']);
+        Route::get('/tags', [\App\Http\Controllers\Client\Topic\TopicController::class, 'createFormResources']);
     });
 
     Route::group(['prefix' => 'post/{post}'], function () {
@@ -144,6 +147,7 @@ Route::group(['prefix' => 'client'], function () {
     Route::group(['prefix' => 'forum'], function () {
 
         Route::get('/', [\App\Http\Controllers\Client\Forum\ForumCategoryController::class, 'index']);
+        //Route::get('/forum-tree', [\App\Http\Controllers\Client\Forum\ForumCategoryController::class, 'getForumTree']);
 
         Route::group(['prefix' => '{forum}'], function () {
             Route::get('/', [\App\Http\Controllers\Client\Forum\ForumController::class, 'show']);

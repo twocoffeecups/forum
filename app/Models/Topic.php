@@ -43,4 +43,9 @@ class Topic extends Model
         return $this->posts()->latest('updated_at')->first();
     }
 
+    public function images()
+    {
+        return $this->hasMany(TopicImage::class, 'topicId', 'id');
+    }
+
 }

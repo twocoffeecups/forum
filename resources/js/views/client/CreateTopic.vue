@@ -39,13 +39,13 @@
                                             }}</label>
                                         <div class="col-sm-10">
                                             <div class="tree-menu card">
-                                                <div @click="toggleCategoryTree" class="card-header p-2 text-center">
+                                                <div role="button" @click.prevent="toggleCategoryTree" class="card-header p-2 text-center">
                                                     Select category.
                                                 </div>
                                                 <CategoryTree v-if="showCategoryTree"
                                                               @selectCategoryEmit="selectCategoryEmit"
                                                               v-for="category in categories"
-                                                              :is-selected="topic.selectCategory.id" :title="category.title"
+                                                              :is-selected="topic.selectCategory.id" :name="category.name"
                                                               :root="category.root" :id="category.id"
                                                               :children="category.children" :indent="0"/>
                                             </div>
@@ -149,7 +149,7 @@ import Emoji from "../../components/client/Emoji.vue";
 import TopicPreview from "../../components/client/TopicPreview.vue";
 import CategoryTree from "../../components/client/CategoryTree.vue";
 import {useToast} from "vue-toastification";
-
+import {mapGetters} from "vuex";
 export default {
     name: "CreateTopic",
     components: {CategoryTree, TopicPreview, Emoji, Sidebar, VueMultiselect},
@@ -160,7 +160,15 @@ export default {
         }
     },
 
+    computed: {
+        ...mapGetters({
+            categories: 'createTopic/getForumTree',
+        }),
+    },
+
     mounted() {
+        this.$store.dispatch('createTopic/getTopicFormResources');
+        this.getTags();
         this.dropzone = new Dropzone(this.$refs.dropzone, {
             url: '/',
             maxFiles: 9,
@@ -209,84 +217,7 @@ export default {
             content: null,
             selectCategory: [],
             selectedTags: [],
-
-            tags: [
-                {option: 'Java', value: 1},
-                {option: 'PHP', value: 2},
-                {option: 'JS', value: 3},
-                {option: 'C#', value: 4},
-                {option: 'C++', value: 5},
-                {option: 'Python', value: 6},
-            ],
-
-            categories: [
-                {
-                    rootId: 1,
-                    title: 'Root category 1',
-                    root: 1,
-                    children: [
-                        {
-                            id: 1,
-                            title: 'Parent category 1',
-                            children: [
-                                {
-                                    id: 3,
-                                    title: 'Child category 1.1',
-                                },
-                                {
-                                    id: 4,
-                                    title: 'Child category 1.2',
-                                },
-                            ],
-                        },
-                        {
-                            id: 5,
-                            title: 'Parent category 2',
-                            children: [
-                                {
-                                    id: 6,
-                                    title: 'Child category 2.1',
-                                    children: [
-                                        {
-                                            id: 7,
-                                            title: 'Child category 2.1.1',
-                                        },
-                                    ],
-                                },
-                                {
-                                    id: 8,
-                                    title: 'Child category 2.2',
-                                },
-                                {
-                                    id: 9,
-                                    title: 'Child category 2.3',
-                                },
-                            ],
-                        },
-                    ],
-                },
-                {
-                    rootId: 10,
-                    title: 'Root category 2',
-                    root: 1,
-                    children: [
-                        {
-                            id: 11,
-                            title: 'Parent category 3',
-                            children: [
-                                {
-                                    id: 12,
-                                    title: 'Child category 3.1',
-                                },
-                                {
-                                    id: 13,
-                                    title: 'Child category 3.2',
-                                },
-                            ],
-                        },
-                    ],
-                }
-            ],
+            tags: [],
 
             topic: {
                 title: null,
@@ -315,9 +246,9 @@ export default {
         },
 
         createTopic() {
-            console.log(this.topic.tags);
+            //console.log(this.topic.tags);
             let data = new FormData();
-            let images = this.dropzone.getAcceptedFiles()
+            let images = this.dropzone.getAcceptedFiles();
             if(images.length>6){
                 this.t$.error('You cannot upload more than 3 files in one message.');
                 return false;
@@ -332,8 +263,19 @@ export default {
             tags.forEach((tag) => {
                 data.append('tags[]', tag.value)
             })
-            this.$store.dispatch('createTopic', data);
+
+            this.$store.dispatch('createTopic/createTopic', data);
         },
+
+        // TODO: переделать в getter
+        getTags(){
+            axios.get('/api/client/topic/tags')
+                .then(response => {
+                    if(response.data){
+                        this.tags = response.data.tags;
+                    }
+                })
+        }
     }
 }
 </script>

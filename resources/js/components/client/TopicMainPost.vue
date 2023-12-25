@@ -28,13 +28,13 @@
 
                         </p>
 
-                        <div v-if="mainPost.images!==null" class="card">
-                            <div class="card-header img-card-header" @click="toggleImageContainer(mainPost.id)"
+                        <div v-if="mainPost.images.length!==0" class="card">
+                            <div class="card-header img-card-header" role="button" @click="toggleImageContainer()"
                                  style="background-color: #bab5a9">
                                 <i>Images</i>
                             </div>
-                            <div :id="`post-img-container-${mainPost.id}`" class="card-body hide">
-                                <img src="/src/assets/img/nature.jpg" class="img-fluid mb-1">
+                            <div v-if="showImg" class="card-body hide">
+                                <img v-for="image in mainPost.images" :src="image.imageUrl" class="img-fluid mb-1">
                             </div>
                         </div>
 
@@ -88,10 +88,17 @@ export default {
         }),
     },
 
+    data(){
+        return{
+            showImg: false,
+        }
+    },
+
     methods: {
-        toggleImageContainer(id) {
-            let elem = document.querySelector(`#post-img-container-${id}`)
-            elem.classList.toggle('hide');
+        toggleImageContainer() {
+            // let elem = document.querySelector(`#post-img-container-${id}`)
+            // elem.classList.toggle('hide');
+            this.showImg = !this.showImg;
         },
     }
 }

@@ -59,23 +59,23 @@ export default {
             });
         },
 
-        createTopic({dispatch}, data) {
-            return new Promise((resolve, reject) => {
-                api.post(`/api/client/topic`, data)
-                    .then(response => {
-                        if (response.data) {
-                            resolve(response);
-                            toast.success(response.data.message ?? "Created.");
-                        } else {
-                            reject(response);
-                        }
-                    })
-                    .catch(error => {
-                        reject(error);
-                        toast.error("Error!");
-                    })
-            });
-        },
+        // createTopic({dispatch}, data) {
+        //     return new Promise((resolve, reject) => {
+        //         api.post(`/api/client/topic`, data)
+        //             .then(response => {
+        //                 if (response.data) {
+        //                     resolve(response);
+        //                     toast.success(response.data.message ?? "Created.");
+        //                 } else {
+        //                     reject(response);
+        //                 }
+        //             })
+        //             .catch(error => {
+        //                 reject(error);
+        //                 toast.error( error.response.data.message ?? "Error!");
+        //             })
+        //     });
+        // },
     },
 
     mutations: {
