@@ -28,13 +28,13 @@
 
                         </p>
 
-                        <div v-if="mainPost.images.length!==0" class="card">
+                        <div v-if="images.length!==0" class="card">
                             <div class="card-header img-card-header" role="button" @click="toggleImageContainer()"
                                  style="background-color: #bab5a9">
                                 <i>Images</i>
                             </div>
                             <div v-if="showImg" class="card-body hide">
-                                <img v-for="image in mainPost.images" :src="image.imageUrl" class="img-fluid mb-1">
+                                <img v-for="image in images" :src="image.imageUrl" class="img-fluid mb-1">
                             </div>
                         </div>
 
@@ -54,8 +54,9 @@
                               </span>
                             </div>
                             <div class="flex-sm-row d-md-flex d-lg-flex d-xl-flex text-center">
-                                <button class="btn btn-sm btn-outline-danger mx-1" data-bs-toggle="modal"
-                                        data-bs-target="#report-form">{{ $t('component.post.report') }}
+                                <button @click.capture="report(mainPost.id)" class="btn btn-sm btn-outline-danger mx-1"
+                                        data-bs-toggle="modal" data-bs-target="#report-form">
+                                    {{ $t('component.post.report') }}
                                 </button>
                                 <button class="btn btn-sm btn-outline-primary mx-1">{{
                                         $t('component.post.reply')
@@ -80,7 +81,8 @@ import {mapGetters, mapState} from "vuex";
 export default {
     name: "TopicMainPost",
     components: {TopicMainPostHeader},
-    props: ['mainPost'],
+    props: ['mainPost', 'images'],
+    emits: ['report'],
 
     computed: {
         ...mapGetters({
@@ -96,9 +98,11 @@ export default {
 
     methods: {
         toggleImageContainer() {
-            // let elem = document.querySelector(`#post-img-container-${id}`)
-            // elem.classList.toggle('hide');
             this.showImg = !this.showImg;
+        },
+
+        report(reportId) {
+            this.$emit('report', {id: reportId, type: 'topic'})
         },
     }
 }

@@ -154,6 +154,12 @@ Route::group(['prefix' => 'client'], function () {
         });
     });
 
+    Route::group(['prefix' => 'report'], function () {
+        Route::get('/report-types', [\App\Http\Controllers\Client\Report\ReportController::class, 'index']);
+
+        Route::post('/topic/{topic}', \App\Http\Controllers\Client\Report\TopicReportController::class);
+        Route::post('/post/{post}', \App\Http\Controllers\Client\Report\PostReportController::class);
+    });
 
     Route::get('/forum-stats', \App\Http\Controllers\Client\Forum\ForumStatsController::class);
 

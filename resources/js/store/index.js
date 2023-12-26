@@ -7,6 +7,7 @@ import topic from "./modules/topic"
 import forum from "./modules/forum";
 import forumCategory from "./modules/forum-category";
 import createTopic from  "./modules/crete-topic";
+import report from "./modules/report";
 
 const store =  createStore({
     //namespaced: true,
@@ -19,6 +20,7 @@ const store =  createStore({
         forum,
         forumCategory,
         createTopic,
+        report,
     },
 });
 

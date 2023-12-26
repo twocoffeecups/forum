@@ -37,7 +37,7 @@
                     </div>
                     <div class="card-body">
                         <!-- Topic main post -->
-                        <TopicMainPost :main-post="topic"/>
+                        <TopicMainPost :main-post="topic" :images="images" @report="report"/>
 
                         <!-- Posts -->
                         <Post v-for="post in posts" :post="post" @report="report" @reply="reply"/>
@@ -65,7 +65,7 @@
         </div>
     </div>
 
-    <ReportForm :report-id="reportId"/>
+    <ReportForm :report-id="reportDetail.id" :type="reportDetail.type"/>
 </template>
 
 <script>
@@ -90,6 +90,7 @@ export default {
         ...mapGetters({
             topic: 'topic/getTopic',
             posts: 'topic/getPosts',
+            images: 'topic/getImages',
         }),
     },
 
@@ -97,6 +98,7 @@ export default {
         return {
             replyPost: [],
             reportId: null,
+            reportDetail: [],
             author: [],
         }
     },
@@ -106,7 +108,8 @@ export default {
             this.replyPost = data
         },
         report(data) {
-            this.reportId = data
+            this.reportId = data.id
+            this.reportDetail = data;
         },
         cancelReply() {
             this.replyPost = [];

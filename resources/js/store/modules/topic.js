@@ -11,11 +11,16 @@ export default {
         topicAuthor: {},
         posts: {},
         mainPost: {},
+        images: {},
     },
 
     getters: {
         getTopic(state){
             return state.topic;
+        },
+
+        getImages(state){
+            return state.images;
         },
 
         getTopicAuthor(state) {
@@ -48,6 +53,7 @@ export default {
                             commit('setTopic', response.data.topic);
                             commit('setTopicAuthor', response.data.topic.author);
                             commit('setPosts', response.data.topic.posts);
+                            commit('setImages', response.data.topic.images);
                             resolve(response);
                         } else {
                             reject(response);
@@ -58,24 +64,6 @@ export default {
                     })
             });
         },
-
-        // createTopic({dispatch}, data) {
-        //     return new Promise((resolve, reject) => {
-        //         api.post(`/api/client/topic`, data)
-        //             .then(response => {
-        //                 if (response.data) {
-        //                     resolve(response);
-        //                     toast.success(response.data.message ?? "Created.");
-        //                 } else {
-        //                     reject(response);
-        //                 }
-        //             })
-        //             .catch(error => {
-        //                 reject(error);
-        //                 toast.error( error.response.data.message ?? "Error!");
-        //             })
-        //     });
-        // },
     },
 
     mutations: {
@@ -87,11 +75,16 @@ export default {
             state.topicAuthor = payload;
         },
 
+        setImages(state, payload){
+            state.images = payload;
+        },
+
         setPosts(state, payload) {
             state.posts = payload;
         },
+
         pushPost(state, payload) {
             state.posts.push(payload);
-        }
+        },
     },
 }

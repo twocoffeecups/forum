@@ -165,7 +165,7 @@ export default {
         },
 
         report(reportId) {
-            this.$emit('report', reportId)
+            this.$emit('report', {id: reportId, type: 'post'})
         },
 
         likePost() {

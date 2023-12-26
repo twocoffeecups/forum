@@ -13,7 +13,7 @@ class ReportRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -25,6 +25,9 @@ class ReportRequest extends FormRequest
     {
         return [
             //
+            'reasonId' => '',
+            'postId' => '',
+            'message' => ''
         ];
     }
 }
