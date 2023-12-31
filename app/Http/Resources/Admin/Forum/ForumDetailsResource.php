@@ -4,7 +4,7 @@ namespace App\Http\Resources\Admin\Forum;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ForumResource extends JsonResource
+class ForumDetailsResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,7 +17,8 @@ class ForumResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'type' => $this->type === 0 ? 'Category' : 'Forum',
+            'type' => $this->type,
+            'parent' => new ForumResource($this->parent),
             'description' => $this->description,
             'status' => $this->status,
             'created_at' => $this->created_at->format('Y-m-d'),
@@ -25,9 +26,9 @@ class ForumResource extends JsonResource
                 'topics' => $this->topics()->count(),
                 'children' => $this->children()->count(),
                 'posts' => $this->posts()->count(),
+                'views' => 1,
             ],
-
-            'author' => new ForumDetailsAuthorResource($this->author),
+            'author' => $this->author->getName(),
             'children' => ForumResource::collection($this->descendantsTree),
         ];
     }

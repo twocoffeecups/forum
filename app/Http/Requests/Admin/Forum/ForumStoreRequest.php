@@ -25,9 +25,9 @@ class ForumStoreRequest extends FormRequest
     {
         return [
             'type' => 'required|integer',
-            'parentId' => 'integer|nullable',
+            'parentId' => '',
             'name' => 'required|string',
-            'description' => 'string',
+            'description' => 'nullable|string',
         ];
     }
 }

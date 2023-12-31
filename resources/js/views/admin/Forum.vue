@@ -7,7 +7,8 @@
                 <div class="card-header">
                     <div class="d-flex justify-content-between my-2">
                         <h4>All Forums</h4>
-                        <div v-if="checkHasPermissions([AccessPermissions.CAN_CREATE_FORUM])">
+<!--                        <div v-if="checkHasPermissions([AccessPermissions.CAN_CREATE_FORUM])">-->
+                        <div>
                             <CreateForumModal :forums="this.forums"/>
                         </div>
                     </div>
@@ -58,9 +59,9 @@
                                 <td>
                                     {{ forum.description }}
                                 </td>
-                                <td>{{ forum.stat.children}}</td>
-                                <td>{{ forum.stat.topics }}</td>
-                                <td>{{ forum.stat.posts }}</td>
+                                <td>{{ forum.stats.children}}</td>
+                                <td>{{ forum.stats.topics }}</td>
+                                <td>{{ forum.stats.posts }}</td>
                                 <td>{{ forum.created_at }}</td>
                                 <th>
                                     <div class="btn-group  btn-group-sm" role="group"
@@ -83,7 +84,7 @@
                                                     :forum-description="forum.description"/>
 
                                     <span class="text-primary mx-2" title="Show">
-                                        <router-link :to="{ name:'admin.forum.details', params:{id:forum.id} }">
+                                        <router-link :to="{ name:'admin.forum.details', params:{id: forum.id} }">
                                           <i class="fas fa-eye"></i>
                                         </router-link>
                                     </span>
@@ -139,10 +140,17 @@ import CreateForumModal from "../../components/admin/CreateForumModal.vue";
 import EditForumModal from "../../components/admin/EditForumModal.vue";
 import {checkHasPermissions} from "../../access/service";
 import AccessPermissions from "../../access/permissions";
+import {mapGetters} from "vuex";
 
 export default {
     name: "Forum",
     components: {EditForumModal, CreateForumModal},
+
+    computed: {
+        ...mapGetters({
+            forums: 'adminForum/getForums',
+        }),
+    },
 
     setup(){
         return{
@@ -152,54 +160,18 @@ export default {
     },
 
     mounted() {
-        this.getForums();
-    },
-
-    data() {
-        return {
-            forums: [],
-        }
+        this.$store.dispatch('adminForum/getForums');
     },
 
     methods: {
-
-        getForums() {
-            axios.get('/api/admin/forum', {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem('access-token')}`
-                }
-            })
-                .then(res => {
-                    console.log(res);
-                    this.forums = res.data.forums
-                })
-                .catch(error => {
-                    console.log(error);
-                })
-        },
-
         changeVisibility(event, forumId) {
             let visibility = event.target.value;
-            // console.log('Forum id: ', forumId)
-            // console.log('Visibility: ', visibility)
-            axios.patch(`/api/admin/forum/${forumId}/change-status`)
-                .then(res => {
-                    console.log(res);
-                })
-                .catch(error => {
-                    console.log(error);
-                })
+            this.$store.dispatch('adminForum/changeForumVisibility', forumId)
         },
 
         deleteForum(forumId) {
             console.log('delete forum, id:', forumId);
-            axios.delete(`/api/admin/forum/${forumId}`)
-                .then(res => {
-                    console.log(res);
-                })
-                .catch(error => {
-                    console.log(error);
-                })
+            this.$store.dispatch('adminForum/deleteForum', forumId);
         }
     }
 

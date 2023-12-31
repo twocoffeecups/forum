@@ -1,6 +1,6 @@
 <template>
     <div class="row">
-        <div class="col-9">
+        <div class="col-12 col-md-9 col-lg-9 col-xl-9">
             <div class="card my-3">
                 <div class="card-header">
                     <h4>Forum details</h4>
@@ -8,32 +8,64 @@
                 <div class="card-body">
                     <dl class="row">
                         <dt class="col-sm-4">Name</dt>
-                        <dd contenteditable class="col-sm-8" @input="updateContent($event, 'name')">{{
+                        <dd contenteditable class="col-sm-8" @focusout.prevent="updateContent($event, 'name')">{{
                                 forum.name
                             }}
                         </dd>
-                        <dt class="col-sm-4">Type</dt>
-                        <dd class="col-sm-8">{{ forum.type }}</dd>
-                        <dt class="col-sm-4">Category</dt>
-                        <dd class="col-sm-8">
-                            {{ forum.parent }}
-                            <span role="button" class="fa-pull-right text-primary mx-2"
-                                  @click="this.showSelect = !this.showSelect">
-                Change forum category
-              </span>
-                        </dd>
-                        <dd v-if="showSelect" class="col-sm-8 offset-sm-4">
-                            <select class="form-select fa-pull-right">
-                                <option class="">Change parent forum</option>
-                                <option class="">Forum category 1</option>
-                                <option class="">Forum category 2</option>
-                                <option class="">Forum category 3</option>
-                            </select>
-                        </dd>
-                        <dt class="col-sm-4">Description</dt>
-                        <dd contenteditable class="col-sm-8" @input="updateContent($event, 'description')">
-                            {{ forum.description }}
-                        </dd>
+                        <div class="row" id="type-changed-field">
+                            <dt class="col-sm-4">Type</dt>
+                            <dd class="col-sm-8">
+                                <span>{{ forum.type===0 ? 'Category' : 'Forum' }}</span>
+                                <span role="button" class="fa-pull-right text-primary mx-2"
+                                      @click="this.showChangeType = !this.showChangeType">
+                                    Change forum type
+                                </span>
+                            </dd>
+                            <dd v-if="showChangeType" class="col-sm-8 offset-sm-4 d-flex flex-row">
+                                <select v-model="selectedType" class="form-select fa-pull-right">
+                                    <option :selected="forum.type===0" value="0">Category</option>
+                                    <option :selected="forum.type===1" value="1">Forum</option>
+                                </select>
+                                <div>
+                                <span @click="changeForumType" role="button" class="text-primary mx-2 fs-4" title="Save">
+                                    <i class="fas fa-save"></i>
+                                </span>
+                                </div>
+                            </dd>
+                        </div>
+
+<!--                        <div class="row" id="parent-changed-field" v-if="parentForum!==null && forum.type===1">-->
+                        <div class="row" id="parent-changed-field" v-if="forum.type===1">
+                            <dt class="col-sm-4">Parent</dt>
+                            <dd class="col-sm-8">
+                                <span v-if="parentForum!==null">{{ parentForum.name }}</span>
+                                <span v-if="parentForum===null">Not parent forum</span>
+
+                                <span role="button" class="fa-pull-right text-primary mx-2"
+                                      @click="this.showSelect = !this.showSelect">
+                                    Change forum category
+                                </span>
+                            </dd>
+                            <dd v-if="showSelect" class="col-sm-8 offset-sm-4 d-flex flex-row">
+                                <select v-model="selectedForum" class="form-select fa-pull-right">
+<!--                                    <ForumOptionTree v-for="forumOption in forums" :is-selected="parentForum.id" :name="forumOption.name" :id="forumOption.id" :forum-id="forum.id" :children="forumOption.children" :indent="0" />-->
+                                    <ForumOptionTree v-for="forumOption in forums" :name="forumOption.name" :id="forumOption.id" :forum-id="forum.id" :children="forumOption.children" :indent="0" />
+                                </select>
+                                <div>
+                                <span @click="changeParentCategory" role="button" class="text-primary mx-2 fs-4" title="Save">
+                                    <i class="fas fa-save"></i>
+                                </span>
+                                </div>
+                            </dd>
+                        </div>
+
+                        <div class="row">
+                            <dt class="col-sm-4">Description</dt>
+                            <dd contenteditable class="col-sm-8" @focusout.prevent="updateContent($event, 'description')">
+                                {{ forum.description }}
+                            </dd>
+                        </div>
+
                         <dt class="col-sm-4">Author</dt>
                         <dd class="col-sm-8">{{ forum.author }}</dd>
                         <dt class="col-sm-4">Created AT</dt>
@@ -42,7 +74,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-3">
+        <div class="col-12 col-md-3 col-lg-3 col-xl-3">
             <div class="card my-3">
                 <div class="card-header">
                     <h4>Forum stats</h4>
@@ -50,13 +82,15 @@
                 <div class="card-body">
                     <dl class="row">
                         <dt class="col-sm-4">Forums</dt>
-                        <dd class="col-sm-8">{{ forum.childrenForumCount }}</dd>
+                        <dd class="col-sm-8">{{ forumStats.children }}</dd>
+                        <dt class="col-sm-4">Topics</dt>
+                        <dd class="col-sm-8">{{ forumStats.topics }}</dd>
                         <dt class="col-sm-4">Posts</dt>
-                        <dd class="col-sm-8">{{ forum.posts }}</dd>
+                        <dd class="col-sm-8">{{ forumStats.posts }}</dd>
                         <dt class="col-sm-4">Views</dt>
-                        <dd class="col-sm-8">{{ forum.views }}</dd>
-                        <dt class="col-sm-4">Unique users</dt>
-                        <dd class="col-sm-8">{{ forum.uniqueUsers }}</dd>
+                        <dd class="col-sm-8">{{ forumStats.views }}</dd>
+<!--                        <dt class="col-sm-4">Unique users</dt>-->
+<!--                        <dd class="col-sm-8">{{ forum.uniqueUsers }}</dd>-->
                     </dl>
                 </div>
             </div>
@@ -74,13 +108,13 @@
                 </div>
             </div>
             <div class="card-body">
-                <div class="table-responsive mb-1">
+                <div v-if="childrenForums.length!==0" class="table-responsive mb-1">
                     <div
                         class="d-flex mt-2 flex-column flex-md-row flex-lg-row flex-xl-row justify-content-center justify-content-md-between justify-content-lg-between mb-3">
                         <div class="d-none d-md-flex d-lg-flex d-xl-flex my-2">
-                <span class="form-text">
-                  Show
-                </span>
+                            <span class="form-text">
+                              Show
+                            </span>
                             <select class="form-select form-select-sm mx-2" aria-label="Select entries">
                                 <option value="10" selected>10</option>
                                 <option value="30">30</option>
@@ -146,8 +180,8 @@
 
                                 <span @click="deleteForum(forum.id)" role="button" class="text-danger mx-2"
                                       title="Edit">
-                    <i class="fas fa-trash"></i>
-                  </span>
+                                <i class="fas fa-trash"></i>
+                              </span>
 
                             </td>
                         </tr>
@@ -155,7 +189,11 @@
                     </table>
                 </div>
 
-                <div class="d-flex flex-column flex-md-row flex-lg-row justify-content-between">
+                <div  v-if="childrenForums.length===0" class="text-center">
+                    <h4>Do not children forums.</h4>
+                </div>
+
+                <div  v-if="childrenForums.length!==0" class="d-flex flex-column flex-md-row flex-lg-row justify-content-between">
                     <div class="d-flex mt-1 d-none d-md-block d-lg-block d-xl-block align-items-center">
                         <div class="table-info" id="table-info" role="status" aria-live="polite">Showing 4 to 10 of 4
                             entries
@@ -189,12 +227,14 @@
 <script>
 import CreateForumModal from "../../components/admin/CreateForumModal.vue";
 import EditForumModal from "../../components/admin/EditForumModal.vue";
-import axios from "axios";
 import {useToast} from "vue-toastification";
+import {mapGetters} from "vuex";
+import ForumOptionTree from "../../components/admin/ForumOptionTree.vue";
+import api from "../../api/api";
 
 export default {
     name: "ForumDetail",
-    components: {EditForumModal, CreateForumModal},
+    components: {ForumOptionTree, EditForumModal, CreateForumModal},
 
     setup() {
         return {
@@ -202,68 +242,63 @@ export default {
         }
     },
 
+    computed: {
+        ...mapGetters({
+            forum: 'adminForum/getForum',
+            childrenForums: 'adminForum/getChildrenForums',
+            forumStats: 'adminForum/getForumStats',
+            parentForum: 'adminForum/getParentForum',
+        }),
+    },
+
+    mounted() {
+        this.$store.dispatch('adminForum/getForum', this.$route.params.id);
+        this.getForums();
+
+    },
+
     data() {
         return {
-
             showSelect: false,
-
-            forum: {
-                id: 1,
-                name: 'Forum 1',
-                type: 'Forum',
-                description: 'Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua.\n' +
-                    'Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur.\n' +
-                    'Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
-                parent: 'Forum category 1',
-                author: 'Admin Adminovich',
-                created_at: '2023-09-11',
-                childrenForumCount: 5,
-                views: 36,
-                posts: 123,
-                uniqueUsers: 15,
-
-            },
-
-            childrenForums: [
-                {
-                    id: 1,
-                    name: 'Forum 1',
-                    type: 'Forum category',
-                    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-                    categories: 5,
-                    topics: 14,
-                    posts: 73,
-                    visibility: true,
-                    createdAt: '23.09.2023',
-                },
-            ],
+            showChangeType: null,
+            selectedForum: null,
+            selectedType: null,
+            forums: [],
         }
     },
 
     methods: {
-        changeVisibility(event, forumId) {
-            let visibility = event.target.value;
-            console.log('Forum id: ', forumId)
-            console.log('Visibility: ', visibility)
+        changeVisibility(event) {
+            this.$store.dispatch('adminForum/changeForumVisibility', this.$route.params.id)
         },
 
         deleteForum(forumId) {
-            console.log('delete forum');
+            this.$store.dispatch('adminForum/deleteForum', this.$route.params.id);
         },
 
         updateContent(e, key) {
             let value = e.target.innerText
-            axios.patch(`/api/admin/forum/${this.forum.id}/update`, {
-                key: value,
-            })
+            let data = new FormData();
+            data.append(key, value);
+            data.append('_method', 'patch');
+            this.$store.dispatch('adminForum/updateForumContent', [this.$route.params.id, data]);
+        },
+
+        changeParentCategory(){
+            console.log("change forum category: ", this.selectedForum);
+            //let parentId = this.isChild && this.type!=0 ? this.selectedForum : null;
+            this.$store.dispatch('adminForum/changeParentCategory', [this.$route.params.id, this.selectedForum])
+        },
+
+        getForums(){
+            api.get(`/api/admin/forum`)
                 .then(res => {
-                    console.log(res);
-                    this.t$.success('Successfully!')
+                    this.forums = res.data.forums
                 })
-                .catch(error => {
-                    console.log(error)
-                    this.t$.error('Error!')
-                })
+        },
+
+        changeForumType(){
+            this.$store.dispatch('adminForum/changeForumType', [this.$route.params.id, this.selectedType]);
         }
     }
 }

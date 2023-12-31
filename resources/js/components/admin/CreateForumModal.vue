@@ -1,6 +1,6 @@
 <template>
     <div class="d-flex justify-content-start mb-3">
-        <button class="btn btn-primary mx-1" data-bs-toggle="modal" data-bs-target="#create-category-modal">+ CRETE CATEGORY</button>
+        <button class="btn btn-primary mx-1" data-bs-toggle="modal" data-bs-target="#create-category-modal">+ CRETE FORUM</button>
     </div>
 
     <div class="modal fade" id="create-category-modal" tabindex="-1" aria-labelledby="create-category-modal" aria-hidden="true">
@@ -35,7 +35,7 @@
                     </div>
 
                     <div v-if="isChild" class="mb-3 form-group">
-                        <select @change="changeForum($event)" class="form-control">
+                        <select v-model="selectedForum" @change="changeForum($event)" class="form-control">
                             <ForumOptionTree v-for="forum in forums" :is-selected="selectedForum" :name="forum.name" :id="forum.id" :children="forum.children" :indent="0" />
                         </select>
                     </div>
@@ -65,10 +65,11 @@
 import { useVuelidate } from '@vuelidate/core';
 import { required, minLength, maxLength, } from '@vuelidate/validators';
 import ForumOptionTree from "./ForumOptionTree.vue";
+import api from "../../api/api";
+
 export default {
     name: "CreateForumModal",
     components: {ForumOptionTree,},
-    props:['forums'],
 
     mounted() {
         this.getForums();
@@ -90,50 +91,44 @@ export default {
             isSelected: null,
             showCategory: null,
             selectedForum: null,
-            forums: []
+            forums: [],
+            //selected: null,
         }
     },
 
     validations(){
         return{
             name:{required, minLength:minLength(3), maxLength:maxLength(64),},
-            description:{required, minLength:minLength(32), maxLength:maxLength(255),},
+            description:{maxLength:maxLength(255),},
         }
     },
 
     methods:{
         createForum(){
             this.v$.$validate();
-            let parentId = this.isChild && this.type!=0 ? this.selectedForum : null;
-            const userId = JSON.parse(localStorage.getItem('user-details')).id;
             if(!this.v$.$error){
-                axios.post(`/api/admin/forum/${userId}/store`, {
-                    parentId : parentId,
-                    name: this.name,
-                    description: this.description,
-                    type: this.forumType,
-                })
-                .then(res => {
-                    console.log(res)
-                })
-                .catch(error => {
-                    console.log(error)
-                })
+                //console.log(this.selectedForum)
+                let parentId = this.isChild && this.type!=0 ? this.selectedForum : null;
+                const data = new FormData();
+                data.append('parentId', parentId);
+                data.append('type', this.forumType);
+                data.append('name', this.name);
+                data.append('description', this.description)
+                this.$store.dispatch('adminForum/createForum', data);
+                this.name = null;
+                this.description = null;
+                this.forumType = 0;
             }
         },
 
         getForums(){
-            axios.get(`/api/admin/forum`)
+            api.get(`/api/admin/forum`)
                 .then(res => {
                     this.forums = res.data.forums
-                })
-                .catch(error => {
-                    console.log(error);
                 })
         },
 
         changeForum(e){
-            //console.log('change category', e.target.value)
             this.selectedForum = e.target.value
         },
     }

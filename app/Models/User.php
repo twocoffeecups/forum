@@ -51,6 +51,10 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
+    public function getName()
+    {
+        return $this->firstName . " " . $this->lastName;
+    }
 
     public function topics(): \Illuminate\Database\Eloquent\Relations\HasMany
     {

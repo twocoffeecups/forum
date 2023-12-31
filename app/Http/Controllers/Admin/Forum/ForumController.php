@@ -3,40 +3,64 @@
 namespace App\Http\Controllers\Admin\Forum;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Forum\ChangeForumCategoryRequest;
+use App\Http\Requests\Admin\Forum\ChangeForumTypeRequest;
 use App\Http\Requests\Admin\Forum\ForumStoreRequest;
+use App\Http\Requests\Admin\Forum\ForumUpdateRequest;
 use App\Http\Resources\Admin\Forum\CreateForumFormResource;
+use App\Http\Resources\Admin\Forum\ForumDetailsResource;
 use App\Http\Resources\Admin\Forum\ForumResource;
 use App\Models\Forum;
-use App\Models\User;
 
 class ForumController extends Controller
 {
 
-    protected function index()
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function index(): \Illuminate\Http\JsonResponse
     {
         $forums = Forum::all();
         return response()->json(['forums' => ForumResource::collection($forums)]);
     }
 
-    protected function show(Forum $forum)
+    /**
+     * @param Forum $forum
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function show(Forum $forum): \Illuminate\Http\JsonResponse
     {
-        return response()->json(['forum' => $forum]);
+        return response()->json(['forum' => new ForumDetailsResource($forum)]);
     }
 
-    protected function store(ForumStoreRequest $request, User $user)
+    /**
+     * @param ForumStoreRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function store(ForumStoreRequest $request): \Illuminate\Http\JsonResponse
     {
         $data = $request->validated();
+        $user = $this->getUserByToken($request);
         if($data['type']==0 && $data['parentId']!=0){
             unset($data['parentId']);
         }
         $data['authorId'] = $user->id;
         $forum = Forum::firstOrCreate($data);
-        return response()->json(['message' => 'Forum created!']);
+        return response()->json([
+            'message' => 'Forum created!',
+            'forum' => new ForumResource($forum),
+        ]);
     }
 
-    protected function update(Forum $forum, ForumStoreRequest $request)
+    /**
+     * @param ForumUpdateRequest $request
+     * @param Forum $forum
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function update(ForumUpdateRequest $request, Forum $forum): \Illuminate\Http\JsonResponse
     {
         $data = $request->validated();
+        //dd($data, $forum);
         foreach($data as $key => $value){
             $forum->$key = $value;
         }
@@ -45,20 +69,66 @@ class ForumController extends Controller
 
     }
 
-    protected function delete(Forum $forum)
+    /**
+     * @param ChangeForumCategoryRequest $request
+     * @param Forum $forum
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function changeParentForum(ChangeForumCategoryRequest $request, Forum $forum): \Illuminate\Http\JsonResponse
     {
+        $data = $request->validated();
+        //dd($data);
+        $parent = Forum::find($data['parentId']);
+        $forum->parent()->associate($parent);
+        $forum->save();
+        return response()->json(['message' => 'Forum parent category changed!']);
+
+    }
+
+    /**
+     * @param ChangeForumTypeRequest $request
+     * @param Forum $forum
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function changeForumType(ChangeForumTypeRequest $request, Forum $forum): \Illuminate\Http\JsonResponse
+    {
+        $data = $request->validated();
+        if(count($forum->topics)!==0 && $data['type']==0){
+            return response()->json(['message' => 'It is impossible to change the type of forum. There are topics on this forum.'], 413);
+        }
+        if($forum->parentId!==null){
+            $forum->parentId = null;
+        }
+        $forum->type = $data['type'];
+        $forum->save();
+        return response()->json(['message' => 'Forum type changed! To make the forum appear on the site, select a parent forum for it.']);
+    }
+
+    /**
+     * @param Forum $forum
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function delete(Forum $forum): \Illuminate\Http\JsonResponse
+    {
+//        if($forum->children){
+//            foreach($forum->children as $child){
+//                $child->parentId = $forum->parent->id ?? null;
+//                $child->type = $child->parentId ? 1:0;
+//                $child->save();
+//            }
+//        }
         if($forum->children){
-            foreach($forum->children as $child){
-                $child->parentId = $forum->parent->id ?? null;
-                $child->type = $child->parentId ? 1:0;
-                $child->save();
-            }
+            return response()->json(['message' => 'You cannot delete the forum. Move the child forums'], 413);
         }
         $forum->delete();
         return response()->json(['message' => 'Forum deleted successfully!']);
     }
 
-    public function status(Forum $forum)
+    /**
+     * @param Forum $forum
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function status(Forum $forum): \Illuminate\Http\JsonResponse
     {
         $forum->status = !$forum->status;
         //dd($forum);
@@ -66,7 +136,10 @@ class ForumController extends Controller
         return response()->json(['message' => 'Forum status changed!']);
     }
 
-    public function forumFormTree()
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function forumFormTree(): \Illuminate\Http\JsonResponse
     {
         $forums = Forum::all();
         return response()->json(['forums' => CreateForumFormResource::collection($forums)]);

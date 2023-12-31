@@ -4,7 +4,7 @@ namespace App\Http\Requests\Admin\Forum;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ForumUpdateRequest extends FormRequest
+class ChangeForumCategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,7 @@ class ForumUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'nullable|string',
-            'description' => 'nullable|string',
+            'parentId' => 'integer|exists:forums,id',
         ];
     }
 }

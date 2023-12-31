@@ -23,12 +23,13 @@ Route::group(['prefix' => 'admin'], function () {
 
     Route::group(['prefix' => 'forum'], function () {
         Route::get('/', [\App\Http\Controllers\Admin\Forum\ForumController::class, 'index']);
-        Route::post('/{user}/store', [\App\Http\Controllers\Admin\Forum\ForumController::class, 'store']);
+        Route::post('/', [\App\Http\Controllers\Admin\Forum\ForumController::class, 'store']);
         Route::get('/{forum}', [\App\Http\Controllers\Admin\Forum\ForumController::class, 'show']);
         Route::patch('/{forum}', [\App\Http\Controllers\Admin\Forum\ForumController::class, 'update']);
         Route::delete('/{forum}', [\App\Http\Controllers\Admin\Forum\ForumController::class, 'delete']);
         Route::patch('/{forum}/change-status', [\App\Http\Controllers\Admin\Forum\ForumController::class, 'status']);
-
+        Route::patch('/{forum}/change-parent-forum', [\App\Http\Controllers\Admin\Forum\ForumController::class, 'changeParentForum']);
+        Route::patch('/{forum}/change-type', [\App\Http\Controllers\Admin\Forum\ForumController::class, 'changeForumType']);
         Route::get('/forum-tree', [\App\Http\Controllers\Admin\Forum\ForumController::class, 'forumFormTree']);
     });
 
