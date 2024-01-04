@@ -91,7 +91,7 @@ const routes = [
             {
                 path: 'role/:id',
                 name: 'admin.role.details',
-                component: () => import('../views/admin/RoleDetail.vue'),
+                component: () => import('../views/admin/RoleDetails.vue'),
             },
             {
                 path: 'permission',
@@ -124,9 +124,19 @@ const routes = [
                 component: () => import('../views/admin/Topic.vue'),
             },
             {
-                path: 'roles',
-                name: 'admin.roles',
-                component: () => import('../views/admin/Role.vue'),
+                path: 'topic/:id',
+                name: 'admin.topic.details',
+                component: () => import('../views/admin/TopicDetails.vue'),
+            },
+            {
+                path: 'topic',
+                name: 'admin.topic',
+                component: () => import('../views/admin/Topic.vue'),
+            },
+            {
+                path: 'reject-type',
+                name: 'admin.reject-type',
+                component: () => import('../views/admin/TopicRejectType.vue'),
             },
             {
                 path: 'reports',

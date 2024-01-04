@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Admin\UnApprovedReason;
+namespace App\Http\Requests\Admin\TopicRejectType;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UnApprovedReasonUpdateRequest extends FormRequest
+class TopicRejectTypeStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,9 @@ class UnApprovedReasonUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'string|max:255',
-            'description' => 'string',
-            'userId' => 'integer|exists:users,id',
+            'title' => 'required|max:255',
+            'description' => 'string|nullable',
+
         ];
     }
 }

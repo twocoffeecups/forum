@@ -26,7 +26,6 @@ class ReportReasonStoreRequest extends FormRequest
         return [
             'name' => 'required|max:32',
             'description' => 'required|max:255',
-            'authorId' => 'integer',
         ];
     }
 }

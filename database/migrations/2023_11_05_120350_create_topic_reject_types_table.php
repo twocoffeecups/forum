@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('un_approved_reasons', function (Blueprint $table) {
+        Schema::create('topic_reject_types', function (Blueprint $table) {
             $table->id();
             $table->string('title');
             $table->string('description')->nullable();
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('un_approved_reasons');
+        Schema::dropIfExists('topic_reject_types');
     }
 };

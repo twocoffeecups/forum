@@ -229,7 +229,7 @@ export default {
             api.delete(`/api/admin/role/${this.role.id}/`)
                 .then(res => {
                     this.t$.success("Role delete successfully.")
-                    this.$router.push({name:'admin.roles'})
+                    this.$router.push({name:'admin.role'})
                 })
                 .catch(error => {
                     this.t$.error("Error!");

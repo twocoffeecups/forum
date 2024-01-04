@@ -19,7 +19,7 @@ class UnApprovedTopic extends Model
 
     protected function reason()
     {
-        return $this->belongsTo(UnApprovedReason::class, 'reasonId', 'id');
+        return $this->belongsTo(TopicRejectType::class, 'reasonId', 'id');
     }
 
     protected function user()

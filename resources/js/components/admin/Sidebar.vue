@@ -52,6 +52,11 @@
                                     class="fas fa-hashtag"></i> Topics
                                 </router-link>
                             </li>
+                            <li>
+                                <router-link :to="{name:'admin.reject-type'}" class="nav-link sidebar_nav_link px-0"><i
+                                    class="fas fa-hashtag"></i> Topics reject type
+                                </router-link>
+                            </li>
                         </ul>
                     </div>
                 </li>
@@ -66,7 +71,7 @@
                     <div class="collapse" id="sub_menu2">
                         <ul class="collapse ps-3 show nav flex-column ms-1">
                             <li class="w-100">
-                                <router-link :to="{ name:'admin.roles' }" class="nav-link sidebar_nav_link px-0"><i
+                                <router-link :to="{ name:'admin.role' }" class="nav-link sidebar_nav_link px-0"><i
                                     class="fas fa-hashtag"></i> Roles
                                 </router-link>
                             </li>

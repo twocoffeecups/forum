@@ -43,18 +43,20 @@ Route::group(['prefix' => 'admin'], function () {
     });
 
     Route::group(['prefix' => 'topic'], function () {
+        Route::get('/', [\App\Http\Controllers\Admin\Topic\TopicController::class, 'index']);
+        Route::get('/{topic}', [\App\Http\Controllers\Admin\Topic\TopicController::class, 'show']);
         Route::get('/{topic}/approved', [\App\Http\Controllers\Admin\Topic\TopicController::class, 'approved']);
         Route::post('/{topic}/do-not-approved', [\App\Http\Controllers\Admin\Topic\TopicController::class, 'doNotApprove']);
         Route::delete('/{topic}', [\App\Http\Controllers\Admin\Topic\TopicController::class, 'delete']);
     });
 
-    Route::group(['prefix' => 'unapproved-reason'], function () {
-        Route::get('/', [\App\Http\Controllers\Admin\UnApprovedReason\UnApprovedReasonController::class, 'index']);
-        Route::post('/', [\App\Http\Controllers\Admin\UnApprovedReason\UnApprovedReasonController::class, 'store']);
-        Route::get('/{reason}', [\App\Http\Controllers\Admin\UnApprovedReason\UnApprovedReasonController::class, 'show']);
-        Route::patch('/{reason}', [\App\Http\Controllers\Admin\UnApprovedReason\UnApprovedReasonController::class, 'update']);
-        Route::delete('/{reason}', [\App\Http\Controllers\Admin\UnApprovedReason\UnApprovedReasonController::class, 'delete']);
-        Route::get('/{reason}/status', [\App\Http\Controllers\Admin\UnApprovedReason\UnApprovedReasonController::class, 'status']);
+    Route::group(['prefix' => 'topic-reject-type'], function () {
+        Route::get('/', [\App\Http\Controllers\Admin\TopicRejectType\TopicRejectTypeController::class, 'index']);
+        Route::post('/', [\App\Http\Controllers\Admin\TopicRejectType\TopicRejectTypeController::class, 'store']);
+        Route::get('/{rejectType}', [\App\Http\Controllers\Admin\TopicRejectType\TopicRejectTypeController::class, 'show']);
+        Route::post('/{rejectType}', [\App\Http\Controllers\Admin\TopicRejectType\TopicRejectTypeController::class, 'update']);
+        Route::delete('/{rejectType}', [\App\Http\Controllers\Admin\TopicRejectType\TopicRejectTypeController::class, 'delete']);
+        Route::patch('/{rejectType}/change-status', [\App\Http\Controllers\Admin\TopicRejectType\TopicRejectTypeController::class, 'status']);
     });
 
     Route::group(['prefix' => 'report-reason'], function () {
@@ -75,8 +77,6 @@ Route::group(['prefix' => 'admin'], function () {
             Route::patch('/{role}/change-role', \App\Http\Controllers\Admin\User\RoleController::class);
             Route::put('/change-permissions', [\App\Http\Controllers\Admin\User\PermissionController::class, 'changePermission']);
         });
-
-
     });
 
     Route::group(['prefix' => 'role'], function () {

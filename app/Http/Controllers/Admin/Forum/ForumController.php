@@ -41,7 +41,7 @@ class ForumController extends Controller
     {
         $data = $request->validated();
         $user = $this->getUserByToken($request);
-        if($data['type']==0 && $data['parentId']!=0){
+        if ($data['type'] == 0 && $data['parentId'] != 0) {
             unset($data['parentId']);
         }
         $data['authorId'] = $user->id;
@@ -61,7 +61,7 @@ class ForumController extends Controller
     {
         $data = $request->validated();
         //dd($data, $forum);
-        foreach($data as $key => $value){
+        foreach ($data as $key => $value) {
             $forum->$key = $value;
         }
         $forum->save();
@@ -77,7 +77,6 @@ class ForumController extends Controller
     protected function changeParentForum(ChangeForumCategoryRequest $request, Forum $forum): \Illuminate\Http\JsonResponse
     {
         $data = $request->validated();
-        //dd($data);
         $parent = Forum::find($data['parentId']);
         $forum->parent()->associate($parent);
         $forum->save();
@@ -93,10 +92,10 @@ class ForumController extends Controller
     protected function changeForumType(ChangeForumTypeRequest $request, Forum $forum): \Illuminate\Http\JsonResponse
     {
         $data = $request->validated();
-        if(count($forum->topics)!==0 && $data['type']==0){
+        if (count($forum->topics) !== 0 && $data['type'] == 0) {
             return response()->json(['message' => 'It is impossible to change the type of forum. There are topics on this forum.'], 413);
         }
-        if($forum->parentId!==null){
+        if ($forum->parentId !== null) {
             $forum->parentId = null;
         }
         $forum->type = $data['type'];
@@ -117,7 +116,7 @@ class ForumController extends Controller
 //                $child->save();
 //            }
 //        }
-        if($forum->children){
+        if ($forum->children) {
             return response()->json(['message' => 'You cannot delete the forum. Move the child forums'], 413);
         }
         $forum->delete();
@@ -131,7 +130,6 @@ class ForumController extends Controller
     public function status(Forum $forum): \Illuminate\Http\JsonResponse
     {
         $forum->status = !$forum->status;
-        //dd($forum);
         $forum->save();
         return response()->json(['message' => 'Forum status changed!']);
     }

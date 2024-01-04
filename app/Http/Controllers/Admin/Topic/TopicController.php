@@ -4,11 +4,23 @@ namespace App\Http\Controllers\Admin\Topic;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Topic\UnApprovedTopicRequest;
+use App\Http\Resources\Admin\Topic\TopicDetailsResource;
 use App\Models\Topic;
 use App\Models\UnApprovedTopic;
 
 class TopicController extends Controller
 {
+
+    public function index()
+    {
+        $topics = Topic::all();
+        return response()->json(['topics' => $topics]);
+    }
+
+    public function show(Topic $topic)
+    {
+        return response()->json(['topic' => new TopicDetailsResource($topic)]);
+    }
 
     public function approved(Topic $topic)
     {
