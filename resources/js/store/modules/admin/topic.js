@@ -79,7 +79,45 @@ export default {
                         reject(error);
                     })
             })
-        }
+        },
+
+        rejectTopic({dispatch}, [id, data]){
+            return new Promise((resolve, reject) => {
+                api.post(`/api/admin/topic/${id}/reject`, data)
+                    .then(response => {
+                        if(response.data){
+                            toast.success(response.data.message ?? "Success.");
+                            dispatch('getTopic', id);
+                            resolve(response);
+                        }else{
+                            resolve(response);
+                        }
+                    })
+                    .catch(error => {
+                        toast.error(error.response.data.message ?? "Error.");
+                        reject(error);
+                    })
+            });
+        },
+
+        resolveTopic({dispatch}, id){
+            return new Promise((resolve, reject) => {
+                api.patch(`/api/admin/topic/${id}/resolve`)
+                    .then(response => {
+                        if(response.data){
+                            toast.success(response.data.message ?? "Success.");
+                            dispatch('getTopic', id);
+                            resolve(response);
+                        }else{
+                            resolve(response);
+                        }
+                    })
+                    .catch(error => {
+                        toast.error(error.response.data.message ?? "Error.");
+                        reject(error);
+                    })
+            });
+        },
     },
 
     mutations: {

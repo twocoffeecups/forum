@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Admin\Topic;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\Topic\UnApprovedTopicRequest;
+use App\Http\Requests\Admin\Topic\RejectTopicRequest;
 use App\Http\Resources\Admin\Topic\TopicDetailsResource;
 use App\Models\Topic;
-use App\Models\UnApprovedTopic;
+use App\Models\RejectedTopic;
 
 class TopicController extends Controller
 {
@@ -22,27 +22,30 @@ class TopicController extends Controller
         return response()->json(['topic' => new TopicDetailsResource($topic)]);
     }
 
-    public function approved(Topic $topic)
+    public function resolve(Topic $topic)
     {
-        $unApprovedTopic = UnApprovedTopic::where('topicId', '=', $topic->id)->first();
-        if($unApprovedTopic){
-            $unApprovedTopic->delete();
+        $rejectedTopic = RejectedTopic::where('topicId', '=', $topic->id)->first();
+        //dd($topic, $rejectedTopic);
+        if($rejectedTopic){
+            $rejectedTopic->delete();
         }
         $topic->status = 1;
         $topic->save();
         return response()->json(['message' => 'The topic is approved.']);
     }
 
-    public function doNotApprove(UnApprovedTopicRequest $request, Topic $topic)
+    public function reject(RejectTopicRequest $request, Topic $topic)
     {
 
-        $unApprovedTopic = UnApprovedTopic::where('topicId', '=', $topic->id)->first();
-        if($unApprovedTopic){
-            return response()->json(['message' => 'You have already added a comment to the refusal to publish the topic.']);
+        $rejectedTopic = RejectedTopic::where('topicId', '=', $topic->id)->first();
+        if($rejectedTopic){
+            return response()->json(['message' => 'You have already added a comment to reject to publish the topic.']);
         }
         $data = $request->validated();
         $data['userId'] = $topic->userId;
-        UnApprovedTopic::firstOrCreate(['topicId' => $data['topicId']], $data);
+        $data['topicId'] = $topic->id;
+        //dd($data, $rejectedTopic);
+        $rejectedTopic = RejectedTopic::firstOrCreate(['topicId' => $data['topicId']], $data);
         $topic->status = 0;
         $topic->save();
         return response()->json(['message' => 'The topic is not approved.']);
@@ -50,9 +53,9 @@ class TopicController extends Controller
 
     protected function delete(Topic $topic)
     {
-        $unApprovedTopic = UnApprovedTopic::where('topicId', '=', $topic->id)->first();
-        if($unApprovedTopic){
-            $unApprovedTopic->delete();
+        $rejectedTopic = RejectedTopic::where('topicId', '=', $topic->id)->first();
+        if($rejectedTopic){
+            $rejectedTopic->delete();
         }
         $topic->delete();
         return response()->json(['message' => 'The topic deleted.']);

@@ -4,7 +4,7 @@ namespace App\Http\Requests\Admin\Topic;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UnApprovedTopicRequest extends FormRequest
+class RejectTopicRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +24,9 @@ class UnApprovedTopicRequest extends FormRequest
     public function rules()
     {
         return [
-            'topicId' => 'integer|exists:topics,id',
-            'reasonId' => 'integer|exists:un_approved_reasons,id',
-            //'userId' => 'required|integer',
-            'message' => 'string'
+            //'topicId' => 'integer|exists:topics,id',
+            'reasonId' => 'integer|exists:topic_reject_types,id',
+            'message' => 'string|nullable'
         ];
     }
 }

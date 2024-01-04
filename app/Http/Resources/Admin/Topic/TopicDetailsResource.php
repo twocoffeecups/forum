@@ -18,12 +18,13 @@ class TopicDetailsResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'forum' => $this->forum->name,
-            'author' => $this->author->getName(),
+            'author' => $this->author->getFullName(),
             'status' => $this->status,
             'created_at' => $this->created_at->format('Y-m-d'),
             'posts' => $this->posts()->count(),
             'views' => 1,
             'tags' => $this->tags,
+            'isRejected' => $this->isRejected,
         ];
     }
 }

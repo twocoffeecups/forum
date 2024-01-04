@@ -48,4 +48,9 @@ class Topic extends Model
         return $this->hasMany(TopicImage::class, 'topicId', 'id');
     }
 
+    public function isRejected()
+    {
+        return $this->hasOne(RejectedTopic::class, 'topicId', 'id');
+    }
+
 }

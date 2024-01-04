@@ -45,8 +45,8 @@ Route::group(['prefix' => 'admin'], function () {
     Route::group(['prefix' => 'topic'], function () {
         Route::get('/', [\App\Http\Controllers\Admin\Topic\TopicController::class, 'index']);
         Route::get('/{topic}', [\App\Http\Controllers\Admin\Topic\TopicController::class, 'show']);
-        Route::get('/{topic}/approved', [\App\Http\Controllers\Admin\Topic\TopicController::class, 'approved']);
-        Route::post('/{topic}/do-not-approved', [\App\Http\Controllers\Admin\Topic\TopicController::class, 'doNotApprove']);
+        Route::patch('/{topic}/resolve', [\App\Http\Controllers\Admin\Topic\TopicController::class, 'resolve']);
+        Route::post('/{topic}/reject', [\App\Http\Controllers\Admin\Topic\TopicController::class, 'reject']);
         Route::delete('/{topic}', [\App\Http\Controllers\Admin\Topic\TopicController::class, 'delete']);
     });
 
