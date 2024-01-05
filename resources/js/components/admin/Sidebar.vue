@@ -17,11 +17,12 @@
                 </li>
 
                 <!-- Statistics -->
-                <li class="nav-item w-100">
-                    <a href="#" class="nav-link sidebar_nav_link align-middle px-0">
-                        <i class="fas fa-signal"></i> <span class="ms-1 d-sm-inline">Statistics</span>
-                    </a>
-                </li>
+                <!-- TODO: Сделать страницу -->
+<!--                <li class="nav-item w-100">-->
+<!--                    <a href="#" class="nav-link sidebar_nav_link align-middle px-0">-->
+<!--                        <i class="fas fa-signal"></i> <span class="ms-1 d-sm-inline">Statistics</span>-->
+<!--                    </a>-->
+<!--                </li>-->
 
                 <!-- Forum -->
                 <li class="nav-item w-100">
@@ -96,16 +97,17 @@
                     <router-link :to="{ name:'admin.reports' }" class="nav-link sidebar_nav_link px-0 align-middle">
                         <i class="fas fa-flag"></i> <span class="ms-1 d-sm-inline">Reports </span>
                         <span class="small position-absolute badge bg-danger rounded-pill" style="font-size: 10px">
-               9+
-            </span>
+                           9+
+                        </span>
                     </router-link>
                 </li>
 
                 <!-- Settings -->
-                <li class="nav-item w-100">
-                    <a href="#" class="nav-link sidebar_nav_link px-0 align-middle">
-                        <i class="fas fa-cog"></i> <span class="ms-1e d-sm-inline">Settings</span> </a>
-                </li>
+                <!-- TODO: сделать страницу -->
+<!--                <li class="nav-item w-100">-->
+<!--                    <a href="#" class="nav-link sidebar_nav_link px-0 align-middle">-->
+<!--                        <i class="fas fa-cog"></i> <span class="ms-1e d-sm-inline">Settings</span> </a>-->
+<!--                </li>-->
 
             </ul>
         </div>

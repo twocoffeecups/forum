@@ -10,7 +10,7 @@
         </a>
         <ul class="dropdown-menu dropdown-profile" aria-labelledby="offcanvas-profile">
             <li data-bs-dismiss="offcanvas">
-                <router-link class="dropdown-item" :to="{name:'profile.detail'}"><i class="fas fa-user-circle mx-2"></i>
+                <router-link class="dropdown-item" :to="{name:'profile.details'}"><i class="fas fa-user-circle mx-2"></i>
                     {{ $t('component.profileDropdown.profile') }}
                 </router-link>
             </li>

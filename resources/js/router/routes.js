@@ -55,7 +55,7 @@ const routes = [
             middleware: [Middleware.auth],
         },
         children: [
-            {path: '', name: 'profile.detail', component: () => import('../views/client/ProfileDetail.vue')},
+            {path: '', name: 'profile.details', component: () => import('../views/client/ProfileDetails.vue')},
             {
                 path: 'notification',
                 name: 'profile.notification',
@@ -88,8 +88,8 @@ const routes = [
             },
             {
                 path: 'users/:id',
-                name: 'admin.userDetail',
-                component: () => import('../views/admin/UserDetail.vue'),
+                name: 'admin.user.details',
+                component: () => import('../views/admin/UserDetails.vue'),
             },
             {
                 path: 'role',
@@ -119,7 +119,7 @@ const routes = [
             {
                 path: 'forum/:id',
                 name: 'admin.forum.details',
-                component: () => import('../views/admin/ForumDetail.vue'),
+                component: () => import('../views/admin/ForumDetails.vue'),
             },
             {
                 path: 'tag',
@@ -154,7 +154,7 @@ const routes = [
             {
                 path: 'reports/:id',
                 name: 'admin.report.details',
-                component: () => import('../views/admin/ReportDetail.vue'),
+                component: () => import('../views/admin/ReportDetails.vue'),
             },
         ],
     },

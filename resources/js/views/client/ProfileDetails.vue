@@ -152,7 +152,7 @@ import Post from "../../components/client/Post.vue";
 import Topic from "../../components/client/Topic.vue";
 
 export default {
-    name: 'ProfileAccount',
+    name: 'ProfileDetails',
     components: {Topic, Post},
 
     computed:{

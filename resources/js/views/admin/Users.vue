@@ -66,7 +66,7 @@
                         <td>{{ user.register_at }}</td>
                         <td>
                             <span class="text-primary mx-2" title="Show">
-                                <router-link :to="{ name:'admin.userDetail', params:{id:user.id} }">
+                                <router-link :to="{ name:'admin.user.details', params:{id:user.id} }">
                                   <i class="fas fa-eye"></i>
                                 </router-link>
                             </span>

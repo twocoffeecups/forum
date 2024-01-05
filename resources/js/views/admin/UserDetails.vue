@@ -171,7 +171,7 @@ import api from "../../api/api";
 import VueMultiselect from "vue-multiselect";
 
 export default {
-    name: "ForumDetail",
+    name: "ForumDetails",
     components: {VueMultiselect,},
 
     setup() {

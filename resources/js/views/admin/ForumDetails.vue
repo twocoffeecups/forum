@@ -233,7 +233,7 @@ import ForumOptionTree from "../../components/admin/ForumOptionTree.vue";
 import api from "../../api/api";
 
 export default {
-    name: "ForumDetail",
+    name: "ForumDetails",
     components: {ForumOptionTree, EditForumModal, CreateForumModal},
 
     setup() {

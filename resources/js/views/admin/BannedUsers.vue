@@ -4,7 +4,7 @@
 
 <script>
 export default {
-  name: "BannedUsers"
+    name: "BannedUsers"
 }
 </script>
 

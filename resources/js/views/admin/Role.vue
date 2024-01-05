@@ -15,9 +15,9 @@
                 <div
                     class="d-flex mt-2 flex-column flex-md-row flex-lg-row flex-xl-row justify-content-center justify-content-md-between justify-content-lg-between mb-3">
                     <div class="d-none d-md-flex d-lg-flex d-xl-flex my-2">
-                <span class="form-text">
-                  Show
-                </span>
+                        <span class="form-text">
+                          Show
+                        </span>
                         <select class="form-select form-select-sm mx-2" aria-label="Select entries">
                             <option value="10" selected>10</option>
                             <option value="30">30</option>
@@ -45,25 +45,25 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr v-for="role in roles">
-                        <th scope="row">{{ role.id }}</th>
-                        <td>{{ role.name }}</td>
-                        <td>{{ role.usersCount }}</td>
-                        <td class="flex-row d-flex">
-                            <span class="d-flex mx-1 p-1 bg-success bg-gradient text-white rounded-1" v-for="permission in role.permissions">{{ permission.option }}</span>
-                        </td>
-                        <td>{{ role.created_at }}</td>
-                        <td>
-                            <span class="text-primary mx-2" title="Show">
-                                <router-link :to="{ name:'admin.role.details', params:{id:role.id} }">
-                                    <i class="fas fa-eye"></i>
-                                </router-link>
-                            </span>
-                            <span @click="deleteRole(role.id)" role="button" class="text-danger mx-2" title="Delete">
-                                <i class="fas fa-trash"></i>
-                            </span>
-                        </td>
-                    </tr>
+                        <tr v-for="role in roles">
+                            <th scope="row">{{ role.id }}</th>
+                            <td>{{ role.name }}</td>
+                            <td>{{ role.usersCount }}</td>
+                            <td class="flex-row d-flex">
+                                <span class="d-flex mx-1 p-1 bg-success bg-gradient text-white rounded-1" v-for="permission in role.permissions">{{ permission.option }}</span>
+                            </td>
+                            <td>{{ role.created_at }}</td>
+                            <td>
+                                <span class="text-primary mx-2" title="Show">
+                                    <router-link :to="{ name:'admin.role.details', params:{id:role.id} }">
+                                        <i class="fas fa-eye"></i>
+                                    </router-link>
+                                </span>
+                                <span @click="deleteRole(role.id)" role="button" class="text-danger mx-2" title="Delete">
+                                    <i class="fas fa-trash"></i>
+                                </span>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>

@@ -28,7 +28,7 @@ class ForumDetailsResource extends JsonResource
                 'posts' => $this->posts()->count(),
                 'views' => 1,
             ],
-            'author' => $this->author->getName(),
+            'author' => $this->author->getFullName(),
             'children' => ForumResource::collection($this->descendantsTree),
         ];
     }
