@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Client\Profile;
 
+use App\Http\Resources\Client\Forum\TopicResource;
 use App\Http\Resources\Client\Post\PostResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -38,8 +39,8 @@ class UserResource extends JsonResource
             'isBanned' => false,
             'emailVerified_at' => $this->email_verified_at->format('Y-m-d'),
             'register_at' => $this->created_at->format('Y-m-d'),
-            'topics' => $this->topics,
-            'posts' => PostResource::collection($this->posts),
+            'topics' => TopicResource::collection($this->topics),
+            'posts' => PostResource::collection(PostResource::collection($this->posts)),
             'likes' => $this->likes,
             'topicBookmarks' => [],
             'postBookmarks' => PostResource::collection($this->bookmarks),

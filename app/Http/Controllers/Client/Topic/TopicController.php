@@ -15,16 +15,17 @@ use App\Models\Topic;
 use App\Models\TopicImage;
 use App\Models\User;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request;
 
 class TopicController extends Controller
 {
 
     public function index()
     {
-        return response()->json(['topics' => TopicResource::collection(Topic::all())]);
+        $topics = Topic::allApprovedTopics();
+        return response()->json(['topics' => TopicResource::collection($topics)]);
     }
 
     /**
@@ -71,8 +72,11 @@ class TopicController extends Controller
         ]);
     }
 
-    protected function show(Topic $topic)
+    protected function show(Request $request, Topic $topic)
     {
+        if($topic->status===0){
+            return response()->json(['message' => "Topic not found"], 404);
+        }
         return response()->json(['topic' => new TopicResource($topic)]);
     }
 

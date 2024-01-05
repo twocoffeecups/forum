@@ -49,7 +49,7 @@ export default {
                         if (response.data) {
                             resolve(response);
                             toast.success(response.data.message ?? "Created.");
-                            router.push({ name:'topic', params:{id:response.data.topicId} })
+                            router.push({ name:'topic.unapproved', params:{id:response.data.topicId} })
                         } else {
                             reject(response);
                         }

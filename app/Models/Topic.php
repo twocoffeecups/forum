@@ -53,4 +53,10 @@ class Topic extends Model
         return $this->hasOne(RejectedTopic::class, 'topicId', 'id');
     }
 
+
+    public static function allApprovedTopics()
+    {
+        return self::all()->where('status', '=', '1');
+    }
+
 }

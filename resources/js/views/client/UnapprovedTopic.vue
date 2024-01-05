@@ -37,21 +37,22 @@
                     </div>
                     <div class="card-body">
 
+                        <div class="alert alert-info mx-auto mb-3" role="alert">
+                            The topic will appear on the forum after the administrator checks and approves it.
+                        </div>
+
+                        <div v-if="topic.isRejected!==null" class="alert alert-danger mx-auto mb-3" role="alert">
+                            <span>Topic rejected: </span>
+                            <span><b>{{ rejectedReason.reason }}</b></span>
+                            <p class="my-1" v-if="rejectedReason.message">{{ rejectedReason.message }}</p>
+                        </div>
+
                         <!-- Topic main post -->
                         <TopicMainPost :main-post="topic" :images="images" @report="report"/>
 
-                        <!-- Posts -->
-                        <Post v-for="post in posts" :post="post" @report="report" @reply="reply"/>
-                        <!-- ./ Posts-->
-
-                        <!-- Create post form -->
-                        <PostCreationForm :reply="replyPost" :reply-id="replyPost.id" @cancelReply="cancelReply"/>
-
-                        <!-- Topic footer -->
-                        <TopicFooter/>
-
-                        <!-- Pagination -->
-                        <Pagination/>
+                        <div class="container ">
+                            <button class="btn btn-outline-secondary fa-pull-right mx-1">{{ $t('component.post.edit') }}</button>
+                        </div>
                     </div>
                 </div>
 
@@ -65,33 +66,26 @@
 
         </div>
     </div>
-
-    <ReportForm :report-id="reportDetail.id" :type="reportDetail.type"/>
 </template>
 
 <script>
-import Pagination from '../../components/client/Pagination.vue';
 import Sidebar from '../../components/client/Sidebar.vue';
-import TopicFooter from '../../components/client/TopicFooter.vue';
 import TopicMainPost from '../../components/client/TopicMainPost.vue';
-import Post from "../../components/client/Post.vue";
-import PostCreationForm from "../../components/client/PostCreationForm.vue";
-import ReportForm from "../../components/client/ReportForm.vue";
 import {mapGetters} from "vuex";
 
 export default {
-    name: "Topic",
-    components: {ReportForm, PostCreationForm, Post, Sidebar, TopicFooter, Pagination, TopicMainPost},
+    name: "UnapprovedTopic",
+    components: {Sidebar, TopicMainPost},
 
     created() {
-        this.$store.dispatch('topic/getTopic', this.$route.params.id);
+        this.$store.dispatch('unapprovedTopic/getTopic', this.$route.params.id);
     },
 
     computed: {
         ...mapGetters({
-            topic: 'topic/getTopic',
-            posts: 'topic/getPosts',
-            images: 'topic/getImages',
+            topic: 'unapprovedTopic/getTopic',
+            images: 'unapprovedTopic/getImages',
+            rejectedReason: 'unapprovedTopic/getRejectedReason',
         }),
     },
 

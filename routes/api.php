@@ -180,6 +180,9 @@ Route::group(['prefix' => 'client'], function () {
         });
     });
 
+    Route::group(['prefix' => 'unapproved-topic'], function () {
+        Route::get('/{topic}', [\App\Http\Controllers\Client\Topic\UnapprovedTopicController::class, 'show'])->middleware('auth:sanctum');
+    });
 
 });
 

@@ -35,7 +35,7 @@
                               title="Delete">
                             <i class="fas fa-trash"></i>
                         </span>
-                        <router-link :to="{name:'topic', params:{id:topic.id}}" class="btn btn-primary mx-1">
+                        <router-link :to="{name:'topic.unapproved', params:{id: this.$route.params.id}}" class="btn btn-primary mx-1">
                             Show
                         </router-link>
                     </dd>

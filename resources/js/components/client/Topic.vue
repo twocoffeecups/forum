@@ -70,7 +70,7 @@
             </div>
 
             <div v-if="topic.latestPost===null" class="col-md-3 col-lg-3 mt-3 mt-lg-0 d-flex flex-row flex-md-column flex-lg-column">
-                <h5>There are no posts on this topic.</h5>
+                <h6>There are no posts on this topic.</h6>
             </div>
         </div>
     </div>

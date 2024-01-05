@@ -29,6 +29,7 @@ class TopicResource extends JsonResource
             'images' => $this->images,
             'files' => $this->files,
             'posts' => PostResource::collection($this->posts),
+            'isRejected' => new TopicRejectedReasonResource($this->isRejected),
             'created_at' => date('d.m.Y H:i', strtotime($this->created_at)),
             'updated_at' => date('d.m.Y H:i', strtotime($this->updated_at)),
         ];

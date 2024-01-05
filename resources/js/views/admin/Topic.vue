@@ -137,7 +137,7 @@
                                 </th>
                                 <td>
                                     <span role="button" class="text-primary mx-2" title="Show">
-                                        <router-link :to="{name:'admin.topic.details', params:{id:topic.id}}">
+                                        <router-link :to="{name:'admin.topic.details', params:{id: topic.id}}">
                                             <i class="far fa-eye"></i>
                                         </router-link>
 

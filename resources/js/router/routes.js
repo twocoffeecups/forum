@@ -39,6 +39,14 @@ const routes = [
         }
     },
     {
+        path: '/unapproved-topic/:id',
+        name: 'topic.unapproved',
+        component: () => import('../views/client/UnapprovedTopic.vue'),
+        meta: {
+            layout: Client,
+        }
+    },
+    {
         path: '/profile',
         name: 'profile',
         component: () => import('../views/client/Profile.vue'),
@@ -190,8 +198,8 @@ const routes = [
         },
     },
     {
-        path: '/:pathMatch(.*)*',
-        name: '404',
+        path: '/:catchAll(.*)',
+        name: 'error.404',
         component: () => import('../views/auth/404.vue'),
         meta: {
             layout: Auth,

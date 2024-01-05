@@ -36,6 +36,10 @@ import Sidebar from "../../components/client/Sidebar.vue";
 export default {
     name: "Account",
     components: {Sidebar, ProfileNavigation},
+
+    mounted() {
+        this.$store.dispatch('profile/getUserDetails');
+    }
 }
 </script>
 

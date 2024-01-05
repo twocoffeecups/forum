@@ -48,13 +48,13 @@ export default {
                     data.append(key, value);
                 }
                 axios.post('/api/auth/sign-up', data)
-                    .then(res => {
-                        if (res.data) {
+                    .then(response => {
+                        if (response.data) {
                             router.push({name: 'auth.signIn'});
                             toast.success('You have successfully registered!');
-                            resolve(res);
+                            resolve(response);
                         } else {
-                            reject(res);
+                            reject(response);
                         }
 
                     })
@@ -72,23 +72,22 @@ export default {
                     email: user.email,
                     password: user.password
                 })
-                    .then(res => {
-                        if (res.data) {
+                    .then(response => {
+                        if (response.data) {
                             toast.success('Login successfully!');
-                            localStorage.setItem('access-token', res.data.accessToken);
+                            localStorage.setItem('access-token', response.data.accessToken);
                             commit('setLoggedIn', true);
-                            commit('setUserDetails', res.data.userDetails);
-                            localStorage.setItem('user-details', JSON.stringify(res.data.userDetails));
-                            console.log(res.data.userDetails)
+                            commit('setUserDetails', response.data.userDetails);
+                            //commit('profile/setTopics', response.data.userDetails);
+                            localStorage.setItem('user-details', JSON.stringify(response.data.userDetails));
                             router.push({name: 'main'});
-                            resolve(res);
+                            resolve(response);
                         } else {
-                            reject(res);
+                            reject(response);
                         }
 
                     })
                     .catch(error => {
-                        console.log('error', error);
                         toast.error(error.response.data.message ?? 'Error!');
                         reject(error);
                     })
@@ -101,13 +100,13 @@ export default {
                 axios.post('/api/auth/password/forgot', {
                     email: email
                 })
-                    .then(res => {
-                        if (res.data) {
+                    .then(response => {
+                        if (response.data) {
                             router.push({name: 'main'});
                             toast.info('An email was sent to the specified email address with a link to create a new password.');
-                            resolve(res);
+                            resolve(response);
                         } else {
-                            reject(res);
+                            reject(response);
                         }
                     })
                     .catch(error => {
@@ -125,13 +124,13 @@ export default {
                     confirmPassword: user.confirmPassword,
                     hash: user.hash
                 })
-                    .then(res => {
-                        if (res.data) {
+                    .then(response => {
+                        if (response.data) {
                             toast.info('Password has been successfully changed. Sign in to your account.');
                             router.push({name: 'auth.signIn'});
-                            resolve(res);
+                            resolve(response);
                         } else {
-                            reject(res);
+                            reject(response);
                         }
                     })
                     .catch(error => {
@@ -149,16 +148,16 @@ export default {
                     }
                 })
                     .then(res => {
-                        if (res.data) {
+                        if (response.data) {
                             localStorage.removeItem('access-token');
                             localStorage.removeItem('user-details');
                             commit('setLoggedIn', false);
                             commit('setUserDetails', {});
                             toast.success("You have successfully logout.")
                             router.push({name: 'main'});
-                            resolve(res);
+                            resolve(response);
                         } else {
-                            reject(res)
+                            reject(response)
                         }
                     })
                     .catch(error => {

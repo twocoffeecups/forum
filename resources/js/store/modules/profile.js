@@ -7,17 +7,52 @@ const toast = useToast();
 export default {
     namespaced: true,
 
+    state: {
+        topics: {},
+        posts: {},
+        topicBookmarks: {},
+        postBookmarks: {},
+        likes: {},
+    },
+
+    getters: {
+        getTopics(state){
+            return state.topics;
+        },
+
+        getPosts(state){
+            return state.posts;
+        },
+
+        getTopicBookmarks(state){
+            return state.topicBookmarks;
+        },
+
+        getPostBookmarks(state){
+            return state.postBookmarks;
+        },
+
+        getLikes(state){
+            return state.likes;
+        },
+    },
+
     actions: {
         getUserDetails({dispatch, commit}) {
             return new Promise((resolve, reject) => {
                 const id = JSON.parse(localStorage.getItem('user-details')).id
                 api.get(`/api/client/profile`)
-                    .then(res => {
-                        if (res.data) {
-                            resolve(res);
-                            commit('auth/setUserDetails', res.data.userDetails, {root: true});
+                    .then(response => {
+                        if (response.data) {
+                            resolve(response);
+                            commit('auth/setUserDetails', response.data.userDetails, {root: true});
+                            commit('setTopics', response.data.userDetails.topics);
+                            commit('setPosts', response.data.userDetails.posts);
+                            commit('setLikes', response.data.userDetails.likes);
+                            commit('setTopicBookmarks', response.data.userDetails.topicBookmarks);
+                            commit('setPostBookmarks', response.data.userDetails.postBookmarks);
                         } else {
-                            reject(res);
+                            reject(response);
                         }
                     })
                     .catch(error => {
@@ -94,6 +129,28 @@ export default {
                         reject(error);
                     })
             });
+        },
+    },
+
+    mutations: {
+        setTopics(state, payload){
+            state.topics = payload;
+        },
+
+        setPosts(state, payload){
+            state.posts = payload;
+        },
+
+        setTopicBookmarks(state, payload){
+            state.topicBookmarks = payload;
+        },
+
+        setPostBookmarks(state, payload){
+            state.postBookmarks = payload;
+        },
+
+        setLikes(state, payload){
+            state.likes = payload;
         },
     },
 }

@@ -63,6 +63,7 @@
                                     }}
                                 </button>
                                 <!--                      <button class="btn btn-sm btn-outline-secondary mx-1">{{ $t('component.post.edit') }}</button>-->
+
                                 <span class="mx-1 p-2"> <i class="far fa-bookmark" style="cursor: pointer"></i></span>
                             </div>
 
@@ -76,7 +77,7 @@
 
 <script>
 import TopicMainPostHeader from './TopicMainPostHeader.vue';
-import {mapGetters, mapState} from "vuex";
+import {mapGetters,} from "vuex";
 
 export default {
     name: "TopicMainPost",
@@ -86,7 +87,7 @@ export default {
 
     computed: {
         ...mapGetters({
-            topicAuthor: 'topic/getTopicAuthor',
+            topicAuthor: 'unapprovedTopic/getTopicAuthor',
         }),
     },
 
