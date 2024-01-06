@@ -137,9 +137,9 @@ const routes = [
                 component: () => import('../views/admin/TopicDetails.vue'),
             },
             {
-                path: 'topic',
-                name: 'admin.topic',
-                component: () => import('../views/admin/Topic.vue'),
+                path: 'rejected-topic',
+                name: 'admin.topic.rejected',
+                component: () => import('../views/admin/RejectedTopic.vue'),
             },
             {
                 path: 'reject-type',

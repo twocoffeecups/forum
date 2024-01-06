@@ -54,6 +54,11 @@
                                 </router-link>
                             </li>
                             <li>
+                                <router-link :to="{name:'admin.topic.rejected'}" class="nav-link sidebar_nav_link px-0"><i
+                                    class="fas fa-hashtag"></i> Rejected topics
+                                </router-link>
+                            </li>
+                            <li>
                                 <router-link :to="{name:'admin.reject-type'}" class="nav-link sidebar_nav_link px-0"><i
                                     class="fas fa-hashtag"></i> Topics reject type
                                 </router-link>

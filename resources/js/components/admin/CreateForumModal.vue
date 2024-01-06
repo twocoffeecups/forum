@@ -1,9 +1,12 @@
 <template>
     <div class="d-flex justify-content-start mb-3">
-        <button class="btn btn-primary mx-1" data-bs-toggle="modal" data-bs-target="#create-category-modal">+ CRETE FORUM</button>
+        <button class="btn btn-primary mx-1" data-bs-toggle="modal" data-bs-target="#create-category-modal">+ CRETE
+            FORUM
+        </button>
     </div>
 
-    <div class="modal fade" id="create-category-modal" tabindex="-1" aria-labelledby="create-category-modal" aria-hidden="true">
+    <div class="modal fade" id="create-category-modal" tabindex="-1" aria-labelledby="create-category-modal"
+         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -30,20 +33,23 @@
                     </div>
 
                     <div class="mb-3 form-check">
-                        <input v-model="isChild" type="checkbox" :disabled="forumType==0" class="form-check-input" id="is-child">
+                        <input v-model="isChild" type="checkbox" :disabled="forumType==0" class="form-check-input"
+                               id="is-child">
                         <label class="form-check-label" for="is-child">Child category</label>
                     </div>
 
                     <div v-if="isChild" class="mb-3 form-group">
                         <select v-model="selectedForum" @change="changeForum($event)" class="form-control">
-                            <ForumOptionTree v-for="forum in forums" :is-selected="selectedForum" :name="forum.name" :id="forum.id" :children="forum.children" :indent="0" />
+                            <ForumOptionTree v-for="forum in forums" :is-selected="selectedForum" :name="forum.name"
+                                             :id="forum.id" :children="forum.children" :indent="0"/>
                         </select>
                     </div>
 
                     <div class="mb-3 form-group">
                         <div :class="{ error: v$.description.$errors.length }">
                             <label for="description" class="col-form-label">Description:</label>
-                            <textarea @blur="v$.description.$touch" class="form-control" v-model="description" id="description"></textarea>
+                            <textarea @blur="v$.description.$touch" class="form-control" v-model="description"
+                                      id="description"></textarea>
                             <div class="input-errors" v-for="error of v$.description.$errors" :key="error.$uid">
                                 <div class="error-msg text-danger">{{ error.$message }}</div>
                             </div>
@@ -54,7 +60,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button @click="createForum" data-bs-dismiss="modal" type="button" class="btn btn-primary">Create</button>
+                    <button @click="createForum" data-bs-dismiss="modal" type="button" class="btn btn-primary">Create
+                    </button>
                 </div>
             </div>
         </div>
@@ -62,28 +69,39 @@
 </template>
 
 <script>
-import { useVuelidate } from '@vuelidate/core';
-import { required, minLength, maxLength, } from '@vuelidate/validators';
+import {useVuelidate} from '@vuelidate/core';
+import {required, minLength, maxLength,} from '@vuelidate/validators';
 import ForumOptionTree from "./ForumOptionTree.vue";
 import api from "../../api/api";
 
 export default {
     name: "CreateForumModal",
     components: {ForumOptionTree,},
+    props: ['parentId'],
 
     mounted() {
         this.getForums();
     },
 
-    setup(){
-        return{
+    setup() {
+        return {
             v$: useVuelidate()
         }
     },
 
-    data(){
-        return{
-            name:null,
+    watch: {
+        parentId(val){
+            if(this.parentId){
+                this.forumType = 1;
+                this.isChild = true;
+                this.selectedForum = val;
+            }
+        },
+    },
+
+    data() {
+        return {
+            name: null,
             isChild: false,
             description: null,
             forumType: 0,
@@ -92,28 +110,26 @@ export default {
             showCategory: null,
             selectedForum: null,
             forums: [],
-            //selected: null,
         }
     },
 
-    validations(){
-        return{
-            name:{required, minLength:minLength(3), maxLength:maxLength(64),},
-            description:{maxLength:maxLength(255),},
+    validations() {
+        return {
+            name: {required, minLength: minLength(3), maxLength: maxLength(64),},
+            description: {maxLength: maxLength(255),},
         }
     },
 
-    methods:{
-        createForum(){
+    methods: {
+        createForum() {
             this.v$.$validate();
-            if(!this.v$.$error){
-                //console.log(this.selectedForum)
-                let parentId = this.isChild && this.type!=0 ? this.selectedForum : null;
+            if (!this.v$.$error) {
+                let parentId = this.isChild && this.type != 0 ? this.selectedForum : null;
                 const data = new FormData();
                 data.append('parentId', parentId);
                 data.append('type', this.forumType);
                 data.append('name', this.name);
-                data.append('description', this.description)
+                data.append('description', this.description);
                 this.$store.dispatch('adminForum/createForum', data);
                 this.name = null;
                 this.description = null;
@@ -121,14 +137,14 @@ export default {
             }
         },
 
-        getForums(){
+        getForums() {
             api.get(`/api/admin/forum`)
                 .then(res => {
                     this.forums = res.data.forums
                 })
         },
 
-        changeForum(e){
+        changeForum(e) {
             this.selectedForum = e.target.value
         },
     }

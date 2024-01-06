@@ -70,6 +70,29 @@
                         <dd class="col-sm-8">{{ forum.author }}</dd>
                         <dt class="col-sm-4">Created AT</dt>
                         <dd class="col-sm-8">{{ forum.created_at }}</dd>
+                        <dt class="col-sm-4">Change visibility status</dt>
+                        <dd class="col-sm-8">
+                            <div class="btn-group" role="group"
+                                 aria-label="Basic radio toggle button group"
+                                 @change.prevent="changeVisibility($event, forum.id)">
+                                <input type="radio" class="btn-check" :name="forum.id+'isPublished'"
+                                       :id="forum.id+'hide'" value="false" autocomplete="off"
+                                       :checked="forum.status != true">
+                                <label class="btn btn-outline-secondary" :for="forum.id+'hide'">Hide</label>
+
+                                <input type="radio" class="btn-check" :name="forum.id+'isPublished'"
+                                       :id="forum.id+'published'" value="true" autocomplete="off"
+                                       :checked="forum.status == true">
+                                <label class="btn btn-outline-success"
+                                       :for="forum.id+'published'">Publish</label>
+                            </div>
+                        </dd>
+                        <dt class="col-sm-4">Actions</dt>
+                        <dd class="col-sm-8">
+                            <button @click.prevent="deleteForum" class="btn btn-danger bg-gradient">Delete</button>
+
+                            <router-link v-if="forum.type===1" :to="{name:'forum', params:{id:this.$route.params.id}}" class="btn btn-primary bg-gradient mx-1">Show on site</router-link>
+                        </dd>
                     </dl>
                 </div>
             </div>
@@ -103,7 +126,7 @@
                 <div class="d-flex justify-content-between my-2">
                     <h4>Children forum</h4>
                     <div>
-                        <CreateForumModal/>
+                        <CreateForumModal :parent-id="forum.id"/>
                     </div>
                 </div>
             </div>
@@ -146,45 +169,45 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr v-for="forum in childrenForums">
-                            <th scope="row">{{ forum.id }}</th>
-                            <td>{{ forum.name }}</td>
-                            <td>{{ forum.type }}</td>
-                            <td>
-                                {{ forum.description }}
-                            </td>
-                            <td>{{ forum.categories }}</td>
-                            <td>{{ forum.topics }}</td>
-                            <td>{{ forum.posts }}</td>
-                            <td>{{ forum.createdAt }}</td>
-                            <th>
-                                <div class="btn-group  btn-group-sm" role="group"
-                                     aria-label="Basic radio toggle button group"
-                                     @change.prevent="changeVisibility($event, forum.id)">
-                                    <input type="radio" class="btn-check" :name="forum.id+'isPublished'"
-                                           :id="forum.id+'hide'" value="false" autocomplete="off"
-                                           :checked="forum.visibility !== true">
-                                    <label class="btn btn-outline-secondary" :for="forum.id+'hide'">Hide</label>
+                            <tr v-for="forum in childrenForums">
+                                <th scope="row">{{ forum.id }}</th>
+                                <td>{{ forum.name }}</td>
+                                <td>{{ forum.type }}</td>
+                                <td>
+                                    {{ forum.description }}
+                                </td>
+                                <td>{{ forum.categories }}</td>
+                                <td>{{ forum.topics }}</td>
+                                <td>{{ forum.posts }}</td>
+                                <td>{{ forum.createdAt }}</td>
+                                <th>
+                                    <div class="btn-group  btn-group-sm" role="group"
+                                         aria-label="Basic radio toggle button group"
+                                         @change.prevent="changeVisibility($event, forum.id)">
+                                        <input type="radio" class="btn-check" :name="forum.id+'isPublished'"
+                                               :id="forum.id+'hide'" value="false" autocomplete="off"
+                                               :checked="forum.visibility !== true">
+                                        <label class="btn btn-outline-secondary" :for="forum.id+'hide'">Hide</label>
 
-                                    <input type="radio" class="btn-check" :name="forum.id+'isPublished'"
-                                           :id="forum.id+'published'" value="true" autocomplete="off"
-                                           :checked="forum.visibility === true">
-                                    <label class="btn btn-outline-success" :for="forum.id+'published'">Publish</label>
-                                </div>
+                                        <input type="radio" class="btn-check" :name="forum.id+'isPublished'"
+                                               :id="forum.id+'published'" value="true" autocomplete="off"
+                                               :checked="forum.visibility === true">
+                                        <label class="btn btn-outline-success" :for="forum.id+'published'">Publish</label>
+                                    </div>
 
-                            </th>
-                            <td>
+                                </th>
+                                <td>
 
-                                <EditForumModal :id="forum.id" :forum-name="forum.name"
-                                                :forum-description="forum.description"/>
+                                    <EditForumModal :id="forum.id" :forum-name="forum.name"
+                                                    :forum-description="forum.description"/>
 
-                                <span @click="deleteForum(forum.id)" role="button" class="text-danger mx-2"
-                                      title="Edit">
-                                <i class="fas fa-trash"></i>
-                              </span>
+                                    <span @click="deleteForum(forum.id)" role="button" class="text-danger mx-2"
+                                          title="Edit">
+                                    <i class="fas fa-trash"></i>
+                                  </span>
 
-                            </td>
-                        </tr>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -272,7 +295,7 @@ export default {
             this.$store.dispatch('adminForum/changeForumVisibility', this.$route.params.id)
         },
 
-        deleteForum(forumId) {
+        deleteForum() {
             this.$store.dispatch('adminForum/deleteForum', this.$route.params.id);
         },
 

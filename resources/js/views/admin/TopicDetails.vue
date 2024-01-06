@@ -153,8 +153,11 @@ export default {
 
     methods: {
         deleteTopic() {
-            console.log("Topic deleted, reason:", this.deleteReason)
-            this.$store.dispatch('adminTopic/deleteTopic', [this.$route.params.id, this.deleteReason]);
+            // console.log("Topic deleted, reason:", this.deleteReason)
+            const data = new FormData();
+            data.append('reason', this.deleteReason);
+            data.append('_method', 'delete');
+            this.$store.dispatch('adminTopic/deleteTopic', [this.$route.params.id, data]);
         },
 
         getRejectTypes() {

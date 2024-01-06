@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Admin\Topic;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Topic\RejectTopicRequest;
+use App\Http\Requests\Admin\Topic\TopicDeleteRequest;
+use App\Http\Resources\Admin\Topic\RejectedTopicResource;
 use App\Http\Resources\Admin\Topic\TopicDetailsResource;
+use App\Http\Resources\Admin\Topic\TopicResource;
 use App\Models\Topic;
 use App\Models\RejectedTopic;
 
@@ -14,7 +17,14 @@ class TopicController extends Controller
     public function index()
     {
         $topics = Topic::all();
-        return response()->json(['topics' => $topics]);
+        return response()->json(['topics' => TopicResource::collection($topics)]);
+    }
+
+    public function rejectedTopic()
+    {
+        $topics = RejectedTopic::all();
+        //dd($topics);
+        return response()->json(['topics' => RejectedTopicResource::collection($topics)]);
     }
 
     public function show(Topic $topic)
@@ -51,9 +61,11 @@ class TopicController extends Controller
         return response()->json(['message' => 'The topic is not approved.']);
     }
 
-    protected function delete(Topic $topic)
+    protected function delete(TopicDeleteRequest $request, Topic $topic)
     {
+        $data = $request->validated();
         $rejectedTopic = RejectedTopic::where('topicId', '=', $topic->id)->first();
+        //dd($data, $topic, $rejectedTopic);
         if($rejectedTopic){
             $rejectedTopic->delete();
         }

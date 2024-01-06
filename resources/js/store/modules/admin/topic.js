@@ -61,11 +61,9 @@ export default {
             });
         },
 
-        deleteTopic({dispatch}, [id, reason]){
+        deleteTopic({dispatch}, [id, data]){
             return new Promise((resolve, reject) => {
-                api.post(`/api/admin/topic/${id}`, {
-                    reason: reason
-                })
+                api.post(`/api/admin/topic/${id}`, data)
                     .then(response => {
                         if (response.data) {
                             toast.success(response.data.message ?? "Deleted.");

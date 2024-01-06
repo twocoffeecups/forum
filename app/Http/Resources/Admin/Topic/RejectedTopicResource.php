@@ -4,7 +4,7 @@ namespace App\Http\Resources\Admin\Topic;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class TopicResource extends JsonResource
+class RejectedTopicResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,13 +16,11 @@ class TopicResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'title' => $this->title,
-            'forum' => $this->forum->name,
-            'author' => $this->author->getFullName(),
-            'status' => $this->status,
+            'title' => $this->topic->title,
+            'author' => $this->topic->author->getFullName(),
+            'reason' => $this->reason->title,
             'created_at' => $this->created_at->format('Y-m-d'),
-            'posts' => $this->posts()->count(),
-            'views' => 1,
+            'posts' => $this->topic->posts()->count(),
         ];
     }
 }

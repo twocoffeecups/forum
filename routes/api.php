@@ -49,6 +49,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/{topic}/reject', [\App\Http\Controllers\Admin\Topic\TopicController::class, 'reject']);
         Route::delete('/{topic}', [\App\Http\Controllers\Admin\Topic\TopicController::class, 'delete']);
     });
+    Route::get('/rejected-topics', [\App\Http\Controllers\Admin\Topic\TopicController::class, 'rejectedTopic']);
 
     Route::group(['prefix' => 'topic-reject-type'], function () {
         Route::get('/', [\App\Http\Controllers\Admin\TopicRejectType\TopicRejectTypeController::class, 'index']);

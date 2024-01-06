@@ -1,5 +1,21 @@
 <template>
     <div class="row mb-3">
+        <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="card text-bg-primary bg-gradient mb-3 col" style="max-width: 360px; max-height: 145px;">
+                <div class="card-body">
+                    <div class="d-flex">
+                        <div class="col">
+                            <h2>123</h2>
+                            <span class="fst-italic">Rejected topics</span>
+                        </div>
+                        <div class="col d-flex justify-content-center align-items-center">
+                            <i class="fas fa-comments" style="font-size: 2.3em"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
         <div class="col-12 col-sm-12 col-md-6 col-lg-6">
             <div class="card text-bg-danger bg-gradient mb-3 col" style="max-width: 360px; max-height: 145px;">
@@ -14,9 +30,6 @@
                         </div>
                     </div>
                 </div>
-                <!--        <div class="card-footer">-->
-                <!--          <p class="card-text text-center" role="button">More info <i class="fas fa-arrow-circle-right"></i></p>-->
-                <!--        </div>-->
             </div>
         </div>
     </div>
@@ -59,37 +72,28 @@
                             <tr></tr>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Forum</th>
-                                <th scope="col">Title</th>
-                                <th scope="col">User</th>
+                                <th scope="col">Topic title</th>
+                                <th scope="col">Reason</th>
+                                <th scope="col">Author</th>
                                 <th scope="col">Posts</th>
-                                <th scope="col">Status</th>
                                 <th scope="col">Created AT</th>
-                                <th scope="col">Allow | Disallow Publication</th>
                                 <th scope="col">Actions</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr v-for="topic in topics">
                                 <th scope="row">{{ topic.id }}</th>
-                                <td>{{ topic.forum }}</td>
                                 <td>{{ topic.title }}</td>
-                                <td>{{ topic.user }}</td>
+                                <td>{{ topic.reason }}</td>
+                                <td>{{ topic.author }}</td>
                                 <td>{{ topic.posts }}</td>
-                                <td>{{ topic.status }}</td>
                                 <td>{{ topic.created_at }}</td>
-                                <th>
-                                    <span>{{ topic.status ? 'Published' : 'Unpublished' }}</span>
-                                </th>
                                 <td>
                                     <span role="button" class="text-primary mx-2" title="Show">
                                         <router-link :to="{name:'admin.topic.details', params:{id: topic.id}}">
                                             <i class="far fa-eye"></i>
                                         </router-link>
 
-                                    </span>
-                                    <span role="button" class="text-danger mx-2" title="Delete">
-                                        <i class="fas fa-trash"></i>
                                     </span>
                                 </td>
                             </tr>
@@ -136,16 +140,18 @@
 import {mapGetters} from "vuex";
 
 export default {
-    name: "Topic",
+    name: "RejectedTopic",
 
     computed: {
         ...mapGetters({
-            topics: 'adminTopic/getTopics',
+            //topics: 'adminTopic/getTopics',
+            topics: 'rejectedTopic/getTopics',
         })
     },
 
     mounted() {
-        this.$store.dispatch('adminTopic/getTopics');
+        //this.$store.dispatch('adminTopic/getTopics');
+        this.$store.dispatch('rejectedTopic/getTopics');
     },
 }
 </script>
