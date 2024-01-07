@@ -31,6 +31,15 @@ const routes = [
         }
     },
     {
+        path: '/edit-topic/:id',
+        name: 'topic.edit',
+        component: () => import('../views/client/EditTopic.vue'),
+        meta: {
+            layout: Client,
+            // middleware: [Middleware.userIsBanned],
+        }
+    },
+    {
         path: '/topic/:id',
         name: 'topic',
         component: () => import('../views/client/Topic.vue'),

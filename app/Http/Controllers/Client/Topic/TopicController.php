@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Client\Topic;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Client\Topic\TopicStoreRequest;
 use App\Http\Requests\Api\Client\Topic\TopicUpdateRequest;
+use App\Http\Resources\Client\Topic\TopicEditResource;
 use App\Http\Resources\Client\Topic\TopicForumTreeResource;
 use App\Http\Resources\Client\Topic\TopicResource;
 use App\Http\Resources\Client\Topic\TopicTagFormResource;
@@ -22,7 +23,10 @@ use Illuminate\Http\Request;
 class TopicController extends Controller
 {
 
-    public function index()
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function index(): \Illuminate\Http\JsonResponse
     {
         $topics = Topic::allApprovedTopics();
         return response()->json(['topics' => TopicResource::collection($topics)]);
@@ -37,23 +41,25 @@ class TopicController extends Controller
         $data = $request->validated();
         $user = $this->getUserByToken($request);
         $data['userId'] = $user->id;
-        if (!empty($data['images'])){
-            $images = $data['images']; unset($data['images']);
+        if (!empty($data['images'])) {
+            $images = $data['images'];
+            unset($data['images']);
         }
-        if (!empty($data['tags'])){
-            $tags = $data['tags']; unset($data['tags']);
+        if (!empty($data['tags'])) {
+            $tags = $data['tags'];
+            unset($data['tags']);
         }
         /** DB transaction
          * TODO: перенести в Service
          */
         DB::beginTransaction();
         $topic = Topic::create($data);
-        if(!empty($tags)) {
+        if (!empty($tags)) {
             $topic->tags()->toggle($tags);
         }
         // images
-        if(!empty($images)){
-            foreach ($images as $image){
+        if (!empty($images)) {
+            foreach ($images as $image) {
                 $imageName = md5(Carbon::now() . '_' . $image->getClientOriginalName()) . '.' . $image->getClientOriginalExtension();
                 $imagePath = Storage::disk('public')->putFileAs('/topics/images', $image, $imageName);
                 TopicImage::create([
@@ -72,27 +78,94 @@ class TopicController extends Controller
         ]);
     }
 
-    protected function show(Request $request, Topic $topic)
+    /**
+     * @param Request $request
+     * @param Topic $topic
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function show(Request $request, Topic $topic): \Illuminate\Http\JsonResponse
     {
-        if($topic->status===0){
+        if ($topic->status === 0) {
             return response()->json(['message' => "Topic not found"], 404);
         }
         return response()->json(['topic' => new TopicResource($topic)]);
     }
 
-    protected function update(TopicUpdateRequest $request, Topic $topic)
+    /**
+     * @param Request $request
+     * @param Topic $topic
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function edit(Request $request, Topic $topic): \Illuminate\Http\JsonResponse
+    {
+//        if($topic->status===0){
+//            return response()->json(['message' => "Topic not found"], 404);
+//        }
+        return response()->json(['topic' => new TopicEditResource($topic)]);
+    }
+
+    /**
+     * @param TopicUpdateRequest $request
+     * @param Topic $topic
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function update(TopicUpdateRequest $request, Topic $topic): \Illuminate\Http\JsonResponse
     {
         $data = $request->validated();
-        foreach($data as $key => $value){
+
+        $images = $data['images'] ?? null;
+        $tags = $data['tags'] ?? null;
+        $imagesForDelete = $data['imagesForDelete'] ?? null;
+        unset($data['images'], $data['tags'], $data['imagesForDelete']);
+        /** DB transaction
+         * TODO: перенести в Service, переделать загрузку изображений
+         */
+        DB::beginTransaction();
+        foreach ($data as $key => $value) {
             $topic->$key = $value;
         }
         $topic->save();
-        return response()->json(['message' => 'Topic updated.']);
+        if (!empty($tags)) {
+            $topic->tags()->toggle($tags);
+        }else {
+            $topic->tags()->detach();
+        }
+        // delete old images
+        if (!empty($topic->images) && !empty($imagesForDelete)) {
+            foreach ($topic->images as $image){
+                if(in_array($image->id, $imagesForDelete)){
+                    Storage::disk('public')->delete($image->imagePath);
+                    $image->delete();
+                }
+            }
+        }
+        // save new images
+        if (!empty($images)) {
+            foreach ($images as $image) {
+                $imageName = md5(Carbon::now() . '_' . $image->getClientOriginalName()) . '.' . $image->getClientOriginalExtension();
+                $imagePath = Storage::disk('public')->putFileAs('/topics/images', $image, $imageName);
+                TopicImage::create([
+                    'topicId' => $topic->id,
+                    'userId' => $topic->userId,
+                    'imagePath' => $imagePath,
+                    'imageUrl' => url('/storage/' . $imagePath),
+                ]);
+            }
+        }
+        DB::commit();
+        return response()->json([
+            'message' => 'Topic updated.',
+            'topic' => new TopicResource($topic),
+        ]);
     }
 
-    protected function delete(Topic $topic)
+    /**
+     * @param Topic $topic
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function delete(Topic $topic): \Illuminate\Http\JsonResponse
     {
-        if($topic->posts != 0){
+        if ($topic->posts != 0) {
             return response()->json(['message' => "You can't delete a topic because there are posts for it"], 406);
         }
         $topic->delete();

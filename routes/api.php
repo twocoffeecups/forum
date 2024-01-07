@@ -172,7 +172,8 @@ Route::group(['prefix' => 'client'], function () {
 
         Route::group(['prefix' => '{topic}'], function () {
             Route::get('/', [\App\Http\Controllers\Client\Topic\TopicController::class, 'show']);
-            Route::patch('/', [\App\Http\Controllers\Client\Topic\TopicController::class, 'update']);
+            Route::get('/edit', [\App\Http\Controllers\Client\Topic\TopicController::class, 'edit']);
+            Route::put('/', [\App\Http\Controllers\Client\Topic\TopicController::class, 'update']);
             Route::delete('/', [\App\Http\Controllers\Client\Topic\TopicController::class, 'delete']);
             Route::group(['prefix' => 'posts'], function () {
                 Route::get('/', [\App\Http\Controllers\Client\Topic\TopicPostController::class, 'index']);

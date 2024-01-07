@@ -24,12 +24,13 @@ class TopicUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'max:255|string',
-            'forumId' => 'integer|exists:forums,id',
-            'content' => 'string',
-            'tags' => '',
-            'images' => '',
-            'files' => '',
+            'title' => 'required|max:255|string',
+            'forumId' => 'required|integer|exists:forums,id',
+            'content' => 'required|string',
+            'tags' => 'nullable|array',
+            'images' => 'nullable|array',
+            'imagesForDelete' => 'nullable|array',
+            'files' => 'nullable|array',
         ];
     }
 }
