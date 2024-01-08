@@ -152,7 +152,7 @@ Route::group(['prefix' => 'client'], function () {
         //Route::get('/forum-tree', [\App\Http\Controllers\Client\Forum\ForumCategoryController::class, 'getForumTree']);
 
         Route::group(['prefix' => '{forum}'], function () {
-            Route::get('/', [\App\Http\Controllers\Client\Forum\ForumController::class, 'show']);
+            Route::post('/', \App\Http\Controllers\Client\Forum\ForumController::class);
         });
     });
 

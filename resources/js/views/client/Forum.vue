@@ -35,7 +35,7 @@
                         <!-- End child -->
 
                         <!-- Topic -->
-                        <div v-if="topics.length !== 0" class="card m-sm-0 mt-1 mb-2">
+                        <div v-if="topicsCount !== 0" class="card m-sm-0 mt-1 mb-2">
                             <div class="card-header">
                                 <div class="row">
                                     <div class="d-flex justify-content-between">
@@ -56,7 +56,7 @@
                                 <div id="flush-collapseOne" class="accordion-collapse collapse"
                                      aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                                     <div class="accordion-body">
-                                        <FilterTopics/>
+                                        <FilterTopics :forum-id="forum.id"/>
                                     </div>
                                 </div>
 
@@ -69,13 +69,17 @@
                                 </template>
 
                             </div>
+
+                            <div v-if="topics.length === 0 && topicsCount !== 0" class="text-center my-2 p-3">
+                                <h4>Nothing was found for your request.</h4>
+                            </div>
                         </div>
 
                         <!-- Pagination -->
                         <Pagination v-if="childrenForums.length !==0" />
 
                         <div class="m-sm-0 mt-1 mb-2">
-                            <div class="mx-3 p-1 text-center" v-if="topics.length === 0">
+                            <div class="mx-3 p-1 text-center" v-if="topicsCount === 0">
                                 <h4>There is not a single topics on this forum. Create first!</h4>
                             </div>
                         </div>
@@ -112,6 +116,7 @@ export default {
             forum: 'forum/getForum',
             childrenForums: 'forum/getChildrenForums',
             topics: 'forum/getTopics',
+            topicsCount: 'forum/getTopicsCount',
         }),
     },
 

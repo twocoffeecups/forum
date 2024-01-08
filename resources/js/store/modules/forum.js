@@ -11,6 +11,11 @@ export default {
         forum: {},
         childrenForums: {},
         topics: {},
+
+        filterOrderBy: 'desc',
+        filterTags: [],
+        filterBy: '',
+        topicsCount: 0,
     },
 
     getters: {
@@ -24,18 +29,30 @@ export default {
 
         getTopics(state) {
             return state.topics;
+        },
+
+        getTopicsCount(state) {
+            return state.topics;
         }
     },
 
     actions: {
-        getForum({dispatch, commit}, id) {
+        getForum({dispatch, state, commit}, id){
             return new Promise((resolve, reject) => {
-                axios.get(`/api/client/forum/${id}`)
+                const data = new FormData();
+                data.append('filterBy', state.filterBy);
+                data.append('orderBy', state.filterOrderBy);
+                state.filterTags.forEach(tag => {
+                    data.append('tags[]', tag.value);
+                });
+
+                axios.post(`/api/client/forum/${id}`, data)
                     .then(response => {
                         if(response.data){
                             commit('setForum', response.data.forum);
                             commit('setChildrenForums', response.data.forum.children);
-                            commit('setTopics', response.data.forum.topics);
+                            commit('setTopics', response.data.topics);
+                            commit('setTopicsCount', response.data.topics.length);
                             resolve(response);
                         }else{
                             reject(response);
@@ -44,7 +61,7 @@ export default {
                     .catch(error => {
                         reject(error);
                     })
-            })
+            });
         }
     },
 
@@ -59,6 +76,22 @@ export default {
 
         setTopics(state, payload) {
             state.topics = payload;
+        },
+
+        setFilterTags(state, payload) {
+            state.filterTags = payload;
+        },
+
+        setFilterOrderBy(state, payload) {
+            state.filterOrderBy = payload;
+        },
+
+        setFilterBy(state, payload){
+            state.filterBy = payload;
+        },
+
+        setTopicsCount(state, payload){
+            state.topicsCount = payload;
         }
     }
 }

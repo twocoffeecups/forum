@@ -18,7 +18,7 @@ class ForumResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'children' => ChildrenForumResource::collection($this->children),
-            'topics' => TopicResource::collection($this->topics->where('status', '=', 1)),
+            //'topics' => TopicResource::collection($this->topics->where('status', '=', 1)),
         ];
     }
 }
