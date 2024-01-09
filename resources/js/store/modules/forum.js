@@ -10,12 +10,7 @@ export default {
     state: {
         forum: {},
         childrenForums: {},
-        topics: {},
-
-        filterOrderBy: 'desc',
-        filterTags: [],
-        filterBy: '',
-        topicsCount: 0,
+        totalTopics: 0,
     },
 
     getters: {
@@ -27,32 +22,20 @@ export default {
             return state.childrenForums;
         },
 
-        getTopics(state) {
-            return state.topics;
-        },
-
-        getTopicsCount(state) {
-            return state.topics;
+        getTotalTopics(state) {
+            return state.totalTopics;
         }
     },
 
     actions: {
-        getForum({dispatch, state, commit}, id){
+        getForum({dispatch, commit}, id){
             return new Promise((resolve, reject) => {
-                const data = new FormData();
-                data.append('filterBy', state.filterBy);
-                data.append('orderBy', state.filterOrderBy);
-                state.filterTags.forEach(tag => {
-                    data.append('tags[]', tag.value);
-                });
-
-                axios.post(`/api/client/forum/${id}`, data)
+                axios.get(`/api/client/forum/${id}`)
                     .then(response => {
                         if(response.data){
                             commit('setForum', response.data.forum);
                             commit('setChildrenForums', response.data.forum.children);
-                            commit('setTopics', response.data.topics);
-                            commit('setTopicsCount', response.data.topics.length);
+                            commit('setTotalTopics', response.data.forum.totalTopics);
                             resolve(response);
                         }else{
                             reject(response);
@@ -62,7 +45,7 @@ export default {
                         reject(error);
                     })
             });
-        }
+        },
     },
 
     mutations: {
@@ -74,24 +57,8 @@ export default {
             state.childrenForums = payload;
         },
 
-        setTopics(state, payload) {
-            state.topics = payload;
-        },
-
-        setFilterTags(state, payload) {
-            state.filterTags = payload;
-        },
-
-        setFilterOrderBy(state, payload) {
-            state.filterOrderBy = payload;
-        },
-
-        setFilterBy(state, payload){
-            state.filterBy = payload;
-        },
-
-        setTopicsCount(state, payload){
-            state.topicsCount = payload;
+        setTotalTopics(state, payload){
+            state.totalTopics = payload;
         }
     }
 }

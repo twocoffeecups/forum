@@ -12,6 +12,9 @@ export default {
         parentForum: {},
         childrenForums: {},
         forumStats: {},
+
+        paginate: {},
+        entriesOnPage: 10,
     },
 
     getters: {
@@ -34,15 +37,24 @@ export default {
         getForumStats(state) {
             return state.forumStats;
         },
+
+        getPaginate(state){
+            return state.paginate;
+        }
     },
 
     actions: {
-        getForums({dispatch, commit}) {
+        getForums({dispatch, state, commit}, page = 1) {
             return new Promise((resolve, reject) => {
-                api.get('/api/admin/forum')
+                api.post('/api/admin/forum/all', {
+                    page: page,
+                    entriesOnPage: state.entriesOnPage,
+                })
                     .then(response => {
                         if (response.data) {
-                            commit('setForums', response.data.forums);
+                            commit('setForums', response.data.data);
+                            console.log("DATA:",response);
+                            commit('setPaginate', response.data.meta);
                             resolve(response);
                         } else {
                             reject(response);
@@ -212,8 +224,16 @@ export default {
 
         pushForum(state, payload) {
             state.forums.push(payload);
+        },
+
+        setPaginate(state, payload){
+            state.paginate = payload;
+        },
+
+        setEntriesOnPage(state, payload){
+            state.entriesOnPage = payload;
         }
-    }
+    },
 
 
 }

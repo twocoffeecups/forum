@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Route;
 Route::group(['prefix' => 'admin'], function () {
 
     Route::group(['prefix' => 'forum'], function () {
-        Route::get('/', [\App\Http\Controllers\Admin\Forum\ForumController::class, 'index']);
+        Route::post('/all', [\App\Http\Controllers\Admin\Forum\ForumController::class, 'index']);
         Route::post('/', [\App\Http\Controllers\Admin\Forum\ForumController::class, 'store']);
         Route::get('/{forum}', [\App\Http\Controllers\Admin\Forum\ForumController::class, 'show']);
         Route::patch('/{forum}', [\App\Http\Controllers\Admin\Forum\ForumController::class, 'update']);
@@ -152,7 +152,8 @@ Route::group(['prefix' => 'client'], function () {
         //Route::get('/forum-tree', [\App\Http\Controllers\Client\Forum\ForumCategoryController::class, 'getForumTree']);
 
         Route::group(['prefix' => '{forum}'], function () {
-            Route::post('/', \App\Http\Controllers\Client\Forum\ForumController::class);
+            Route::get('/', \App\Http\Controllers\Client\Forum\ForumController::class);
+            Route::post('/topics', \App\Http\Controllers\Client\Forum\ForumTopicController::class);
         });
     });
 

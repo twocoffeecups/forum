@@ -18,17 +18,10 @@ class ForumController extends Controller
      * @param FilterRequest $request
      * @param Forum $forum
      * @return \Illuminate\Http\JsonResponse
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     public function __invoke(FilterRequest $request, Forum $forum): \Illuminate\Http\JsonResponse
     {
-        $filters = $request->validated();
-        $filtered = app()->make(TopicFilter::class, ['queryParams' => array_filter($filters)]);
-        $topics = Topic::filter($filtered)->where('forumId', '=', $forum->id)->get();
-        return response()->json([
-            'forum' => new ForumResource($forum),
-            'topics' => TopicResource::collection($topics),
-        ]);
+        return response()->json(['forum' => new ForumResource($forum)]);
     }
 
 }

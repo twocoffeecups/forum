@@ -14,6 +14,7 @@ import rejectType from "./modules/admin/reject-type";
 import unapprovedTopic from "./modules/unapproved-topic";
 import rejectedTopic from "./modules/admin/rejected-topic";
 import editTopic from "./modules/edit-topic";
+import forumTopics from "./modules/forum-topics";
 
 const store =  createStore({
     //namespaced: true,
@@ -33,6 +34,7 @@ const store =  createStore({
         unapprovedTopic,
         rejectedTopic,
         editTopic,
+        forumTopics,
     },
 });
 

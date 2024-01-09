@@ -35,7 +35,7 @@
                         <!-- End child -->
 
                         <!-- Topic -->
-                        <div v-if="topicsCount !== 0" class="card m-sm-0 mt-1 mb-2">
+                        <div v-if="totalTopics !== 0" class="card m-sm-0 mt-1 mb-2">
                             <div class="card-header">
                                 <div class="row">
                                     <div class="d-flex justify-content-between">
@@ -65,21 +65,26 @@
                             <!-- Topics -->
                             <div class="card-body p-0 bg-body-tertiary bg-gradient">
                                 <template v-for="topic in topics">
-                                    <Topic :topic="topic" />
+                                    <Topic :topic="topic"/>
                                 </template>
 
                             </div>
 
-                            <div v-if="topics.length === 0 && topicsCount !== 0" class="text-center my-2 p-3">
+                            <div v-if="topics.length === 0 && totalTopics !== 0" class="text-center my-2 p-3">
                                 <h4>Nothing was found for your request.</h4>
                             </div>
                         </div>
 
                         <!-- Pagination -->
-                        <Pagination v-if="childrenForums.length !==0" />
+                        <Pagination v-if="totalPages > 1"
+                                    :total-pages="totalPages"
+                                    :links="paginate.links"
+                                    :forum-id="this.$route.params.id"
+                                    :current-page="paginate.current_page"
+                                    :last-page="paginate.last_page" />
 
                         <div class="m-sm-0 mt-1 mb-2">
-                            <div class="mx-3 p-1 text-center" v-if="topicsCount === 0">
+                            <div class="mx-3 p-1 text-center" v-if="totalTopics === 0">
                                 <h4>There is not a single topics on this forum. Create first!</h4>
                             </div>
                         </div>
@@ -105,7 +110,7 @@ import Sidebar from '../../components/client/Sidebar.vue';
 import Topic from '../../components/client/Topic.vue';
 import Pagination from "../../components/client/Pagination.vue";
 import ForumItem from "../../components/client/ForumItem.vue";
-import { mapGetters } from "vuex";
+import {mapGetters} from "vuex";
 
 export default {
     name: "Forum",
@@ -115,19 +120,22 @@ export default {
         ...mapGetters({
             forum: 'forum/getForum',
             childrenForums: 'forum/getChildrenForums',
-            topics: 'forum/getTopics',
-            topicsCount: 'forum/getTopicsCount',
+            topics: 'forumTopics/getTopics',
+            totalTopics: 'forum/getTotalTopics',
+            totalPages: 'forumTopics/getTotalPages',
+            paginate: 'forumTopics/getPaginate',
         }),
     },
 
     mounted() {
         this.$store.dispatch('forum/getForum', this.$route.params.id);
+        this.$store.dispatch('forumTopics/getTopics', this.$route.params.id);
     },
 
     watch: {
         '$route.params.id': {
             immediate: true,
-            handler(){
+            handler() {
                 this.$store.dispatch('forum/getForum', this.$route.params.id);
             },
         },

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Api\Client\Topic;
+namespace App\Http\Requests\Admin\Paginate;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class FilterRequest extends FormRequest
+class PaginateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,9 +25,7 @@ class FilterRequest extends FormRequest
     {
         return [
             'page' => 'integer',
-            'orderBy' => 'string|nullable',
-            'filterBy' => 'string|nullable',
-            'tags' => 'array|nullable',
+            'entriesOnPage' => '',
         ];
     }
 }

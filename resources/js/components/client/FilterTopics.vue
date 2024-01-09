@@ -51,9 +51,6 @@
             </div>
 
         </div>
-<!--        <div class="col-lg-2 text-lg-right">-->
-<!--            -->
-<!--        </div>-->
     </div>
 </template>
 
@@ -68,8 +65,8 @@ export default {
 
     computed: {
         ...mapMutations({
-            setOrderBy: 'forum/setFilterOrderBy',
-            setFilterTags: 'forum/setFilterTags',
+            setOrderBy: 'forumTopics/setFilterOrderBy',
+            setFilterTags: 'forumTopics/setFilterTags',
         })
     },
 
@@ -88,15 +85,15 @@ export default {
 
     watch: {
         orderBy(val){
-            this.$store.commit('forum/setFilterOrderBy', val);
+            this.$store.commit('forumTopics/setFilterOrderBy', val);
         },
 
         selectedTags(val){
-            this.$store.commit('forum/setFilterTags', val)
+            this.$store.commit('forumTopics/setFilterTags', val)
         },
 
         filterBy(val){
-            this.$store.commit('forum/setFilterBy', val);
+            this.$store.commit('forumTopics/setFilterBy', val);
         },
     },
 
@@ -111,15 +108,15 @@ export default {
         },
 
         applyFilters(){
-            this.$store.dispatch('forum/getForum', this.forumId);
+            this.$store.dispatch('forumTopics/getTopics', this.forumId);
         },
 
         resetFilters(){
-            this.$store.commit('forum/setFilterOrderBy', 'desc');
-            this.$store.commit('forum/setFilterTags', [])
-            this.$store.commit('forum/setFilterBy', '');
+            this.$store.commit('forumTopics/setFilterOrderBy', 'desc');
+            this.$store.commit('forumTopics/setFilterTags', [])
+            this.$store.commit('forumTopics/setFilterBy', '');
             this.selectedTags = [];
-            this.$store.dispatch('forum/getForum', this.forumId);
+            this.$store.dispatch('forumTopics/getTopics', this.forumId);
         }
     },
 }

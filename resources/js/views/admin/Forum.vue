@@ -17,17 +17,19 @@
                     <div class="table-responsive mb-1">
                         <div
                             class="d-flex mt-2 flex-column flex-md-row flex-lg-row flex-xl-row justify-content-center justify-content-md-between justify-content-lg-between mb-3">
+                            <!-- Change showing count entries -->
                             <div class="d-none d-md-flex d-lg-flex d-xl-flex my-2">
                                 <span class="form-text">
                                   Show
                                 </span>
-                                <select class="form-select form-select-sm mx-2" aria-label="Select entries">
+                                <select v-model="entriesOnPage" class="form-select form-select-sm mx-2" aria-label="Select entries">
                                     <option value="10" selected>10</option>
                                     <option value="30">30</option>
                                     <option value="50">50</option>
                                 </select>
                                 <span class="form-text">entries</span>
                             </div>
+                            <!-- ./ -->
                             <div class="d-flex mx-2 my-2">
                                 <label class="form-text mx-1">Search: </label>
                                 <input type="search" class="form-control" id="search" style="max-height: 20px;"/>
@@ -100,33 +102,13 @@
                         </table>
                     </div>
 
-                    <div class="d-flex flex-column flex-md-row flex-lg-row justify-content-between">
-                        <div class="d-flex mt-1 d-none d-md-block d-lg-block d-xl-block align-items-center">
-                            <div class="table-info" id="table-info" role="status" aria-live="polite">Showing 4 to 10 of
-                                4
-                                entries
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-center mt-1">
-                            <nav>
-                                <ul class="pagination" style="color: black">
-                                    <li class="page-item">
-                                        <a class="page-link" href="#" aria-label="Предыдущая">
-                                            <span aria-hidden="true">&laquo;</span>
-                                        </a>
-                                    </li>
-                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#" aria-label="Следующая">
-                                            <span aria-hidden="true">&raquo;</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </nav>
-                        </div>
-                    </div>
+                    <TablePagination
+                        @selectPageEmit="selectPage"
+                        :total-entries="paginate.total"
+                        :total-pages="paginate.last_page"
+                        :links="paginate.links"
+                        :current-page="paginate.current_page"
+                        :last-page="paginate.last_page" />
                 </div>
             </div>
 
@@ -141,14 +123,17 @@ import EditForumModal from "../../components/admin/EditForumModal.vue";
 import {checkHasPermissions} from "../../access/service";
 import AccessPermissions from "../../access/permissions";
 import {mapGetters} from "vuex";
+import TablePagination from "../../components/admin/TablePagination.vue";
+import Pagination from "../../components/client/Pagination.vue";
 
 export default {
     name: "Forum",
-    components: {EditForumModal, CreateForumModal},
+    components: {Pagination, TablePagination, EditForumModal, CreateForumModal},
 
     computed: {
         ...mapGetters({
             forums: 'adminForum/getForums',
+            paginate: 'adminForum/getPaginate',
         }),
     },
 
@@ -163,6 +148,18 @@ export default {
         this.$store.dispatch('adminForum/getForums');
     },
 
+    data() {
+        return {
+            entriesOnPage: 10,
+        }
+    },
+
+    watch: {
+        entriesOnPage(val){
+            this.$store.commit('adminForum/setEntriesOnPage', val);
+            this.$store.dispatch('adminForum/getForums')
+        }
+    },
     methods: {
         changeVisibility(event, forumId) {
             let visibility = event.target.value;
@@ -172,6 +169,10 @@ export default {
         deleteForum(forumId) {
             console.log('delete forum, id:', forumId);
             this.$store.dispatch('adminForum/deleteForum', forumId);
+        },
+
+        selectPage(page){
+            this.$store.dispatch('adminForum/getForums', [page, this.entriesOnPage])
         }
     }
 

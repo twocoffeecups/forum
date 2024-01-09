@@ -7,6 +7,7 @@ use App\Http\Requests\Admin\Forum\ChangeForumCategoryRequest;
 use App\Http\Requests\Admin\Forum\ChangeForumTypeRequest;
 use App\Http\Requests\Admin\Forum\ForumStoreRequest;
 use App\Http\Requests\Admin\Forum\ForumUpdateRequest;
+use App\Http\Requests\Admin\Paginate\PaginateRequest;
 use App\Http\Resources\Admin\Forum\CreateForumFormResource;
 use App\Http\Resources\Admin\Forum\ForumDetailsResource;
 use App\Http\Resources\Admin\Forum\ForumResource;
@@ -15,13 +16,12 @@ use App\Models\Forum;
 class ForumController extends Controller
 {
 
-    /**
-     * @return \Illuminate\Http\JsonResponse
-     */
-    protected function index(): \Illuminate\Http\JsonResponse
+
+    protected function index(PaginateRequest $request)
     {
-        $forums = Forum::all();
-        return response()->json(['forums' => ForumResource::collection($forums)]);
+        $data = $request->validated();
+        $forums = Forum::paginate($data['entriesOnPage'], ['*'], 'page', $data['page']);
+        return ForumResource::collection($forums);
     }
 
     /**
