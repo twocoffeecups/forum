@@ -27,7 +27,7 @@ const routes = [
         component: () => import('../views/client/CreateTopic.vue'),
         meta: {
             layout: Client,
-            // middleware: [Middleware.userIsBanned],
+            middleware: [Middleware.auth],
         }
     },
     {
@@ -36,7 +36,7 @@ const routes = [
         component: () => import('../views/client/EditTopic.vue'),
         meta: {
             layout: Client,
-            // middleware: [Middleware.userIsBanned],
+            middleware: [Middleware.auth],
         }
     },
     {
@@ -53,6 +53,7 @@ const routes = [
         component: () => import('../views/client/UnapprovedTopic.vue'),
         meta: {
             layout: Client,
+            middleware: [Middleware.auth],
         }
     },
     {
@@ -65,11 +66,13 @@ const routes = [
         },
         children: [
             {path: '', name: 'profile.details', component: () => import('../views/client/ProfileDetails.vue')},
-            {
-                path: 'notification',
-                name: 'profile.notification',
-                component: () => import('../views/client/ProfileNotification.vue'),
-            },
+
+            /** TODO: сделать уведомления */
+            // {
+            //     path: 'notification',
+            //     name: 'profile.notification',
+            //     component: () => import('../views/client/ProfileNotification.vue'),
+            // },
             {
                 path: 'edit',
                 name: 'profile.edit',
@@ -86,7 +89,6 @@ const routes = [
         meta: {
             layout: Admin,
             middleware: [Middleware.canReadAdminDashboard],
-            //middleware: [Middleware.canReadAdminDashboard, Middleware.auth],
         },
 
         children: [

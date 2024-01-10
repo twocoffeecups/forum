@@ -13,10 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('un_approved_topics', function (Blueprint $table) {
+        Schema::create('rejected_topics', function (Blueprint $table) {
             $table->id();
             $table->foreignId('topicId')->index('topicIdx')->constrained('topics', 'id')->cascadeOnUpdate()->cascadeOnDelete();
-            $table->foreignId('reasonId')->index('reasonIdx')->constrained('un_approved_reasons', 'id');
+            $table->foreignId('reasonId')->index('reasonIdx')->constrained('topic_rejected_types', 'id');
             $table->tinyText('message')->nullable();
             $table->foreignId('userId')->index('userIdx')->constrained('users', 'id')->cascadeOnUpdate()->cascadeOnDelete();
             //$table->foreignId('moderId')->index('userIdx')->constrained('users', 'id')->cascadeOnUpdate()->cascadeOnDelete();
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('un_approved_topics');
+        Schema::dropIfExists('rejected_topics');
     }
 };

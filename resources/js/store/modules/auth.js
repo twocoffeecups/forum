@@ -33,6 +33,10 @@ export default {
         avatar(state) {
             return state.userDetails.avatar;
         },
+
+        getUserId(state){
+            return state.userDetails.id;
+        }
     },
 
     actions: {

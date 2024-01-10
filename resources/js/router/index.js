@@ -1,7 +1,6 @@
 import {createRouter, createWebHistory} from 'vue-router'
 import routes from "./routes";
 import store from "../store";
-import middlewarePipeline from "./middleware-pipeline";
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),

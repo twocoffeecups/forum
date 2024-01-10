@@ -38,7 +38,7 @@ export default {
                     .then(response => {
                         if (response.data) {
                             commit('setTopic', response.data.topic);
-                            commit('setTopicAuthor', response.data.topic.author);
+                            commit('topic/setTopicAuthor', response.data.topic.author, {root: true});
                             commit('setImages', response.data.topic.images);
                             commit('setRejectedReason', response.data.topic.isRejected);
                             resolve(response);

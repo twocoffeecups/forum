@@ -46,7 +46,6 @@ export default {
         selectCategory(id, name, root) {
             if (root) {
                 this.selectedId = id;
-                console.log(id, name)
                 this.$emit('selectCategoryEmit', {id: id, name: name});
             }
         },

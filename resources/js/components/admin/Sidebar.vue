@@ -6,11 +6,12 @@
             <h5 class="offcanvas-title fw-bold" style="color: white; font-size: 1.8em;">Dashboard</h5>
         </div>
 
+        <SidebarProfileItem />
 
         <div class="offcanvas-body">
             <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
                 <!-- Dashboard main page -->
-                <li class="nav-item w-100">
+                <li class="nav-item w-100" data-bs-dismiss="offcanvas">
                     <router-link :to="{name:'admin.index'}" class="nav-link sidebar_nav_link align-middle px-0">
                         <i class="fas fa-home"></i> <span class="ms-1">Dashboard</span>
                     </router-link>
@@ -33,7 +34,7 @@
                     </a>
                     <div class="collapse" id="sub_menu1">
                         <ul class="collapse ps-3 show nav flex-column ms-1">
-                            <li class="w-100">
+                            <li class="w-100"  data-bs-dismiss="offcanvas">
                                 <router-link :to="{name:'admin.forum'}" class="nav-link sidebar_nav_link px-0"><i
                                     class="fas fa-hashtag"></i> Forums
                                 </router-link>
@@ -43,22 +44,22 @@
 <!--                                    class="fas fa-hashtag"></i> Forums tree-->
 <!--                                </router-link>-->
 <!--                            </li>-->
-                            <li>
+                            <li  data-bs-dismiss="offcanvas">
                                 <router-link :to="{name:'admin.tag'}" class="nav-link sidebar_nav_link px-0"><i
                                     class="fas fa-hashtag"></i> Tags
                                 </router-link>
                             </li>
-                            <li>
+                            <li data-bs-dismiss="offcanvas">
                                 <router-link :to="{name:'admin.topic'}" class="nav-link sidebar_nav_link px-0"><i
                                     class="fas fa-hashtag"></i> Topics
                                 </router-link>
                             </li>
-                            <li>
+                            <li data-bs-dismiss="offcanvas">
                                 <router-link :to="{name:'admin.topic.rejected'}" class="nav-link sidebar_nav_link px-0"><i
                                     class="fas fa-hashtag"></i> Rejected topics
                                 </router-link>
                             </li>
-                            <li>
+                            <li data-bs-dismiss="offcanvas">
                                 <router-link :to="{name:'admin.reject-type'}" class="nav-link sidebar_nav_link px-0"><i
                                     class="fas fa-hashtag"></i> Topics reject type
                                 </router-link>
@@ -76,12 +77,12 @@
                     </a>
                     <div class="collapse" id="sub_menu2">
                         <ul class="collapse ps-3 show nav flex-column ms-1">
-                            <li class="w-100">
+                            <li class="w-100" data-bs-dismiss="offcanvas">
                                 <router-link :to="{ name:'admin.role' }" class="nav-link sidebar_nav_link px-0"><i
                                     class="fas fa-hashtag"></i> Roles
                                 </router-link>
                             </li>
-                            <li class="w-100">
+                            <li class="w-100" data-bs-dismiss="offcanvas">
                                 <router-link :to="{ name: 'admin.permission' }" class="nav-link sidebar_nav_link px-0">
                                     <i class="fas fa-hashtag"></i> Permissions
                                 </router-link>
@@ -91,14 +92,14 @@
                 </li>
 
                 <!-- Users -->
-                <li class="nav-item w-100">
+                <li class="nav-item w-100" data-bs-dismiss="offcanvas">
                     <router-link :to="{ name:'admin.users' }" class="nav-link sidebar_nav_link align-middle px-0">
                         <i class="fas fa-users"></i> <span class="ms-1 d-sm-inline">Users</span>
                     </router-link>
                 </li>
 
                 <!-- Reports -->
-                <li class="nav-item w-100">
+                <li class="nav-item w-100" data-bs-dismiss="offcanvas">
                     <router-link :to="{ name:'admin.reports' }" class="nav-link sidebar_nav_link px-0 align-middle">
                         <i class="fas fa-flag"></i> <span class="ms-1 d-sm-inline">Reports </span>
                         <span class="small position-absolute badge bg-danger rounded-pill" style="font-size: 10px">
@@ -109,7 +110,7 @@
 
                 <!-- Settings -->
                 <!-- TODO: сделать страницу -->
-<!--                <li class="nav-item w-100">-->
+<!--                <li class="nav-item w-100" data-bs-dismiss="offcanvas">-->
 <!--                    <a href="#" class="nav-link sidebar_nav_link px-0 align-middle">-->
 <!--                        <i class="fas fa-cog"></i> <span class="ms-1e d-sm-inline">Settings</span> </a>-->
 <!--                </li>-->
@@ -121,8 +122,11 @@
 </template>
 
 <script>
+import SidebarProfileItem from "./SidebarProfileItem.vue";
+
 export default {
-    name: "Sidebar"
+    name: "Sidebar",
+    components: {SidebarProfileItem}
 }
 </script>
 

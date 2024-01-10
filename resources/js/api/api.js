@@ -18,6 +18,6 @@ api.interceptors.response.use(
         localStorage.removeItem('access-token');
     }
     return Promise.reject(error);
-})
-console.log("TOKEN NNNN", token);
+});
+
 export default api;

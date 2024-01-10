@@ -125,7 +125,6 @@ export default {
         getPermissions() {
             api.get('/api/admin/permission')
                 .then(res => {
-                    console.log("Permissions:", res);
                     this.permissions = res.data.permissions;
                 })
                 .catch(error => {

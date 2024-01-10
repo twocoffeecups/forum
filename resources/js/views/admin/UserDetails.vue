@@ -206,7 +206,6 @@ export default {
                     this.stats = res.data.user.stats;
                     this.userTopics = res.data.user.topics
                     this.userPermissions = res.data.user.permissions;
-                    console.log(this.selectedPermissions);
                 })
         },
 

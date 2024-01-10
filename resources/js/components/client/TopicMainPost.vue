@@ -7,8 +7,7 @@
                 <div class="col-md-3">
                     <div class="card-header h-100">
                         <div class="media flex-wrap w-100 align-items-center">
-                            <img :src="topicAuthor.avatar" width="64" class="d-block ui-w-40 rounded-circle" alt="">
-<!--                            src="https://i0.wp.com/www.celebrity-cutouts.com/wp-content/uploads/2018/11/todd-howard-smile-celebrity-mask.png?resize=450%2C450&ssl=1"-->
+                            <img :src="topicAuthor.avatar" width="64" class="d-block ui-w-40 rounded-circle" alt="Avatar">
                             <div class="media-body ml-3"><a href="javascript:void(0)"
                                                             data-abc="true">{{ topicAuthor.name }}</a>
                                 <div class="text-muted small">Offline</div>
@@ -87,7 +86,7 @@ export default {
 
     computed: {
         ...mapGetters({
-            topicAuthor: 'unapprovedTopic/getTopicAuthor',
+            topicAuthor: 'topic/getTopicAuthor',
         }),
     },
 

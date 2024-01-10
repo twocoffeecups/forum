@@ -69,7 +69,6 @@ export default {
 
     methods: {
         toggleDzImagesPreview() {
-            console.log('toggle previw')
             let elem = document.querySelector('.dz-template-container');
             elem.classList.add('hide');
         }

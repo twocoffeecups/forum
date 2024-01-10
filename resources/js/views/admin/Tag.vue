@@ -150,7 +150,6 @@ export default {
             api.get('/api/admin/tag')
                 .then(res => {
                     this.tags = res.data.tags
-                    console.log(this.tags);
                 })
         },
 

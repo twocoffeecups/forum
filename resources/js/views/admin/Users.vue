@@ -3,7 +3,6 @@
         <div class="card-header">
             <div class="d-flex justify-content-between my-2">
                 <h4>All Users</h4>
-
                 <CreateUserModal/>
             </div>
         </div>
@@ -133,7 +132,6 @@ export default {
             api.get('/api/admin/user')
                 .then(res => {
                     this.users = res.data.users;
-                    console.log(res);
                 })
         }
     },

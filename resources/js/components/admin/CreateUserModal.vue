@@ -109,7 +109,6 @@ export default {
                 data.append('roleId', this.selectedRole);
                 api.post('/api/admin/user/register', data)
                     .then(res => {
-                        console.log(res);
                         this.t$.success(res.data.message)
                     })
                     .catch(error => {
@@ -122,7 +121,6 @@ export default {
         getRoles() {
             api.get('/api/admin/role')
                 .then(res => {
-                    console.log(res);
                     this.roles = res.data.roles;
                 })
         },

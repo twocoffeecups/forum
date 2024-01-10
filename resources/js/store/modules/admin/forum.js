@@ -53,7 +53,6 @@ export default {
                     .then(response => {
                         if (response.data) {
                             commit('setForums', response.data.data);
-                            console.log("DATA:",response);
                             commit('setPaginate', response.data.meta);
                             resolve(response);
                         } else {
@@ -125,7 +124,6 @@ export default {
 
         updateForumContent({dispatch}, [id, data]) {
             return new Promise((resolve, reject) => {
-                console.log(data);
                 api.post(`/api/admin/forum/${id}`, data)
                     .then(response => {
                         if (response.data) {

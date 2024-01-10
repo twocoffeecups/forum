@@ -39,8 +39,8 @@ class UserResource extends JsonResource
             'emailVerified_at' => $this->email_verified_at->format('Y-m-d'),
             'register_at' => $this->created_at->format('Y-m-d'),
             'topics' => TopicResource::collection($this->topics),
-            'posts' => PostResource::collection(PostResource::collection($this->posts)),
-            'likes' => $this->likes,
+            'posts' => PostResource::collection($this->posts),
+            'likes' => PostResource::collection($this->likes),
             'topicBookmarks' => [],
             'postBookmarks' => PostResource::collection($this->bookmarks),
         ];

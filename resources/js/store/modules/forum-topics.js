@@ -48,7 +48,6 @@ export default {
                             commit('setTopics', response.data.data);
                             commit('setTotalPages', response.data.meta.last_page);
                             commit('setPaginate', response.data.meta);
-                            console.log("FORUM TOPICS: ", response);
                             resolve(response);
                         }else{
                             reject(response);

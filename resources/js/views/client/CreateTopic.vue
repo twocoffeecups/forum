@@ -224,7 +224,6 @@ export default {
                 content: null,
                 forumId: null,
                 selectCategory: [],
-                //tags: [],
             },
         }
     },
@@ -233,7 +232,6 @@ export default {
         togglePreviewContainer() {
             let elem = document.querySelector('.preview-container');
             elem.classList.toggle('hide');
-            //this.showPreview = !this.showPreview
         },
 
         toggleCategoryTree() {
@@ -246,7 +244,6 @@ export default {
         },
 
         createTopic() {
-            //console.log(this.topic.tags);
             let data = new FormData();
             let images = this.dropzone.getAcceptedFiles();
             if(images.length>6){

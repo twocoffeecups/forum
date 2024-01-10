@@ -15,7 +15,7 @@ class UserResource extends JsonResource
      */
     public function toArray($request)
     {
-        $permissions = $this->permissions;
+        $permissions = $this->permissions();
 
         return [
             'id' => $this->id,

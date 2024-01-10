@@ -48,7 +48,7 @@
         "post":{
             "registerDate": "Registration date",
             "messages": "Messages",
-            "report": "Repost",
+            "report": "Report",
             "reply": "Reply",
             "edit": "Edit"
         },

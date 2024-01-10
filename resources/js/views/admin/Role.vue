@@ -131,7 +131,6 @@ export default {
         getRoles() {
             axios.get('/api/admin/role')
                 .then(res => {
-                    console.log("ROLES:", res);
                     this.roles = res.data.roles;
                 })
                 .catch(error => {
