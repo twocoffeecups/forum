@@ -40,12 +40,18 @@ export default {
     actions: {
         getUserDetails({dispatch, commit}) {
             return new Promise((resolve, reject) => {
-                const id = JSON.parse(localStorage.getItem('user-details')).id
-                api.get(`/api/client/profile`)
+                axios.get(`/api/client/profile`, {
+                    headers:{
+                        Authorization: `Bearer ${localStorage.getItem('access-token')}`,
+                    }
+                })
                     .then(response => {
                         if (response.data) {
                             resolve(response);
                             commit('auth/setUserDetails', response.data.userDetails, {root: true});
+                            commit('middleware/setPermissions', response.data.userDetails.permissions, {root: true});
+                            commit('middleware/setCanReadAdminDashboard', response.data.userDetails.canReadAdminDashboard, {root: true});
+                            commit('auth/setLoggedIn', true, {root: true});
                             commit('setTopics', response.data.userDetails.topics);
                             commit('setPosts', response.data.userDetails.posts);
                             commit('setLikes', response.data.userDetails.likes);

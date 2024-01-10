@@ -5,7 +5,7 @@ const token = localStorage.getItem('access-token');
 
 const api = axios.create({
     headers:{
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${localStorage.getItem('access-token')}`
     }
 });
 
@@ -19,5 +19,5 @@ api.interceptors.response.use(
     }
     return Promise.reject(error);
 })
-
+console.log("TOKEN NNNN", token);
 export default api;

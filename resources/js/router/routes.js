@@ -85,7 +85,8 @@ const routes = [
         component: () => import('../views/admin/Dashboard.vue'),
         meta: {
             layout: Admin,
-            middleware: [Middleware.auth],
+            middleware: [Middleware.canReadAdminDashboard],
+            //middleware: [Middleware.canReadAdminDashboard, Middleware.auth],
         },
 
         children: [

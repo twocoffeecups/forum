@@ -30,14 +30,9 @@ export default {
             return state.userDetails.role;
         },
 
-        permissions(state) {
-            return state.userDetails.permissions;
-        },
-
         avatar(state) {
             return state.userDetails.avatar;
-        }
-
+        },
     },
 
     actions: {
@@ -75,10 +70,11 @@ export default {
                     .then(response => {
                         if (response.data) {
                             toast.success('Login successfully!');
-                            localStorage.setItem('access-token', response.data.accessToken);
+                            commit('middleware/setToken', response.data.accessToken, {root: true});
                             commit('setLoggedIn', true);
+                            commit('middleware/setCanReadAdminDashboard', response.data.userDetails.canReadAdminDashboard, {root: true});
                             commit('setUserDetails', response.data.userDetails);
-                            //commit('profile/setTopics', response.data.userDetails);
+                            commit('middleware/setPermissions', response.data.userDetails.permissions, {root: true});
                             localStorage.setItem('user-details', JSON.stringify(response.data.userDetails));
                             router.push({name: 'main'});
                             resolve(response);
@@ -140,19 +136,22 @@ export default {
             });
         },
 
-        logout({dispatch, commit}) {
+        logout({dispatch, state, commit}) {
             return new Promise((resolve, reject) => {
                 axios.post('/api/auth/logout', {}, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('access-token')}`
                     }
                 })
-                    .then(res => {
+                    .then(response => {
                         if (response.data) {
                             localStorage.removeItem('access-token');
-                            localStorage.removeItem('user-details');
+                            localStorage.removeItem('canRAD');
+                            //state.middleware.setCanReadAdminDashboard = false;
                             commit('setLoggedIn', false);
                             commit('setUserDetails', {});
+                            commit('middleware/setPermissions', null, {root: true});
+                            commit('middleware/setCanReadAdminDashboard', false, {root: true});
                             toast.success("You have successfully logout.")
                             router.push({name: 'main'});
                             resolve(response);
@@ -166,13 +165,13 @@ export default {
             });
         },
 
-        setLoggedInstate(ctx) {
+        setLoggedInstate({commit}) {
             return new Promise((resolve, reject) => {
                 if (localStorage.getItem('access-token')) {
-                    ctx.commit('setLoggedIn', true);
+                    commit('setLoggedIn', true);
                     resolve(true);
                 } else {
-                    ctx.commit('setLoggedIn', false);
+                    commit('setLoggedIn', false);
                     resolve(false);
                 }
             });

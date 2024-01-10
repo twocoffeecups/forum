@@ -11,7 +11,7 @@ export default {
 
     created() {
         this.checkUserInState();
-        this.getUserInfo()
+        this.getUserInfo();
     },
 
     methods:{
@@ -20,7 +20,9 @@ export default {
         },
 
         getUserInfo(){
-            this.$store.dispatch('profile/getUserDetails');
+            if(this.$store.getters['middleware/token']){
+                this.$store.dispatch('profile/getUserDetails');
+            }
         },
     },
 }

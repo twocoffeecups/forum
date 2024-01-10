@@ -16,9 +16,7 @@ class UserResource extends JsonResource
      */
     public function toArray($request)
     {
-        $permissions = $this->permissions;
-        $permissions->merge($this->permissionsThroughRole());
-        $userPermissions = $permissions->flatten(1)->pluck('slug');
+        $permissions = $this->permissions()->flatten(1)->pluck('slug');
 
         return [
             'id' => $this->id,
@@ -30,7 +28,8 @@ class UserResource extends JsonResource
             'avatar' => $this->avatar,
             'phone' => $this->phone,
             'role' => $this->role->slug,
-            'permissions' => $userPermissions,
+            'permissions' => $permissions,
+            'canReadAdminDashboard' => $this->canReadAdminDashboard(),
             'stats' => [
                 'topics' => $this->topics->count(),
                 'posts' => $this->posts->count(),

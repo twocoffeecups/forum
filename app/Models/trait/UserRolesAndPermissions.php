@@ -17,6 +17,11 @@ trait UserRolesAndPermissions
         return $this->role->slug === 'admin';
     }
 
+    public function canReadAdminDashboard()
+    {
+        return (bool) $this->permissions()->where('slug', '=', 'can-read-admin-dashboard');
+    }
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -25,10 +30,18 @@ trait UserRolesAndPermissions
         return $this->belongsTo(Role::class, 'roleId', 'id');
     }
 
+
+    public function permissions()
+    {
+        $permissions = $this->userPermissions;
+        $p = $permissions->merge($this->permissionsThroughRole());
+        return $p->unique();
+    }
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function permissions()
+    public function userPermissions(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(Permission::class,'user_permissions', 'userId', 'permissionId');
     }
