@@ -6,7 +6,7 @@
                     <div class="card-header h-100">
                         <div class="media flex-wrap w-100 align-items-center">
                             <img :src="avatar" width="64" class="d-block ui-w-40 rounded-circle" alt="">
-                            <div class="media-body ml-3"><a href="javascript:void(0)" data-abc="true">{{ post.author.name }}</a>
+                            <div class="media-body ml-3"><a href="" data-abc="true">{{ post.author.name }}</a>
                                 <div class="text-muted small">Offline</div>
                             </div>
                             <div class="text-muted small ml-3">

@@ -77,6 +77,7 @@
 
                         <!-- Pagination -->
                         <Pagination v-if="totalPages > 1"
+                                    @selectPageEmit="selectPage"
                                     :total-pages="totalPages"
                                     :links="paginate.links"
                                     :forum-id="this.$route.params.id"
@@ -140,6 +141,12 @@ export default {
             },
         },
     },
+
+    methods: {
+        selectPage(page){
+            this.$store.dispatch('forumTopics/getTopics', [this.$route.params.id, page]);
+        }
+    }
 }
 </script>
 

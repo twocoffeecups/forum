@@ -158,6 +158,7 @@ Route::group(['prefix' => 'client'], function () {
         });
     });
 
+    // Report
     Route::group(['prefix' => 'report'], function () {
         Route::get('/report-types', [\App\Http\Controllers\Client\Report\ReportController::class, 'index']);
 
@@ -165,9 +166,18 @@ Route::group(['prefix' => 'client'], function () {
         Route::post('/post/{post}', \App\Http\Controllers\Client\Report\PostReportController::class);
     });
 
+    // members profile
+    Route::group(['prefix' => 'user-profile/{user}'], function () {
+        Route::get('/', [\App\Http\Controllers\Client\UserProfile\UserProfileController::class, 'index']);
+        Route::post('/topics', [\App\Http\Controllers\Client\UserProfile\UserProfileController::class, 'getUserTopics']);
+        Route::post('/posts', [\App\Http\Controllers\Client\UserProfile\UserProfileController::class, 'getUserPosts']);
+    });
+
+    // Forum stats
     Route::get('/forum-stats', \App\Http\Controllers\Client\Forum\ForumStatsController::class);
     Route::get('/active-topics', \App\Http\Controllers\Client\Topic\ActiveTopicsController::class);
 
+    // topics
     Route::group(['prefix' => 'topic'], function () {
 
         Route::get('/', [\App\Http\Controllers\Client\Topic\TopicController::class, 'index']);
@@ -185,6 +195,7 @@ Route::group(['prefix' => 'client'], function () {
         });
     });
 
+    // Unapproved topics
     Route::group(['prefix' => 'unapproved-topic'], function () {
         Route::get('/{topic}', [\App\Http\Controllers\Client\Topic\UnapprovedTopicController::class, 'show'])->middleware('auth:sanctum');
     });

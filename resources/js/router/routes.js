@@ -80,6 +80,14 @@ const routes = [
             },
         ],
     },
+    {
+        path: '/user/:id',
+        name: 'user.profile',
+        component: () => import('../views/client/UserProfile.vue'),
+        meta: {
+            layout: Client,
+        }
+    },
 
     //  Admin
     {
