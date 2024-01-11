@@ -6,7 +6,7 @@
             "topic": "Топик",
             "search": "Поиск"
         },
-        "activeTopics" : "Последние сообщения",
+        "activeTopics" : "Активные темы",
         "accountNavigation":{
             "profile": "Профиль",
             "editProfile": "Изменить профиль",

@@ -4,8 +4,8 @@
             {{ $t('component.activeTopics') }}
         </h4>
         <hr class="m-0">
-        <template v-for="topic in activeTopics">
-            <ActiveTopic />
+        <template v-for="topic in topics">
+            <ActiveTopic :topic-id="topic.id" :title="topic.title" :author="topic.author" :created_at="topic.created_at" />
         </template>
     </div>
 </template>
@@ -16,11 +16,24 @@ export default{
     name:'ActiveTopics',
     components:{ActiveTopic},
 
+    mounted() {
+        this.getActiveTopics();
+    },
+
     data(){
         return{
-            activeTopics: 4,
+            topics: {},
         }
     },
+
+    methods: {
+        getActiveTopics() {
+            axios.get('/api/client/active-topics')
+                .then(response => {
+                    this.topics = response.data.topics;
+                })
+        }
+    }
 }
 </script>
 
