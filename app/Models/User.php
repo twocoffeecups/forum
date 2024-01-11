@@ -66,15 +66,29 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Post::class, 'userId', 'id');
     }
 
-    public function likes(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function likedPosts(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(Post::class, 'post_likes', 'userId', 'postId');
     }
 
+    public function likedTopics(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Topic::class, 'topic_likes', 'userId', 'topicId');
+    }
 
-    public function bookmarks(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function postBookmarks(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(Post::class, 'user_bookmarks', 'userId', 'postId');
+    }
+
+    public function topicBookmarks(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Topic::class, 'user_topic_bookmarks', 'userId', 'topicId');
+    }
+
+    public function unapprovedTopic()
+    {
+        return $this->hasMany(Topic::class, 'userId', 'id')->where('status', '=', 0);
     }
 
 }

@@ -68,6 +68,42 @@ export default {
                     })
             });
         },
+
+        likeTopic({dispatch}, id){
+            return new Promise((resolve, reject) => {
+                api.patch(`/api/client/topic/${id}/like`)
+                    .then(response => {
+                        if(response.data){
+                            toast.success(response.data.message ?? "Success.");
+                            resolve(response);
+                        }else {
+                            reject(response);
+                        }
+                    })
+                    .catch(error => {
+                        toast.error(error.response.data.message ?? "Error.")
+                        reject(error);
+                    })
+            });
+        },
+
+        addToBookmarks({dispatch}, id){
+            return new Promise((resolve, reject) => {
+                api.patch(`/api/client/topic/${id}/bookmarks`)
+                    .then(response => {
+                        if(response.data){
+                            toast.success(response.data.message ?? "Success.");
+                            resolve(response);
+                        }else {
+                            reject(response);
+                        }
+                    })
+                    .catch(error => {
+                        toast.error(error.response.data.message ?? "Error.")
+                        reject(error);
+                    })
+            });
+        }
     },
 
     mutations: {

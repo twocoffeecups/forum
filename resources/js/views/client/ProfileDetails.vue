@@ -63,7 +63,13 @@
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="pills-like-tab" data-bs-toggle="pill"
                                         data-bs-target="#pills-like" type="button" role="tab" aria-controls="pills-like"
-                                        aria-selected="false"> Like
+                                        aria-selected="false">Like
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="pills-like-topics-tab" data-bs-toggle="pill"
+                                        data-bs-target="#pills-like-topics" type="button" role="tab" aria-controls="pills-like-topics"
+                                        aria-selected="false">Like topics
                                 </button>
                             </li>
                             <li class="nav-item" role="presentation">
@@ -88,8 +94,11 @@
                             <!-- Topics -->
                             <div class="tab-pane fade" id="pills-topic" role="tabpanel"
                                  aria-labelledby="pills-topic-tab" tabindex="0">
+                                <UnapprovedTopic v-if="unapprovedTopic.length!==0" v-for="topic in unapprovedTopic" :topic="topic"/>
+
                                 <Topic  v-if="topics.length!==0" v-for="topic in topics" :topic="topic" />
-                                <div v-if="userDetails.topics.length===0" class="text-center m-1 p-1">
+
+                                <div v-if="userDetails.topics.length===0  && unapprovedTopic.length===0" class="text-center m-1 p-1">
                                     <h5>You haven't created any topics.</h5>
                                 </div>
                             </div>
@@ -106,12 +115,21 @@
                             </div>
 
                             <!-- TODO: доделать -->
-                            <!-- Liked  -->
+                            <!-- Liked posts  -->
                             <div class="tab-pane fade" id="pills-like" role="tabpanel" aria-labelledby="pills-like-tab"
                                  tabindex="0">
                                 <Post v-if="likes.length!==0" v-for="like in likes" :post="like" />
                                 <div v-if="likes.length===0" class="text-center m-1 p-1">
                                     <h5>You haven't liked posts or topics.</h5>
+                                </div>
+                            </div>
+
+                            <!-- Liked topics  -->
+                            <div class="tab-pane fade" id="pills-like-topics" role="tabpanel" aria-labelledby="pills-like-topics-tab"
+                                 tabindex="0">
+                                <Topic  v-if="likedTopics.length!==0" v-for="topic in likedTopics" :topic="topic" />
+                                <div v-if="likedTopics.length===0" class="text-center m-1 p-1">
+                                    <h5>You haven't added any topics to your bookmarks list.</h5>
                                 </div>
                             </div>
 
@@ -150,17 +168,20 @@
 import {mapGetters} from "vuex";
 import Post from "../../components/client/Post.vue";
 import Topic from "../../components/client/Topic.vue";
+import UnapprovedTopic from "../../components/client/UnapprovedTopic.vue";
 
 export default {
     name: 'ProfileDetails',
-    components: {Topic, Post},
+    components: {UnapprovedTopic, Topic, Post},
 
     computed:{
         ...mapGetters({
             userDetails: 'auth/userDetails',
             topics: 'profile/getTopics',
+            unapprovedTopic: 'profile/getUnapprovedTopic',
             posts: 'profile/getPosts',
             likes: 'profile/getLikes',
+            likedTopics: 'profile/getLikedTopics',
             postBookmarks: 'profile/getPostBookmarks',
             topicBookmarks: 'profile/getTopicBookmarks',
         }),

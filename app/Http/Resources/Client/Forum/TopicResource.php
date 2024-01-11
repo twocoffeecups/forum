@@ -17,6 +17,7 @@ class TopicResource extends JsonResource
         return [
             'id' => $this->id,
             'title' => $this->title,
+            'status' => $this->status,
             'rating' => $this->likes->count(),
             'postsCount' => $this->posts->count(),
             'views' => 1,

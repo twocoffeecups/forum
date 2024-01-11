@@ -13,11 +13,17 @@ export default {
         topicBookmarks: {},
         postBookmarks: {},
         likes: {},
+        likedTopics: {},
+        unapprovedTopic: {},
     },
 
     getters: {
         getTopics(state){
             return state.topics;
+        },
+
+        getUnapprovedTopic(state){
+            return state.unapprovedTopic;
         },
 
         getPosts(state){
@@ -35,6 +41,10 @@ export default {
         getLikes(state){
             return state.likes;
         },
+
+        getLikedTopics(state){
+            return state.likedTopics;
+        }
     },
 
     actions: {
@@ -53,8 +63,10 @@ export default {
                             commit('middleware/setCanReadAdminDashboard', response.data.userDetails.canReadAdminDashboard, {root: true});
                             commit('auth/setLoggedIn', true, {root: true});
                             commit('setTopics', response.data.userDetails.topics);
+                            commit('setUnapprovedTopic', response.data.userDetails.unapprovedTopic);
                             commit('setPosts', response.data.userDetails.posts);
                             commit('setLikes', response.data.userDetails.likes);
+                            commit('setLikedTopics', response.data.userDetails.likedTopics);
                             commit('setTopicBookmarks', response.data.userDetails.topicBookmarks);
                             commit('setPostBookmarks', response.data.userDetails.postBookmarks);
                         } else {
@@ -157,6 +169,14 @@ export default {
 
         setLikes(state, payload){
             state.likes = payload;
+        },
+
+        setLikedTopics(state, payload){
+            state.likedTopics = payload;
+        },
+
+        setUnapprovedTopic(state, payload){
+            state.unapprovedTopic = payload;
         },
     },
 }

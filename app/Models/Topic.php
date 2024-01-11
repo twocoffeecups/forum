@@ -35,6 +35,11 @@ class Topic extends Model
         return $this->belongsToMany(User::class, 'topic_likes', 'topicId', 'userId');
     }
 
+    public function bookmarks(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'topic_bookmarks', 'topicId', 'userId');
+    }
+
     public function posts(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Post::class, 'topicId', 'id');
@@ -60,5 +65,6 @@ class Topic extends Model
     {
         return self::all()->where('status', '=', '1');
     }
+
 
 }

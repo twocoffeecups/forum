@@ -45,7 +45,7 @@
 
                         <div class="mt-2 d-block d-md-flex d-lg-flex d-xl-flex justify-content-between">
                             <div class="flex-sm-row d-md-flex d-lg-flex d-xl-flex text-center">
-                                <button class="btn btn-xs text-muted has-icon"><i class="far fa-heart"></i>
+                                <button @click.prevent="likeTopic(topicAuthor.id)" class="btn btn-xs text-muted has-icon"><i class="far fa-heart"></i>
                                     {{ mainPost.rating }}
                                 </button>
                                 <span class="text-muted d-inline-flex align-items-center align-middle ml-4">
@@ -53,17 +53,17 @@
                               </span>
                             </div>
                             <div class="flex-sm-row d-md-flex d-lg-flex d-xl-flex text-center">
-                                <button @click.capture="report(mainPost.id)" class="btn btn-sm btn-outline-danger mx-1"
+                                <button v-if="userId!==topicAuthor.id" @click.capture="report(mainPost.id)" class="btn btn-sm btn-outline-danger mx-1"
                                         data-bs-toggle="modal" data-bs-target="#report-form">
                                     {{ $t('component.post.report') }}
                                 </button>
-                                <button class="btn btn-sm btn-outline-primary mx-1">{{
+                                <button v-if="userId!==topicAuthor.id" class="btn btn-sm btn-outline-primary mx-1">{{
                                         $t('component.post.reply')
                                     }}
                                 </button>
-                                <!--                      <button class="btn btn-sm btn-outline-secondary mx-1">{{ $t('component.post.edit') }}</button>-->
+                                <router-link  v-if="userId===topicAuthor.id" :to="{name:'topic.edit', params:{id:this.$route.params.id}}" class="btn btn-sm btn-outline-secondary mx-1">{{ $t('component.post.edit') }}</router-link>
 
-                                <span class="mx-1 p-2"> <i class="far fa-bookmark" style="cursor: pointer"></i></span>
+                                <span v-if="userId!==topicAuthor.id" @click.prevent="addToBookmarks" role="button" class="mx-1 p-2"> <i class="far fa-bookmark" style="cursor: pointer"></i></span>
                             </div>
 
                         </div>
@@ -87,6 +87,7 @@ export default {
     computed: {
         ...mapGetters({
             topicAuthor: 'topic/getTopicAuthor',
+            userId: 'auth/getUserId',
         }),
     },
 
@@ -103,6 +104,15 @@ export default {
 
         report(reportId) {
             this.$emit('report', {id: reportId, type: 'topic'})
+        },
+
+        likeTopic(authorId){
+            if (this.userId === authorId) return;
+            this.$store.dispatch('topic/likeTopic', this.$route.params.id);
+        },
+
+        addToBookmarks(){
+            this.$store.dispatch('topic/addToBookmarks', this.$route.params.id);
         },
     }
 }

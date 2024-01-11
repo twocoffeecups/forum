@@ -172,11 +172,29 @@ class TopicController extends Controller
         return response()->json(['message' => 'Topic deleted.']);
     }
 
-    protected function like(Topic $topic, User $user)
+    /**
+     * @param Request $request
+     * @param Topic $topic
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function like(Request $request, Topic $topic): \Illuminate\Http\JsonResponse
     {
-        //dd($topic->likes);
+        $user = $this->getUserByToken($request);
         $topic->likes()->toggle($user->id);
         return response()->json(['message' => 'Change topic like.']);
+    }
+
+    /**
+     * @param Request $request
+     * @param Topic $topic
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function addToBookmarks(Request $request, Topic $topic): \Illuminate\Http\JsonResponse
+    {
+        $user = $this->getUserByToken($request);
+        $user->topicBookmarks()->toggle($topic->id);
+        //$topic->bookmarks()->toggle($user->id);
+        return response()->json(['message' => 'Change topic bookmarks.']);
     }
 
     /**
@@ -194,7 +212,7 @@ class TopicController extends Controller
 
     /**
      * @return \Illuminate\Http\JsonResponse
-     * TODO: переделать getter на фронте и удалить метод
+     * TODO: переделать getter на фронте и удалить этот метод
      */
     public function topicTags(): \Illuminate\Http\JsonResponse
     {

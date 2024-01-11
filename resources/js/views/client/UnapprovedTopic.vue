@@ -50,9 +50,6 @@
                         <!-- Topic main post -->
                         <TopicMainPost :main-post="topic" :images="images" @report="report"/>
 
-                        <div class="container ">
-                            <router-link :to="{name:'topic.edit', params:{id:this.$route.params.id}}" class="btn btn-outline-secondary fa-pull-right mx-1">{{ $t('component.post.edit') }}</router-link>
-                        </div>
                     </div>
                 </div>
 

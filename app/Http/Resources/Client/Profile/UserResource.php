@@ -38,11 +38,13 @@ class UserResource extends JsonResource
             'isBanned' => false,
             'emailVerified_at' => $this->email_verified_at->format('Y-m-d'),
             'register_at' => $this->created_at->format('Y-m-d'),
-            'topics' => TopicResource::collection($this->topics),
+            'topics' => TopicResource::collection($this->topics->where('status', '=', 1)),
+            'unapprovedTopic' => TopicResource::collection($this->unapprovedTopic),
             'posts' => PostResource::collection($this->posts),
-            'likes' => PostResource::collection($this->likes),
-            'topicBookmarks' => [],
-            'postBookmarks' => PostResource::collection($this->bookmarks),
+            'likes' => PostResource::collection($this->likedPosts),
+            'likedTopics' => TopicResource::collection($this->likedTopics),
+            'topicBookmarks' => TopicResource::collection($this->topicBookmarks),
+            'postBookmarks' => PostResource::collection($this->postBookmarks),
         ];
     }
 }

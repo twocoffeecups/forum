@@ -1,5 +1,10 @@
 <template>
     <div class="forum-item py-2 px-3 mb-0 border-bottom ">
+        <div v-if="!topic.status" class="row">
+            <div class="alert alert-danger text-sm" role="alert">
+                <span>Эта тема ещё не утверждена модератором!</span>
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-7 col-lg-7 d-flex flex-column align-content-between">
                 <router-link :to="{name:'topic', params:{id: topic.id}}" class="forum-nav-link" style="font-size: 1.2em">
@@ -46,7 +51,7 @@
 
 <script>
 export default {
-    name: 'Topic',
+    name: 'UnapprovedTopic',
     props: ['topic', 'latestPost'],
 }
 </script>

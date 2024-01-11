@@ -127,7 +127,8 @@ Route::group(['prefix' => 'client'], function () {
         Route::post('/', [\App\Http\Controllers\Client\Topic\TopicController::class, 'store'])->middleware('auth:sanctum');
 
         Route::group(['prefix' => '{topic}'], function () {
-            Route::get('/like', [\App\Http\Controllers\Client\Topic\TopicController::class, 'like']);
+            Route::patch('/like', [\App\Http\Controllers\Client\Topic\TopicController::class, 'like'])->middleware('auth:sanctum');
+            Route::patch('/bookmarks', [\App\Http\Controllers\Client\Topic\TopicController::class, 'addToBookmarks'])->middleware('auth:sanctum');
 
             // Post
             Route::group(['prefix' => 'post'], function () {

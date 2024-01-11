@@ -29,7 +29,7 @@
             <div class="card">
                 <div class="card-header">
                     <div class="d-flex justify-content-between my-2">
-                        <h4>All Forums</h4>
+                        <h4>All Topics</h4>
                     </div>
                 </div>
                 <div class="card-body">
@@ -61,11 +61,10 @@
                                 <th scope="col">#</th>
                                 <th scope="col">Forum</th>
                                 <th scope="col">Title</th>
-                                <th scope="col">User</th>
+                                <th scope="col">Author</th>
                                 <th scope="col">Posts</th>
                                 <th scope="col">Status</th>
                                 <th scope="col">Created AT</th>
-                                <th scope="col">Allow | Disallow Publication</th>
                                 <th scope="col">Actions</th>
                             </tr>
                             </thead>
@@ -74,13 +73,12 @@
                                 <th scope="row">{{ topic.id }}</th>
                                 <td>{{ topic.forum }}</td>
                                 <td>{{ topic.title }}</td>
-                                <td>{{ topic.user }}</td>
+                                <td>{{ topic.author }}</td>
                                 <td>{{ topic.posts }}</td>
-                                <td>{{ topic.status }}</td>
-                                <td>{{ topic.created_at }}</td>
-                                <th>
+                                <td>
                                     <span>{{ topic.status ? 'Published' : 'Unpublished' }}</span>
-                                </th>
+                                </td>
+                                <td>{{ topic.created_at }}</td>
                                 <td>
                                     <span role="button" class="text-primary mx-2" title="Show">
                                         <router-link :to="{name:'admin.topic.details', params:{id: topic.id}}">
