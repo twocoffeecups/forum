@@ -66,7 +66,7 @@
         </div>
     </div>
 
-    <ReportForm :report-id="reportDetail.id" :type="reportDetail.type"/>
+    <ReportForm :report-id="reportDetail.id" :type="reportDetail.type" :user-id="reportDetail.userId"/>
 </template>
 
 <script>
@@ -102,6 +102,15 @@ export default {
             reportDetail: [],
             author: [],
         }
+    },
+
+    watch: {
+        '$route.params.id': {
+            immediate: true,
+            handler() {
+                this.$store.dispatch('topic/getTopic', this.$route.params.id);
+            },
+        },
     },
 
     methods: {

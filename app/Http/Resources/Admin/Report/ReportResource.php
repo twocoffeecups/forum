@@ -4,7 +4,7 @@ namespace App\Http\Resources\Admin\Report;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ReportReasonResource extends JsonResource
+class ReportResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,9 +16,10 @@ class ReportReasonResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
-            'description' => $this->description,
-            'author' => $this->author->getFullName(),
+            'reason' => $this->reason,
+            'object' => $this->object == 'topic' ? $this->topic : $this->post,
+            'user' => $this->user,
+            'sender' => $this->sender,
             'status' => $this->status,
             'created_at' => $this->created_at,
         ];

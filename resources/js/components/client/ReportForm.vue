@@ -47,7 +47,7 @@ import {mapGetters} from "vuex";
 
 export default {
     name: "ReportForm",
-    props: ['reportId', 'type'],
+    props: ['reportId', 'type', 'userId'],
 
     computed: {
         ...mapGetters({
@@ -76,17 +76,16 @@ export default {
         sendReport() {
             const data = new FormData();
             data.append('reasonId', this.reasonId);
-            data.append('postId', this.reportId);
+            data.append('object', this.type);
             data.append('message', this.message);
             data.append('type', this.type);
-            //this.t$.info('Report send.')
-            console.log("REPORT DETAILS", data)
-            if(this.type==='post'){
-                this.$store.dispatch('report/sendPostReport', [data, this.reportId]);
+            data.append('userId', this.userId);
+            if(this.type==='topic'){
+                data.append('topicId', this.reportId);
             }else{
-                this.$store.dispatch('report/sendTopicReport', [data, this.reportId]);
+                data.append('postId', this.reportId);
             }
-
+            this.$store.dispatch('report/sendReport', [data, this.reportId]);
         }
     }
 }

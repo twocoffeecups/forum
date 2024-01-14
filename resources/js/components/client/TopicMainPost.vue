@@ -9,7 +9,7 @@
                         <div class="media flex-wrap w-100 align-items-center">
                             <img :src="topicAuthor.avatar" width="64" class="d-block ui-w-40 rounded-circle" alt="Avatar">
                             <div class="media-body ml-3">
-                                <a href="" data-abc="true">{{ topicAuthor.name }}</a>
+                                <router-link v-if="topicAuthor.id" :to="{name:'user.profile', params:{id:topicAuthor.id}}" data-abc="true">{{ topicAuthor.name }}</router-link>
                                 <div class="text-muted small">Offline</div>
                             </div>
                             <div class="text-muted small ml-3">
@@ -103,7 +103,7 @@ export default {
         },
 
         report(reportId) {
-            this.$emit('report', {id: reportId, type: 'topic'})
+            this.$emit('report', {id: reportId, type: 'topic', userId: this.topicAuthor.id});
         },
 
         likeTopic(authorId){

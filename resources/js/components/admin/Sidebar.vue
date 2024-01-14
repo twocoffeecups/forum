@@ -27,23 +27,18 @@
 
                 <!-- Forum -->
                 <li class="nav-item w-100">
-                    <a class="nav-link sidebar_nav_link align-middle px-0" data-bs-toggle="collapse" href="#sub_menu1"
+                    <a class="nav-link sidebar_nav_link align-middle px-0" data-bs-toggle="collapse" href="#sub-menu-1"
                        role="button" aria-expanded="false" aria-controls="sub_menu1">
                         <i class="fab fa-forumbee"></i> <span class="ms-1 d-sm-inline">Forum</span>
                         <span class="fa-pull-right sidebar_icon"><i class="fas fa-chevron-down"></i></span>
                     </a>
-                    <div class="collapse" id="sub_menu1">
+                    <div class="collapse" id="sub-menu-1">
                         <ul class="collapse ps-3 show nav flex-column ms-1">
                             <li class="w-100"  data-bs-dismiss="offcanvas">
                                 <router-link :to="{name:'admin.forum'}" class="nav-link sidebar_nav_link px-0"><i
                                     class="fas fa-hashtag"></i> Forums
                                 </router-link>
                             </li>
-<!--                            <li class="w-100">-->
-<!--                                <router-link :to="{name:'admin.forumsTree'}" class="nav-link sidebar_nav_link px-0"><i-->
-<!--                                    class="fas fa-hashtag"></i> Forums tree-->
-<!--                                </router-link>-->
-<!--                            </li>-->
                             <li  data-bs-dismiss="offcanvas">
                                 <router-link :to="{name:'admin.tag'}" class="nav-link sidebar_nav_link px-0"><i
                                     class="fas fa-hashtag"></i> Tags
@@ -70,12 +65,12 @@
 
                 <!-- Role and Permission -->
                 <li class="nav-item w-100">
-                    <a class="nav-link sidebar_nav_link  align-middle px-0" data-bs-toggle="collapse" href="#sub_menu2"
+                    <a class="nav-link sidebar_nav_link  align-middle px-0" data-bs-toggle="collapse" href="#sub-menu-2"
                        role="button" aria-expanded="false" aria-controls="sub_menu2">
                         <i class="fab fa-forumbee"></i> <span class="ms-1 d-sm-inline">Roles & Permissions</span>
                         <span class="fa-pull-right sidebar_icon"><i class="fas fa-chevron-down"></i></span>
                     </a>
-                    <div class="collapse" id="sub_menu2">
+                    <div class="collapse" id="sub-menu-2">
                         <ul class="collapse ps-3 show nav flex-column ms-1">
                             <li class="w-100" data-bs-dismiss="offcanvas">
                                 <router-link :to="{ name:'admin.role' }" class="nav-link sidebar_nav_link px-0"><i
@@ -99,13 +94,30 @@
                 </li>
 
                 <!-- Reports -->
-                <li class="nav-item w-100" data-bs-dismiss="offcanvas">
-                    <router-link :to="{ name:'admin.reports' }" class="nav-link sidebar_nav_link px-0 align-middle">
-                        <i class="fas fa-flag"></i> <span class="ms-1 d-sm-inline">Reports </span>
-                        <span class="small position-absolute badge bg-danger rounded-pill" style="font-size: 10px">
-                           9+
-                        </span>
-                    </router-link>
+
+                <li class="nav-item w-100">
+                    <a class="nav-link sidebar_nav_link  align-middle px-0" data-bs-toggle="collapse" href="#sub-menu-3"
+                       role="button" aria-expanded="false" aria-controls="sub_menu2">
+                        <i class="fab fa-forumbee"></i> <span class="ms-1 d-sm-inline">Reports</span>
+                        <span class="fa-pull-right sidebar_icon"><i class="fas fa-chevron-down"></i></span>
+                    </a>
+                    <div class="collapse" id="sub-menu-3">
+                        <ul class="collapse ps-3 show nav flex-column ms-1">
+                            <li class="nav-item w-100" data-bs-dismiss="offcanvas">
+                                <router-link :to="{ name:'admin.reports.reason' }" class="nav-link sidebar_nav_link px-0 align-middle">
+                                    <i class="fas fa-flag"></i> <span class="ms-1 d-sm-inline">Report types</span>
+                                </router-link>
+                            </li>
+                            <li class="nav-item w-100" data-bs-dismiss="offcanvas">
+                                <router-link :to="{ name:'admin.reports' }" class="nav-link sidebar_nav_link px-0 align-middle">
+                                    <i class="fas fa-flag"></i> <span class="ms-1 d-sm-inline">All Reports</span>
+                                    <span class="small position-absolute badge bg-danger rounded-pill" style="font-size: 10px">
+                                       9+
+                                    </span>
+                                </router-link>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
 
                 <!-- Settings -->

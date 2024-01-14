@@ -22,7 +22,7 @@ export default {
     actions: {
         getReportType({dispatch, commit}){
             return new Promise((resolve,reject) => {
-                axios.get('/api/client/report/report-types')
+                axios.get('/api/client/report')
                     .then(response => {
                         if(response.data){
                             commit('setReportTypes', response.data.reportTypes);
@@ -37,29 +37,9 @@ export default {
             })
         },
 
-        /** TODO: Переделать sendPostReport и sendTopicReport или объеденить в один метод **/
-        sendPostReport({dispatch}, [data, id]){
+        sendReport({dispatch}, [data, id]){
             return new Promise((resolve,reject) => {
-                console.log("MODEL ID:", id);
-                api.post(`/api/client/report/post/${id}`, data)
-                    .then(response => {
-                        if(response.data){
-                            toast.success(response.data.message ?? "Success.")
-                            resolve(response);
-                        }else{
-                            reject(response);
-                        }
-                    })
-                    .catch(error => {
-                        toast.error(error.response.data.message ?? "Error!");
-                        reject(error);
-                    })
-            })
-        },
-        sendTopicReport({dispatch}, [data, id]){
-            return new Promise((resolve,reject) => {
-                console.log("MODEL ID:", id);
-                api.post(`/api/client/report/topic/${id}`, data)
+                api.post(`/api/client/report`, data)
                     .then(response => {
                         if(response.data){
                             toast.success(response.data.message ?? "Success.")

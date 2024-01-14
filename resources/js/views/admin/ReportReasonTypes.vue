@@ -6,7 +6,9 @@
             <div class="card">
                 <div class="card-header">
                     <div class="d-flex justify-content-between my-2">
-                        <h4>Reports</h4>
+                        <h4>Report reason types</h4>
+
+                        <CreateReportReasonTypeModal />
                     </div>
                 </div>
                 <div class="card-body">
@@ -38,33 +40,36 @@
                             <tr></tr>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Post</th>
-                                <th scope="col">Reason</th>
-                                <th scope="col">Sender</th>
-                                <th scope="col">New</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Author</th>
                                 <th scope="col">Status</th>
-                                <th scope="col">Posts</th>
                                 <th scope="col">Created date</th>
                                 <th scope="col">Actions</th>
                             </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="report in reports">
-                                    <th scope="row">{{ report.id }}</th>
-                                    <td>{{ report.post }}</td>
-                                    <td>{{ report.reason }}</td>
-                                    <td>{{ report.sender }}</td>
-                                    <td>{{ report.new }}</td>
-                                    <td>{{ report.status }}</td>
-                                    <td>{{ report.user }}</td>
-                                    <td>{{ report.created_at }}</td>
+                                <tr v-for="reportType in reportReasons">
+                                    <th scope="row">{{ reportType.id }}</th>
+                                    <td contenteditable @focusout.prevent="update($event, reportType.id, reportType.name)">{{ reportType.name }}</td>
+                                    <td>{{ reportType.author }}</td>
                                     <td>
-                                        <span class="text-primary mx-2" title="Show">
-                                            <router-link :to="{ name:'admin.report.details', params:{id:1} }">
-                                              <i class="fas fa-eye"></i>
-                                            </router-link>
-                                        </span>
-                                        <span role="button" class="text-danger mx-2" title="Edit">
+                                        <div class="btn-group  btn-group-sm" role="group"
+                                             aria-label="Basic radio toggle button group"
+                                             @change.prevent="changeVisibility($event, reportType.id)">
+                                            <input type="radio" class="btn-check" :name="reportType.id+'isPublished'"
+                                                   :id="reportType.id+'hide'" value="false" autocomplete="off"
+                                                   :checked="reportType.status != true">
+                                            <label class="btn btn-outline-secondary" :for="reportType.id+'hide'">Hide</label>
+
+                                            <input type="radio" class="btn-check" :name="reportType.id+'isPublished'"
+                                                   :id="reportType.id+'published'" value="true" autocomplete="off"
+                                                   :checked="reportType.status == true">
+                                            <label class="btn btn-outline-success" :for="reportType.id+'published'">Publish</label>
+                                        </div>
+                                    </td>
+                                    <td>{{ reportType.created_at }}</td>
+                                    <td>
+                                        <span @click.prevent="deleteReportReason(reportType.id)" role="button" class="text-danger mx-2" title="Edit">
                                             <i class="fas fa-trash"></i>
                                         </span>
                                     </td>
@@ -92,51 +97,58 @@
 <script>
 import {mapGetters} from "vuex";
 import TablePagination from "../../components/admin/TablePagination.vue";
+import CreateReportReasonTypeModal from "../../components/admin/CreateReportReasonTypeModal.vue";
 
 export default {
-    name: "Report",
-    components: {TablePagination},
+    name: "ReportReasonTypes",
+    components: {CreateReportReasonTypeModal, TablePagination},
 
     computed: {
         ...mapGetters({
-            reports: 'adminReport/getReports',
-            paginate: 'adminReport/getPaginate',
+            reportReasons: 'reportReason/getReportReasonType',
+            paginate: 'reportReason/getPaginate',
         }),
     },
 
     mounted() {
-        this.$store.dispatch('adminReport/getReports')
+        this.$store.dispatch('reportReason/getReportReasonType');
     },
 
     data() {
         return {
-            // reports: [
-            //     {
-            //         id: 1,
-            //         reason: 'AAAAAAAAAA',
-            //         post: 'Test post',
-            //         sender: 'User Userovich',
-            //         user: 'Ashot Cumshotovich',
-            //         new: true,
-            //         status: false,
-            //         created_at: '2023-09-06',
-            //     }
-            // ],
             entriesOnPage: 10,
         }
     },
 
     watch: {
         entriesOnPage(val){
-            this.$store.commit('adminForum/setEntriesOnPage', val);
-            this.$store.dispatch('adminReport/getReports');
+            this.$store.commit('reportReason/setEntriesOnPage', val);
+            this.$store.dispatch('reportReason/getReportReasonType');
         }
     },
 
     methods: {
         selectPage(page){
-            this.$store.dispatch('adminReport/getReports', page)
+            this.$store.dispatch('reportReason/getReportReasonType', page)
         },
+
+        update(event, id, reasonName){
+            let name = event.target.innerText;
+            if (name === reasonName) return;
+            if (name.length < 6) {
+                this.t$.error("Min length 6.");
+                return;
+            }
+            this.$store.dispatch('reportReason/update', [id, name]);
+        },
+
+        changeVisibility(event, id){
+            this.$store.dispatch('reportReason/changeStatus', id)
+        },
+
+        deleteReportReason(id){
+            this.$store.dispatch('reportReason/delete', id);
+        }
     },
 }
 </script>

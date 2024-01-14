@@ -60,13 +60,18 @@ Route::group(['prefix' => 'admin'], function () {
         Route::patch('/{rejectType}/change-status', [\App\Http\Controllers\Admin\TopicRejectType\TopicRejectTypeController::class, 'status']);
     });
 
-    Route::group(['prefix' => 'report-reason'], function () {
-        Route::get('/', [\App\Http\Controllers\Admin\Report\ReportReasonController::class, 'index']);
-        Route::post('/', [\App\Http\Controllers\Admin\Report\ReportReasonController::class, 'store']);
-        Route::get('/{reportReason}', [\App\Http\Controllers\Admin\Report\ReportReasonController::class, 'show']);
-        Route::patch('/{reportReason}', [\App\Http\Controllers\Admin\Report\ReportReasonController::class, 'update']);
-        Route::delete('/{reportReason}', [\App\Http\Controllers\Admin\Report\ReportReasonController::class, 'delete']);
-        Route::post('/{reportReason}/status', [\App\Http\Controllers\Admin\Report\ReportReasonController::class, 'status']);
+    Route::group(['prefix' => 'report-reason-type'], function () {
+        Route::post('/', [\App\Http\Controllers\Admin\Report\ReportReasonTypeController::class, 'index']);
+        Route::post('/store', [\App\Http\Controllers\Admin\Report\ReportReasonTypeController::class, 'store']);
+        Route::get('/{reportReason}', [\App\Http\Controllers\Admin\Report\ReportReasonTypeController::class, 'show']);
+        Route::patch('/{reportReason}', [\App\Http\Controllers\Admin\Report\ReportReasonTypeController::class, 'update']);
+        Route::delete('/{reportReason}', [\App\Http\Controllers\Admin\Report\ReportReasonTypeController::class, 'delete']);
+        Route::patch('/{reportReason}/change-status', [\App\Http\Controllers\Admin\Report\ReportReasonTypeController::class, 'status']);
+    });
+
+    Route::group(['prefix' => 'report'], function () {
+        Route::post('/', [\App\Http\Controllers\Admin\Report\ReportController::class, 'index']);
+        Route::get('/{report}', [\App\Http\Controllers\Admin\Report\ReportController::class, 'show']);
     });
 
     Route::group(['prefix' => 'user'], function () {
@@ -160,10 +165,8 @@ Route::group(['prefix' => 'client'], function () {
 
     // Report
     Route::group(['prefix' => 'report'], function () {
-        Route::get('/report-types', [\App\Http\Controllers\Client\Report\ReportController::class, 'index']);
-
-        Route::post('/topic/{topic}', \App\Http\Controllers\Client\Report\TopicReportController::class);
-        Route::post('/post/{post}', \App\Http\Controllers\Client\Report\PostReportController::class);
+        Route::get('/', \App\Http\Controllers\Client\Report\ReportController::class);
+        Route::post('/', \App\Http\Controllers\Client\Report\SendReportController::class);
     });
 
     // members profile

@@ -27,15 +27,15 @@
                         <div class="row">
                             <div class="col-4 border-end border-light">
                                 <h6 class="text-muted mt-1 mb-2 fw-normal">{{ $t('view.accountDetail.topics') }}</h6>
-                                <h3 class="mb-0 fw-bold">{{ userDetails.stats.topics }}</h3>
+                                <h3 v-if="userDetails.stats.topics" class="mb-0 fw-bold">{{ userDetails.stats.topics }}</h3>
                             </div>
                             <div class="col-4 border-end border-light">
                                 <h6 class="text-muted mt-1 mb-2 fw-normal">{{ $t('view.accountDetail.posts') }}</h6>
-                                <h3 class="mb-0 fw-bold">{{ userDetails.stats.posts }}</h3>
+                                <h3 v-if="userDetails.stats.posts" class="mb-0 fw-bold">{{ userDetails.stats.posts }}</h3>
                             </div>
                             <div class="col-4">
                                 <h6 class="text-muted mt-1 mb-2 fw-normal">{{ $t('view.accountDetail.carma') }}</h6>
-                                <h3 class="mb-0 fw-bold">{{ userDetails.stats.carma }}</h3>
+                                <h3 v-if="userDetails.stats.carma" class="mb-0 fw-bold">{{ userDetails.stats.carma }}</h3>
                             </div>
                         </div>
                     </div>

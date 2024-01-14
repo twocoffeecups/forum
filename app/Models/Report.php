@@ -12,4 +12,34 @@ class Report extends Model
 
     protected $guarded = false;
     protected $table = 'reports';
+
+    public function reason()
+    {
+        return $this->belongsTo(ReportReasonType::class, 'reasonId', 'id');
+    }
+
+    public function topic()
+    {
+        return $this->belongsTo(Topic::class, 'topicId', 'id');
+    }
+
+    public function post()
+    {
+        return $this->belongsTo(Post::class, 'postId', 'id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'userId', 'id');
+    }
+
+    public function sender()
+    {
+        return $this->belongsTo(User::class, 'senderId', 'id');
+    }
+
+    public function moder()
+    {
+        return $this->belongsTo(User::class, 'moderId', 'id');
+    }
 }

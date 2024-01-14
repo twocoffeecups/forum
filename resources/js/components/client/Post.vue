@@ -6,7 +6,8 @@
                     <div class="card-header h-100">
                         <div class="media flex-wrap w-100 align-items-center">
                             <img :src="avatar" width="64" class="d-block ui-w-40 rounded-circle" alt="">
-                            <div class="media-body ml-3"><a href="" data-abc="true">{{ post.author.name }}</a>
+                            <div class="media-body ml-3">
+                                <router-link v-if="post.author.id" :to="{name:'user.profile', params:{id:post.author.id}}" data-abc="true">{{ post.author.name }}</router-link>
                                 <div class="text-muted small">Offline</div>
                             </div>
                             <div class="text-muted small ml-3">
@@ -109,7 +110,7 @@ export default {
         },
 
         report(reportId) {
-            this.$emit('report', {id: reportId, type: 'post'})
+            this.$emit('report', {id: reportId, type: 'post', userId: this.post.author.id})
         },
 
         likePost(userId, authorId) {

@@ -24,9 +24,8 @@ class ReportReasonUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'max:32',
+            'name' => 'min:6|max:64',
             'description' => 'max:255',
-            'authorId' => 'integer',
         ];
     }
 }

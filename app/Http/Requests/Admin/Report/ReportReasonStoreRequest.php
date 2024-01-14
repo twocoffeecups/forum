@@ -24,8 +24,8 @@ class ReportReasonStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|max:32',
-            'description' => 'required|max:255',
+            'name' => 'required|min:6|max:32',
+            'description' => 'nullable|string|max:255',
         ];
     }
 }

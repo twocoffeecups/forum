@@ -13,12 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('reports', function (Blueprint $table) {
+        Schema::create('post_reports', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('reasonId')->index('reportReasonIdx')->constrained('report_reasons')->cascadeOnUpdate()->cascadeOnDelete();
-            $table->foreignId('postId')->index('postIdx')->constrained('posts')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('reasonId')->index('reportReasonIdx')->constrained('report_reason_types')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->enum('object', ['topic', 'post']);
+            $table->foreignId('postId')->nullable()->index('postIdx')->constrained('posts')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('topicId')->nullable()->index('topicIdx')->constrained('topics')->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('userId')->index('userIdx')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('senderId')->index('senderIdx')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('moderId')->index('moderIdx')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
             $table->unsignedTinyInteger('status')->default(0);
             $table->unsignedTinyInteger('reportClosed')->default(0);
             $table->string('message')->nullable();
@@ -35,6 +38,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('reports');
+        Schema::dropIfExists('post_reports');
     }
 };

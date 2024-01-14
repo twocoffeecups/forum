@@ -24,10 +24,12 @@ class ReportRequest extends FormRequest
     public function rules()
     {
         return [
-            //
-            'reasonId' => '',
-            'postId' => '',
-            'message' => ''
+            'reasonId' => 'integer|exists:report_reason_types,id',
+            'object' => 'string',
+            'topicId' => 'nullable|integer|exists:topics,id',
+            'postId' => 'nullable|integer|exists:posts,id',
+            'userId' => 'integer|exists:users,id',
+            'message' => 'nullable|string'
         ];
     }
 }

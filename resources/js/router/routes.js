@@ -176,6 +176,11 @@ const routes = [
                 name: 'admin.report.details',
                 component: () => import('../views/admin/ReportDetails.vue'),
             },
+            {
+                path: 'report-reason',
+                name: 'admin.reports.reason',
+                component: () => import('../views/admin/ReportReasonTypes.vue'),
+            },
         ],
     },
 

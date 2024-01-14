@@ -16,6 +16,8 @@ import rejectedTopic from "./modules/admin/rejected-topic";
 import editTopic from "./modules/edit-topic";
 import forumTopics from "./modules/forum-topics";
 import userProfile from "./modules/user-profile";
+import adminReport from "./modules/admin/report";
+import reportReason from "./modules/admin/report-reason-types";
 
 const store =  createStore({
     //namespaced: true,
@@ -37,6 +39,8 @@ const store =  createStore({
         editTopic,
         forumTopics,
         userProfile,
+        adminReport,
+        reportReason,
     },
 });
 
