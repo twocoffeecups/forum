@@ -16,6 +16,7 @@ class RejectedTopicResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'topicId' => $this->topicId,
             'title' => $this->topic->title,
             'author' => $this->topic->author->getFullName(),
             'reason' => $this->reason->title,

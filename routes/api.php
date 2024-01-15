@@ -74,6 +74,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/', [\App\Http\Controllers\Admin\Report\ReportController::class, 'index']);
         Route::get('/{report}', [\App\Http\Controllers\Admin\Report\ReportController::class, 'show']);
         Route::post('/{report}/reject', [\App\Http\Controllers\Admin\Report\ReportController::class, 'reject']);
+        Route::post('/{report}/processing', [\App\Http\Controllers\Admin\Report\ReportController::class, 'processing']);
     });
 
     Route::group(['prefix' => 'user'], function () {

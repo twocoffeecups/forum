@@ -18,7 +18,8 @@
                                 <span class="form-text">
                                   Show
                                 </span>
-                                <select v-model="entriesOnPage" class="form-select form-select-sm mx-2" aria-label="Select entries">
+                                <select v-model="entriesOnPage" class="form-select form-select-sm mx-2"
+                                        aria-label="Select entries">
                                     <option value="10" selected>10</option>
                                     <option value="20">30</option>
                                     <option value="30">50</option>
@@ -48,28 +49,31 @@
                             </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="report in reports">
-                                    <th scope="row">{{ report.id }}</th>
-                                    <td>{{ report.type }}</td>
-                                    <td>
-                                        <router-link v-if="report.type=='topic'" :to="{name:'topic', params:{id:report.object.id}}">{{ report.object.title }}</router-link>
-                                        <a v-if="report.type=='post'" href="#">Post for topic</a>
-                                    </td>
-                                    <td>{{ report.reason.name }}</td>
-                                    <td>{{ report.sender.login }}</td>
-                                    <td>{{ !report.status ? 'New' : 'Process' }}</td>
-                                    <td>{{ report.created_at }}</td>
-                                    <td>
+                            <tr v-for="report in reports">
+                                <th scope="row">{{ report.id }}</th>
+                                <td>{{ report.type }}</td>
+                                <td>
+                                    <span v-if="report.object"><router-link v-if="report.type=='topic'"
+                                                                            :to="{name:'topic', params:{id:report.object.id}}">{{
+                                            report.object.title
+                                        }}</router-link></span>
+                                    <a v-if="report.type=='post'" href="#">Post for topic</a>
+                                </td>
+                                <td>{{ report.reason.name }}</td>
+                                <td>{{ report.sender.login }}</td>
+                                <td>{{ !report.closed ? 'New' : 'Closed' }}</td>
+                                <td>{{ report.created_at }}</td>
+                                <td>
                                         <span class="text-primary mx-2" title="Show">
                                             <router-link :to="{ name:'admin.report.details', params:{id:report.id} }">
                                               <i class="fas fa-eye"></i>
                                             </router-link>
                                         </span>
-                                        <span role="button" class="text-danger mx-2" title="Edit">
+                                    <span role="button" class="text-danger mx-2" title="Edit">
                                             <i class="fas fa-trash"></i>
                                         </span>
-                                    </td>
-                                </tr>
+                                </td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>
@@ -81,7 +85,7 @@
                         :total-pages="paginate.last_page"
                         :links="paginate.links"
                         :current-page="paginate.current_page"
-                        :last-page="paginate.last_page" />
+                        :last-page="paginate.last_page"/>
                 </div>
             </div>
 
@@ -116,14 +120,14 @@ export default {
     },
 
     watch: {
-        entriesOnPage(val){
+        entriesOnPage(val) {
             this.$store.commit('adminForum/setEntriesOnPage', val);
             this.$store.dispatch('adminReport/getReports');
         }
     },
 
     methods: {
-        selectPage(page){
+        selectPage(page) {
             this.$store.dispatch('adminReport/getReports', page)
         },
     },

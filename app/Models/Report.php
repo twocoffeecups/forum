@@ -20,12 +20,12 @@ class Report extends Model
 
     public function topic()
     {
-        return $this->belongsTo(Topic::class, 'topicId', 'id');
+        return $this->belongsTo(Topic::class, 'topicId', 'id')->withTrashed();
     }
 
     public function post()
     {
-        return $this->belongsTo(Post::class, 'postId', 'id');
+        return $this->belongsTo(Post::class, 'postId', 'id')->withTrashed();
     }
 
     public function user()

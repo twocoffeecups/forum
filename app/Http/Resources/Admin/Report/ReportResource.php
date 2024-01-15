@@ -23,8 +23,9 @@ class ReportResource extends JsonResource
             'type' => $this->object,
             'object' => $this->object == 'topic' ? new TopicResource($this->topic) : new PostResource($this->post),
             'user' => new UserResource($this->user),
-            'sender' => $this->sender,
+            'sender' => new UserResource($this->sender),
             'status' => $this->status,
+            'closed' => $this->closed,
             'created_at' => $this->created_at->format('Y-m-d'),
         ];
     }

@@ -4,7 +4,7 @@ namespace App\Http\Requests\Admin\Report;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class RejectReportRequest extends FormRequest
+class ProcessReportRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,11 @@ class RejectReportRequest extends FormRequest
     public function rules()
     {
         return [
-            //'noViolations' => 'nullable|boolean',
             'message' => 'required|string',
+            'reasonId' => 'required|integer|exists:report_reason_types,id',
+            'action' => 'required|integer',
+            'warn' => 'required|string',
+            'totalDaysBan' => 'nullable|integer|min:3|max:30',
         ];
     }
 }

@@ -90,7 +90,8 @@
                                 <td>{{ topic.created_at }}</td>
                                 <td>
                                     <span role="button" class="text-primary mx-2" title="Show">
-                                        <router-link :to="{name:'admin.topic.details', params:{id: topic.id}}">
+                                        <span class="mx-2">ID: {{topic.id}}</span>
+                                        <router-link :to="{name:'admin.topic.details', params:{id: topic.topicId}}">
                                             <i class="far fa-eye"></i>
                                         </router-link>
 

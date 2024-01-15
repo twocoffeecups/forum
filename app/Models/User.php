@@ -96,4 +96,13 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->isWarned;
     }
 
+    public function isBanned(): bool
+    {
+        return (bool)$this->banDetails();
+    }
+
+    public function banDetails()
+    {
+        return $this->hasMany(BanList::class, 'userId', 'id')->first();
+    }
 }

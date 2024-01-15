@@ -18,9 +18,9 @@ return new class extends Migration
             $table->foreignId('userId')->index()->constrained('users');
             $table->string('email');
             $table->foreignId('reportId')->index('reportIdx')->constrained('reports')->cascadeOnUpdate()->cascadeOnDelete();
-            $table->foreignId('banReason')->index('banReasonIdx')->constrained('report_reason_types')->cascadeOnDelete();
+            $table->foreignId('reasonId')->index('reasonIdx')->constrained('report_reason_types')->cascadeOnDelete();
             $table->unsignedTinyInteger('banExclude')->default(0);
-            $table->timestamp('banStart');
+            $table->timestamp('banStart')->useCurrent();;
             $table->timestamp('banEnd');
             $table->timestamps();
 

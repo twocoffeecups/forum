@@ -66,17 +66,18 @@ export default {
             });
         },
 
-        reject({dispatch}, [id, data]){
+        reject({dispatch, commit}, [id, data]){
             return new Promise((resolve, reject) => {
                 api.post(`/api/admin/report/${id}/reject`, data)
                     .then(response => {
                         if(response.data){
                             toast.success(response.data.message ?? "Success.");
+                            commit('setReport', response.data.report);
+                            dispatch('getReport', id);
                             resolve(response);
                         }else {
                             resolve(response);
                         }
-                        router.push({name:'admin.reports'});
                     })
                     .catch(error => {
                         toast.error(error.response.data.message ?? "Error.");
@@ -84,6 +85,26 @@ export default {
                     })
             });
         },
+
+        processing({dispatch, commit}, [id, data]){
+            return new Promise((resolve, reject) => {
+                api.post(`/api/admin/report/${id}/processing`, data)
+                    .then(response => {
+                        if(response.data){
+                            toast.success(response.data.message ?? "Success.");
+                            commit('setReport', response.data.report);
+                            dispatch('getReport', id);
+                            resolve(response);
+                        }else {
+                            resolve(response);
+                        }
+                    })
+                    .catch(error => {
+                        toast.error(error.response.data.message ?? "Error.");
+                        reject(error);
+                    })
+            })
+        }
     },
 
     mutations: {

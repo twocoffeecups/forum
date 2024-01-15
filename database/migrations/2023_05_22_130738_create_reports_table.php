@@ -23,7 +23,7 @@ return new class extends Migration
             $table->foreignId('senderId')->index('senderIdx')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('moderId')->index('moderIdx')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
             $table->unsignedTinyInteger('status')->default(0);
-            $table->unsignedTinyInteger('reportClosed')->default(0);
+            $table->unsignedTinyInteger('closed')->default(0);
             $table->string('message')->nullable();
             $table->timestamps();
 

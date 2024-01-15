@@ -85,6 +85,7 @@ class TopicController extends Controller
      */
     protected function show(Request $request, Topic $topic): \Illuminate\Http\JsonResponse
     {
+        // TODO: сделать доступ только автору и админу/модератору
         if ($topic->status === 0) {
             return response()->json(['message' => "Topic not found"], 404);
         }
