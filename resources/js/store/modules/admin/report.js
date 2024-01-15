@@ -1,5 +1,6 @@
 import api from "../../../api/api";
 import {useToast} from "vue-toastification";
+import router from "../../../router";
 
 const toast = useToast();
 export default {
@@ -60,6 +61,25 @@ export default {
                         }
                     })
                     .catch(error => {
+                        reject(error);
+                    })
+            });
+        },
+
+        reject({dispatch}, [id, data]){
+            return new Promise((resolve, reject) => {
+                api.post(`/api/admin/report/${id}/reject`, data)
+                    .then(response => {
+                        if(response.data){
+                            toast.success(response.data.message ?? "Success.");
+                            resolve(response);
+                        }else {
+                            resolve(response);
+                        }
+                        router.push({name:'admin.reports'});
+                    })
+                    .catch(error => {
+                        toast.error(error.response.data.message ?? "Error.");
                         reject(error);
                     })
             });

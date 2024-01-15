@@ -30,6 +30,7 @@ class UserResource extends JsonResource
                 //'reports' => $this->reports->count(),
                 'carma' => 0,
             ],
+            'isWarned' => $this->isWarned(),
             'permissions' => RolePermissionResource::collection($permissions),
             'inBanList' => false,
             'email_verified_at' => $this->email_verified_at ?? 'No',

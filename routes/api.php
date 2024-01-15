@@ -62,6 +62,7 @@ Route::group(['prefix' => 'admin'], function () {
 
     Route::group(['prefix' => 'report-reason-type'], function () {
         Route::post('/', [\App\Http\Controllers\Admin\Report\ReportReasonTypeController::class, 'index']);
+        Route::get('/for-form', [\App\Http\Controllers\Admin\Report\ReportReasonTypeController::class, 'allForForm']);
         Route::post('/store', [\App\Http\Controllers\Admin\Report\ReportReasonTypeController::class, 'store']);
         Route::get('/{reportReason}', [\App\Http\Controllers\Admin\Report\ReportReasonTypeController::class, 'show']);
         Route::patch('/{reportReason}', [\App\Http\Controllers\Admin\Report\ReportReasonTypeController::class, 'update']);
@@ -72,6 +73,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::group(['prefix' => 'report'], function () {
         Route::post('/', [\App\Http\Controllers\Admin\Report\ReportController::class, 'index']);
         Route::get('/{report}', [\App\Http\Controllers\Admin\Report\ReportController::class, 'show']);
+        Route::post('/{report}/reject', [\App\Http\Controllers\Admin\Report\ReportController::class, 'reject']);
     });
 
     Route::group(['prefix' => 'user'], function () {

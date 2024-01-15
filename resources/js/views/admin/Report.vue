@@ -38,12 +38,11 @@
                             <tr></tr>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Post</th>
+                                <th scope="col">Type</th>
+                                <th scope="col">Object</th>
                                 <th scope="col">Reason</th>
                                 <th scope="col">Sender</th>
-                                <th scope="col">New</th>
                                 <th scope="col">Status</th>
-                                <th scope="col">Posts</th>
                                 <th scope="col">Created date</th>
                                 <th scope="col">Actions</th>
                             </tr>
@@ -51,16 +50,18 @@
                             <tbody>
                                 <tr v-for="report in reports">
                                     <th scope="row">{{ report.id }}</th>
-                                    <td>{{ report.post }}</td>
-                                    <td>{{ report.reason }}</td>
-                                    <td>{{ report.sender }}</td>
-                                    <td>{{ report.new }}</td>
-                                    <td>{{ report.status }}</td>
-                                    <td>{{ report.user }}</td>
+                                    <td>{{ report.type }}</td>
+                                    <td>
+                                        <router-link v-if="report.type=='topic'" :to="{name:'topic', params:{id:report.object.id}}">{{ report.object.title }}</router-link>
+                                        <a v-if="report.type=='post'" href="#">Post for topic</a>
+                                    </td>
+                                    <td>{{ report.reason.name }}</td>
+                                    <td>{{ report.sender.login }}</td>
+                                    <td>{{ !report.status ? 'New' : 'Process' }}</td>
                                     <td>{{ report.created_at }}</td>
                                     <td>
                                         <span class="text-primary mx-2" title="Show">
-                                            <router-link :to="{ name:'admin.report.details', params:{id:1} }">
+                                            <router-link :to="{ name:'admin.report.details', params:{id:report.id} }">
                                               <i class="fas fa-eye"></i>
                                             </router-link>
                                         </span>
@@ -110,18 +111,6 @@ export default {
 
     data() {
         return {
-            // reports: [
-            //     {
-            //         id: 1,
-            //         reason: 'AAAAAAAAAA',
-            //         post: 'Test post',
-            //         sender: 'User Userovich',
-            //         user: 'Ashot Cumshotovich',
-            //         new: true,
-            //         status: false,
-            //         created_at: '2023-09-06',
-            //     }
-            // ],
             entriesOnPage: 10,
         }
     },

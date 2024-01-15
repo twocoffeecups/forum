@@ -61,4 +61,10 @@ class ReportReasonTypeController extends Controller
         $reportReason->save();
         return response()->json(['message' => 'Report reason type status changed']);
     }
+
+    public function allForForm()
+    {
+        $reportReasons = ReportReasonType::all()->where('status', '=', 1);
+        return response()->json(['reportReasonTypes' => ReportReasonResource::collection($reportReasons)]);
+    }
 }

@@ -2,6 +2,9 @@
 
 namespace App\Http\Resources\Admin\Report;
 
+use App\Http\Resources\Admin\User\UserResource;
+use App\Http\Resources\Client\Post\PostResource;
+use App\Http\Resources\Client\Topic\TopicResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ReportResource extends JsonResource
@@ -17,11 +20,12 @@ class ReportResource extends JsonResource
         return [
             'id' => $this->id,
             'reason' => $this->reason,
-            'object' => $this->object == 'topic' ? $this->topic : $this->post,
-            'user' => $this->user,
+            'type' => $this->object,
+            'object' => $this->object == 'topic' ? new TopicResource($this->topic) : new PostResource($this->post),
+            'user' => new UserResource($this->user),
             'sender' => $this->sender,
             'status' => $this->status,
-            'created_at' => $this->created_at,
+            'created_at' => $this->created_at->format('Y-m-d'),
         ];
     }
 }
