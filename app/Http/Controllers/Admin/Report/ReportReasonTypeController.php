@@ -8,6 +8,7 @@ use App\Http\Requests\Admin\Report\ReportReasonStoreRequest;
 use App\Http\Requests\Admin\Report\ReportReasonUpdateRequest;
 use App\Http\Resources\Admin\Report\ReportReasonResource;
 use App\Models\ReportReasonType;
+use App\Services\AuthService;
 
 class ReportReasonTypeController extends Controller
 {
@@ -22,7 +23,7 @@ class ReportReasonTypeController extends Controller
     public function store(ReportReasonStoreRequest $request)
     {
         $data = $request->validated();
-        $user = $this->getUserByToken($request);
+        $user = AuthService::getUserByToken($request);
         $data['authorId'] = $user->id;
         $reportReason = ReportReasonType::firstOrCreate($data);
         return response()->json([

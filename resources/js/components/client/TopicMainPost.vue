@@ -53,17 +53,17 @@
                               </span>
                             </div>
                             <div class="flex-sm-row d-md-flex d-lg-flex d-xl-flex text-center">
-                                <button v-if="userId!==topicAuthor.id" @click.capture="report(mainPost.id)" class="btn btn-sm btn-outline-danger mx-1"
+                                <button v-if="userId!==topicAuthor.id && isLoggedIn" @click.capture="report(mainPost.id)" class="btn btn-sm btn-outline-danger mx-1"
                                         data-bs-toggle="modal" data-bs-target="#report-form">
                                     {{ $t('component.post.report') }}
                                 </button>
-                                <button v-if="userId!==topicAuthor.id" class="btn btn-sm btn-outline-primary mx-1">{{
+                                <button v-if="userId!==topicAuthor.id && isLoggedIn" class="btn btn-sm btn-outline-primary mx-1">{{
                                         $t('component.post.reply')
                                     }}
                                 </button>
-                                <router-link  v-if="userId===topicAuthor.id" :to="{name:'topic.edit', params:{id:this.$route.params.id}}" class="btn btn-sm btn-outline-secondary mx-1">{{ $t('component.post.edit') }}</router-link>
+                                <router-link  v-if="userId===topicAuthor.id && isLoggedIn" :to="{name:'topic.edit', params:{id:this.$route.params.id}}" class="btn btn-sm btn-outline-secondary mx-1">{{ $t('component.post.edit') }}</router-link>
 
-                                <span v-if="userId!==topicAuthor.id" @click.prevent="addToBookmarks" role="button" class="mx-1 p-2"> <i class="far fa-bookmark" style="cursor: pointer"></i></span>
+                                <span v-if="userId!==topicAuthor.id && isLoggedIn" @click.prevent="addToBookmarks" role="button" class="mx-1 p-2"> <i class="far fa-bookmark" style="cursor: pointer"></i></span>
                             </div>
 
                         </div>
@@ -88,6 +88,7 @@ export default {
         ...mapGetters({
             topicAuthor: 'topic/getTopicAuthor',
             userId: 'auth/getUserId',
+            isLoggedIn: 'auth/isLoggedIn',
         }),
     },
 

@@ -7,6 +7,7 @@ use App\Http\Requests\Admin\TopicRejectType\TopicRejectTypeStoreRequest;
 use App\Http\Requests\Admin\TopicRejectType\TopicRejectTypeUpdateRequest;
 use App\Http\Resources\Admin\TopicRejectType\TopicRejectTypeResource;
 use App\Models\TopicRejectType;
+use App\Services\AuthService;
 
 class TopicRejectTypeController extends Controller
 {
@@ -26,7 +27,7 @@ class TopicRejectTypeController extends Controller
     protected function store(TopicRejectTypeStoreRequest $request): \Illuminate\Http\JsonResponse
     {
         $data = $request->validated();
-        $user = $this->getUserByToken($request);
+        $user = AuthService::getUserByToken($request);
         $data['userId'] = $user->id;
         //dd($data);
         $rejectType = TopicRejectType::firstOrCreate($data);

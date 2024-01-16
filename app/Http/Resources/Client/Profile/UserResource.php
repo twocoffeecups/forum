@@ -33,9 +33,10 @@ class UserResource extends JsonResource
             'stats' => [
                 'topics' => $this->topics->count(),
                 'posts' => $this->posts->count(),
-                'carma' => 0,
+                'carma' => 1,
             ],
-            'isBanned' => false,
+            'isBanned' => $this->isBanned(),
+            'banDetails' => $this->banDetails(),
             'emailVerified_at' => $this->email_verified_at->format('Y-m-d'),
             'register_at' => $this->created_at->format('Y-m-d'),
             'topics' => TopicResource::collection($this->topics->where('status', '=', 1)),

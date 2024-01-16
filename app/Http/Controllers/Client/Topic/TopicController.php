@@ -15,6 +15,7 @@ use App\Models\Tag;
 use App\Models\Topic;
 use App\Models\TopicImage;
 use App\Models\User;
+use App\Services\AuthService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -39,7 +40,10 @@ class TopicController extends Controller
     protected function store(TopicStoreRequest $request): \Illuminate\Http\JsonResponse
     {
         $data = $request->validated();
-        $user = $this->getUserByToken($request);
+        $user = AuthService::getUserByToken($request);
+        if($user->isBanned()){
+            AuthService::checkEndOfBan($user);
+        }
         $data['userId'] = $user->id;
         if (!empty($data['images'])) {
             $images = $data['images'];
@@ -180,7 +184,7 @@ class TopicController extends Controller
      */
     protected function like(Request $request, Topic $topic): \Illuminate\Http\JsonResponse
     {
-        $user = $this->getUserByToken($request);
+        $user = AuthService::getUserByToken($request);
         $topic->likes()->toggle($user->id);
         return response()->json(['message' => 'Change topic like.']);
     }
@@ -192,7 +196,7 @@ class TopicController extends Controller
      */
     protected function addToBookmarks(Request $request, Topic $topic): \Illuminate\Http\JsonResponse
     {
-        $user = $this->getUserByToken($request);
+        $user = AuthService::getUserByToken($request);
         $user->topicBookmarks()->toggle($topic->id);
         //$topic->bookmarks()->toggle($user->id);
         return response()->json(['message' => 'Change topic bookmarks.']);

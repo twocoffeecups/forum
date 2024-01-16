@@ -12,6 +12,7 @@ use App\Http\Resources\Admin\Forum\CreateForumFormResource;
 use App\Http\Resources\Admin\Forum\ForumDetailsResource;
 use App\Http\Resources\Admin\Forum\ForumResource;
 use App\Models\Forum;
+use App\Services\AuthService;
 
 class ForumController extends Controller
 {
@@ -40,7 +41,7 @@ class ForumController extends Controller
     protected function store(ForumStoreRequest $request): \Illuminate\Http\JsonResponse
     {
         $data = $request->validated();
-        $user = $this->getUserByToken($request);
+        $user = AuthService::getUserByToken($request);
         if ($data['type'] == 0 && $data['parentId'] != 0) {
             unset($data['parentId']);
         }

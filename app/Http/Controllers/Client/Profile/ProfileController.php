@@ -9,6 +9,7 @@ use App\Http\Requests\Api\Client\Profile\UpdateProfileRequest;
 use App\Http\Resources\Client\Profile\UserPermissionsResource;
 use App\Http\Resources\Client\Profile\UserResource;
 use App\Models\User;
+use App\Services\AuthService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -24,7 +25,9 @@ class ProfileController extends Controller
     public function index(Request $request): \Illuminate\Http\JsonResponse
     {
         $user = $request->user();
-        //$user = $this->getUserByToken($request);
+        if($user->isBanned()){
+            AuthService::checkEndOfBan($user);
+        }
         return response()->json([
             'userDetails' => new UserResource($user),
         ]);

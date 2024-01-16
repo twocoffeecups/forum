@@ -5,9 +5,8 @@ namespace App\Http\Middleware;
 use App\Services\AuthService;
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class RoleMiddleware
+class PermissionMiddleware
 {
     /**
      * Handle an incoming request.
@@ -16,10 +15,10 @@ class RoleMiddleware
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
-    public function handle(Request $request, Closure $next, $role)
+    public function handle(Request $request, Closure $next, $permission)
     {
         $user = AuthService::getUserByToken($request);
-        if($user->role->slug !== $role){
+        if(!$user->permissions()->contains('slug', $permission)){
             abort(403, 'Access error!');
         }
         return $next($request);

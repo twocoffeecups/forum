@@ -7,6 +7,7 @@ use App\Http\Requests\Admin\Tag\TagStoreRequest;
 use App\Http\Requests\Admin\Tag\TagUpdateRequest;
 use App\Http\Resources\Admin\Forum\TagResource;
 use App\Models\Tag;
+use App\Services\AuthService;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\PersonalAccessToken;
 
@@ -29,7 +30,7 @@ class TagController extends Controller
     public function store(TagStoreRequest $request): \Illuminate\Http\JsonResponse
     {
         $data = $request->validated();
-        $user = $this->getUserByToken($request);
+        $user = AuthService::getUserByToken($request);
         $data['authorId'] = $user->id;
         $tag = Tag::firstOrCreate($data);
         return response()->json([

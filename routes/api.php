@@ -18,8 +18,8 @@ use Illuminate\Support\Facades\Route;
 //});
 
 // admin routes
-//Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum','role:admin,moderator']], function(){
-Route::group(['prefix' => 'admin'], function () {
+Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum','permissions:can-read-admin-dashboard']], function(){
+//Route::group(['prefix' => 'admin'], function () {
 
     Route::group(['prefix' => 'forum'], function () {
         Route::post('/all', [\App\Http\Controllers\Admin\Forum\ForumController::class, 'index']);
@@ -117,9 +117,9 @@ Route::group(['prefix' => 'client'], function () {
 
 
     // User auth api routes
-    Route::group(['prefix' => '{user}'], function () {
+    Route::group(['prefix' => '{user}', 'middleware' => 'auth:sanctum'], function () {
         // Get user profile details
-        Route::get('/profile-details', [\App\Http\Controllers\Client\Profile\ProfileController::class, 'index'])->middleware('auth:sanctum');
+        Route::get('/profile-details', [\App\Http\Controllers\Client\Profile\ProfileController::class, 'index']);
 
         // Edit profile
         Route::group(['prefix' => 'profile'], function () {
@@ -129,22 +129,26 @@ Route::group(['prefix' => 'client'], function () {
         });
     });
 
-    // Topic
+    // auth user topic routes
     Route::group(['prefix' => 'topic'], function () {
+        Route::group(['middleware' => 'auth:sanctum'], function () {
+            Route::group(['prefix' => '{topic}'], function () {
+                Route::patch('/like', [\App\Http\Controllers\Client\Topic\TopicController::class, 'like'])->middleware('auth:sanctum');
+                Route::patch('/bookmarks', [\App\Http\Controllers\Client\Topic\TopicController::class, 'addToBookmarks'])->middleware('auth:sanctum');
+            });
 
-        Route::post('/', [\App\Http\Controllers\Client\Topic\TopicController::class, 'store'])->middleware('auth:sanctum');
-
-        Route::group(['prefix' => '{topic}'], function () {
-            Route::patch('/like', [\App\Http\Controllers\Client\Topic\TopicController::class, 'like'])->middleware('auth:sanctum');
-            Route::patch('/bookmarks', [\App\Http\Controllers\Client\Topic\TopicController::class, 'addToBookmarks'])->middleware('auth:sanctum');
-
-            // Post
-            Route::group(['prefix' => 'post'], function () {
-                Route::post('/', [\App\Http\Controllers\Client\Post\PostController::class, 'store']);
-                Route::patch('/', [\App\Http\Controllers\Client\Post\PostController::class, 'update']);
+            // is user not banned
+            Route::group(['middleware' => 'isNotBanList'], function () {
+                Route::post('/', [\App\Http\Controllers\Client\Topic\TopicController::class, 'store']);
+                Route::group(['prefix' => '{topic}/post'], function () {
+                    Route::post('/', [\App\Http\Controllers\Client\Post\PostController::class, 'store']);
+                    Route::patch('/', [\App\Http\Controllers\Client\Post\PostController::class, 'update']);
+                });
             });
         });
 
+
+        // resources for created and updated form
         Route::get('/form-resources', [\App\Http\Controllers\Client\Topic\TopicController::class, 'createFormResources']);
         Route::get('/tags', [\App\Http\Controllers\Client\Topic\TopicController::class, 'createFormResources']);
     });
@@ -154,6 +158,7 @@ Route::group(['prefix' => 'client'], function () {
         Route::patch('/like', [\App\Http\Controllers\Client\Post\PostController::class, 'like']);
     });
 
+    // TODO: создать маршкруты типа /api/forum
     // Forum api routes
     Route::group(['prefix' => 'forum'], function () {
 
@@ -169,7 +174,7 @@ Route::group(['prefix' => 'client'], function () {
     // Report
     Route::group(['prefix' => 'report'], function () {
         Route::get('/', \App\Http\Controllers\Client\Report\ReportController::class);
-        Route::post('/', \App\Http\Controllers\Client\Report\SendReportController::class);
+        Route::post('/', \App\Http\Controllers\Client\Report\SendReportController::class)->middleware('auth:sanctum');
     });
 
     // members profile
@@ -179,16 +184,15 @@ Route::group(['prefix' => 'client'], function () {
         Route::post('/posts', [\App\Http\Controllers\Client\UserProfile\UserProfileController::class, 'getUserPosts']);
     });
 
+    // TODO: создать маршкруты типа /api/forum
     // Forum stats
     Route::get('/forum-stats', \App\Http\Controllers\Client\Forum\ForumStatsController::class);
     Route::get('/active-topics', \App\Http\Controllers\Client\Topic\ActiveTopicsController::class);
 
+    // TODO: создать маршкруты типа /api/forum
     // topics
     Route::group(['prefix' => 'topic'], function () {
-
         Route::get('/', [\App\Http\Controllers\Client\Topic\TopicController::class, 'index']);
-        Route::post('/', [\App\Http\Controllers\Client\Topic\TopicController::class, 'store']);
-
         Route::group(['prefix' => '{topic}'], function () {
             Route::get('/', [\App\Http\Controllers\Client\Topic\TopicController::class, 'show']);
             Route::get('/edit', [\App\Http\Controllers\Client\Topic\TopicController::class, 'edit']);

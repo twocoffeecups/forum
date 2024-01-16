@@ -1,0 +1,46 @@
+<?php
+
+namespace App\Services;
+
+use App\Models\BanList;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Laravel\Sanctum\PersonalAccessToken;
+
+class AuthService
+{
+
+    /**
+     * @param Request $request
+     * @return mixed
+     */
+    public static function getUserByToken(Request $request): mixed
+    {
+        $hashedToken = $request->bearerToken();
+        $token = PersonalAccessToken::findToken($hashedToken);
+        $user = $token->tokenable;
+        return $user;
+    }
+
+    // TODO: переделать
+    public static function checkEndOfBan($user)
+    {
+        $bannedUser = BanList::where('userId', $user->id)->first();
+        $nowDate = Carbon::parse(Carbon::now());
+        $endBanTime = Carbon::parse($bannedUser->banEnd);
+        if($nowDate >= $endBanTime){
+            $bannedUser->banExclude = 1;
+            $bannedUser->save();
+            $bannedUser->delete();
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public static function deleteFromBanList()
+    {
+
+    }
+
+}

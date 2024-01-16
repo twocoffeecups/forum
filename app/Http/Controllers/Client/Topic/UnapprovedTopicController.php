@@ -14,6 +14,7 @@ use App\Models\Tag;
 use App\Models\Topic;
 use App\Models\TopicImage;
 use App\Models\User;
+use App\Services\AuthService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -23,7 +24,7 @@ class UnapprovedTopicController extends Controller
 {
     protected function show(Request $request, Topic $topic)
     {
-        $user = $this->getUserByToken($request);
+        $user = AuthService::getUserByToken($request);
         if($topic->userId!==$user->id){
             return response()->json(['message' => "Topic not found"], 404);
         }

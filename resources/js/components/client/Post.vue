@@ -57,15 +57,15 @@
                                 </span>
                             </div>
                             <div class="flex-sm-row d-md-flex d-lg-flex d-xl-flex text-center">
-                                <button v-if="userId!==post.author.id" @click.capture="report(post.id)" class="btn btn-sm btn-outline-danger mx-1"
+                                <button v-if="userId!==post.author.id && isLoggedIn" @click.capture="report(post.id)" class="btn btn-sm btn-outline-danger mx-1"
                                         data-bs-toggle="modal" data-bs-target="#report-form">
                                     {{ $t('component.post.report') }}
                                 </button>
-                                <button v-if="userId!==post.author.id" @click.prevent="replyPost(post.id)" class="btn btn-sm btn-outline-primary mx-1">
+                                <button v-if="userId!==post.author.id && isLoggedIn" @click.prevent="replyPost(post.id)" class="btn btn-sm btn-outline-primary mx-1">
                                     {{ $t('component.post.reply') }}
                                 </button>
                                 <!--                <button class="btn btn-sm btn-outline-secondary mx-1">{{ $t('component.post.edit') }}</button>-->
-                                <span v-if="userId!==post.author.id" @click.prevent="addPostToBookmarks(post.id)" class="mx-1 p-2">
+                                <span v-if="userId!==post.author.id && isLoggedIn" @click.prevent="addPostToBookmarks(post.id)" class="mx-1 p-2">
                                     <i class="far fa-bookmark"
                                        style="cursor: pointer"></i>
                                 </span>
@@ -90,6 +90,7 @@ export default {
     computed:{
         ...mapGetters({
             userId: 'auth/getUserId',
+            isLoggedIn: 'auth/isLoggedIn',
         }),
     },
 

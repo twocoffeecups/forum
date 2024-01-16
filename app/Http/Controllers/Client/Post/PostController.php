@@ -9,6 +9,7 @@ use App\Http\Resources\Client\Post\PostResource;
 use App\Models\Post;
 use App\Models\Topic;
 use App\Models\User;
+use App\Services\AuthService;
 use Illuminate\Http\Request;
 use Laravel\Sanctum\PersonalAccessToken;
 
@@ -24,7 +25,10 @@ class PostController extends Controller
     protected function store(PostStoreRequest $request, Topic $topic): \Illuminate\Http\JsonResponse
     {
 
-        $user = $this->getUserByToken($request);
+        $user = AuthService::getUserByToken($request);
+        if($user->isBanned()){
+            AuthService::checkEndOfBan($user);
+        }
         $data['userId'] = $user->id;
         $data['topicId'] = $topic->id;
         $post = Post::firstOrCreate($data);
@@ -59,7 +63,7 @@ class PostController extends Controller
      */
     protected function bookmarks(Request $request, Post $post): \Illuminate\Http\JsonResponse
     {
-        $user = $this->getUserByToken($request);
+        $user = AuthService::getUserByToken($request);
         $user->bookmarks()->toggle($post->id);
         return response()->json(['message' => 'Success.']);
     }
@@ -71,7 +75,7 @@ class PostController extends Controller
      */
     protected function like(Request $request, Post $post): \Illuminate\Http\JsonResponse
     {
-        $user = $this->getUserByToken($request);
+        $user = AuthService::getUserByToken($request);
         $user->likes()->toggle($post->id);
         return response()->json(['message' => 'Success.']);
     }

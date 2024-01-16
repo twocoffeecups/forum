@@ -12,15 +12,4 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    /**
-     * @param $request
-     * @return mixed
-     */
-    protected function getUserByToken($request)
-    {
-        $hashedToken = $request->bearerToken();
-        $token = PersonalAccessToken::findToken($hashedToken);
-        $user = $token->tokenable;
-        return $user;
-    }
 }
