@@ -62,7 +62,6 @@ class ReportController extends Controller
         $message = $data['message'];
         $warn = $data['warn'];
         unset($data['message'], $data['action'], $data['totalDaysBan'], $data['warn']);
-        //dd($data, $action, $message, $totalDaysBan, $report);
         /** DB transaction
          */
         DB::beginTransaction();
@@ -98,6 +97,9 @@ class ReportController extends Controller
         }else{
             $bannedUser = BanList::where('userId', '=', $data['userId'])->first();
             if($bannedUser!=null){
+                $bannedUser->banEnd = Carbon::parse($bannedUser->banEnd)->addDays($totalDaysBan);
+                $bannedUser->save();
+            }else{
                 $ban = BanList::firstOrCreate(['userId' => $data['userId']], $data);
             }
         }

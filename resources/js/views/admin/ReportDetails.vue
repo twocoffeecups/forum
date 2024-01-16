@@ -78,7 +78,7 @@
                     <label class="col-sm-2 col-form-label">Reason</label>
                     <div class="col-sm-10 mb-3">
                         <select v-model="processReportForm.reasonId" class="form-select">
-                            <option v-for="reportReason in reportReasonsTypes" :value="reportReason.id">{{ reportReason.name }}</option>
+                            <option v-if="report.reason" v-for="reportReason in reportReasonsTypes" :selected="report.reason.id==reportReason.id" :value="reportReason.id">{{ reportReason.name }}</option>
                         </select>
                     </div>
                 </div>
@@ -111,11 +111,18 @@
                     </div>
                 </div>
 
-                <div v-if="!processReportForm.warn || report.user.isWarned" class="mb-3 row">
+                <div v-if="!processReportForm.warn || report.user.isWarned || processReportForm.addBanTime" class="mb-3 row">
                     <label for="ban-date" class="col-sm-2 col-form-label">Ban time</label>
                     <div class="col-sm-10 mb-3">
-                        <input v-model="processReportForm.totalDaysBan" type="number" id="total-day-ban" min="3" max="30" />
-                        <label class="form-label mx-2" for="total-day-ban">Days</label>
+                        <div class="row">
+                            <div class="col-12 col-md-12 col-lg-12 col-xl-3">
+                                <input v-model="processReportForm.totalDaysBan" type="number" id="total-day-ban" min="3" max="30" />
+                                <label class="form-label mx-2" for="total-day-ban">Days</label>
+                            </div>
+                            <div v-if="report.user && report.user.isBanned" class="col-12 col-md-12  col-lg-12 col-xl-9">
+                                <span class=""><i>The user is on the ban list.The duration of the ban will be increased by the specified number of days.</i></span>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -131,12 +138,7 @@
                 Reject the report
             </div>
             <div class="card-body">
-<!--                <div class="mb-3 row">-->
-<!--                    <label for="" class="col-sm-2 col-form-label">No violations found</label>-->
-<!--                    <div class="col-sm-10 mb-3">-->
-<!--                        <input v-model="rejectReportForm.noViolations" class="form-check-input p-2" type="checkbox" value="1" id="noViolations">-->
-<!--                    </div>-->
-<!--                </div>-->
+
                 <div class="mb-3 row">
                     <label for="userMessage" class="col-sm-2 col-form-label">Message</label>
                     <div class="col-sm-10 mb-3">
@@ -188,13 +190,7 @@ export default {
         return {
             reportReasonsTypes: [],
             showObj: false,
-
-            showForm: false,
             reportProcessForm: true,
-
-            formVisible: true,
-            reportProcessStatus: false,
-
             processReportForm: {
                 message: null,
                 reasonId: null,
