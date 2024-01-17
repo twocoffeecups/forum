@@ -48,10 +48,10 @@
                         <PostCreationForm :reply="replyPost" :reply-id="replyPost.id" @cancelReply="cancelReply"/>
 
                         <!-- Topic footer -->
-                        <TopicFooter/>
+                        <TopicFooter v-if="isLoggedIn" :topic-id="this.$route.params.id" />
 
                         <!-- Pagination -->
-                        <Pagination/>
+<!--                        <Pagination/>-->
                     </div>
                 </div>
 
@@ -92,6 +92,7 @@ export default {
             topic: 'topic/getTopic',
             posts: 'topic/getPosts',
             images: 'topic/getImages',
+            isLoggedIn: 'auth/isLoggedIn',
         }),
     },
 
@@ -125,6 +126,10 @@ export default {
             this.replyPost = [];
         }
     },
+
+    // destroyed() {
+    //     Echo.leave(`users.reading.topic.${this.$route.params.id}`);
+    // },
 }
 </script>
 

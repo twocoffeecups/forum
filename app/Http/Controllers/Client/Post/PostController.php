@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Client\Post;
 
+use App\Events\PostCreated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Client\Post\PostStoreRequest;
 use App\Http\Requests\Api\Client\Post\PostUpdateRequest;
@@ -26,6 +27,7 @@ class PostController extends Controller
     {
 
         $user = AuthService::getUserByToken($request);
+        $data = $request->validated();
         if($user->isBanned()){
             AuthService::checkEndOfBan($user);
         }
