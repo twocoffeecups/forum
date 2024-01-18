@@ -17,9 +17,9 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
 
-Broadcast::channel('users.reading.topic.{id}', function (\App\Models\User $user, $id) {
-    if(\Illuminate\Support\Facades\Auth::check()){
-        return new \App\Http\Resources\Client\Topic\UserReadingTopicResource($user);
-    }
-});
+//Broadcast::channel('users.reading.topic.{id}', function (\App\Models\User $user, $id) {
+//    if(\Illuminate\Support\Facades\Auth::check()){
+//        return new \App\Http\Resources\Client\Topic\UserReadingTopicResource($user);
+//    }
+//});
 

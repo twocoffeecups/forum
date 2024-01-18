@@ -41,7 +41,7 @@
                                     <i>Images</i>
                                 </div>
                                 <div :id="`post-img-container-${post.id}`" class="card-body hide">
-                                    <img src="/src/assets/img/nature.jpg" class="img-fluid mb-1">
+<!--                                    <img :src="/src/assets/img/nature.jpg" class="img-fluid mb-1">-->
                                 </div>
                             </div>
                         </div>

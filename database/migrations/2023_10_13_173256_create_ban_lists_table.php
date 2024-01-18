@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('ban_lists', function (Blueprint $table) {
             $table->id();
             $table->foreignId('userId')->index()->constrained('users');
-            $table->string('email');
+            $table->string('email')->nullable();
             $table->foreignId('reportId')->index('reportIdx')->constrained('reports')->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('reasonId')->index('reasonIdx')->constrained('report_reason_types')->cascadeOnDelete();
             $table->unsignedTinyInteger('banExclude')->default(0);

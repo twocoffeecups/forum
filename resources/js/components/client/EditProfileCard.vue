@@ -48,25 +48,13 @@
                 <!-- Form row -->
                 <div class="row gx-3 mb-3">
                     <!-- Form Group (email address)-->
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <label class="small mb-1" for="email">{{ $t('component.signUp.email') }}</label>
                         <div :class="{ error: v$.user.email.$errors.length }">
                             <input @blur="v$.user.email.$touch" v-model.trim="user.email" type="email"
                                    class="form-control form-control-lg" id="email">
                             <div class="input-errors my-2 text-danger small text-start"
                                  v-for="error of v$.user.email.$errors" :key="error.$uid">
-                                <div class="error-msg">{{ error.$message }}</div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Form Group (phone number)-->
-                    <div class="col-md-6">
-                        <label class="small mb-1" for="phone">{{ $t('component.signUp.phone') }}</label>
-                        <div :class="{ error: v$.user.phone.$errors.length }">
-                            <input @blur="v$.user.phone.$touch" v-model.trim="user.phone" type="tel"
-                                   class="form-control form-control-lg" id="phone">
-                            <div class="input-errors my-2 text-danger small text-start"
-                                 v-for="error of v$.user.phone.$errors" :key="error.$uid">
                                 <div class="error-msg">{{ error.$message }}</div>
                             </div>
                         </div>
@@ -104,7 +92,6 @@ export default {
                 email: this.userDetails.email,
                 firstName: this.userDetails.firstName,
                 lastName: this.userDetails.lastName,
-                phone: this.userDetails.phone,
             },
         }
     },
@@ -116,7 +103,6 @@ export default {
                 email: {required, email, minLength: minLength(8), maxLength: maxLength(32), $lazy: true},
                 firstName: {required, minLength: minLength(2), maxLength: maxLength(32), $lazy: true},
                 lastName: {required, minLength: minLength(2), maxLength: maxLength(32), $lazy: true},
-                phone: {minLength: minLength(9), maxLength: maxLength(13), $lazy: true},
             },
         }
     },

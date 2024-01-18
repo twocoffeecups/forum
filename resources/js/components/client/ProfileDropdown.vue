@@ -4,7 +4,7 @@
         <a class="nav-link dropdown-toggle-split d-flex" href="#" id="offcanvas-profile" role="button"
            data-bs-toggle="dropdown" aria-expanded="false">
             <img
-                src="https://w7.pngwing.com/pngs/980/886/png-transparent-male-portrait-avatar-computer-icons-icon-design-avatar-flat-face-icon-people-head-cartoon.png"
+                :src="avatar ?? 'storage/app/public/default/default-avatar.png'"
                 alt="mdo" width="32" height="32" class="rounded-circle">
             <span class="d-sm-block mx-3 d-md-block d-lg-none">User profile</span>
         </a>
@@ -36,6 +36,7 @@ export default {
     computed:{
         ...mapGetters({
             isLoggedIn: 'auth/isLoggedIn',
+            avatar: "auth/avatar",
         }),
     },
 

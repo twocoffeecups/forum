@@ -20,7 +20,6 @@ class PostController extends Controller
     /**
      * @param PostStoreRequest $request
      * @param Topic $topic
-     * @param User $user
      * @return \Illuminate\Http\JsonResponse
      */
     protected function store(PostStoreRequest $request, Topic $topic): \Illuminate\Http\JsonResponse
@@ -28,6 +27,7 @@ class PostController extends Controller
 
         $user = AuthService::getUserByToken($request);
         $data = $request->validated();
+        //dd($data, $user);
         if($user->isBanned()){
             AuthService::checkEndOfBan($user);
         }

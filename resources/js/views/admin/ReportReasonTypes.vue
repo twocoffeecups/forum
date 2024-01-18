@@ -13,7 +13,7 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive mb-1">
-                        <div
+                        <div v-if="reportReasons!==0"
                             class="d-flex mt-2 flex-column flex-md-row flex-lg-row flex-xl-row justify-content-center justify-content-md-between justify-content-lg-between mb-3">
                             <!-- Change showing count entries -->
                             <div class="d-none d-md-flex d-lg-flex d-xl-flex my-2">
@@ -35,7 +35,7 @@
                         </div>
 
                         <!-- Table -->
-                        <table class="table table-striped table-hover table-bordered">
+                        <table v-if="reportReasons!==0" class="table table-striped table-hover table-bordered">
                             <thead class="table-primary">
                             <tr></tr>
                             <tr>
@@ -76,6 +76,10 @@
                                 </tr>
                             </tbody>
                         </table>
+
+                        <div v-if="reportReasons===0" class="text-center mx-1">
+                            <h4>You haven't report reason types.</h4>
+                        </div>
                     </div>
 
                     <TablePagination

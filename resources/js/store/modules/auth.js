@@ -36,7 +36,11 @@ export default {
 
         getUserId(state){
             return state.userDetails.id;
-        }
+        },
+
+        canReadAdminDashboard(state){
+            return state.userDetails ? state.userDetails.canReadAdminDashboard : false;
+        },
     },
 
     actions: {
@@ -176,6 +180,9 @@ export default {
                     resolve(true);
                 } else {
                     commit('setLoggedIn', false);
+                    commit('setUserDetails', {});
+                    commit('middleware/setPermissions', null, {root: true});
+                    commit('middleware/setCanReadAdminDashboard', false, {root: true});
                     resolve(false);
                 }
             });

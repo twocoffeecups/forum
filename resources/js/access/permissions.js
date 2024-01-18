@@ -7,6 +7,8 @@ const AccessPermissions = {
     CAN_UPDATE_FORUM: "can-update-forum",
     CAN_DELETE_FORUM: "can-delete-forum",
 
+    CAN_CREATE_TOPIC: "can-create-topic",
+
     CAN_CREATE_POST: "can-create-post",
     CAN_UPDATE_POST: "can-update-post",
     CAN_DELETE_POST: "can-delete-post",

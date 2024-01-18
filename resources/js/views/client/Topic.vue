@@ -126,10 +126,6 @@ export default {
             this.replyPost = [];
         }
     },
-
-    // destroyed() {
-    //     Echo.leave(`users.reading.topic.${this.$route.params.id}`);
-    // },
 }
 </script>
 

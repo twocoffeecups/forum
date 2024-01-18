@@ -17,9 +17,10 @@ use Illuminate\Support\Facades\Route;
 //    return $request->user();
 //});
 
-// admin routes
-Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum','permissions:can-read-admin-dashboard']], function(){
-//Route::group(['prefix' => 'admin'], function () {
+// admin dashboard routes
+Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum', 'canReadAdminDashboard']], function () {
+
+    Route::get('/main', [\App\Http\Controllers\Admin\Main\MainController::class, 'index']);
 
     Route::group(['prefix' => 'forum'], function () {
         Route::post('/all', [\App\Http\Controllers\Admin\Forum\ForumController::class, 'index']);
@@ -131,17 +132,21 @@ Route::group(['prefix' => 'client'], function () {
 
     // auth user topic routes
     Route::group(['prefix' => 'topic'], function () {
+
         Route::group(['middleware' => 'auth:sanctum'], function () {
+
             Route::group(['prefix' => '{topic}'], function () {
-                Route::patch('/like', [\App\Http\Controllers\Client\Topic\TopicController::class, 'like'])->middleware('auth:sanctum');
-                Route::patch('/bookmarks', [\App\Http\Controllers\Client\Topic\TopicController::class, 'addToBookmarks'])->middleware('auth:sanctum');
+                Route::patch('/like', [\App\Http\Controllers\Client\Topic\TopicController::class, 'like']);
+                Route::patch('/bookmarks', [\App\Http\Controllers\Client\Topic\TopicController::class, 'addToBookmarks']);
             });
 
             // is user not banned
             Route::group(['middleware' => 'isNotBanList'], function () {
-                Route::post('/', [\App\Http\Controllers\Client\Topic\TopicController::class, 'store']);
+                Route::post('/', [\App\Http\Controllers\Client\Topic\TopicController::class, 'store'])
+                    ->middleware('permissions:can-create-topic');
                 Route::group(['prefix' => '{topic}/post'], function () {
-                    Route::post('/', [\App\Http\Controllers\Client\Post\PostController::class, 'store']);
+                    Route::post('/', [\App\Http\Controllers\Client\Post\PostController::class, 'store'])
+                        ->middleware('permissions:can-create-post');
                     Route::patch('/', [\App\Http\Controllers\Client\Post\PostController::class, 'update']);
                 });
             });

@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('rejected_topics', function (Blueprint $table) {
             $table->id();
             $table->foreignId('topicId')->index('topicIdx')->constrained('topics', 'id')->cascadeOnUpdate()->cascadeOnDelete();
-            $table->foreignId('reasonId')->index('reasonIdx')->constrained('topic_rejected_types', 'id');
+            $table->foreignId('reasonId')->index('reasonIdx')->constrained('topic_reject_types', 'id');
             $table->tinyText('message')->nullable();
             $table->foreignId('userId')->index('userIdx')->constrained('users', 'id')->cascadeOnUpdate()->cascadeOnDelete();
             //$table->foreignId('moderId')->index('userIdx')->constrained('users', 'id')->cascadeOnUpdate()->cascadeOnDelete();

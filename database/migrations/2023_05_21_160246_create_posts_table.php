@@ -20,8 +20,9 @@ return new class extends Migration
             $table->foreignId('userId')->index('userIdx')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('replyId')->nullable()->index('replyIdx')->constrained('posts')->cascadeOnUpdate()->noActionOnDelete();
             $table->text('message');
-
             $table->timestamps();
+
+            $table->softDeletes();
         });
     }
 

@@ -25,25 +25,26 @@ export default {
     name: 'TopicFooter',
     props: ['topicId'],
 
-    mounted() {
-        Echo.join(`users.reading.topic.${this.topicId}`)
-            .here((users) => {
-                this.users = users;
-            })
-            .joining((user) => {
-                this.users.push(user);
-            })
-            .leaving((user) => {
-                this.users.splice(this.users.indexOf(user), 1)
-            })
-            .error((error) => {
-                console.error(error);
-            });
-    },
-
-    unmounted() {
-        Echo.leave(`users.reading.topic.${this.topicId}`);
-    },
+    // TODO: пока не трогать
+    // mounted() {
+    //     Echo.join(`users.reading.topic.${this.topicId}`)
+    //         .here((users) => {
+    //             this.users = users;
+    //         })
+    //         .joining((user) => {
+    //             this.users.push(user);
+    //         })
+    //         .leaving((user) => {
+    //             this.users.splice(this.users.indexOf(user), 1)
+    //         })
+    //         .error((error) => {
+    //             console.error(error);
+    //         });
+    // },
+    //
+    // unmounted() {
+    //     Echo.leave(`users.reading.topic.${this.topicId}`);
+    // },
 
     data() {
         return {

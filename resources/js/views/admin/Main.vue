@@ -115,9 +115,9 @@
                         <div
                             class="d-flex mt-2 flex-column flex-md-row flex-lg-row flex-xl-row justify-content-center justify-content-md-between justify-content-lg-between mb-3">
                             <div class="d-none d-md-flex d-lg-flex d-xl-flex my-2">
-                      <span class="form-text">
-                        Show
-                      </span>
+                                <span class="form-text">
+                                    Show
+                                </span>
                                 <select class="form-select form-select-sm mx-2" aria-label="Select entries">
                                     <option value="10" selected>10</option>
                                     <option value="30">30</option>
@@ -150,27 +150,27 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr v-for="user in 8">
-                                <th scope="row">1</th>
-                                <td>tot@H</td>
-                                <td>Tod Howard</td>
-                                <td>tot@gmail.com</td>
-                                <td>User</td>
-                                <td>1</td>
-                                <td>2</td>
-                                <td>36</td>
-                                <td>0</td>
-                                <td>08.09.2023</td>
-                                <td>
-                  <span role="button" class="text-primary mx-2" title="Edit">
-                    <i class="fas fa-edit"></i>
-                  </span>
+                                <tr v-for="user in 8">
+                                    <th scope="row">1</th>
+                                    <td>tot@H</td>
+                                    <td>Tod Howard</td>
+                                    <td>tot@gmail.com</td>
+                                    <td>User</td>
+                                    <td>1</td>
+                                    <td>2</td>
+                                    <td>36</td>
+                                    <td>0</td>
+                                    <td>08.09.2023</td>
+                                    <td>
+                                          <span role="button" class="text-primary mx-2" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                          </span>
 
-                                    <span role="button" class="text-danger mx-2" title="Edit">
-                    <i class="fas fa-trash"></i>
-                  </span>
-                                </td>
-                            </tr>
+                                        <span role="button" class="text-danger mx-2" title="Edit">
+                                            <i class="fas fa-trash"></i>
+                                          </span>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -213,10 +213,30 @@
 
 <script>
 import AddRoleModal from "../../components/admin/AddRoleModal.vue";
+import api from "../../api/api";
 
 export default {
     name: "Main",
-    components: {AddRoleModal,}
+    components: {AddRoleModal,},
+
+    created() {
+        this.getMainPageInfo();
+    },
+
+    methods: {
+        getMainPageInfo() {
+            api.get(`/api/admin/main`)
+                .then(response => {
+                    console.log(response);
+                })
+                .catch(error => {
+                    if(error.response.status===404){
+                        this.$router.push({name:'main'});
+                    }
+                    console.log(error);
+                })
+        }
+    },
 }
 </script>
 

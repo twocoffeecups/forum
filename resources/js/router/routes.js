@@ -132,11 +132,6 @@ const routes = [
                 component: () => import('../views/admin/Forum.vue'),
             },
             {
-                path: 'forums-tree',
-                name: 'admin.forumsTree',
-                component: () => import('../views/admin/ForumsTree.vue'),
-            },
-            {
                 path: 'forum/:id',
                 name: 'admin.forum.details',
                 component: () => import('../views/admin/ForumDetails.vue'),

@@ -67,5 +67,6 @@ class Kernel extends HttpKernel
         'role' => \App\Http\Middleware\RoleMiddleware::class,
         'permissions' => \App\Http\Middleware\PermissionMiddleware::class,
         'isNotBanList' => \App\Http\Middleware\IsNotBanList::class,
+        'canReadAdminDashboard' => \App\Http\Middleware\CanReadAdminDashboard::class,
     ];
 }

@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('post_reports', function (Blueprint $table) {
+        Schema::create('reports', function (Blueprint $table) {
             $table->id();
             $table->foreignId('reasonId')->index('reportReasonIdx')->constrained('report_reason_types')->cascadeOnUpdate()->cascadeOnDelete();
             $table->enum('object', ['topic', 'post']);
@@ -38,6 +38,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('post_reports');
+        Schema::dropIfExists('reports');
     }
 };

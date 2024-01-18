@@ -64,7 +64,7 @@ export default {
                         if (response.data) {
                             resolve(response);
                             toast.success(response.data.message ?? "updated.");
-                            if (response.data.topic.status == 1) {
+                            if (response.data.topic.status === 1) {
                                 router.push({name: 'topic', params: {id: response.data.topic.id}})
                             } else {
                                 router.push({name: 'topic.unapproved', params: {id: response.data.topic.id}})

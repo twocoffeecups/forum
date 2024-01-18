@@ -19,7 +19,7 @@ trait UserRolesAndPermissions
 
     public function canReadAdminDashboard()
     {
-        return (bool) $this->permissions()->where('slug', '=', 'can-read-admin-dashboard');
+        return (bool) $this->permissions()->where('slug', '=', 'can-read-admin-dashboard')->first();
     }
 
     /**

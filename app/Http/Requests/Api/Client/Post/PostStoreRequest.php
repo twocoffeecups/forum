@@ -25,9 +25,7 @@ class PostStoreRequest extends FormRequest
     {
         return [
             'message' => 'required|string',
-            'replyId' => 'integer|nullable|exists:posts,id',
-            'files' => '',
-            'images' => '',
+            'replyId' => 'nullable|integer|exists:posts,id',
         ];
     }
 }

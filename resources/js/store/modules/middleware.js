@@ -9,7 +9,7 @@ export default {
             isAdmin: true,
             userIsBanned: false,
         },
-        canReadAdminDashboard: !localStorage.getItem('canRAD'),
+        canReadAdminDashboard: !!localStorage.getItem('canRAD') ?? '',
         token: !!localStorage.getItem('access-token') ?? '',
         permissions: null,
     },
@@ -48,7 +48,7 @@ export default {
 
         /** TODO: переделать(без localStorage) */
         setCanReadAdminDashboard(state, payload){
-            localStorage.setItem('canRAD', payload);
+            localStorage.setItem('canRAD', payload!=false ? payload: '');
             state.canReadAdminDashboard = payload;
         },
 

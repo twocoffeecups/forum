@@ -25,7 +25,7 @@ class UnapprovedTopicController extends Controller
     protected function show(Request $request, Topic $topic)
     {
         $user = AuthService::getUserByToken($request);
-        if($topic->userId!==$user->id){
+        if($topic->userId!==$user->id || $topic->status!==0){
             return response()->json(['message' => "Topic not found"], 404);
         }
         return response()->json(['topic' => new TopicResource($topic)]);

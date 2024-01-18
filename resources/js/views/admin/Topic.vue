@@ -34,7 +34,7 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive mb-1">
-                        <div
+                        <div v-if="topics!==0"
                             class="d-flex mt-2 flex-column flex-md-row flex-lg-row flex-xl-row justify-content-center justify-content-md-between justify-content-lg-between mb-3">
                             <div class="d-none d-md-flex d-lg-flex d-xl-flex my-2">
                                 <span class="form-text">
@@ -54,7 +54,7 @@
                         </div>
 
                         <!-- Table -->
-                        <table class="table table-striped table-hover table-bordered">
+                        <table v-if="topics!==0" class="table table-striped table-hover table-bordered">
                             <thead class="table-primary">
                             <tr></tr>
                             <tr>
@@ -93,35 +93,12 @@
                             </tr>
                             </tbody>
                         </table>
+
+                        <div v-if="topics===0" class="text-center mx-1">
+                            <h4>You haven't topics.</h4>
+                        </div>
                     </div>
 
-                    <div class="d-flex flex-column flex-md-row flex-lg-row justify-content-between">
-                        <div class="d-flex mt-1 d-none d-md-block d-lg-block d-xl-block align-items-center">
-                            <div class="table-info" id="table-info" role="status" aria-live="polite">Showing 4 to 10 of
-                                4
-                                entries
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-center mt-1">
-                            <nav>
-                                <ul class="pagination" style="color: black">
-                                    <li class="page-item">
-                                        <a class="page-link" href="#" aria-label="Предыдущая">
-                                            <span aria-hidden="true">&laquo;</span>
-                                        </a>
-                                    </li>
-                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#" aria-label="Следующая">
-                                            <span aria-hidden="true">&raquo;</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </nav>
-                        </div>
-                    </div>
                 </div>
             </div>
 

@@ -62,18 +62,6 @@
                         </div>
 
                         <div class="form-outline mb-4">
-                            <div :class="{ error: v$.signUpForm.phone.$errors.length }">
-                                <input @blur="v$.signUpForm.phone.$touch" v-model.trim="signUpForm.phone" type="tel"
-                                       :placeholder="$t('component.signUp.phone')" class="form-control form-control-lg"
-                                       id="phone">
-                                <div class="input-errors my-2 text-danger small text-start"
-                                     v-for="error of v$.signUpForm.phone.$errors" :key="error.$uid">
-                                    <div class="error-msg">{{ error.$message }}</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-outline mb-4">
                             <div :class="{ error: v$.signUpForm.password.$errors.length }">
                                 <input @blur="v$.signUpForm.password.$touch" v-model.trim="signUpForm.password"
                                        type="password" :placeholder="$t('component.signUp.password')"
@@ -165,7 +153,6 @@ export default {
                 email: null,
                 firstName: null,
                 lastName: null,
-                phone: null,
                 password: null,
                 passwordConfirmation: null,
             },
@@ -179,7 +166,6 @@ export default {
                 email: {required, email, minLength: minLength(8), maxLength: maxLength(32), $lazy: true},
                 firstName: {required, minLength: minLength(2), maxLength: maxLength(32), $lazy: true},
                 lastName: {required, minLength: minLength(2), maxLength: maxLength(32), $lazy: true},
-                phone: {minLength: minLength(9), maxLength: maxLength(13), $lazy: true},
                 password: {required, minLength: minLength(8), maxLength: maxLength(32), $lazy: true},
                 passwordConfirmation: {
                     required,
