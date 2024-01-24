@@ -26,7 +26,7 @@ class PostController extends Controller
     protected function store(PostStoreRequest $request, Topic $topic): \Illuminate\Http\JsonResponse
     {
 
-        $user = Auth::user() ?? AuthService::getUserByToken($request);
+        $user = AuthService::getAuthorizedUser($request);
         $data = $request->validated();
         if($user->isBanned()){
             AuthService::checkEndOfBan($user);
@@ -65,7 +65,7 @@ class PostController extends Controller
      */
     protected function bookmarks(Request $request, Post $post): \Illuminate\Http\JsonResponse
     {
-        $user = AuthService::getUserByToken($request);
+        $user = AuthService::getAuthorizedUser($request);
         $post->likes()->toggle($user->id);
         return response()->json(['message' => 'Success.']);
     }
@@ -77,7 +77,7 @@ class PostController extends Controller
      */
     protected function like(Request $request, Post $post): \Illuminate\Http\JsonResponse
     {
-        $user = AuthService::getUserByToken($request);
+        $user = AuthService::getAuthorizedUser($request);
         $post->bookmarks()->toggle($user->id);
         return response()->json(['message' => 'Success.']);
     }

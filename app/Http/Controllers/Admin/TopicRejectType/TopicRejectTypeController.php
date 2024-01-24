@@ -27,9 +27,8 @@ class TopicRejectTypeController extends Controller
     protected function store(TopicRejectTypeStoreRequest $request): \Illuminate\Http\JsonResponse
     {
         $data = $request->validated();
-        $user = AuthService::getUserByToken($request);
+        $user = AuthService::getAuthorizedUser($request);
         $data['userId'] = $user->id;
-        //dd($data);
         $rejectType = TopicRejectType::firstOrCreate($data);
         return response()->json(['message' => 'Topic reject type created.']);
     }
@@ -51,7 +50,6 @@ class TopicRejectTypeController extends Controller
     protected function update(TopicRejectTypeUpdateRequest $request, TopicRejectType $rejectType): \Illuminate\Http\JsonResponse
     {
         $data = $request->validated();
-        //dd($data, $rejectType);
         foreach($data as $key => $value) {
             $rejectType->$key = $value;
         }

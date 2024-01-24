@@ -25,7 +25,6 @@ class RegisterController extends Controller
         $user->save();
         $token = $user->createToken('authToken')->plainTextToken;
 
-
         return response()->json([
             'message' => 'Registration successfully!',
             'userInfo' => new UserResource($user),

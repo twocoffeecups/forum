@@ -26,7 +26,7 @@ class PermissionController extends Controller
     public function store(PermissionRequest $request)
     {
         $data = $request->validated();
-        $data['slug'] = 'can-' . str_replace(' ', '-', strtolower($data['name']));
+        $data['slug'] = 'can_' . str_replace(' ', '_', strtolower($data['name']));
         $permission = Permission::firstOrCreate($data);
         return response()->json([
             'message' => 'Permission created!',
@@ -42,7 +42,7 @@ class PermissionController extends Controller
     public function update(PermissionRequest $request, Permission $permission)
     {
         $data = $request->validated();
-        $data['slug'] =  "can-" . str_replace(' ', '-', strtolower($data['name']));
+        $data['slug'] =  "can_" . str_replace(' ', '_', strtolower($data['name']));
         foreach ($data as $key => $value) {
             $permission->$key = $value;
         }

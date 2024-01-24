@@ -24,7 +24,8 @@ class ProfileController extends Controller
      */
     public function index(Request $request): \Illuminate\Http\JsonResponse
     {
-        $user = $request->user();
+//        $user = $request->user();
+        $user = AuthService::getAuthorizedUser($request);
         if($user->isBanned()){
             AuthService::checkEndOfBan($user);
         }

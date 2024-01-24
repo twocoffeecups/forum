@@ -35,7 +35,6 @@ class UserController extends Controller
         $password = Str::random(12);
         $data['password'] = Hash::make($password);
         $user = User::firstOrCreate(['login' => $data['login']], $data);
-        //$user->sendEmailVerificationNotification();
         Mail::to($user->email)->send(new VerifyMail($user->id, $user->login, sha1($user->getEmailForVerification())));
         Mail::to($user->email)->send(new PasswordMail($password, $user->getEmailForVerification()));
         return response()->json([

@@ -16,7 +16,7 @@ class SendReportController extends Controller
     public function __invoke(ReportRequest $request)
     {
         $data = $request->validated();
-        $user = AuthService::getUserByToken($request);
+        $user = AuthService::getAuthorizedUser($request);
         if(!in_array($data['object'], self::REPORT_OBJECTS_TYPE)){
             return response()->json(['message' => 'Error! Incorrect data.'], 413);
         }

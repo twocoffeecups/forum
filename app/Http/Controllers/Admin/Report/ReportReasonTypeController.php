@@ -23,7 +23,7 @@ class ReportReasonTypeController extends Controller
     public function store(ReportReasonStoreRequest $request)
     {
         $data = $request->validated();
-        $user = AuthService::getUserByToken($request);
+        $user = AuthService::getAuthorizedUser($request);
         $data['authorId'] = $user->id;
         $reportReason = ReportReasonType::firstOrCreate($data);
         return response()->json([

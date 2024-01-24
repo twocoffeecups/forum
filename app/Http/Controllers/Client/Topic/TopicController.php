@@ -40,7 +40,7 @@ class TopicController extends Controller
     protected function store(TopicStoreRequest $request): \Illuminate\Http\JsonResponse
     {
         $data = $request->validated();
-        $user = AuthService::getUserByToken($request);
+        $user = AuthService::getAuthorizedUser($request);
         if($user->isBanned()){
             AuthService::checkEndOfBan($user);
         }
@@ -117,7 +117,6 @@ class TopicController extends Controller
     protected function update(TopicUpdateRequest $request, Topic $topic): \Illuminate\Http\JsonResponse
     {
         $data = $request->validated();
-
         $images = $data['images'] ?? null;
         $tags = $data['tags'] ?? null;
         $imagesForDelete = $data['imagesForDelete'] ?? null;
@@ -184,7 +183,7 @@ class TopicController extends Controller
      */
     protected function like(Request $request, Topic $topic): \Illuminate\Http\JsonResponse
     {
-        $user = AuthService::getUserByToken($request);
+        $user = AuthService::getAuthorizedUser($request);
         $topic->likes()->toggle($user->id);
         return response()->json(['message' => 'Change topic like.']);
     }
@@ -196,9 +195,8 @@ class TopicController extends Controller
      */
     protected function addToBookmarks(Request $request, Topic $topic): \Illuminate\Http\JsonResponse
     {
-        $user = AuthService::getUserByToken($request);
+        $user = AuthService::getAuthorizedUser($request);
         $user->topicBookmarks()->toggle($topic->id);
-        //$topic->bookmarks()->toggle($user->id);
         return response()->json(['message' => 'Change topic bookmarks.']);
     }
 

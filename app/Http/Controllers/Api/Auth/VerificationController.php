@@ -32,12 +32,9 @@ class VerificationController extends Controller
         }
 
         if($user->markEmailAsVerified()){
-            //event(new Verified($user));
-            //return response()->json(['message' => 'Email address has been successfully confirmed!']);
-            return redirect('/personal')->with('message', 'Email address has been successfully confirmed!');
+            return redirect('/profile')->with('message', 'Email address has been successfully confirmed!');
         }else{
-            //return response()->json(['message' => 'Error! Email don\'t confirmed.']);
-            return redirect('/personal')->with('message', 'Error! Email don\'t confirmed.');
+            return redirect('/profile')->with('message', 'Error! Email don\'t confirmed.');
         }
 
     }

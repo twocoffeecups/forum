@@ -23,7 +23,6 @@ class TopicController extends Controller
     public function rejectedTopic()
     {
         $topics = RejectedTopic::all();
-        //dd($topics);
         return response()->json(['topics' => RejectedTopicResource::collection($topics)]);
     }
 
@@ -35,7 +34,6 @@ class TopicController extends Controller
     public function resolve(Topic $topic)
     {
         $rejectedTopic = RejectedTopic::where('topicId', '=', $topic->id)->first();
-        //dd($topic, $rejectedTopic);
         if($rejectedTopic){
             $rejectedTopic->delete();
         }
@@ -54,7 +52,6 @@ class TopicController extends Controller
         $data = $request->validated();
         $data['userId'] = $topic->userId;
         $data['topicId'] = $topic->id;
-        //dd($data, $rejectedTopic);
         $rejectedTopic = RejectedTopic::firstOrCreate(['topicId' => $data['topicId']], $data);
         $topic->status = 0;
         $topic->save();
@@ -65,7 +62,6 @@ class TopicController extends Controller
     {
         $data = $request->validated();
         $rejectedTopic = RejectedTopic::where('topicId', '=', $topic->id)->first();
-        //dd($data, $topic, $rejectedTopic);
         if($rejectedTopic){
             $rejectedTopic->delete();
         }

@@ -51,7 +51,7 @@ class RoleController extends Controller
     public function update(RoleEditNameRequest $request, Role $role): \Illuminate\Http\JsonResponse
     {
         $data = $request->validated();
-        $data['slug'] = str_replace(' ', '-', strtolower($data['name']));
+        $data['slug'] = str_replace(' ', '_', strtolower($data['name']));
         foreach ($data as $key => $value){
             $role->$key = $value;
         }

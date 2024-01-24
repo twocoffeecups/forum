@@ -19,7 +19,6 @@ class ForumCategoryController extends Controller
     public function index(): \Illuminate\Http\JsonResponse
     {
         $forumCategories = Forum::all()->where('type', '=', 0);
-        //dd($forumCategories->toArray());
         return response()->json(['forums' => ForumCategoryResource::collection($forumCategories)]);
     }
 

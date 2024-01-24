@@ -17,7 +17,6 @@ class ForumStatsController extends Controller
      */
     public function __invoke(): \Illuminate\Http\JsonResponse
     {
-        //dd(111111111111111111);
         $stats = [
             'posts' => Post::all()->count(),
             'topics' => Topic::all()->count(),
