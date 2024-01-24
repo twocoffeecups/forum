@@ -24,7 +24,24 @@ import PageContent from "../components/admin/PageContent.vue";
 
 export default {
     name: "Admin",
-    components: {PageContent, Header, Footer, Sidebar}
+    components: {PageContent, Header, Footer, Sidebar},
+
+    mounted() {
+        this.getUserInfo();
+    },
+
+    methods: {
+        getUserInfo(){
+            // if(this.$store.getters['dashboardProfile/getToken']){
+            //     this.$store.dispatch('dashboardProfile/getUserDetails');
+            // }
+            if(this.$store.getters['middleware/token']){
+                this.$store.dispatch('profile/getUserDetails');
+            }
+        },
+    },
+
+
 }
 </script>
 

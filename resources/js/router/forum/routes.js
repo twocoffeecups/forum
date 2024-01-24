@@ -1,10 +1,9 @@
-import Admin from "../../layouts/Admin.vue";
 import Client from "../../layouts/Client.vue";
 import Auth from "../../layouts/Auth.vue";
 import Middleware from "../../middleware";
 
 const routes = [
-    // Client
+    // Forum
     {
         path: '/',
         name: 'main',

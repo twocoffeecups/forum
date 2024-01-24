@@ -19,7 +19,7 @@ class CanReadAdminDashboard
     public function handle(Request $request, Closure $next)
     {
         $user = Auth::user();
-        //dd(Auth::check(), $user->canReadAdminDashboard());
+        //dd(Auth::check(), $user->canReadAdminDashboard(), $user->login);
         if(!Auth::check() || !$user->canReadAdminDashboard()){
             abort(404);
         }

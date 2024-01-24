@@ -1,7 +1,7 @@
 import axios from "axios";
 import {useToast} from "vue-toastification";
-import router from '../../router/forum';
-import api from "../../api/api";
+import router from '../../../router/forum';
+import api from "../../../api/api";
 
 const toast = useToast();
 
@@ -46,16 +46,11 @@ export default {
                     .then(res => {
                         axios.post('/register', data)
                             .then(response => {
-                                if (response.data) {
-                                    toast.success('You have successfully registered!');
-                                    commit('middleware/setToken', response.config.headers['X-XSRF-TOKEN'], {root: true});
-                                    commit('setLoggedIn', true);
-                                    router.push({name: 'main'});
-                                    resolve(response);
-                                } else {
-                                    reject(response);
-                                }
-
+                                toast.success('You have successfully registered!');
+                                commit('middleware/setToken', response.config.headers['X-XSRF-TOKEN'], {root: true});
+                                commit('setLoggedIn', true);
+                                router.push({name: 'main'});
+                                resolve(response);
                             })
                             .catch(error => {
                                 this.t$.error(error.response.data.message ?? 'Error!');
@@ -77,17 +72,12 @@ export default {
                             password: user.password
                         })
                             .then(response => {
-                                if (response.data) {
-                                    toast.success('Login successfully!');
-                                    commit('middleware/setToken', response.config.headers['X-XSRF-TOKEN'], {root: true});
-                                    commit('setLoggedIn', true);
-                                    dispatch('profile/getUserDetails', '',{root: true})
-                                    router.push({name: 'main'});
-                                    resolve(response);
-                                } else {
-                                    reject(response);
-                                }
-
+                                toast.success('Login successfully!');
+                                commit('middleware/setToken', response.config.headers['X-XSRF-TOKEN'], {root: true});
+                                commit('setLoggedIn', true);
+                                dispatch('profile/getUserDetails', '',{root: true})
+                                router.push({name: 'main'});
+                                resolve(response);
                             })
                             .catch(error => {
                                 toast.error(error.response.data.message ?? 'Error!');
@@ -107,13 +97,9 @@ export default {
                     email: email
                 })
                     .then(response => {
-                        if (response.data) {
-                            router.push({name: 'main'});
-                            toast.info( response.data.message ?? 'An email was sent to the specified email address with a link to create a new password.');
-                            resolve(response);
-                        } else {
-                            reject(response);
-                        }
+                        router.push({name: 'main'});
+                        toast.info( response.data.message ?? 'An email was sent to the specified email address with a link to create a new password.');
+                        resolve(response);
                     })
                     .catch(error => {
                         toast.error(error.response.data.message ?? 'Error!');
@@ -128,16 +114,12 @@ export default {
                     .then(res => {
                         axios.post('/password/reset', data)
                             .then(response => {
-                                if (response.data) {
-                                    commit('middleware/setToken', response.config.headers['X-XSRF-TOKEN'], {root: true});
-                                    commit('setLoggedIn', true);
-                                    dispatch('profile/getUserDetails', '',{root: true})
-                                    toast.success( response.data.message ?? 'Password has been successfully changed. Sign in to your account.');
-                                    router.push({name: 'main'});
-                                    resolve(response);
-                                } else {
-                                    reject(response);
-                                }
+                                commit('middleware/setToken', response.config.headers['X-XSRF-TOKEN'], {root: true});
+                                commit('setLoggedIn', true);
+                                dispatch('profile/getUserDetails', '',{root: true})
+                                toast.success( response.data.message ?? 'Password has been successfully changed. Sign in to your account.');
+                                router.push({name: 'main'});
+                                resolve(response);
                             })
                             .catch(error => {
                                 toast.error(error.response.data.message ?? 'Error!');
@@ -153,19 +135,15 @@ export default {
 
         logout({dispatch, commit}) {
             return new Promise((resolve, reject) => {
-                axios.get('/logout')
+                axios.post('/logout')
                     .then(response => {
-                        if (response.data) {
-                            router.push({name: 'main'});
-                            localStorage.removeItem('access-token');
-                            commit('setLoggedIn', false);
-                            commit('setUserDetails', {});
-                            commit('middleware/setPermissions', null, {root: true});
-                            toast.success("You have successfully logout.")
-                            resolve(response);
-                        } else {
-                            reject(response)
-                        }
+                        router.push({name: 'main'});
+                        localStorage.removeItem('access-token');
+                        commit('setLoggedIn', false);
+                        commit('setUserDetails', {});
+                        commit('middleware/setPermissions', null, {root: true});
+                        toast.success("You have successfully logout.")
+                        resolve(response);
                     })
                     .catch(error => {
                         reject(error)
@@ -173,7 +151,7 @@ export default {
             });
         },
 
-        setLoggedInstate({commit}) {
+        setLoggedInstate({dispatch, commit}) {
             return new Promise((resolve, reject) => {
                 if (localStorage.getItem('access-token')) {
                     commit('setLoggedIn', true);

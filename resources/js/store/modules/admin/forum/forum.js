@@ -1,4 +1,4 @@
-import api from "../../../api/api";
+import api from "../../../../api/api";
 import {useToast} from "vue-toastification";
 import axios from "axios";
 

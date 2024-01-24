@@ -82,6 +82,13 @@ const routes = [
             },
         ],
     },
+    {
+        path: "/",
+        name: "forum.main",
+        beforeEnter: () => {
+            window.location.href = 'http://127.0.0.1:8000';
+        }
+    }
 ];
 
 export default routes;

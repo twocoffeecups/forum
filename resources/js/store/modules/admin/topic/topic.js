@@ -1,43 +1,37 @@
-import api from "../../../api/api";
+import api from "../../../../api/api";
 import {useToast} from "vue-toastification";
-import router from "../../../router/forum";
 
 const toast = useToast();
 export default {
     namespaced: true,
 
     state: {
-        reports: {},
-        paginate: {},
-        entriesOnPage: 10,
-        report: {},
+        topics: {},
+        topic: {},
+        topicTags: {},
     },
 
     getters: {
-        getReports(state){
-            return state.reports;
+        getTopics(state){
+            return state.topics;
         },
 
-        getReport(state){
-            return state.report;
+        getTopic(state){
+            return state.topic;
         },
 
-        getPaginate(state){
-            return state.paginate;
+        getTopicTags(state){
+            return state.topicTags;
         }
     },
 
     actions: {
-        getReports({dispatch, state, commit}, page = 1) {
+        getTopics({dispatch, commit}) {
             return new Promise((resolve, reject) => {
-                api.post('/api/admin/report', {
-                    page: page,
-                    entriesOnPage: state.entriesOnPage,
-                })
+                api.get('/api/admin/topic')
                     .then(response => {
                         if (response.data) {
-                            commit('setReports', response.data.data);
-                            commit('setPaginate', response.data.meta);
+                            commit('setTopics', response.data.topics);
                             resolve(response);
                         } else {
                             reject(response);
@@ -49,12 +43,13 @@ export default {
             });
         },
 
-        getReport({dispatch, commit}, id){
+        getTopic({dispatch, commit}, id){
             return new Promise((resolve, reject) => {
-                api.get(`/api/admin/report/${id}`)
+                api.get(`/api/admin/topic/${id}`)
                     .then(response => {
                         if (response.data) {
-                            commit('setReport', response.data.report);
+                            commit('setTopic', response.data.topic);
+                            commit('setTopicTags', response.data.topic.tags);
                             resolve(response);
                         } else {
                             reject(response);
@@ -66,37 +61,15 @@ export default {
             });
         },
 
-        reject({dispatch, commit}, [id, data]){
+        deleteTopic({dispatch}, [id, data]){
             return new Promise((resolve, reject) => {
-                api.post(`/api/admin/report/${id}/reject`, data)
+                api.post(`/api/admin/topic/${id}`, data)
                     .then(response => {
-                        if(response.data){
-                            toast.success(response.data.message ?? "Success.");
-                            commit('setReport', response.data.report);
-                            dispatch('getReport', id);
+                        if (response.data) {
+                            toast.success(response.data.message ?? "Deleted.");
                             resolve(response);
-                        }else {
-                            resolve(response);
-                        }
-                    })
-                    .catch(error => {
-                        toast.error(error.response.data.message ?? "Error.");
-                        reject(error);
-                    })
-            });
-        },
-
-        processing({dispatch, commit}, [id, data]){
-            return new Promise((resolve, reject) => {
-                api.post(`/api/admin/report/${id}/processing`, data)
-                    .then(response => {
-                        if(response.data){
-                            toast.success(response.data.message ?? "Success.");
-                            commit('setReport', response.data.report);
-                            dispatch('getReport', id);
-                            resolve(response);
-                        }else {
-                            resolve(response);
+                        } else {
+                            reject(response);
                         }
                     })
                     .catch(error => {
@@ -104,24 +77,60 @@ export default {
                         reject(error);
                     })
             })
-        }
+        },
+
+        rejectTopic({dispatch}, [id, data]){
+            return new Promise((resolve, reject) => {
+                api.post(`/api/admin/topic/${id}/reject`, data)
+                    .then(response => {
+                        if(response.data){
+                            toast.success(response.data.message ?? "Success.");
+                            dispatch('getTopic', id);
+                            resolve(response);
+                        }else{
+                            resolve(response);
+                        }
+                    })
+                    .catch(error => {
+                        toast.error(error.response.data.message ?? "Error.");
+                        reject(error);
+                    })
+            });
+        },
+
+        resolveTopic({dispatch}, id){
+            return new Promise((resolve, reject) => {
+                api.patch(`/api/admin/topic/${id}/resolve`)
+                    .then(response => {
+                        if(response.data){
+                            toast.success(response.data.message ?? "Success.");
+                            dispatch('getTopic', id);
+                            resolve(response);
+                        }else{
+                            resolve(response);
+                        }
+                    })
+                    .catch(error => {
+                        toast.error(error.response.data.message ?? "Error.");
+                        reject(error);
+                    })
+            });
+        },
     },
 
     mutations: {
-        setReports(state, payload) {
-            state.reports = payload;
+        setTopics(state, payload) {
+            state.topics = payload;
         },
 
-        setReport(state, payload){
-            state.report = payload;
+        setTopic(state, payload){
+            state.topic = payload;
         },
 
-        setPaginate(state, payload){
-            state.paginate = payload;
+        setTopicTags(state, payload){
+            state.topicTags = payload;
         },
+    }
 
-        setEntriesOnPage(state, payload){
-            state.entriesOnPage = payload;
-        },
-    },
+
 }

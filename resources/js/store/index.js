@@ -1,27 +1,28 @@
-import { createStore } from 'vuex';
-import middleware from "./modules/middleware";
-import auth from "./modules/auth";
-import profile from "./modules/profile";
-import post from "./modules/post";
-import topic from "./modules/topic"
-import forum from "./modules/forum";
-import forumCategory from "./modules/forum-category";
-import createTopic from  "./modules/crete-topic";
-import report from "./modules/report";
-import adminForum from "./modules/admin/forum";
-import adminTopic from "./modules/admin/topic";
-import rejectType from "./modules/admin/reject-type";
-import unapprovedTopic from "./modules/unapproved-topic";
-import rejectedTopic from "./modules/admin/rejected-topic";
-import editTopic from "./modules/edit-topic";
-import forumTopics from "./modules/forum-topics";
-import userProfile from "./modules/user-profile";
-import adminReport from "./modules/admin/report";
-import reportReason from "./modules/admin/report-reason-types";
+import {createStore} from 'vuex';
+import middleware from "./modules/auth/middleware";
+import auth from "./modules/auth/auth";
+import profile from "./modules/profile/profile";
+import post from "./modules/post/post";
+import topic from "./modules/topic/topic"
+import forum from "./modules/forum/forum";
+import forumCategory from "./modules/forum/forum-category";
+import createTopic from "./modules/topic/crete-topic";
+import report from "./modules/report/report";
+import adminForum from "./modules/admin/forum/forum";
+import adminTopic from "./modules/admin/topic/topic";
+import rejectType from "./modules/admin/topic/reject-type";
+import unapprovedTopic from "./modules/topic/unapproved-topic";
+import rejectedTopic from "./modules/admin/topic/rejected-topic";
+import editTopic from "./modules/topic/edit-topic";
+import forumTopics from "./modules/forum/forum-topics";
+import userProfile from "./modules/profile/user-profile";
+import adminReport from "./modules/admin/report/report";
+import reportReason from "./modules/admin/report/report-reason-types";
+import dashboardProfile from  "./modules/admin/profile/profile";
 
-const store =  createStore({
+const store = createStore({
     //namespaced: true,
-    modules:{
+    modules: {
         middleware,
         auth,
         profile,
@@ -41,6 +42,7 @@ const store =  createStore({
         userProfile,
         adminReport,
         reportReason,
+        dashboardProfile
     },
 });
 
