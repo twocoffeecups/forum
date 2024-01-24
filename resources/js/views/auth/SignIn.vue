@@ -1,5 +1,4 @@
 <template>
-
     <!-- Sign in form -->
     <div class="container py-5 mx-auto my-auto">
         <div class="row d-flex justify-content-center align-items-center">
@@ -54,7 +53,7 @@
                                 </router-link>
                                 for create new account.
                                 {{ $t('component.signIn.forgotYouPass') }}
-                                <router-link :to="{name:'auth.forgotPassword'}">Create new!</router-link>
+                                <router-link :to="{name:'auth.password.forgot'}">Create new!</router-link>
                             </p>
                         </div>
 

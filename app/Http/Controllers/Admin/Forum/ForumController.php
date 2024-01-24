@@ -41,7 +41,7 @@ class ForumController extends Controller
     protected function store(ForumStoreRequest $request): \Illuminate\Http\JsonResponse
     {
         $data = $request->validated();
-        $user = AuthService::getUserByToken($request);
+        $user = AuthService::getAuthorizedUser($request);
         if ($data['type'] == 0 && $data['parentId'] != 0) {
             unset($data['parentId']);
         }

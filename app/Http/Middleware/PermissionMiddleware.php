@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use App\Services\AuthService;
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PermissionMiddleware
 {
@@ -17,7 +18,7 @@ class PermissionMiddleware
      */
     public function handle(Request $request, Closure $next, $permission)
     {
-        $user = AuthService::getUserByToken($request);
+        $user = AuthService::getAuthorizedUser($request);
         if(!$user->permissions()->contains('slug', $permission)){
             abort(403, 'Access error!');
         }

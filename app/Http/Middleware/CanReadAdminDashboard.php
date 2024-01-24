@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use App\Services\AuthService;
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CanReadAdminDashboard
 {
@@ -17,8 +18,9 @@ class CanReadAdminDashboard
      */
     public function handle(Request $request, Closure $next)
     {
-        $user = AuthService::getUserByToken($request);
-        if(!$user->canReadAdminDashboard()){
+        $user = Auth::user();
+        //dd(Auth::check(), $user->canReadAdminDashboard());
+        if(!Auth::check() || !$user->canReadAdminDashboard()){
             abort(404);
         }
         return $next($request);

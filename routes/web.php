@@ -13,8 +13,17 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Auth::routes(['verify'=>true]);
-//Auth::routes();
+
+Auth::routes(['verify' => true]);
+
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('{page}', \App\Http\Controllers\Main\MainController::class)->where('page', '(.*)');
+Route::group(['prefix' => 'admin', 'middleware' => 'canReadAdminDashboard'], function () {
+    Route::get('/{page?}', [\App\Http\Controllers\DashboardController::class, 'index'])
+        ->where('page', '.*');
+});
+
+Route::get('{page}', \App\Http\Controllers\Main\MainController::class)
+    ->where('page', '(.*)');
+
+

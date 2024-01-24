@@ -42,13 +42,13 @@
                         </div>
 
                         <div class="form-outline mb-4">
-                            <div :class="{ error: v$.user.confirmPassword.$errors.length }">
-                                <input @blur="v$.user.confirmPassword.$touch" type="password"
-                                       v-model.trim="user.confirmPassword"
+                            <div :class="{ error: v$.user.password_confirmation.$errors.length }">
+                                <input @blur="v$.user.password_confirmation.$touch" type="password"
+                                       v-model.trim="user.password_confirmation"
                                        :placeholder="$t('view.resetPassword.confirmPass')"
                                        class="form-control form-control-lg" id="confirmPassword">
                                 <div class="input-errors my-2 text-danger small text-start"
-                                     v-for="error of v$.user.confirmPassword.$errors" :key="error.$uid">
+                                     v-for="error of v$.user.password_confirmation.$errors" :key="error.$uid">
                                     <div class="error-msg">{{ error.$message }}</div>
                                 </div>
                             </div>
@@ -63,7 +63,7 @@
                                 </router-link>
                                 for create new account.
                                 {{ $t('component.signIn.forgotYouPass') }}
-                                <router-link :to="{name:'auth.forgotPassword'}">Create new!</router-link>
+                                <router-link :to="{name:'auth.password.forgot'}">Create new!</router-link>
                             </p>
                         </div>
 
@@ -104,8 +104,8 @@ export default {
             user: {
                 email: null,
                 password: null,
-                confirmPassword: null,
-                hash: this.$route.params.hash,
+                password_confirmation: null,
+                token: this.$route.params.hash,
             },
         }
     },
@@ -115,7 +115,7 @@ export default {
             user: {
                 email: {required, email, minLength: minLength(6), maxLength: maxLength(32), $lazy: true},
                 password: {required, minLength: minLength(8), maxLength: maxLength(64), $lazy: true},
-                confirmPassword: {
+                password_confirmation: {
                     required,
                     minLength: minLength(8),
                     sameAs: sameAs(this.user.password),

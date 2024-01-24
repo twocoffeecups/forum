@@ -9,7 +9,6 @@ export default {
             isAdmin: true,
             userIsBanned: false,
         },
-        canReadAdminDashboard: !!localStorage.getItem('canRAD') ?? '',
         token: !!localStorage.getItem('access-token') ?? '',
         permissions: null,
     },
@@ -31,10 +30,6 @@ export default {
             return state.token;
         },
 
-        canReadAdminDashboard(state){
-            return state.canReadAdminDashboard;
-        },
-
         permissions(state) {
             return state.permissions;
         },
@@ -44,12 +39,6 @@ export default {
         setToken(state, payload){
             state.token = !!payload ?? '';
             localStorage.setItem('access-token', payload);
-        },
-
-        /** TODO: переделать(без localStorage) */
-        setCanReadAdminDashboard(state, payload){
-            localStorage.setItem('canRAD', payload!=false ? payload: '');
-            state.canReadAdminDashboard = payload;
         },
 
         setPermissions(state, payload){

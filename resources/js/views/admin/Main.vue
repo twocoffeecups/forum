@@ -218,25 +218,6 @@ import api from "../../api/api";
 export default {
     name: "Main",
     components: {AddRoleModal,},
-
-    created() {
-        this.getMainPageInfo();
-    },
-
-    methods: {
-        getMainPageInfo() {
-            api.get(`/api/admin/main`)
-                .then(response => {
-                    console.log(response);
-                })
-                .catch(error => {
-                    if(error.response.status===404){
-                        this.$router.push({name:'main'});
-                    }
-                    console.log(error);
-                })
-        }
-    },
 }
 </script>
 

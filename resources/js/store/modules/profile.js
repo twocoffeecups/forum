@@ -60,7 +60,6 @@ export default {
                             resolve(response);
                             commit('auth/setUserDetails', response.data.userDetails, {root: true});
                             commit('middleware/setPermissions', response.data.userDetails.permissions, {root: true});
-                            commit('middleware/setCanReadAdminDashboard', response.data.userDetails.canReadAdminDashboard, {root: true});
                             commit('auth/setLoggedIn', true, {root: true});
                             commit('setTopics', response.data.userDetails.topics);
                             commit('setUnapprovedTopic', response.data.userDetails.unapprovedTopic);

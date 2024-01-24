@@ -1,7 +1,7 @@
 import {useToast} from "vue-toastification";
 import axios from "axios";
 import api from "../../api/api";
-import router from '../../router';
+import router from '../../router/forum';
 
 const toast = useToast();
 

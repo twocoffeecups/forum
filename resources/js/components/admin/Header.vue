@@ -12,9 +12,12 @@
 
                 <ul class="nav me-lg-auto mb-2 justify-content-sm-start justify-content-md-start mb-md-0">
                     <li class="nav-item">
-                        <router-link :to="{name:'main'}" href="#" class="nav-link px-2 link-body-emphasis">
-                            To Forum
-                        </router-link>
+<!--                        <router-link :to="{name:'client'}" href="#" class="nav-link px-2 link-body-emphasis">-->
+<!--                            To Forum-->
+<!--                        </router-link>-->
+                        <a href="/" class="nav-link px-2 link-body-emphasis">
+                            Go to Forum
+                        </a>
                     </li>
                 </ul>
 

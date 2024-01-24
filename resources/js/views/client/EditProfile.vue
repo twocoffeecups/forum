@@ -35,16 +35,23 @@ import EditProfileCard from "../../components/client/EditProfileCard.vue";
 import EditPasswordCard from "../../components/client/EditPasswordCard.vue";
 import DeleteAccountCard from "../../components/client/DeleteAccountCard.vue";
 import EditAvatarCard from "../../components/client/EditAvatarCard.vue";
+import {mapGetters} from "vuex";
 
 export default {
     name: 'EditAccount',
     components: {EditAvatarCard, DeleteAccountCard, EditPasswordCard, EditProfileCard},
 
-    data(){
-        return{
-            userDetails: JSON.parse(localStorage.getItem('user-details')),
-        }
+    computed: {
+        ...mapGetters({
+            userDetails: 'auth/userDetails',
+        })
     },
+
+    // data(){
+    //     return{
+    //         userDetails: JSON.parse(localStorage.getItem('user-details')),
+    //     }
+    // },
 
 }
 </script>

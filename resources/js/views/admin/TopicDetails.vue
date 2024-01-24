@@ -35,9 +35,12 @@
                               title="Delete">
                             <i class="fas fa-trash"></i>
                         </span>
-                        <router-link :to="{name:'topic.unapproved', params:{id: this.$route.params.id}}" class="btn btn-primary mx-1">
+                        <a v-if="topic.status===0" :href="`/unapproved-topic/${this.$route.params.id}`" class="btn btn-primary mx-1">
                             Show
-                        </router-link>
+                        </a>
+                        <a v-if="topic.status!==0" :href="`/topic/${this.$route.params.id}`" class="btn btn-primary mx-1">
+                            Show
+                        </a>
                     </dd>
                     <dd v-if="deleteForm" class="col-sm-8 offset-sm-4 d-flex flex-row">
                         <textarea v-model="deleteReason" class="form-control mx-1"

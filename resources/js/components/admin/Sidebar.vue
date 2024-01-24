@@ -12,7 +12,7 @@
             <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
                 <!-- Dashboard main page -->
                 <li class="nav-item w-100" data-bs-dismiss="offcanvas">
-                    <router-link :to="{name:'admin.index'}" class="nav-link sidebar_nav_link align-middle px-0">
+                    <router-link :to="{name:'dashboard.index'}" class="nav-link sidebar_nav_link align-middle px-0">
                         <i class="fas fa-home"></i> <span class="ms-1">Dashboard</span>
                     </router-link>
                 </li>

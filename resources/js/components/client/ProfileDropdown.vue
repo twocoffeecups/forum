@@ -4,7 +4,7 @@
         <a class="nav-link dropdown-toggle-split d-flex" href="#" id="offcanvas-profile" role="button"
            data-bs-toggle="dropdown" aria-expanded="false">
             <img
-                :src="avatar ?? 'storage/app/public/default/default-avatar.png'"
+                :src="avatar"
                 alt="mdo" width="32" height="32" class="rounded-circle">
             <span class="d-sm-block mx-3 d-md-block d-lg-none">User profile</span>
         </a>

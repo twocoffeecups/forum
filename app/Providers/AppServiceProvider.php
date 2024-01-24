@@ -31,7 +31,7 @@ class AppServiceProvider extends ServiceProvider
             return (new MailMessage)
                 ->subject('Verify Email Address')
                 ->line('Click the button below to verify your email address.')
-                ->action('Verify Email Address', 'http://127.0.0.1:8000/admin/login');
+                ->action('Verify Email Address', $url);
         });
     }
 }

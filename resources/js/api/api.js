@@ -1,5 +1,5 @@
 import axios from "axios";
-import router from "../router";
+import router from "../router/forum";
 import store from "../store";
 
 const token = localStorage.getItem('access-token');
@@ -17,9 +17,9 @@ api.interceptors.response.use(
     (error) => {
     if(error.response.status === 401 || error.response.status === 419){
         localStorage.removeItem('access-token');
-        store.dispatch('auth/setLoggedInstate');
+        // store.dispatch('auth/setLoggedInstate');
+        store.dispatch('auth/logout');
         router.push({name:'main'});
-        //console.log(error)
     }
     return Promise.reject(error);
 });

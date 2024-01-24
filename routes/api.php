@@ -18,10 +18,8 @@ use Illuminate\Support\Facades\Route;
 //});
 
 // admin dashboard routes
-Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum', 'canReadAdminDashboard']], function () {
-
-    Route::get('/main', [\App\Http\Controllers\Admin\Main\MainController::class, 'index']);
-
+Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum']], function () {
+//Route::group(['prefix' => 'admin'], function () {
     Route::group(['prefix' => 'forum'], function () {
         Route::post('/all', [\App\Http\Controllers\Admin\Forum\ForumController::class, 'index']);
         Route::post('/', [\App\Http\Controllers\Admin\Forum\ForumController::class, 'store']);
@@ -36,7 +34,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum', 'canReadAdmi
 
     Route::group(['prefix' => 'tag'], function () {
         Route::get('/', [\App\Http\Controllers\Admin\Forum\TagController::class, 'index']);
-        Route::post('/', [\App\Http\Controllers\Admin\Forum\TagController::class, 'store']);
+        Route::post('/', [\App\Http\Controllers\Admin\Forum\TagController::class, 'store'])
+            ->middleware('permissions:can-create-tag');
         Route::get('/{tag}', [\App\Http\Controllers\Admin\Forum\TagController::class, 'show']);
         Route::patch('/{tag}', [\App\Http\Controllers\Admin\Forum\TagController::class, 'update']);
         Route::delete('/{tag}', [\App\Http\Controllers\Admin\Forum\TagController::class, 'delete']);
@@ -227,7 +226,7 @@ Route::group(['prefix' => 'auth'], function () {
         Route::post('/logout', \App\Http\Controllers\Api\Auth\LogoutController::class);
     });
 
-    Route::get('/email/verify/{id}/{hash}', [\App\Http\Controllers\Api\Auth\VerificationController::class, 'verify'])->name('email.verify');
+    Route::get('/email/verify/{id}/{hash}', [\App\Http\Controllers\Api\Auth\VerificationController::class, 'verify'])->name('verify.email');
     Route::get('/email/resend', [\App\Http\Controllers\Api\Auth\VerificationController::class, 'resend']);
     Route::post('/password/forgot', \App\Http\Controllers\Api\Auth\ForgotPasswordController::class);
     Route::post('/password/reset', \App\Http\Controllers\Api\Auth\ResetPasswordController::class);

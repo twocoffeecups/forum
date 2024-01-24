@@ -1,6 +1,6 @@
 import {useToast} from "vue-toastification";
 import api from "../../api/api";
-import router from "../../router";
+import router from "../../router/forum";
 
 const toast = useToast();
 export default {

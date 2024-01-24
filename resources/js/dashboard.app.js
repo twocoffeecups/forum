@@ -1,8 +1,8 @@
 import './bootstrap';
 
 import { createApp } from 'vue'
-import App from './App.vue'
-import router from './router/forum'
+import Dashboard from "./layouts/Admin.vue";
+import router from './router/dashboard'
 // import axios from "axios";
 
 // vuex store
@@ -43,7 +43,7 @@ const toastOptions = {
 
 import './assets/main.css'
 
-const app = createApp(App)
+const app = createApp(Dashboard)
 
 // app.component('font-awesome-icon', FontAwesomeIcon)
 app.component('QuillEditor', QuillEditor)
@@ -52,8 +52,4 @@ app.use(router);
 app.use(store);
 app.use(i18n);
 
-
-//axios.defaults.withCredentials = true;
-//app.config.globalProperties.axios = axios;
-
-app.mount('#app')
+app.mount('#dashboard-app')

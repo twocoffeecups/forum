@@ -8,8 +8,6 @@ use App\Http\Requests\Admin\Tag\TagUpdateRequest;
 use App\Http\Resources\Admin\Forum\TagResource;
 use App\Models\Tag;
 use App\Services\AuthService;
-use Illuminate\Support\Facades\Auth;
-use Laravel\Sanctum\PersonalAccessToken;
 
 class TagController extends Controller
 {
@@ -30,7 +28,7 @@ class TagController extends Controller
     public function store(TagStoreRequest $request): \Illuminate\Http\JsonResponse
     {
         $data = $request->validated();
-        $user = AuthService::getUserByToken($request);
+        $user = AuthService::getAuthorizedUser($request);
         $data['authorId'] = $user->id;
         $tag = Tag::firstOrCreate($data);
         return response()->json([
@@ -51,7 +49,6 @@ class TagController extends Controller
     public function update(TagUpdateRequest $request, Tag $tag)
     {
         $data = $request->validated();
-        //dd($data);
         foreach($data as $key => $value){
             $tag->$key = $value;
         }

@@ -74,13 +74,13 @@
                         </div>
 
                         <div class="form-outline mb-4">
-                            <div :class="{ error: v$.signUpForm.passwordConfirmation.$errors.length }">
-                                <input @blur="v$.signUpForm.passwordConfirmation.$touch"
-                                       v-model.trim="signUpForm.passwordConfirmation" type="password"
+                            <div :class="{ error: v$.signUpForm.password_confirmation.$errors.length }">
+                                <input @blur="v$.signUpForm.password_confirmation.$touch"
+                                       v-model.trim="signUpForm.password_confirmation" type="password"
                                        :placeholder="$t('component.signUp.confirmPass')"
                                        class="form-control form-control-lg" id="confirmPassword">
                                 <div class="input-errors my-2 text-danger small text-start"
-                                     v-for="error of v$.signUpForm.passwordConfirmation.$errors" :key="error.$uid">
+                                     v-for="error of v$.signUpForm.password_confirmation.$errors" :key="error.$uid">
                                     <div class="error-msg">{{ error.$message }}</div>
                                 </div>
                             </div>
@@ -95,7 +95,7 @@
                                 </router-link>
                                 .
                                 {{ $t('component.signIn.forgotYouPass') }}
-                                <router-link :to="{name:'auth.forgotPassword'}">Create new!</router-link>
+                                <router-link :to="{name:'auth.password.forgot'}">Create new!</router-link>
                             </p>
                         </div>
 
@@ -154,7 +154,7 @@ export default {
                 firstName: null,
                 lastName: null,
                 password: null,
-                passwordConfirmation: null,
+                password_confirmation: null,
             },
         }
     },
@@ -167,7 +167,7 @@ export default {
                 firstName: {required, minLength: minLength(2), maxLength: maxLength(32), $lazy: true},
                 lastName: {required, minLength: minLength(2), maxLength: maxLength(32), $lazy: true},
                 password: {required, minLength: minLength(8), maxLength: maxLength(32), $lazy: true},
-                passwordConfirmation: {
+                password_confirmation: {
                     required,
                     minLength: minLength(6),
                     sameAs: sameAs(this.signUpForm.password),
@@ -182,7 +182,11 @@ export default {
         signUp() {
             this.v$.$validate();
             if (!this.v$.$error) {
-                this.$store.dispatch('auth/register', this.signUpForm);
+                let data = new FormData();
+                for (let [key, value] of Object.entries(this.signUpForm)) {
+                    data.append(key, value);
+                }
+                this.$store.dispatch('auth/register', data);
             }
         },
     }
