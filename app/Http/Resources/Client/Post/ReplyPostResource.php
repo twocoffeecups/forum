@@ -17,7 +17,7 @@ class ReplyPostResource extends JsonResource
         return [
             'id' => $this->id,
             'message' => $this->message,
-            'author' => $name = $this->author->firstName ." ".$this->author->lastName ?? $this->author->login,
+            'author' => $this->author->getFullName(),
             //'replyPost' => $this->replyPost(),
             'created_at' => date('d.m.Y H:i', strtotime($this->created_at)),
         ];

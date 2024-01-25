@@ -6,6 +6,7 @@ use App\Http\Resources\Client\Forum\LatestPostResource;
 use App\Http\Resources\Client\Forum\TopicTagResource;
 use App\Http\Resources\Client\Post\PostResource;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Carbon;
 
 class ActiveTopicResource extends JsonResource
 {
@@ -22,7 +23,7 @@ class ActiveTopicResource extends JsonResource
             'title' => $this->title,
             'author' => $this->author->getFullName(),
             //'latestPost' => new LatestPostResource($this->latestPost()),
-            'created_at' => date('d.m.Y', strtotime($this->created_at)),
+            'created_at' => Carbon::parse($this->created_at)->diffForHumans(),
         ];
     }
 }

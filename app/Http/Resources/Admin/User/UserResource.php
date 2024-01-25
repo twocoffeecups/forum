@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Admin\User;
 
 use App\Http\Resources\Admin\Role\RolePermissionResource;
+use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class UserResource extends JsonResource
@@ -24,6 +25,8 @@ class UserResource extends JsonResource
             'email' => $this->email,
             'role' => $this->role->name,
             'roleId' => $this->role->id,
+            'status' => $this->checkOnlineStatus(),
+            'lastVisit' => Carbon::parse($this->lastVisit)->diffForHumans(),
             'stats' => [
                 'topics' => $this->topics->count(),
                 'posts' => $this->posts->count(),

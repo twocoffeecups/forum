@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\trait\UserRolesAndPermissions;
+use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -25,6 +26,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'lastName',
         'avatar',
         'email',
+        'lastVisit',
         'roleId',
         'password',
     ];
@@ -101,5 +103,17 @@ class User extends Authenticatable implements MustVerifyEmail
     public function banDetails()
     {
         return $this->hasMany(BanList::class, 'userId', 'id')->first();
+    }
+
+    /**
+     * @return bool
+     * Check user online status
+     */
+    public function checkOnlineStatus(): bool
+    {
+        $now = Carbon::parse(now());
+        $lastVisit = Carbon::parse($this->lastVisit);
+        $diff = $now->diffInMinutes($lastVisit);
+        return (bool) $diff < 2 ?? false;
     }
 }

@@ -20,6 +20,13 @@
                             <dd class="col-sm-8">{{ user.register_at }}</dd>
                             <dt class="col-sm-4">Email verified</dt>
                             <dd class="col-sm-8">{{ user.email_verified_at }}</dd>
+                            <dt class="col-sm-4">Last visit</dt>
+                            <dd class="col-sm-8">{{ user.lastVisit }}</dd>
+                            <dt class="col-sm-4">Status</dt>
+                            <dd class="col-sm-8">
+                                <span v-if="user.status" class="text-success">Online</span>
+                                <span v-if="!user.status" class="text-danger">Offline</span>
+                            </dd>
                         </dl>
                     </div>
                     <div class="col-6">

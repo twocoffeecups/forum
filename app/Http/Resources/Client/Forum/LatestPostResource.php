@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Client\Forum;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Carbon;
 
 class LatestPostResource extends JsonResource
 {
@@ -17,7 +18,7 @@ class LatestPostResource extends JsonResource
         return [
             'id' => $this->id,
             'author' => new PostAuthorResource($this->author),
-            'created_at' => date('d.m.Y H:i', strtotime($this->created_at)),
+            'created_at' => Carbon::parse($this->created_at)->diffForHumans(),
         ];
     }
 }

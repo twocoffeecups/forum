@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Client\Topic;
 
 use App\Http\Resources\Client\Forum\TopicTagResource;
+use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class TopicAuthorResource extends JsonResource
@@ -17,11 +18,12 @@ class TopicAuthorResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->firstName." ".$this->lastName,
-            'status' => 'offline',
+            'name' => $this->getFullName(),
+            'status' => $this->checkOnlineStatus(),
+            'lastVisit' => Carbon::parse($this->lastVisit)->diffForHumans(),
             'avatar' => url($this->avatar),
             'totalPosts' => $this->posts->count(),
-            'register_at' => date('d.m.Y H:i', strtotime($this->created_at)),
+            'register_at' => $this->created_at->format('Y-d-m'),
         ];
     }
 }

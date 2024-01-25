@@ -17,12 +17,25 @@
                                     <div class="card-body text-center">
                                         <div class="d-flex flex-row">
                                             <img class="img-account-profile rounded-circle mb-2"
-                                                 :src="userDetails.avatar" alt="">
+                                                 :src="userDetails.avatar" width="60" alt="">
 
-                                            <div class="w-100 ms-3">
-                                                <h4 class="my-1">{{ userDetails.name ?? userDetails.login }}</h4>
-                                                <p class="text-muted">{{ userDetails.email }}</p>
-                                                <p>Register: {{ userDetails.register_at }} </p>
+                                            <div class="w-100">
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <h4 class="my-1">{{ userDetails.name ?? userDetails.login }}</h4>
+                                                        <!--  <p class="text-muted">{{ userDetails.email }}</p>-->
+                                                        <p class="text-muted">
+                                                            <span v-if="userDetails.status" class="text-success">Online</span>
+                                                            <span v-if="!userDetails.status" class="text-danger">Offline</span>
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <p>Last visit: {{ userDetails.lastVisit }}</p>
+                                                        <p>Register: {{ userDetails.register_at }} </p>
+                                                    </div>
+                                                </div>
+
+
                                             </div>
                                         </div>
                                         <!-- Profile picture image-->

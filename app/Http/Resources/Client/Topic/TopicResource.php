@@ -4,6 +4,7 @@ namespace App\Http\Resources\Client\Topic;
 
 use App\Http\Resources\Client\Forum\TopicTagResource;
 use App\Http\Resources\Client\Post\PostResource;
+use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class TopicResource extends JsonResource
@@ -31,8 +32,8 @@ class TopicResource extends JsonResource
             'files' => $this->files,
             'posts' => PostResource::collection($this->posts),
             'isRejected' => new TopicRejectedReasonResource($this->isRejected),
-            'created_at' => date('d.m.Y H:i', strtotime($this->created_at)),
-            'updated_at' => date('d.m.Y H:i', strtotime($this->updated_at)),
+            'created_at' => $this->created_at->format('Y.d.m'),
+            'updated_at' => Carbon::parse($this->updated_at)->diffForHumans(),
         ];
     }
 }

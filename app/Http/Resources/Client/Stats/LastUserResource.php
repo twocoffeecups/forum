@@ -17,7 +17,8 @@ class LastUserResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'name' => $name = $this->firstName ." ".$this->lastName ?? $this->login,
+            'id' => $this->id,
+            'name' => $this->getFullName(),
         ];
     }
 }

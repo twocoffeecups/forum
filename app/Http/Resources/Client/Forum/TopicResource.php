@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Client\Forum;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Carbon;
 
 class TopicResource extends JsonResource
 {
@@ -24,7 +25,7 @@ class TopicResource extends JsonResource
             'latestPost' => new LatestPostResource($this->latestPost()),
             'tags' => TopicTagResource::collection($this->tags),
             'author' => new PostAuthorResource($this->author),
-            'created_at' => date('d.m.Y H:i', strtotime($this->created_at)),
+            'created_at' => Carbon::parse($this->created_at)->diffForHumans(),
         ];
     }
 }

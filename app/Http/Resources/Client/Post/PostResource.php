@@ -6,6 +6,7 @@ use App\Http\Resources\Client\Forum\TopicTagResource;
 use App\Http\Resources\Client\Topic\TopicAuthorResource;
 use App\Http\Resources\Client\Topic\TopicForumResource;
 use App\Http\Resources\Client\Topic\TopicLikeResource;
+use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class PostResource extends JsonResource
@@ -28,8 +29,8 @@ class PostResource extends JsonResource
             'replyPost' => new ReplyPostResource($this->replyPost()),
             'images' => $this->images,
             'files' => $this->files,
-            'created_at' => date('d.m.Y H:i', strtotime($this->created_at)),
-            'updated_at' => date('d.m.Y H:i', strtotime($this->updated_at)),
+            'created_at' => Carbon::parse($this->created_at)->diffForHumans(),
+            'updated_at' => Carbon::parse($this->updated_at)->diffForHumans(),
         ];
     }
 }

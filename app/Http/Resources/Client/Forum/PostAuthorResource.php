@@ -16,7 +16,7 @@ class PostAuthorResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->firstName." ".$this->lastName,
+            'name' => $this->getFullName(),
         ];
     }
 }

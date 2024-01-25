@@ -4,6 +4,7 @@ namespace App\Http\Resources\Client\Profile;
 
 use App\Http\Resources\Client\Forum\TopicResource;
 use App\Http\Resources\Client\Post\PostResource;
+use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class UserResource extends JsonResource
@@ -25,6 +26,9 @@ class UserResource extends JsonResource
             'lastName' => $this->lastName,
             'name' => $this->firstName . ' ' . $this->lastName,
             'email' => $this->email,
+            'status' => $this->checkOnlineStatus(),
+            'lastVisit' => Carbon::parse($this->lastVisit)->diffForHumans(),
+            'lastVisitTime' => $this->lastVisit,
             'avatar' => $this->avatar,
             'role' => $this->role->slug,
             'permissions' => $permissions,

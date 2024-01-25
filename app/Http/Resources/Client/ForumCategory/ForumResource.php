@@ -21,7 +21,7 @@ class ForumResource extends JsonResource
             'posts' => 31,
             'views' => 3,
             'latestPost' => 'Post text...',
-            'created_at' => $this->created_at,
+            'created_at' => $this->created_at->format('Y-d-m'),
         ];
     }
 }

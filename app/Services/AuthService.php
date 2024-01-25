@@ -29,6 +29,9 @@ class AuthService
     {
         $hashedToken = $request->bearerToken();
         $token = PersonalAccessToken::findToken($hashedToken);
+        if(!$token){
+            return null;
+        }
         $user = $token->tokenable;
         return $user;
     }

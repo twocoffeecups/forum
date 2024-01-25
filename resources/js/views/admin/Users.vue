@@ -36,6 +36,8 @@
                         <th scope="col">Login</th>
                         <th scope="col">Name</th>
                         <th scope="col">Email</th>
+                        <th scope="col">Last visit</th>
+                        <th scope="col">Status</th>
                         <th scope="col">Topics</th>
                         <th scope="col">Posts</th>
                         <th scope="col">Reports</th>
@@ -52,6 +54,11 @@
                         <td>{{ user.login }}</td>
                         <td>{{ user.name }}</td>
                         <td>{{ user.email }}</td>
+                        <td>{{ user.lastVisit }}</td>
+                        <td>
+                            <span v-if="user.status" class="text-success">Online</span>
+                            <span v-if="!user.status" class="text-danger">Offline</span>
+                        </td>
                         <td>{{ user.stats.topics }}</td>
                         <td>{{ user.stats.posts }}</td>
                         <td>{{ user.stats.reports }}</td>

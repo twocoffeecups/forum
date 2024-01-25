@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('firstName')->nullable();
             $table->string('lastName')->nullable();
             $table->string('email')->unique();
+            $table->timestamp('lastVisit')->nullable();
             $table->string('avatar')->default('http://127.0.0.1:8000/storage/default/default-avatar.png');
             $table->foreignId('roleId')->default(2)->index('roleIdx')->constrained('roles')->cascadeOnUpdate()->cascadeOnDelete();
             $table->unsignedTinyInteger('isWarned')->default(0);
