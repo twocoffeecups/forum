@@ -72,11 +72,11 @@
                                         data-bs-toggle="modal" data-bs-target="#report-form">
                                     {{ $t('component.post.report') }}
                                 </button>
-                                <button v-if="userId!==topicAuthor.id && isLoggedIn"
-                                        class="btn btn-sm btn-outline-primary mx-1">{{
-                                        $t('component.post.reply')
-                                    }}
-                                </button>
+<!--                                <button v-if="userId!==topicAuthor.id && isLoggedIn"-->
+<!--                                        class="btn btn-sm btn-outline-primary mx-1">{{-->
+<!--                                        $t('component.post.reply')-->
+<!--                                    }}-->
+<!--                                </button>-->
                                 <router-link v-if="userId===topicAuthor.id && isLoggedIn"
                                              :to="{name:'topic.edit', params:{id:this.$route.params.id}}"
                                              class="btn btn-sm btn-outline-secondary mx-1">{{

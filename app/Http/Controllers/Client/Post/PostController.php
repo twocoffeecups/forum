@@ -10,6 +10,8 @@ use App\Http\Resources\Client\Post\PostResource;
 use App\Models\Post;
 use App\Models\Topic;
 use App\Models\User;
+use App\Notifications\PostLiked;
+use App\Notifications\ReplyPost;
 use App\Services\AuthService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -34,6 +36,12 @@ class PostController extends Controller
         $data['userId'] = $user->id;
         $data['topicId'] = $topic->id;
         $post = Post::firstOrCreate($data);
+        if(!empty($data['replyId'])){
+
+            $replyPost = Post::find($data['replyId']);
+            //dd($replyPost->author);
+            $replyPost->author->notify(new ReplyPost($user, $post, $topic));
+        }
         return response()->json([
             'message' => 'The post created.',
             'post' => new PostResource($post),
@@ -79,6 +87,8 @@ class PostController extends Controller
     {
         $user = AuthService::getAuthorizedUser($request);
         $post->bookmarks()->toggle($user->id);
+        // post liked event
+        $post->author->notify(new PostLiked($user, $post));
         return response()->json(['message' => 'Success.']);
     }
 

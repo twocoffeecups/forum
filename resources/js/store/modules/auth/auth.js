@@ -37,6 +37,14 @@ export default {
         getUserId(state){
             return state.userDetails.id;
         },
+
+        getNotifications(state){
+            return state.userDetails.notifications;
+        },
+
+        getUnreadNotifications(state){
+            return state.userDetails.unreadNotifications;
+        },
     },
 
     actions: {
@@ -142,7 +150,7 @@ export default {
                         commit('setLoggedIn', false);
                         commit('setUserDetails', {});
                         commit('middleware/setPermissions', null, {root: true});
-                        toast.success("You have successfully logout.")
+                        //toast.success("You have successfully logout.")
                         resolve(response);
                     })
                     .catch(error => {

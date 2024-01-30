@@ -13,6 +13,9 @@ use App\Models\RejectedTopic;
 use App\Models\Report;
 use App\Models\Topic;
 use App\Models\User;
+use App\Notifications\ReportProcessed;
+use App\Notifications\ReportRejected;
+use App\Notifications\ViolatedSiteRules;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -33,9 +36,8 @@ class ReportController extends Controller
     public function reject(RejectReportRequest $request, Report $report)
     {
         $data = $request->validated();
-        // TODO: сделать уведомления
-        // sender notification
-
+        // send notification
+        $report->sender->notify(new ReportRejected($report, $data['message']));
         $report->status = 1;
         $report->closed = 1;
         $report->save();
@@ -56,12 +58,15 @@ class ReportController extends Controller
         $data = $request->validated();
         $data['userId'] = $report->user->id;
         $data['reportId'] = $report->id;
-        $totalDaysBan = $data['totalDaysBan'];
-        $data['banEnd'] = Carbon::parse(Carbon::now())->addDays($totalDaysBan);
+        if(!empty($data['totalDaysBan'])){
+            $totalDaysBan = $data['totalDaysBan'];
+            $data['banEnd'] = Carbon::parse(Carbon::now())->addDays($totalDaysBan);
+        }
         $action = $data['action'];
         $message = $data['message'];
-        $warn = $data['warn'];
+        $warn = $data['warn']=='true' ? true:false;
         unset($data['message'], $data['action'], $data['totalDaysBan'], $data['warn']);
+
         /** DB transaction
          */
         DB::beginTransaction();
@@ -86,19 +91,16 @@ class ReportController extends Controller
             $topic->save();
         }
 
-        // TODO: сделать уведомления
-        // send notification
-
         // add user in ban list or check warned
-        if($warn==='true'){
+        if($warn===true){
             $user = User::find($report->user->id);
             $user->isWarned = 1;
             $user->save();
         }else{
-            $bannedUser = BanList::where('userId', '=', $data['userId'])->first();
-            if($bannedUser!=null){
-                $bannedUser->banEnd = Carbon::parse($bannedUser->banEnd)->addDays($totalDaysBan);
-                $bannedUser->save();
+            $ban = BanList::where('userId', '=', $data['userId'])->first();
+            if($ban!=null){
+                $ban->banEnd = Carbon::parse($ban->banEnd)->addDays($totalDaysBan);
+                $ban->save();
             }else{
                 $ban = BanList::firstOrCreate(['userId' => $data['userId']], $data);
             }
@@ -106,6 +108,10 @@ class ReportController extends Controller
         $report->status = 1;
         $report->closed = 1;
         $report->save();
+
+        // send user notification
+        $report->sender->notify(new ReportProcessed($report, $warn, $totalDaysBan ?? null));
+        $report->user->notify(new ViolatedSiteRules($report, $message, $warn, $ban ?? null));
         DB::commit();
         /** DB end transaction */
         return response()->json([

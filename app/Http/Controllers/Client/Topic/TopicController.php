@@ -15,6 +15,7 @@ use App\Models\Tag;
 use App\Models\Topic;
 use App\Models\TopicImage;
 use App\Models\User;
+use App\Notifications\TopicLiked;
 use App\Services\AuthService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -185,6 +186,7 @@ class TopicController extends Controller
     {
         $user = AuthService::getAuthorizedUser($request);
         $topic->likes()->toggle($user->id);
+        $topic->author->notify(new TopicLiked($topic, $user));
         return response()->json(['message' => 'Change topic like.']);
     }
 

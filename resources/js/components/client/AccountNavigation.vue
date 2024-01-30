@@ -4,7 +4,7 @@
         <router-link class="nav-link" :to="{name:'profile.edit'}">{{ $t('component.accountNavigation.editProfile') }}</router-link>
 
         <!-- TODO: сделать уведомления -->
-<!--        <router-link class="nav-link" :to="{name:'profile.notification'}">{{ $t('component.accountNavigation.notifications') }}</router-link>-->
+        <router-link class="nav-link" :to="{name:'profile.notification'}">{{ $t('component.accountNavigation.notifications') }}</router-link>
     </nav>
 </template>
 

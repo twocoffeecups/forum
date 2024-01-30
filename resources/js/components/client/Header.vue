@@ -41,7 +41,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <NotificationsList/>
+                            <NotificationsList v-if="isLoggedIn"/>
                         </li>
 
                         <li class="nav-item w-100">
@@ -76,6 +76,7 @@ import NotificationsList from "./NotificationsList.vue";
 import ProfileDropdown from "./ProfileDropdown.vue";
 import LanguageSwitcher from "./LanguageSwitcher.vue";
 import SearchButton from "./SearchButton.vue";
+import {mapGetters} from "vuex";
 
 export default {
     name: "Header",
@@ -94,6 +95,10 @@ export default {
         selectedTheme() {
             return this.theme === true ? 'Dark' : 'Light'
         },
+
+        ...mapGetters({
+            isLoggedIn: 'auth/isLoggedIn'
+        })
     }
 }
 </script>

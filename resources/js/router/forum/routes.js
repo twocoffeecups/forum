@@ -65,13 +65,11 @@ const routes = [
         },
         children: [
             {path: '', name: 'profile.details', component: () => import('../../views/client/ProfileDetails.vue')},
-
-            /** TODO: сделать уведомления */
-            // {
-            //     path: 'notification',
-            //     name: 'profile.notification',
-            //     component: () => import('../views/client/ProfileNotification.vue'),
-            // },
+            {
+                path: 'notification',
+                name: 'profile.notification',
+                component: () => import('../../views/client/ProfileNotification.vue'),
+            },
             {
                 path: 'edit',
                 name: 'profile.edit',

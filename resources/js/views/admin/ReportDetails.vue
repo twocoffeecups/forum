@@ -116,7 +116,7 @@
                     <div class="col-sm-10 mb-3">
                         <div class="row">
                             <div class="col-12 col-md-12 col-lg-12 col-xl-3">
-                                <input v-model="processReportForm.totalDaysBan" type="number" id="total-day-ban" min="3" max="30" />
+                                <input v-model="totalDaysBan" type="number" id="total-day-ban" min="5" max="30" />
                                 <label class="form-label mx-2" for="total-day-ban">Days</label>
                             </div>
                             <div v-if="report.user && report.user.isBanned" class="col-12 col-md-12  col-lg-12 col-xl-9">
@@ -194,10 +194,10 @@ export default {
             processReportForm: {
                 message: null,
                 reasonId: null,
-                totalDaysBan: 3,
                 action: 1,
                 warn: false,
             },
+            totalDaysBan: null,
             rejectReportForm: {
                 noViolations: false,
                 message: null,
@@ -219,7 +219,9 @@ export default {
             for (let [key, value] of Object.entries(this.processReportForm)) {
                 data.append(key, value);
             }
-            console.log("DATA:", data);
+            if(this.totalDaysBan!==null && this.processReportForm.warn===false){
+                data.append("totalDaysBan", this.totalDaysBan);
+            }
             this.$store.dispatch('adminReport/processing', [this.$route.params.id, data]);
         },
 
@@ -228,7 +230,7 @@ export default {
             let data = new FormData();
             data.append('message', this.rejectReportForm.message);
             data.append('noViolations', this.rejectReportForm.noViolations);
-            console.log(data)
+            console.log(data.totalDaysBan)
             this.$store.dispatch('adminReport/reject', [this.$route.params.id, data]);
         }
     }

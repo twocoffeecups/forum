@@ -9,39 +9,37 @@
             <ul class="dropdown-menu notifications overflow-x-hidden" style="position: absolute">
                 <li class="notifications-header">
                     <div class="text-center" style="padding-bottom: 4px">{{ $t('component.notificationsList.youHave') }}
-                        <b>5</b> {{ $t('component.notificationsList.unreadMess') }}
+                        <b v-if="notifications">{{ notifications.length }}</b> {{ $t('component.notificationsList.unreadMess') }}
                     </div>
                 </li>
 
-                <li v-for="notification in 5">
+                <!-- TODO: Сделать один динамический компонент -->
+                <li v-if="notifications" v-for="notification in notifications.slice(0, 3)">
                     <div class="notification">
-                        <router-link class="overlay-link" :to="{ name:'profile.details' }"
-                                     title="overlay"></router-link>
-                        <div class="top-text-block">
-                            <div class="top-text-heading">
-                                <p>
-                                    Пользователь <a href="/#" class="inner-link">Tod Howard</a> положительно оценил вашу
-                                    запись
-                                    <router-link :to="{ name:'topic', params:{id:1}}" class="inner-link">My first
-                                        topic
-                                    </router-link>
-                                </p>
-                            </div>
-                            <div class="text-small">2 hours ago</div>
-                        </div>
+                        <!--        <router-link class="overlay-link" :to="{ name:'profile.details' }"-->
+                        <!--                     title="overlay"></router-link>-->
+                        <TopicLiked v-if="notification.type==='TopicLiked'" :notification="notification" />
+                        <PostLiked v-if="notification.type==='PostLiked'" :notification="notification" />
+                        <ReplyPost v-if="notification.type==='ReplyPost'" :notification="notification" />
+                        <ReportRejected v-if="notification.type==='ReportRejected'" :notification="notification"/>
+                        <ReportProcessed v-if="notification.type==='ReportProcessed'" :notification="notification"/>
+                        <ViolatedSiteRules v-if="notification.type==='ViolatedSiteRules'" :notification="notification"/>
+                        <TopicRejected v-if="notification.type==='TopicRejected'" :notification="notification"/>
                     </div>
-
                 </li>
 
-                <li class="notifications-footer mt-3">
-                    <div class="text-center mt-2" style="padding-bottom: 4px"><a
-                        href="#">{{ $t('component.notificationsList.viewAll') }}</a></div>
+                <li class="notifications-footer mt-1">
+                    <div class="text-center mt-2" style="padding-bottom: 4px">
+                        <router-link :to="{name:'profile.notification'}">
+                            {{ $t('component.notificationsList.viewAll') }}
+                        </router-link>
+                    </div>
                 </li>
             </ul>
         </div>
 
         <div class="d-block d-sm-block d-md-block d-lg-none d-xl-none" data-bs-dismiss="offcanvas">
-            <router-link class="nav-link d-flex align-items-center" :to="{name:'profile.details'}">
+            <router-link class="nav-link d-flex align-items-center" :to="{name:'profile.notification'}">
                 <i class="fas fa-bell d-sm-block mx-2 d-md-block d-lg-none"></i>
                 {{ $t('component.notificationsList.notifications') }}
             </router-link>
@@ -52,8 +50,24 @@
 </template>
 
 <script>
+import {mapGetters} from "vuex";
+import PostLiked from "./Notification/PostLiked.vue";
+import TopicLiked from "./Notification/TopicLiked.vue";
+import ReplyPost from "./Notification/ReplyPost.vue";
+import ReportRejected from "./Notification/ReportRejected.vue";
+import ViolatedSiteRules from "./Notification/ViolatedSiteRules.vue";
+import ReportProcessed from "./Notification/ReportProcessed.vue";
+import TopicRejected from "./Notification/TopicRejected.vue";
+
 export default {
-    name: "NotificationsList"
+    name: "NotificationsList",
+    components: {TopicRejected, ReportProcessed, ViolatedSiteRules, ReportRejected, ReplyPost, TopicLiked, PostLiked,},
+
+    computed: {
+        ...mapGetters({
+            notifications: 'auth/getUnreadNotifications',
+        })
+    }
 }
 </script>
 
@@ -61,7 +75,7 @@ export default {
 .notifications {
     position: absolute;
     top: 30px;
-    padding: 10px;
+    //padding: 10px;
     min-width: 100%;
 }
 

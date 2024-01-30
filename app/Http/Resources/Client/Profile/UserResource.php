@@ -49,6 +49,8 @@ class UserResource extends JsonResource
             'likedTopics' => TopicResource::collection($this->likedTopics),
             'topicBookmarks' => TopicResource::collection($this->topicBookmarks),
             'postBookmarks' => PostResource::collection($this->postBookmarks),
+            'unreadNotifications' => NotificationResource::collection($this->unreadNotifications),
+            'notifications' => NotificationResource::collection($this->notifications),
         ];
     }
 }

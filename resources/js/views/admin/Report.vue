@@ -53,10 +53,12 @@
                                 <th scope="row">{{ report.id }}</th>
                                 <td>{{ report.type }}</td>
                                 <td>
-                                    <span v-if="report.object"><router-link v-if="report.type=='topic'"
-                                                                            :to="{name:'topic', params:{id:report.object.id}}">{{
-                                            report.object.title
-                                        }}</router-link></span>
+<!--                                    <span v-if="report.object">-->
+<!--                                        <router-link v-if="report.type=='topic'"-->
+<!--                                                                            :to="{name:'topic', params:{id:report.object.id}}">{{-->
+<!--                                            report.object.title-->
+<!--                                        }}</router-link></span>-->
+                                    <a v-if="report.type=='topic'" :href="`/topic/${report.object.id}`">{{ report.object.title }}</a>
                                     <a v-if="report.type=='post'" href="#">Post for topic</a>
                                 </td>
                                 <td>{{ report.reason.name }}</td>

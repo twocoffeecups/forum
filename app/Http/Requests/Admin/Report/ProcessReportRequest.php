@@ -28,7 +28,7 @@ class ProcessReportRequest extends FormRequest
             'reasonId' => 'required|integer|exists:report_reason_types,id',
             'action' => 'required|integer',
             'warn' => 'required|string',
-            'totalDaysBan' => 'nullable|integer|min:3|max:30',
+            'totalDaysBan' => 'integer|nullable|min:5|max:30',
         ];
     }
 }

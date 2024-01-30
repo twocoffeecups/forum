@@ -1,6 +1,8 @@
 import axios from "axios";
 import {useToast} from "vue-toastification";
 import api from "../../../api/api";
+import store from "../../index";
+import router from "../../../router/forum";
 
 const toast = useToast();
 
@@ -73,6 +75,10 @@ export default {
                         }
                     })
                     .catch(error => {
+                        localStorage.removeItem('access-token');
+                        // store.dispatch('auth/setLoggedInstate');
+                        store.dispatch('auth/logout');
+                        router.push({name:'main'});
                         reject(error);
                     })
             });

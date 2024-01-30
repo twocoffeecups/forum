@@ -10,6 +10,7 @@ use App\Http\Resources\Admin\Topic\TopicDetailsResource;
 use App\Http\Resources\Admin\Topic\TopicResource;
 use App\Models\Topic;
 use App\Models\RejectedTopic;
+use App\Notifications\TopicRejected;
 
 class TopicController extends Controller
 {
@@ -52,7 +53,10 @@ class TopicController extends Controller
         $data = $request->validated();
         $data['userId'] = $topic->userId;
         $data['topicId'] = $topic->id;
+        //dd($data);
         $rejectedTopic = RejectedTopic::firstOrCreate(['topicId' => $data['topicId']], $data);
+        // user notification
+        $topic->author->notify(new TopicRejected($topic, $data['message']));
         $topic->status = 0;
         $topic->save();
         return response()->json(['message' => 'The topic is not approved.']);
