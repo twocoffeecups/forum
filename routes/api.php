@@ -116,6 +116,8 @@ Route::group(['prefix' => 'client'], function () {
     Route::get('/profile', [\App\Http\Controllers\Client\Profile\ProfileController::class, 'index'])->middleware('auth:sanctum');
 
 
+    Route::post('/search', \App\Http\Controllers\Client\Search\SearchController::class);
+
     // User auth api routes
     Route::group(['prefix' => '{user}', 'middleware' => 'auth:sanctum'], function () {
         // Get user profile details

@@ -24,12 +24,13 @@
                                     </div>
 
                                     <!-- Search -->
-                                    <div class="input-group input-group-sm d-flex w-25 h-75">
-                                        <input type="text" class="form-control" aria-label="Sizing example input"
-                                               placeholder="Search on this topic.."
-                                               aria-describedby="inputGroup-sizing-sm">
-                                        <span class="input-group-text" id="inputGroup-sizing-sm">Search</span>
-                                    </div>
+                                    <!-- TODO: Сделать поиск по теме -->
+<!--                                    <div class="input-group input-group-sm d-flex w-25 h-75">-->
+<!--                                        <input type="text" class="form-control" aria-label="Sizing example input"-->
+<!--                                               placeholder="Search on this topic.."-->
+<!--                                               aria-describedby="inputGroup-sizing-sm">-->
+<!--                                        <span class="input-group-text" id="inputGroup-sizing-sm">Search</span>-->
+<!--                                    </div>-->
                                 </div>
 
                             </div>

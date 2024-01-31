@@ -4,7 +4,7 @@
             <li v-if="currentPage !== 1" class="page-item">
                 <a @click.prevent="selectPage(currentPage - 1)" class="page-link" href="#">{{ $t('component.pagination.previous') }}</a>
             </li>
-            <li v-for="link in links" class="page-item">
+            <li v-if="links" v-for="link in links" class="page-item">
                 <template v-if="Number(link.label)">
                     <a @click.prevent="selectPage(link.label)" class="page-link" href="#">{{ link.label }}</a>
                 </template>

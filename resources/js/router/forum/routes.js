@@ -30,6 +30,14 @@ const routes = [
         }
     },
     {
+        path: '/search/:search?',
+        name: 'forum.search',
+        component: () => import('../../views/client/Search.vue'),
+        meta: {
+            layout: Client,
+        }
+    },
+    {
         path: '/edit-topic/:id',
         name: 'topic.edit',
         component: () => import('../../views/client/EditTopic.vue'),

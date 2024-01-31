@@ -19,6 +19,7 @@ import userProfile from "./modules/profile/user-profile";
 import adminReport from "./modules/admin/report/report";
 import reportReason from "./modules/admin/report/report-reason-types";
 import dashboardProfile from  "./modules/admin/profile/profile";
+import search from "./modules/forum/search";
 
 const store = createStore({
     //namespaced: true,
@@ -42,7 +43,8 @@ const store = createStore({
         userProfile,
         adminReport,
         reportReason,
-        dashboardProfile
+        dashboardProfile,
+        search,
     },
 });
 

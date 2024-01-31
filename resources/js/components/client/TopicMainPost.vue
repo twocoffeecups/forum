@@ -6,24 +6,45 @@
             <div class="row g-0">
                 <div class="col-md-3">
                     <div class="card-header h-100">
-                        <div class="media flex-wrap w-100 align-items-center">
-                            <img :src="topicAuthor.avatar" width="64" class="d-block ui-w-40 rounded-circle"
+<!--                        <div class="media flex-wrap w-100 align-items-center">-->
+<!--                            <img :src="topicAuthor.avatar" width="64" class="d-block ui-w-40 rounded-circle"-->
+<!--                                 alt="Avatar">-->
+<!--                            <div class="media-body ml-3">-->
+<!--                                <router-link v-if="topicAuthor.id"-->
+<!--                                             :to="{name:'user.profile', params:{id:topicAuthor.id}}" data-abc="true">-->
+<!--                                    {{ topicAuthor.name }}-->
+<!--                                </router-link>-->
+<!--                                <div class="text-muted small">-->
+<!--                                    <span v-if="topicAuthor.status" class="text-success">Online</span>-->
+<!--                                    <span v-if="!topicAuthor.status" class="text-danger">Offline</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div class="text-muted small ml-3">-->
+<!--                                <div>{{ $t('component.post.registerDate') }} <strong>{{-->
+<!--                                        topicAuthor.register_at-->
+<!--                                    }}</strong></div>-->
+<!--                                <div><strong>{{ topicAuthor.totalPosts }}</strong> {{ $t('component.post.messages') }}-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+                        <div v-if="mainPost.author" class="media flex-wrap w-100 align-items-center">
+                            <img v-if="mainPost.author.id" :src="mainPost.author.avatar" width="64" class="d-block ui-w-40 rounded-circle"
                                  alt="Avatar">
                             <div class="media-body ml-3">
-                                <router-link v-if="topicAuthor.id"
-                                             :to="{name:'user.profile', params:{id:topicAuthor.id}}" data-abc="true">
-                                    {{ topicAuthor.name }}
+                                <router-link v-if="mainPost.author.id"
+                                             :to="{name:'user.profile', params:{id:mainPost.author.id}}" data-abc="true">
+                                    {{ mainPost.author.name }}
                                 </router-link>
                                 <div class="text-muted small">
-                                    <span v-if="topicAuthor.status" class="text-success">Online</span>
-                                    <span v-if="!topicAuthor.status" class="text-danger">Offline</span>
+                                    <span v-if="mainPost.author.status" class="text-success">Online</span>
+                                    <span v-if="!mainPost.author.status" class="text-danger">Offline</span>
                                 </div>
                             </div>
                             <div class="text-muted small ml-3">
                                 <div>{{ $t('component.post.registerDate') }} <strong>{{
-                                        topicAuthor.register_at
+                                        mainPost.author.register_at
                                     }}</strong></div>
-                                <div><strong>{{ topicAuthor.totalPosts }}</strong> {{ $t('component.post.messages') }}
+                                <div><strong>{{ mainPost.author.totalPosts }}</strong> {{ $t('component.post.messages') }}
                                 </div>
                             </div>
                         </div>
