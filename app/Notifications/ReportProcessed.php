@@ -13,16 +13,18 @@ class ReportProcessed extends Notification
 {
     use Queueable;
 
-    public Report $report;
-    public int|null $totalBanDays;
-    public bool $warn;
+    protected Report $report;
+    protected int|null $totalBanDays;
+    protected bool $warn;
+    protected string $action;
     /**
      * Create a new notification instance.
      */
-    public function __construct(Report $report, bool $warn, null|int $totalBanDays)
+    public function __construct(Report $report, bool $warn, string $action, null|int $totalBanDays)
     {
         $this->report = $report;
         $this->warn = $warn;
+        $this->action = $action;
         $this->totalBanDays = $totalBanDays;
     }
 
@@ -46,6 +48,7 @@ class ReportProcessed extends Notification
         return [
             'userName' => $this->report->sender->getFullName(),
             'reportReasonType' => $this->report->reason->name,
+            'action' => $this->action,
             'object' => $this->report->object,
             'post' => $this->report->post !==null ? new PostNotificationResource($this->report->post) : null,
             'topic' => $this->report->topic,

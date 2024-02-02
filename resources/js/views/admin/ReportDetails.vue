@@ -86,7 +86,7 @@
                 <div class="mb-3 row">
                     <label for="ban-date" class="col-sm-2 col-form-label">Actions</label>
                     <div class="col-sm-10 mb-3">
-                        <div v-if="report.object==='post'" class="form-check form-check-inline">
+                        <div v-if="report.type==='topic'" class="form-check form-check-inline">
                             <input v-model="processReportForm.action" class="form-check-input" type="radio" name="inlineRadioOptions" id="edit-radio" value="0">
                             <label class="form-check-label" for="edit-radio">Edit</label>
                         </div>

@@ -98,7 +98,7 @@
 
                                 <Topic  v-if="topics.length!==0" v-for="topic in topics" :topic="topic" />
 
-                                <div v-if="userDetails.topics.length===0  && unapprovedTopic.length===0" class="text-center m-1 p-1">
+                                <div v-if="(!userDetails.topics && !unapprovedTopic) && (userDetails.topics.length===0  && unapprovedTopic.length===0)" class="text-center m-1 p-1">
                                     <h5>You haven't created any topics.</h5>
                                 </div>
                             </div>

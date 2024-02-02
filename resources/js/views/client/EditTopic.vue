@@ -258,7 +258,6 @@ export default {
                 data.append('imagesForDelete[]', imageId)
             })
             data.append('_method', 'put')
-            console.log(data);
             this.$store.dispatch('editTopic/updateTopic', [this.$route.params.id, data]);
         },
 

@@ -14,6 +14,11 @@ class Topic extends Model
     protected $guarded = false;
     protected $table = 'topics';
     protected $primaryKey = 'id';
+    protected $fillable = [
+        'forumId',
+        'title',
+        'content',
+    ];
 
     public function forum(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {

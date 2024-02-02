@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\DB;
 
 class SearchController extends Controller
 {
+    /**
+     * @param SearchRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function __invoke(SearchRequest $request): \Illuminate\Http\JsonResponse
     {
         $data = $request->validated();

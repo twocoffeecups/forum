@@ -2,23 +2,20 @@
 
 namespace App\Http\Controllers\Client\Post;
 
-use App\Events\PostCreated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Client\Post\PostStoreRequest;
 use App\Http\Requests\Api\Client\Post\PostUpdateRequest;
-use App\Http\Resources\Client\Post\PostResource;
 use App\Models\Post;
 use App\Models\Topic;
 use App\Models\User;
 use App\Notifications\PostLiked;
-use App\Notifications\ReplyPost;
 use App\Services\AuthService;
+use App\Services\Post\PostService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Laravel\Sanctum\PersonalAccessToken;
 
 class PostController extends Controller
 {
+    use PostService;
 
     /**
      * @param PostStoreRequest $request
@@ -27,25 +24,15 @@ class PostController extends Controller
      */
     protected function store(PostStoreRequest $request, Topic $topic): \Illuminate\Http\JsonResponse
     {
-
         $user = AuthService::getAuthorizedUser($request);
         $data = $request->validated();
         if($user->isBanned()){
             AuthService::checkEndOfBan($user);
         }
-        $data['userId'] = $user->id;
-        $data['topicId'] = $topic->id;
-        $post = Post::firstOrCreate($data);
-        if(!empty($data['replyId'])){
-
-            $replyPost = Post::find($data['replyId']);
-            //dd($replyPost->author);
-            $replyPost->author->notify(new ReplyPost($user, $post, $topic));
-        }
-        return response()->json([
-            'message' => 'The post created.',
-            'post' => new PostResource($post),
-        ]);
+        $post = $this->createPost($topic, $user, $data);
+        return $post
+            ? $this->postCreatedSuccessfullyResponse($post)
+            : $this->failedToCreatePostResponse();
     }
 
     /**
@@ -56,14 +43,8 @@ class PostController extends Controller
     protected function update(PostUpdateRequest $request, Post $post): \Illuminate\Http\JsonResponse
     {
         $data = $request->validated();
-        foreach ($data as $key => $value) {
-            $post->$key = $value;
-        }
-        $post->save();
-        return response()->json([
-            'message' => 'The post updated.',
-            'post' => new PostResource($post),
-        ]);
+        $post = $this->updatePost($post, $data);
+        return response()->json(['message' => 'Post update successfully.']);
     }
 
     /**
@@ -87,9 +68,8 @@ class PostController extends Controller
     {
         $user = AuthService::getAuthorizedUser($request);
         $post->bookmarks()->toggle($user->id);
-        // post liked event
+        // post liked notify
         $post->author->notify(new PostLiked($user, $post));
         return response()->json(['message' => 'Success.']);
     }
-
 }

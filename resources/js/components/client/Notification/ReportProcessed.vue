@@ -38,7 +38,9 @@
                     Сообщение было удаленно.
                 </span>
                 <span v-if="notification.data.object==='topic'">
-                    Тема была удаленна.
+                    Тема
+                    <span v-if="notification.data.action==='deleted'">была удаленна.</span>
+                    <span v-if="notification.data.action==='rejected'">была снята с публикации до исправления нарушений.</span>
                 </span>
             </div>
         </div>

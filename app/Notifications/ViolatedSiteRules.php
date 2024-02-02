@@ -15,19 +15,21 @@ class ViolatedSiteRules extends Notification
 {
     use Queueable;
 
-    public Report $report;
-    public string $message;
-    public $warn;
-    public null|BanList $ban;
+    protected Report $report;
+    protected string $message;
+    protected $warn;
+    protected null|BanList $ban;
+    protected string $action;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct(Report $report, string $message, $warn, null|BanList $ban = null)
+    public function __construct(Report $report, string $message, $warn, string $action,null|BanList $ban = null)
     {
         $this->report = $report;
         $this->message = $message;
         $this->warn = $warn;
+        $this->action = $action;
         $this->ban = $ban;
     }
 
@@ -51,6 +53,7 @@ class ViolatedSiteRules extends Notification
         return [
             'object' => $this->report->object,
             'reason' => $this->report->reason->name,
+            'action' => $this->action,
             'post' => $this->report->post !==null ? new PostNotificationResource($this->report->post) : null,
             'topic' => $this->report->topic,
             'message' => $this->message,

@@ -10,10 +10,21 @@
                 <!-- topic -->
                 <span v-if="notification.data.object==='topic'">
                     Ваша тема
-                    <router-link v-if="notification.data.topic.id" :to="{ name:'topic', params:{id: notification.data.topic.id}}" class="inner-link">
-                        {{ notification.data.topic.title }}
-                    </router-link>.
-                    была удаллена.
+                    <!-- if deleted -->
+                    <template v-if="notification.data.action==='deleted'">
+                        <router-link v-if="notification.data.topic.id" :to="{ name:'topic', params:{id: notification.data.topic.id}}" class="inner-link">
+                            {{ notification.data.topic.title }}
+                        </router-link>
+                        была удаллена.
+                    </template>
+                    <!-- if add to rejected list -->
+                    <template v-if="notification.data.action==='rejected'">
+                        <router-link v-if="notification.data.topic.id" :to="{ name:'topic.unapproved', params:{id: notification.data.topic.id}}" class="inner-link">
+                            {{ notification.data.topic.title }}
+                        </router-link>
+                        была снят с публикации. Исправьте указзанное нарушение.
+                    </template>
+
                 </span>
 
                 <!-- post -->

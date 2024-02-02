@@ -62,20 +62,21 @@ export default {
                 api.post(`/api/client/topic/${id}`, data)
                     .then(response => {
                         if (response.data) {
-                            resolve(response);
-                            toast.success(response.data.message ?? "updated.");
-                            if (response.data.topic.status === 1) {
+                            toast.success(response.data.message ?? "Updated.");
+                            console.log("TOPIC", response.data.topic)
+                            if (response.data.topic.status == 1) {
                                 router.push({name: 'topic', params: {id: response.data.topic.id}})
                             } else {
                                 router.push({name: 'topic.unapproved', params: {id: response.data.topic.id}})
                             }
+                            resolve(response);
                         } else {
                             reject(response);
                         }
                     })
                     .catch(error => {
-                        reject(error);
                         toast.error(error.response.data.message ?? "Error!");
+                        reject(error);
                     })
             })
         },

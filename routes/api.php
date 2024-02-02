@@ -73,8 +73,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum']], function (
     Route::group(['prefix' => 'report'], function () {
         Route::post('/', [\App\Http\Controllers\Admin\Report\ReportController::class, 'index']);
         Route::get('/{report}', [\App\Http\Controllers\Admin\Report\ReportController::class, 'show']);
-        Route::post('/{report}/reject', [\App\Http\Controllers\Admin\Report\ReportController::class, 'reject']);
-        Route::post('/{report}/processing', [\App\Http\Controllers\Admin\Report\ReportController::class, 'processing']);
+        Route::post('/{report}/reject', \App\Http\Controllers\Admin\Report\ReportRejectController::class);
+        Route::post('/{report}/processing', \App\Http\Controllers\Admin\Report\ReportProcessingController::class);
     });
 
     Route::group(['prefix' => 'user'], function () {
@@ -143,7 +143,7 @@ Route::group(['prefix' => 'client'], function () {
 
             // is user not banned
             Route::group(['middleware' => 'isNotBanList'], function () {
-                Route::post('/', [\App\Http\Controllers\Client\Topic\TopicController::class, 'store'])
+                Route::post('/', \App\Http\Controllers\Client\Topic\StoreTopicController::class)
                     ->middleware('permissions:can-create-topic');
                 Route::group(['prefix' => '{topic}/post'], function () {
                     Route::post('/', [\App\Http\Controllers\Client\Post\PostController::class, 'store'])
@@ -202,7 +202,7 @@ Route::group(['prefix' => 'client'], function () {
         Route::group(['prefix' => '{topic}'], function () {
             Route::get('/', [\App\Http\Controllers\Client\Topic\TopicController::class, 'show']);
             Route::get('/edit', [\App\Http\Controllers\Client\Topic\TopicController::class, 'edit']);
-            Route::put('/', [\App\Http\Controllers\Client\Topic\TopicController::class, 'update']);
+            Route::put('/', \App\Http\Controllers\Client\Topic\UpdateTopicController::class);
             Route::delete('/', [\App\Http\Controllers\Client\Topic\TopicController::class, 'delete']);
             Route::group(['prefix' => 'posts'], function () {
                 Route::get('/', [\App\Http\Controllers\Client\Topic\TopicPostController::class, 'index']);
