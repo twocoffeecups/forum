@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Report;
+namespace App\Services\Dashboard\Report;
 
 use App\Http\Resources\Admin\Report\ReportResource;
 use App\Models\BanList;

@@ -42,7 +42,7 @@ export default {
                     data.append('tags[]', tag.value);
                 });
 
-                axios.post(`/api/client/forum/${id}/topics`, data)
+                axios.post(`/api/forum/${id}/topics`, data)
                     .then(response => {
                         if(response.data){
                             commit('setTopics', response.data.data);

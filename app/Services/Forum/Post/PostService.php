@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Post;
+namespace App\Services\Forum\Post;
 
 use App\Http\Resources\Client\Post\PostResource;
 use App\Models\Post;

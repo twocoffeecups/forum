@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Services\Topic;
+namespace App\Services\Forum\Topic;
 
 use App\Http\Resources\Client\Topic\TopicResource;
 use App\Models\Topic;
 use App\Models\TopicImage;
-use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;

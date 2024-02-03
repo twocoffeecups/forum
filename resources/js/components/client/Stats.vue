@@ -32,7 +32,7 @@ export default{
 
     methods: {
         getStats() {
-            axios.get('/api/client/forum-stats')
+            axios.get('/api/forum/sidebar/stats')
                 .then(res => {
                     this.stats = res.data.stats;
                     this.lastUser = res.data.stats.lastUser;

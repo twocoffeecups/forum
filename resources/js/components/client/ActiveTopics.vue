@@ -28,7 +28,7 @@ export default{
 
     methods: {
         getActiveTopics() {
-            axios.get('/api/client/active-topics')
+            axios.get('/api/forum/sidebar/active-topics')
                 .then(response => {
                     this.topics = response.data.topics;
                 })

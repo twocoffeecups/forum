@@ -48,7 +48,7 @@ export default {
     actions: {
         getTopic({dispatch, commit}, id) {
             return new Promise((resolve, reject) => {
-                axios.get(`/api/client/topic/${id}`)
+                axios.get(`/api/topic/${id}`)
                     .then(response => {
                         if (response.data) {
                             commit('setTopic', response.data.topic);

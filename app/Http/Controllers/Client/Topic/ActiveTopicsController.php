@@ -15,6 +15,7 @@ class ActiveTopicsController extends Controller
 
     /**
      * @return \Illuminate\Http\JsonResponse
+     * Get 4 active topics
      */
     public function __invoke(): \Illuminate\Http\JsonResponse
     {

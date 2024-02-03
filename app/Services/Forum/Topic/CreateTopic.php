@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Topic;
+namespace App\Services\Forum\Topic;
 
 use App\Http\Resources\Client\Topic\TopicResource;
 use App\Models\Topic;

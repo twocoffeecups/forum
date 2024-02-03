@@ -137,7 +137,7 @@ export default {
                 let data = new FormData();
                 data.append('avatar', avatar);
                 data.append('_method', 'patch');
-                api.post(`/api/client/${1}/profile/update-avatar`, data)
+                api.post(`/api/client/profile/update-avatar`, data)
                     .then(res => {
                         if (res.data) {
                             toast.success(res.data.message);

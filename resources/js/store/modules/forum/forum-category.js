@@ -20,7 +20,7 @@ export default {
     actions: {
         getForumCategories({dispatch, commit}) {
             return new Promise((resolve, reject) => {
-                axios.get(`/api/client/forum`)
+                axios.get(`/api/forum`)
                     .then(response => {
                         if(response.data){
                             commit('setForumCategories', response.data.forums)

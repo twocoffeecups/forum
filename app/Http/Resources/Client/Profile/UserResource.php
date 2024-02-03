@@ -29,7 +29,7 @@ class UserResource extends JsonResource
             'status' => $this->checkOnlineStatus(),
             'lastVisit' => Carbon::parse($this->lastVisit)->diffForHumans(),
             'lastVisitTime' => $this->lastVisit,
-            'avatar' => $this->avatar,
+            'avatar' => $this->getAvatar(),
             'role' => $this->role->slug,
             'permissions' => $permissions,
             'canReadAdminDashboard' => $this->canReadAdminDashboard(),

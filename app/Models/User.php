@@ -24,7 +24,6 @@ class User extends Authenticatable implements MustVerifyEmail
         'login',
         'firstName',
         'lastName',
-        'avatar',
         'email',
         'lastVisit',
         'roleId',
@@ -103,6 +102,15 @@ class User extends Authenticatable implements MustVerifyEmail
     public function banDetails()
     {
         return $this->hasMany(BanList::class, 'userId', 'id')->first();
+    }
+
+    /**
+     * @return string|bool
+     * If avatar path and url not null - return avatar url
+     */
+    public function getAvatar(): string|bool
+    {
+        return $this->avatarPath && $this->avatarUrl ? $this->avatarUrl : false;
     }
 
     /**

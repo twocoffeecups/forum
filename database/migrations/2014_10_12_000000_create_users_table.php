@@ -20,7 +20,8 @@ return new class extends Migration
             $table->string('lastName')->nullable();
             $table->string('email')->unique();
             $table->timestamp('lastVisit')->nullable();
-            $table->string('avatar')->default('http://127.0.0.1:8000/storage/default/default-avatar.png');
+            $table->string('avatarPath')->nullable();
+            $table->string('avatarUrl')->nullable();
             $table->foreignId('roleId')->default(2)->index('roleIdx')->constrained('roles')->cascadeOnUpdate()->cascadeOnDelete();
             $table->unsignedTinyInteger('isWarned')->default(0);
             $table->timestamp('email_verified_at')->nullable();

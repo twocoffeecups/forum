@@ -28,7 +28,7 @@ export default {
     actions: {
         search({dispatch, commit}, [search, page = 1]){
             return new Promise((resolve, reject) => {
-                axios.post(`/api/client/search`, {
+                axios.post(`/api/forum/search`, {
                     page: page,
                     search: search,
                 })

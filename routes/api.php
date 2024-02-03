@@ -17,7 +17,9 @@ use Illuminate\Support\Facades\Route;
 //    return $request->user();
 //});
 
-// admin dashboard routes
+/**
+ * Admin dashboard routes
+ */
 Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum']], function () {
 //Route::group(['prefix' => 'admin'], function () {
     Route::group(['prefix' => 'forum'], function () {
@@ -110,37 +112,31 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum']], function (
 
 
 });
-
-// Client routes
+/**
+ * Client routes
+ */
 Route::group(['prefix' => 'client'], function () {
     Route::get('/profile', [\App\Http\Controllers\Client\Profile\ProfileController::class, 'index'])->middleware('auth:sanctum');
 
-
-    Route::post('/search', \App\Http\Controllers\Client\Search\SearchController::class);
-
     // User auth api routes
-    Route::group(['prefix' => '{user}', 'middleware' => 'auth:sanctum'], function () {
+    Route::group(['middleware' => 'auth:sanctum'], function () {
         // Get user profile details
         Route::get('/profile-details', [\App\Http\Controllers\Client\Profile\ProfileController::class, 'index']);
-
         // Edit profile
         Route::group(['prefix' => 'profile'], function () {
             Route::put('/profile-update', [\App\Http\Controllers\Client\Profile\ProfileController::class, 'update']);
             Route::put('/edit-password', [\App\Http\Controllers\Client\Profile\ProfileController::class, 'updatePassword']);
-            Route::patch('/update-avatar', [\App\Http\Controllers\Client\Profile\ProfileController::class, 'updateAvatar']);
+            Route::patch('/update-avatar', \App\Http\Controllers\Client\Profile\UpdateAvatarController::class);
         });
     });
 
     // auth user topic routes
     Route::group(['prefix' => 'topic'], function () {
-
         Route::group(['middleware' => 'auth:sanctum'], function () {
-
             Route::group(['prefix' => '{topic}'], function () {
                 Route::patch('/like', [\App\Http\Controllers\Client\Topic\TopicController::class, 'like']);
                 Route::patch('/bookmarks', [\App\Http\Controllers\Client\Topic\TopicController::class, 'addToBookmarks']);
             });
-
             // is user not banned
             Route::group(['middleware' => 'isNotBanList'], function () {
                 Route::post('/', \App\Http\Controllers\Client\Topic\StoreTopicController::class)
@@ -152,8 +148,6 @@ Route::group(['prefix' => 'client'], function () {
                 });
             });
         });
-
-
         // resources for created and updated form
         Route::get('/form-resources', [\App\Http\Controllers\Client\Topic\TopicController::class, 'createFormResources']);
         Route::get('/tags', [\App\Http\Controllers\Client\Topic\TopicController::class, 'createFormResources']);
@@ -163,62 +157,61 @@ Route::group(['prefix' => 'client'], function () {
         Route::patch('/bookmarks', [\App\Http\Controllers\Client\Post\PostController::class, 'bookmarks']);
         Route::patch('/like', [\App\Http\Controllers\Client\Post\PostController::class, 'like']);
     });
-
-    // TODO: создать маршкруты типа /api/forum
-    // Forum api routes
-    Route::group(['prefix' => 'forum'], function () {
-
-        Route::get('/', [\App\Http\Controllers\Client\Forum\ForumCategoryController::class, 'index']);
-        //Route::get('/forum-tree', [\App\Http\Controllers\Client\Forum\ForumCategoryController::class, 'getForumTree']);
-
-        Route::group(['prefix' => '{forum}'], function () {
-            Route::get('/', \App\Http\Controllers\Client\Forum\ForumController::class);
-            Route::post('/topics', \App\Http\Controllers\Client\Forum\ForumTopicController::class);
-        });
-    });
-
     // Report
     Route::group(['prefix' => 'report'], function () {
         Route::get('/', \App\Http\Controllers\Client\Report\ReportController::class);
         Route::post('/', \App\Http\Controllers\Client\Report\SendReportController::class)->middleware('auth:sanctum');
     });
-
-    // members profile
+    // user profile
     Route::group(['prefix' => 'user-profile/{user}'], function () {
         Route::get('/', [\App\Http\Controllers\Client\UserProfile\UserProfileController::class, 'index']);
         Route::post('/topics', [\App\Http\Controllers\Client\UserProfile\UserProfileController::class, 'getUserTopics']);
         Route::post('/posts', [\App\Http\Controllers\Client\UserProfile\UserProfileController::class, 'getUserPosts']);
     });
-
-    // TODO: создать маршкруты типа /api/forum
+});
+/**
+ * Forum routes
+ */
+Route::group(['prefix' => 'forum'], function () {
+    // Forum api routes
+    Route::get('/', [\App\Http\Controllers\Client\Forum\ForumCategoryController::class, 'index']);
+    Route::group(['prefix' => '{forum}'], function () {
+        Route::get('/', \App\Http\Controllers\Client\Forum\ForumController::class);
+        Route::post('/topics', \App\Http\Controllers\Client\Forum\ForumTopicController::class);
+    });
+    Route::post('/search', \App\Http\Controllers\Client\Search\SearchController::class);
     // Forum stats
-    Route::get('/forum-stats', \App\Http\Controllers\Client\Forum\ForumStatsController::class);
-    Route::get('/active-topics', \App\Http\Controllers\Client\Topic\ActiveTopicsController::class);
+    Route::group(['prefix' => 'sidebar'], function () {
+        Route::get('/stats', \App\Http\Controllers\Client\Forum\ForumStatsController::class);
+        Route::get('/active-topics', \App\Http\Controllers\Client\Topic\ActiveTopicsController::class);
+    });
+});
+/**
+ *
+ */
 
-    // TODO: создать маршкруты типа /api/forum
-    // topics
-    Route::group(['prefix' => 'topic'], function () {
-        Route::get('/', [\App\Http\Controllers\Client\Topic\TopicController::class, 'index']);
-        Route::group(['prefix' => '{topic}'], function () {
-            Route::get('/', [\App\Http\Controllers\Client\Topic\TopicController::class, 'show']);
-            Route::get('/edit', [\App\Http\Controllers\Client\Topic\TopicController::class, 'edit']);
-            Route::put('/', \App\Http\Controllers\Client\Topic\UpdateTopicController::class);
-            Route::delete('/', [\App\Http\Controllers\Client\Topic\TopicController::class, 'delete']);
-            Route::group(['prefix' => 'posts'], function () {
-                Route::get('/', [\App\Http\Controllers\Client\Topic\TopicPostController::class, 'index']);
-            });
-
+/**
+ * Topic routes
+ */
+Route::group(['prefix' => 'topic'], function () {
+    Route::get('/', [\App\Http\Controllers\Client\Topic\TopicController::class, 'index']);
+    Route::group(['prefix' => '{topic}'], function () {
+        Route::get('/', [\App\Http\Controllers\Client\Topic\TopicController::class, 'show']);
+        Route::get('/edit', [\App\Http\Controllers\Client\Topic\TopicController::class, 'edit']);
+        Route::put('/', \App\Http\Controllers\Client\Topic\UpdateTopicController::class);
+        Route::delete('/', [\App\Http\Controllers\Client\Topic\TopicController::class, 'delete']);
+        Route::group(['prefix' => 'posts'], function () {
+            Route::get('/', [\App\Http\Controllers\Client\Topic\TopicPostController::class, 'index']);
         });
     });
-
     // Unapproved topics
-    Route::group(['prefix' => 'unapproved-topic'], function () {
+    Route::group(['prefix' => 'unapproved'], function () {
         Route::get('/{topic}', [\App\Http\Controllers\Client\Topic\UnapprovedTopicController::class, 'show'])->middleware('auth:sanctum');
     });
-
 });
-
-// auth for rest api
+/**
+ * Auth for rest api routes
+ */
 Route::group(['prefix' => 'auth'], function () {
 
     Route::post('/sign-up', \App\Http\Controllers\Api\Auth\RegisterController::class);

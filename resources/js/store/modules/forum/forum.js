@@ -30,7 +30,7 @@ export default {
     actions: {
         getForum({dispatch, commit}, id){
             return new Promise((resolve, reject) => {
-                axios.get(`/api/client/forum/${id}`)
+                axios.get(`/api/forum/${id}`)
                     .then(response => {
                         if(response.data){
                             commit('setForum', response.data.forum);

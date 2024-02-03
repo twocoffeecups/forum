@@ -10,7 +10,7 @@ use App\Models\Topic;
 use App\Models\User;
 use App\Notifications\PostLiked;
 use App\Services\AuthService;
-use App\Services\Post\PostService;
+use App\Services\Forum\Post\PostService;
 use Illuminate\Http\Request;
 
 class PostController extends Controller

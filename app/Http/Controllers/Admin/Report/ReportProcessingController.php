@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin\Report;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Report\ProcessReportRequest;
 use App\Models\Report;
-use App\Services\Report\ReportProcessing;
+use App\Services\Dashboard\Report\ReportProcessing;
 
 class ReportProcessingController extends Controller
 {

@@ -24,7 +24,6 @@ class ProfileController extends Controller
      */
     public function index(Request $request): \Illuminate\Http\JsonResponse
     {
-//        $user = $request->user();
         $user = AuthService::getAuthorizedUser($request);
         if($user->isBanned()){
             AuthService::checkEndOfBan($user);
@@ -64,29 +63,4 @@ class ProfileController extends Controller
         $user->save();
         return response()->json(['message' => 'You password updated!'], 200);
     }
-
-    /**
-     * @param User $user
-     * @param AvatarRequest $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    protected function updateAvatar(User $user, AvatarRequest $request): \Illuminate\Http\JsonResponse
-    {
-        $data = $request->validated();
-        // if user avatar exists
-        if($user->avatar !== null){
-            if(Storage::disk('public')->exists($user->avatar)){
-                Storage::disk('public')->delete($user->avatar);
-            }
-        }
-        // new avatar
-        $avatarName = md5(Carbon::now() . '_' . $data['avatar']->getClientOriginalName()) . '.' . $data['avatar']->getClientOriginalExtension();
-        $avatarPath = Storage::disk('public')->putFileAs('/users/avatars', $data['avatar'], $avatarName);
-
-        $user->avatar = url('/storage/' . $avatarPath);
-        $user->save();
-
-        return response()->json(['message'=>'New avatar saved.']);
-    }
-
 }

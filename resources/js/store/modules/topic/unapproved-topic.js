@@ -34,7 +34,7 @@ export default {
     actions: {
         getTopic({dispatch, commit}, id) {
             return new Promise((resolve, reject) => {
-                api.get(`/api/client/unapproved-topic/${id}`)
+                api.get(`/api/topic/unapproved/${id}`)
                     .then(response => {
                         if (response.data) {
                             commit('setTopic', response.data.topic);

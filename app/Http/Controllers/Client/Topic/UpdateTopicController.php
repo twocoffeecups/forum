@@ -3,25 +3,9 @@
 namespace App\Http\Controllers\Client\Topic;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\Client\Topic\TopicStoreRequest;
 use App\Http\Requests\Api\Client\Topic\TopicUpdateRequest;
-use App\Http\Resources\Client\Topic\TopicEditResource;
-use App\Http\Resources\Client\Topic\TopicForumTreeResource;
-use App\Http\Resources\Client\Topic\TopicResource;
-use App\Http\Resources\Client\Topic\TopicTagFormResource;
-use App\Libraries\TreeBuilder;
-use App\Models\Forum;
-use App\Models\Tag;
 use App\Models\Topic;
-use App\Models\TopicImage;
-use App\Notifications\TopicLiked;
-use App\Services\AuthService;
-use App\Services\Topic\CreateTopic;
-use App\Services\Topic\UpdateTopic;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
+use App\Services\Forum\Topic\UpdateTopic;
 
 class UpdateTopicController extends Controller
 {
