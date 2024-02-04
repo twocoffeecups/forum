@@ -65,6 +65,15 @@ class Topic extends Model
         return $this->hasOne(RejectedTopic::class, 'topicId', 'id');
     }
 
+    public function views(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(TopicView::class, 'topicId', 'id');
+    }
+
+    public function numberOfViews(): int
+    {
+        return (int) $this->views()->count();
+    }
 
     public static function allApprovedTopics()
     {

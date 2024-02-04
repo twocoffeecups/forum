@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\TopicVisits;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -70,5 +71,6 @@ class Kernel extends HttpKernel
         'permissions' => \App\Http\Middleware\PermissionMiddleware::class,
         'isNotBanList' => \App\Http\Middleware\IsNotBanList::class,
         'canReadAdminDashboard' => \App\Http\Middleware\CanReadAdminDashboard::class,
+        'topicVisits' => TopicVisits::class,
     ];
 }

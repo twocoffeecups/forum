@@ -187,10 +187,6 @@ Route::group(['prefix' => 'forum'], function () {
     });
 });
 /**
- *
- */
-
-/**
  * Topic routes
  */
 Route::group(['prefix' => 'topic'], function () {

@@ -11,6 +11,7 @@ use App\Libraries\TreeBuilder;
 use App\Models\Forum;
 use App\Models\Tag;
 use App\Models\Topic;
+use App\Models\TopicView;
 use App\Notifications\TopicLiked;
 use App\Services\AuthService;
 use Illuminate\Http\Request;
@@ -34,6 +35,8 @@ class TopicController extends Controller
     protected function show(Request $request, Topic $topic): \Illuminate\Http\JsonResponse
     {
         // TODO: сделать доступ только автору и админу/модератору
+        /** save topic view */
+        TopicView::saveView($request, $topic);
         if ($topic->status === 0) {
             return response()->json(['message' => "Topic not found"], 404);
         }
