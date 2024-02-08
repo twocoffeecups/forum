@@ -12,7 +12,6 @@
 
     <!-- Main -->
 <!--    <PageContent/>-->
-
 </template>
 
 <script>
@@ -32,9 +31,6 @@ export default {
 
     methods: {
         getUserInfo(){
-            // if(this.$store.getters['dashboardProfile/getToken']){
-            //     this.$store.dispatch('dashboardProfile/getUserDetails');
-            // }
             if(this.$store.getters['middleware/token']){
                 this.$store.dispatch('profile/getUserDetails');
             }

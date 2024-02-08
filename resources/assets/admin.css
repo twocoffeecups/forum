@@ -1,0 +1,27 @@
+body{
+    overflow: auto;
+}
+
+.sidebar_nav_link{
+    color: white;
+}
+
+.sidebar_nav_link[aria-expanded="true"] .sidebar_icon{
+    transform: rotate(180deg);
+}
+
+@media screen and (min-width: 960px){
+    .sidebar{
+        transform: none;
+        visibility: visible !important;
+    }
+
+    main{
+        margin-left: 280px;
+        overflow-x: hidden;
+    }
+
+    .header{
+        margin-left: 280px;
+    }
+}

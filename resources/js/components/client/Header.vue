@@ -2,7 +2,8 @@
     <nav class="navbar navbar-expand-lg  bg-body-tertiary" style="background: #f7f7f7">
         <div class="container py-3">
             <a class="navbar-brand" href="#">
-                <img src="../../assets/img/logo.png" class="img-fluid" alt="Bootstrap" width="135" height="55">
+                <img v-if="logo" :src="logo.imageUrl ?? '../../assets/img/logo.png'" class="img-fluid" alt="Bootstrap" width="115" height="40">
+                <span v-if="!showOnlyLogo.value" class="mx-1 p-1 h4 fw-bold">{{ forumName.value ?? 'Forum' }}</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#navbarOffcanvasLg"
                     aria-controls="navbarOffcanvasLg" aria-label="Toggle navigation">
@@ -77,6 +78,7 @@ import ProfileDropdown from "./ProfileDropdown.vue";
 import LanguageSwitcher from "./LanguageSwitcher.vue";
 import SearchButton from "./SearchButton.vue";
 import {mapGetters} from "vuex";
+import api from "../../api/api";
 
 export default {
     name: "Header",
@@ -95,11 +97,13 @@ export default {
         selectedTheme() {
             return this.theme === true ? 'Dark' : 'Light'
         },
-
         ...mapGetters({
-            isLoggedIn: 'auth/isLoggedIn'
+            forumName: 'forumSettings/getForumName',
+            isLoggedIn: 'auth/isLoggedIn',
+            logo: 'forumSettings/getLogo',
+            showOnlyLogo: 'forumSettings/getShowOnlyLogo',
         })
-    }
+    },
 }
 </script>
 

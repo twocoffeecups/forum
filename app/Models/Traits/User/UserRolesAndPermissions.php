@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\trait;
+namespace App\Models\Traits\User;
 
 use App\Models\Permission;
 use App\Models\Role;

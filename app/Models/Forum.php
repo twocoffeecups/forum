@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\trait\AdjacencyList;
+use App\Models\Traits\AdjacencyList;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\trait;
+namespace App\Models\Traits;
 
 trait AdjacencyList
 {

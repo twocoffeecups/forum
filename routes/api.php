@@ -22,6 +22,9 @@ use Illuminate\Support\Facades\Route;
  */
 Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum']], function () {
 //Route::group(['prefix' => 'admin'], function () {
+    /**
+     * Forums
+     */
     Route::group(['prefix' => 'forum'], function () {
         Route::post('/all', [\App\Http\Controllers\Admin\Forum\ForumController::class, 'index']);
         Route::post('/', [\App\Http\Controllers\Admin\Forum\ForumController::class, 'store']);
@@ -34,6 +37,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum']], function (
         Route::get('/forum-tree', [\App\Http\Controllers\Admin\Forum\ForumController::class, 'forumFormTree']);
     });
 
+    /**
+     * Tags
+     */
     Route::group(['prefix' => 'tag'], function () {
         Route::get('/', [\App\Http\Controllers\Admin\Forum\TagController::class, 'index']);
         Route::post('/', [\App\Http\Controllers\Admin\Forum\TagController::class, 'store'])
@@ -44,6 +50,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum']], function (
         Route::patch('/{tag}/status', [\App\Http\Controllers\Admin\Forum\TagController::class, 'status']);
     });
 
+    /**
+     * Topics
+     */
     Route::group(['prefix' => 'topic'], function () {
         Route::get('/', [\App\Http\Controllers\Admin\Topic\TopicController::class, 'index']);
         Route::get('/{topic}', [\App\Http\Controllers\Admin\Topic\TopicController::class, 'show']);
@@ -52,6 +61,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum']], function (
         Route::delete('/{topic}', [\App\Http\Controllers\Admin\Topic\TopicController::class, 'delete']);
     });
     Route::get('/rejected-topics', [\App\Http\Controllers\Admin\Topic\TopicController::class, 'rejectedTopic']);
+
 
     Route::group(['prefix' => 'topic-reject-type'], function () {
         Route::get('/', [\App\Http\Controllers\Admin\TopicRejectType\TopicRejectTypeController::class, 'index']);
@@ -62,6 +72,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum']], function (
         Route::patch('/{rejectType}/change-status', [\App\Http\Controllers\Admin\TopicRejectType\TopicRejectTypeController::class, 'status']);
     });
 
+    /**
+     * Report reason types
+     */
     Route::group(['prefix' => 'report-reason-type'], function () {
         Route::post('/', [\App\Http\Controllers\Admin\Report\ReportReasonTypeController::class, 'index']);
         Route::get('/for-form', [\App\Http\Controllers\Admin\Report\ReportReasonTypeController::class, 'allForForm']);
@@ -72,6 +85,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum']], function (
         Route::patch('/{reportReason}/change-status', [\App\Http\Controllers\Admin\Report\ReportReasonTypeController::class, 'status']);
     });
 
+    /**
+     * Reports
+     */
     Route::group(['prefix' => 'report'], function () {
         Route::post('/', [\App\Http\Controllers\Admin\Report\ReportController::class, 'index']);
         Route::get('/{report}', [\App\Http\Controllers\Admin\Report\ReportController::class, 'show']);
@@ -79,6 +95,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum']], function (
         Route::post('/{report}/processing', \App\Http\Controllers\Admin\Report\ReportProcessingController::class);
     });
 
+    /**
+     * Users
+     */
     Route::group(['prefix' => 'user'], function () {
         Route::get('/', [\App\Http\Controllers\Admin\User\UserController::class, 'index']);
         Route::post('/register', [\App\Http\Controllers\Admin\User\UserController::class, 'register']);
@@ -90,6 +109,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum']], function (
         });
     });
 
+    /**
+     * Roles
+     */
     Route::group(['prefix' => 'role'], function () {
         Route::get('/', [\App\Http\Controllers\Admin\Role\RoleController::class, 'index']);
         Route::post('/', [\App\Http\Controllers\Admin\Role\RoleController::class, 'store']);
@@ -100,6 +122,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum']], function (
         Route::put('/{role}/change-permissions', [\App\Http\Controllers\Admin\Role\RoleController::class, 'changePermissions']);
     });
 
+    /**
+     * Permissions
+     */
     Route::group(['prefix' => 'permission'], function () {
         Route::get('/', [\App\Http\Controllers\Admin\Permission\PermissionController::class, 'index']);
         Route::get('/permission-for-form', [\App\Http\Controllers\Admin\Permission\PermissionController::class, 'getPermissionsForForm']);
@@ -110,7 +135,36 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum']], function (
         Route::post('/{permission}/status', [\App\Http\Controllers\Admin\Permission\PermissionController::class, 'status']);
     });
 
-
+    /**
+     * Settings
+     */
+    Route::group(['prefix' => 'settings'], function () {
+        Route::get('/get-all', \App\Http\Controllers\Admin\Setting\SettingController::class);
+        /** Forum name */
+        Route::group(['prefix' => 'forum-name'], function () {
+            Route::patch('/', \App\Http\Controllers\Admin\Setting\General\ForumName\ChangeForumNameController::class);
+        });
+        /** Forum meta (description, keywords) */
+        Route::group(['prefix' => 'meta'], function () {
+            Route::patch('/', \App\Http\Controllers\Admin\Setting\General\Meta\ChangeMetaController::class);
+        });
+        /** Max posts on topic page */
+        Route::patch('/posts-on-page', \App\Http\Controllers\Admin\Setting\Topic\ChangePostsOnPageController::class);
+        /** Max topics on forum page */
+        Route::patch('/topics-on-page', \App\Http\Controllers\Admin\Setting\Topic\ChangeTopicOnPageController::class);
+        /** Logo */
+        Route::group(['prefix' => 'logo'], function () {
+            Route::patch('/', \App\Http\Controllers\Admin\Setting\Styles\Logo\UpdateLogoController::class);
+        });
+        /** Background */
+        Route::group(['prefix' => 'background'], function () {
+            Route::patch('/', \App\Http\Controllers\Admin\Setting\Styles\Background\UpdateBackgroundController::class);
+        });
+        /** Show only logo */
+        Route::group(['prefix' => 'show-only-logo'], function () {
+            Route::patch('/', \App\Http\Controllers\Admin\Setting\General\ForumName\DontShowForumNameController::class);
+        });
+    });
 });
 /**
  * Client routes
@@ -169,6 +223,7 @@ Route::group(['prefix' => 'client'], function () {
         Route::post('/posts', [\App\Http\Controllers\Client\UserProfile\UserProfileController::class, 'getUserPosts']);
     });
 });
+
 /**
  * Forum routes
  */
@@ -185,7 +240,13 @@ Route::group(['prefix' => 'forum'], function () {
         Route::get('/stats', \App\Http\Controllers\Client\Forum\ForumStatsController::class);
         Route::get('/active-topics', \App\Http\Controllers\Client\Topic\ActiveTopicsController::class);
     });
+
+    /**
+     * Forum settings
+     */
+//    Route::get('/settings', \App\Http\Controllers\Forum\Settings\SettingController::class);
 });
+Route::get('/settings', \App\Http\Controllers\Forum\Settings\SettingController::class);
 /**
  * Topic routes
  */
@@ -205,6 +266,7 @@ Route::group(['prefix' => 'topic'], function () {
         Route::get('/{topic}', [\App\Http\Controllers\Client\Topic\UnapprovedTopicController::class, 'show'])->middleware('auth:sanctum');
     });
 });
+
 /**
  * Auth for rest api routes
  */
@@ -221,6 +283,4 @@ Route::group(['prefix' => 'auth'], function () {
     Route::get('/email/resend', [\App\Http\Controllers\Api\Auth\VerificationController::class, 'resend']);
     Route::post('/password/forgot', \App\Http\Controllers\Api\Auth\ForgotPasswordController::class);
     Route::post('/password/reset', \App\Http\Controllers\Api\Auth\ResetPasswordController::class);
-
-
 });

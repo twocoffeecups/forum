@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\trait\UserRolesAndPermissions;
+use App\Models\Traits\User\UserRolesAndPermissions;
 use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

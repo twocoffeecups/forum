@@ -16,6 +16,10 @@
           integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
 
+    <!-- Meta -->
+    <meta name="description" content="{{ $description }}">
+    <meta name="keywords" content="{{ $keywords }}">
+
     @vite(['resources/sass/app.scss', 'resources/js/app.js', 'resources/js/assets/main.css'])
     {{--    <link rel="stylesheet" href="resources/js/assets/main.css">--}}
     <style>

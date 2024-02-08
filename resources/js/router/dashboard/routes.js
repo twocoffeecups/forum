@@ -80,6 +80,11 @@ const routes = [
                 name: 'admin.reports.reason',
                 component: () => import('../../views/admin/ReportReasonTypes.vue'),
             },
+            {
+                path: 'settings',
+                name: 'dashboard.settings',
+                component: () => import('../../views/admin/Settings.vue'),
+            },
         ],
     },
     {

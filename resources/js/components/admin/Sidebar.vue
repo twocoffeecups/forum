@@ -121,11 +121,11 @@
                 </li>
 
                 <!-- Settings -->
-                <!-- TODO: сделать страницу -->
-<!--                <li class="nav-item w-100" data-bs-dismiss="offcanvas">-->
-<!--                    <a href="#" class="nav-link sidebar_nav_link px-0 align-middle">-->
-<!--                        <i class="fas fa-cog"></i> <span class="ms-1e d-sm-inline">Settings</span> </a>-->
-<!--                </li>-->
+                <li class="nav-item w-100" data-bs-dismiss="offcanvas">
+                    <router-link :to="{name: 'dashboard.settings'}" class="nav-link sidebar_nav_link px-0 align-middle">
+                        <i class="fas fa-cog"></i> <span class="ms-1e d-sm-inline">Settings</span>
+                    </router-link>
+                </li>
 
             </ul>
         </div>

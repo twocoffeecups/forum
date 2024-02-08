@@ -9,7 +9,12 @@
 export default {
     name: "App",
 
+    beforeCreate() {
+        //this.getSettings();
+    },
+
     created() {
+        this.getSettings();
         this.checkUserInState();
         this.getUserInfo();
     },
@@ -23,6 +28,10 @@ export default {
             if(this.$store.getters['middleware/token']){
                 this.$store.dispatch('profile/getUserDetails');
             }
+        },
+
+        getSettings(){
+            this.$store.dispatch('forumSettings/getSettings');
         },
     },
 }

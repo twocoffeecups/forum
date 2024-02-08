@@ -20,6 +20,8 @@ import adminReport from "./modules/admin/report/report";
 import reportReason from "./modules/admin/report/report-reason-types";
 import dashboardProfile from  "./modules/admin/profile/profile";
 import search from "./modules/forum/search";
+import forumSettings from "./modules/settings/settings";
+import adminSettings from "./modules/admin/settings/settings";
 
 const store = createStore({
     //namespaced: true,
@@ -45,6 +47,8 @@ const store = createStore({
         reportReason,
         dashboardProfile,
         search,
+        forumSettings,
+        adminSettings,
     },
 });
 

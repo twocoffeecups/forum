@@ -24,6 +24,5 @@ Route::group(['prefix' => 'admin', 'middleware' => 'canReadAdminDashboard'], fun
 });
 
 Route::get('{page}', \App\Http\Controllers\Main\MainController::class)
-    ->where('page', '(.*)');
-
-
+    ->where('page', '(.*)')
+    ->name('forum.main');
