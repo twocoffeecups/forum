@@ -56,9 +56,7 @@
                                 mainPost.updated_at
                             }}</small></p>
 
-                        <p class="card-text" v-html="mainPost.content">
-
-                        </p>
+                        <p class="card-text" v-html="mainPost.content"></p>
 
                         <div v-if="images.length!==0" class="card">
                             <div class="card-header img-card-header" role="button" @click="toggleImageContainer()"
@@ -78,10 +76,10 @@
 
                         <div class="mt-2 d-block d-md-flex d-lg-flex d-xl-flex justify-content-between">
                             <div class="flex-sm-row d-md-flex d-lg-flex d-xl-flex text-center">
-                                <button @click.prevent="likeTopic(topicAuthor.id)"
-                                        class="btn btn-xs text-muted has-icon"><i class="far fa-heart"></i>
-                                    {{ mainPost.rating }}
-                                </button>
+                                <LikeButton :id="this.$route.params.id"
+                                            :type="`topic`"
+                                            :author-id="topicAuthor.id"
+                                            :rating="mainPost.rating" />
                                 <span class="text-muted d-inline-flex align-items-center align-middle ml-4">
                                     <i class="fa fa-eye text-muted fsize-3"></i>&nbsp; <span
                                     class="align-middle"> {{ mainPost.views }}</span>
@@ -93,6 +91,7 @@
                                         data-bs-toggle="modal" data-bs-target="#report-form">
                                     {{ $t('component.post.report') }}
                                 </button>
+
 <!--                                <button v-if="userId!==topicAuthor.id && isLoggedIn"-->
 <!--                                        class="btn btn-sm btn-outline-primary mx-1">{{-->
 <!--                                        $t('component.post.reply')-->
@@ -105,9 +104,16 @@
                                     }}
                                 </router-link>
 
-                                <span v-if="userId!==topicAuthor.id && isLoggedIn" @click.prevent="addToBookmarks"
-                                      role="button" class="mx-1 p-2"> <i class="far fa-bookmark"
-                                                                         style="cursor: pointer"></i></span>
+                                <BookmarksButton :id="this.$route.params.id"
+                                                 :type="`topic`"
+                                                 :author-id="topicAuthor.id" />
+<!--                                <span v-if="userId!==topicAuthor.id && isLoggedIn" @click.prevent="addToBookmarks"-->
+<!--                                      role="button" class="mx-1 p-2">-->
+<!--                                        <i class="far fa-bookmark"-->
+<!--                                                                         style="cursor: pointer">-->
+
+<!--                                    </i>-->
+<!--                                </span>-->
                             </div>
 
                         </div>
@@ -121,10 +127,12 @@
 <script>
 import TopicMainPostHeader from './TopicMainPostHeader.vue';
 import {mapGetters,} from "vuex";
+import LikeButton from "./LikeButton.vue";
+import BookmarksButton from "./BookmarksButton.vue";
 
 export default {
     name: "TopicMainPost",
-    components: {TopicMainPostHeader},
+    components: {BookmarksButton, LikeButton, TopicMainPostHeader},
     props: ['mainPost', 'images'],
     emits: ['report'],
 
@@ -133,6 +141,7 @@ export default {
             topicAuthor: 'topic/getTopicAuthor',
             userId: 'auth/getUserId',
             isLoggedIn: 'auth/isLoggedIn',
+            userTopicsLikes: 'profile/getLikedTopics',
         }),
     },
 
@@ -149,15 +158,6 @@ export default {
 
         report(reportId) {
             this.$emit('report', {id: reportId, type: 'topic', userId: this.topicAuthor.id});
-        },
-
-        likeTopic(authorId) {
-            if (this.userId === authorId) return;
-            this.$store.dispatch('topic/likeTopic', this.$route.params.id);
-        },
-
-        addToBookmarks() {
-            this.$store.dispatch('topic/addToBookmarks', this.$route.params.id);
         },
     }
 }

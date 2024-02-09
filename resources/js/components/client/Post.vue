@@ -65,10 +65,10 @@
 
                         <div class="mt-2 d-block d-md-flex d-lg-flex d-xl-flex justify-content-between align-items-end">
                             <div class="flex-sm-row d-md-flex d-lg-flex d-xl-flex text-center">
-                                <button @click.prevent="likePost(userId, post.author.id)"
-                                        class="btn btn-xs text-muted has-icon"><i
-                                    class="far fa-heart"></i> {{ post.rating }}
-                                </button>
+                                <LikeButton :id="post.id"
+                                            :type="`post`"
+                                            :author-id="post.author.id"
+                                            :rating="post.rating"/>
                                 <span class="text-muted d-inline-flex align-items-center align-middle ml-4">
                                   <i class="fa fa-eye text-muted fsize-3"></i>&nbsp; <span
                                     class="align-middle"> {{ post.views }}</span>
@@ -85,11 +85,14 @@
                                     {{ $t('component.post.reply') }}
                                 </button>
                                 <!--                <button class="btn btn-sm btn-outline-secondary mx-1">{{ $t('component.post.edit') }}</button>-->
-                                <span v-if="userId!==post.author.id && isLoggedIn"
-                                      @click.prevent="addPostToBookmarks(post.id)" class="mx-1 p-2">
-                                    <i class="far fa-bookmark"
-                                       style="cursor: pointer"></i>
-                                </span>
+<!--                                <span v-if="userId!==post.author.id && isLoggedIn"-->
+<!--                                      @click.prevent="addPostToBookmarks(post.id)" class="mx-1 p-2">-->
+<!--                                    <i class="far fa-bookmark"-->
+<!--                                       style="cursor: pointer"></i>-->
+<!--                                </span>-->
+                                <BookmarksButton :id="post.id"
+                                                 :type="`post`"
+                                                 :author-id="post.author.id" />
                             </div>
 
                         </div>
@@ -102,9 +105,12 @@
 
 <script>
 import {mapGetters} from "vuex";
+import LikeButton from "./LikeButton.vue";
+import BookmarksButton from "./BookmarksButton.vue";
 
 export default {
     name: "Post",
+    components: {BookmarksButton, LikeButton},
     props: ['post'],
     emits: ['reply', 'report',],
 
@@ -133,15 +139,6 @@ export default {
 
         report(reportId) {
             this.$emit('report', {id: reportId, type: 'post', userId: this.post.author.id})
-        },
-
-        likePost(userId, authorId) {
-            if (userId == authorId) return;
-            this.$store.dispatch('likePost', this.post.id);
-        },
-
-        addPostToBookmarks() {
-            this.$store.dispatch('addPostToBookmarks', this.post.id);
         },
     }
 }

@@ -9,7 +9,7 @@ use App\Services\AuthService;
 use App\Services\Forum\Topic\CreateTopic;
 use Illuminate\Support\Facades\DB;
 
-class StoreTopicController extends Controller
+class StoreController extends Controller
 {
     use CreateTopic;
 

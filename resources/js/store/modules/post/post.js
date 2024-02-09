@@ -30,15 +30,17 @@ export default {
             });
         },
 
-        likePost({dispatch}, postId) {
+        likePost({dispatch, commit}, postId) {
             return new Promise((resolve, reject) => {
                 api.patch(`/api/client/post/${postId}/like`)
-                    .then(res => {
-                        if (res.data) {
-                            resolve(res);
+                    .then(response => {
+                        if (response.data) {
+                            resolve(response);
+                            commit('topic/updatePostRating', response.data.post, {root: true})
+                            dispatch('profile/getUserDetails', '', {root: true})
                             toast.success("Like post!");
                         } else {
-                            reject(res);
+                            reject(response);
                         }
                     })
                     .catch(error => {
@@ -51,12 +53,13 @@ export default {
         addPostToBookmarks({dispatch}, postId) {
             return new Promise((resolve, reject) => {
                 api.patch(`/api/client/post/${postId}/bookmarks`)
-                    .then(res => {
-                        if (res.data) {
-                            resolve(res);
+                    .then(response => {
+                        if (response.data) {
+                            resolve(response);
+                            dispatch('profile/getUserDetails', '', {root: true})
                             toast.success("Post save in bookmarks.");
                         } else {
-                            reject(res);
+                            reject(response);
                         }
                     })
                     .catch(error => {

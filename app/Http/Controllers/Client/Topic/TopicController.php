@@ -70,31 +70,6 @@ class TopicController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @param Topic $topic
-     * @return \Illuminate\Http\JsonResponse
-     */
-    protected function like(Request $request, Topic $topic): \Illuminate\Http\JsonResponse
-    {
-        $user = AuthService::getAuthorizedUser($request);
-        $topic->likes()->toggle($user->id);
-        $topic->author->notify(new TopicLiked($topic, $user));
-        return response()->json(['message' => 'Change topic like.']);
-    }
-
-    /**
-     * @param Request $request
-     * @param Topic $topic
-     * @return \Illuminate\Http\JsonResponse
-     */
-    protected function addToBookmarks(Request $request, Topic $topic): \Illuminate\Http\JsonResponse
-    {
-        $user = AuthService::getAuthorizedUser($request);
-        $user->topicBookmarks()->toggle($topic->id);
-        return response()->json(['message' => 'Change topic bookmarks.']);
-    }
-
-    /**
      * @return \Illuminate\Http\JsonResponse
      */
     public function createFormResources(): \Illuminate\Http\JsonResponse

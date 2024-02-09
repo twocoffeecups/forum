@@ -69,12 +69,15 @@ export default {
             });
         },
 
-        likeTopic({dispatch}, id){
+        likeTopic({dispatch, commit}, id){
             return new Promise((resolve, reject) => {
                 api.patch(`/api/client/topic/${id}/like`)
                     .then(response => {
                         if(response.data){
                             toast.success(response.data.message ?? "Success.");
+                            commit('updateTopicRating', response.data.topic)
+                            //commit('setTopic', response.data.topic);
+                            dispatch('profile/getUserDetails', '', {root: true})
                             resolve(response);
                         }else {
                             reject(response);
@@ -93,6 +96,7 @@ export default {
                     .then(response => {
                         if(response.data){
                             toast.success(response.data.message ?? "Success.");
+                            dispatch('profile/getUserDetails', '', {root: true})
                             resolve(response);
                         }else {
                             reject(response);
@@ -125,6 +129,18 @@ export default {
 
         pushPost(state, payload) {
             state.posts.push(payload);
+        },
+
+        updateTopicRating(state, payload){
+            state.topic.rating = payload.rating;
+        },
+
+        updatePostRating(state, payload){
+            state.posts.map(post => {
+                if(post.id === payload.id){
+                    post.rating = payload.rating
+                }
+            })
         },
     },
 }

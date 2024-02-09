@@ -7,7 +7,7 @@ use App\Http\Requests\Api\Client\Topic\TopicUpdateRequest;
 use App\Models\Topic;
 use App\Services\Forum\Topic\UpdateTopic;
 
-class UpdateTopicController extends Controller
+class UpdateController extends Controller
 {
     use UpdateTopic;
 

@@ -188,17 +188,17 @@ Route::group(['prefix' => 'client'], function () {
     Route::group(['prefix' => 'topic'], function () {
         Route::group(['middleware' => 'auth:sanctum'], function () {
             Route::group(['prefix' => '{topic}'], function () {
-                Route::patch('/like', [\App\Http\Controllers\Client\Topic\TopicController::class, 'like']);
-                Route::patch('/bookmarks', [\App\Http\Controllers\Client\Topic\TopicController::class, 'addToBookmarks']);
+                Route::patch('/like', \App\Http\Controllers\Client\Topic\LikeController::class);
+                Route::patch('/bookmarks', \App\Http\Controllers\Client\Topic\BookmarkController::class);
             });
             // is user not banned
             Route::group(['middleware' => 'isNotBanList'], function () {
-                Route::post('/', \App\Http\Controllers\Client\Topic\StoreTopicController::class)
+                Route::post('/', \App\Http\Controllers\Client\Topic\StoreController::class)
                     ->middleware('permissions:can-create-topic');
                 Route::group(['prefix' => '{topic}/post'], function () {
-                    Route::post('/', [\App\Http\Controllers\Client\Post\PostController::class, 'store'])
+                    Route::post('/', [\App\Http\Controllers\Client\Post\StoreController::class, 'store'])
                         ->middleware('permissions:can-create-post');
-                    Route::patch('/', [\App\Http\Controllers\Client\Post\PostController::class, 'update']);
+                    Route::patch('/', [\App\Http\Controllers\Client\Post\UpdateController::class, 'update']);
                 });
             });
         });
@@ -208,8 +208,8 @@ Route::group(['prefix' => 'client'], function () {
     });
 
     Route::group(['prefix' => 'post/{post}'], function () {
-        Route::patch('/bookmarks', [\App\Http\Controllers\Client\Post\PostController::class, 'bookmarks']);
-        Route::patch('/like', [\App\Http\Controllers\Client\Post\PostController::class, 'like']);
+        Route::patch('/bookmarks', \App\Http\Controllers\Client\Post\BookmarkController::class);
+        Route::patch('/like', \App\Http\Controllers\Client\Post\LikeController::class);
     });
     // Report
     Route::group(['prefix' => 'report'], function () {
@@ -255,7 +255,7 @@ Route::group(['prefix' => 'topic'], function () {
     Route::group(['prefix' => '{topic}'], function () {
         Route::get('/', [\App\Http\Controllers\Client\Topic\TopicController::class, 'show']);
         Route::get('/edit', [\App\Http\Controllers\Client\Topic\TopicController::class, 'edit']);
-        Route::put('/', \App\Http\Controllers\Client\Topic\UpdateTopicController::class);
+        Route::put('/', \App\Http\Controllers\Client\Topic\UpdateController::class);
         Route::delete('/', [\App\Http\Controllers\Client\Topic\TopicController::class, 'delete']);
         Route::group(['prefix' => 'posts'], function () {
             Route::get('/', [\App\Http\Controllers\Client\Topic\TopicPostController::class, 'index']);
