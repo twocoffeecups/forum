@@ -82,20 +82,25 @@
                                     </div>
                                 </th>
                                 <td>
-                                    <EditForumModal :id="forum.id" :forum-name="forum.name"
-                                                    :forum-description="forum.description"/>
+                                    <div class="d-flex justify-content-around">
+                                        <EditForumModal :id="forum.id" :forum-name="forum.name"
+                                                        :forum-description="forum.description"/>
 
-                                    <span class="text-primary mx-2" title="Show">
+                                        <span class="text-primary mx-2" title="Show" style="font-size: 1.3em">
                                         <router-link :to="{ name:'admin.forum.details', params:{id: forum.id} }">
                                           <i class="fas fa-eye"></i>
                                         </router-link>
                                     </span>
 
 
-                                    <span v-if="checkHasPermissions([AccessPermissions.CAN_DELETE_FORUM])" @click="deleteForum(forum.id)" role="button" class="text-danger mx-2"
-                                          title="Edit">
+                                        <span v-if="checkHasPermissions([AccessPermissions.CAN_DELETE_FORUM])"
+                                              @click="deleteForum(forum.id)" role="button" class="text-danger mx-2"
+                                              style="font-size: 1.3em"
+                                              title="Edit">
                                       <i class="fas fa-trash"></i>
                                   </span>
+                                    </div>
+
                                 </td>
                             </tr>
                             </tbody>

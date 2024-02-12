@@ -118,7 +118,6 @@
 </template>
 
 <script>
-import {useToast} from "vue-toastification";
 import {mapGetters} from "vuex";
 import api from "../../api/api";
 
@@ -130,12 +129,6 @@ export default {
             topic: 'adminTopic/getTopic',
             topicTags: 'adminTopic/getTopicTags',
         }),
-    },
-
-    setup() {
-        return {
-            t$: useToast(),
-        }
     },
 
     data() {
@@ -156,7 +149,6 @@ export default {
 
     methods: {
         deleteTopic() {
-            // console.log("Topic deleted, reason:", this.deleteReason)
             const data = new FormData();
             data.append('reason', this.deleteReason);
             data.append('_method', 'delete');
@@ -174,7 +166,6 @@ export default {
             const data = new FormData();
             data.append('reasonId', this.selectedReasonId);
             data.append('message', this.message)
-            //console.log(data);
             this.$store.dispatch('adminTopic/rejectTopic', [this.$route.params.id, data]);
         },
 

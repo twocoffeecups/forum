@@ -2,9 +2,6 @@
 
 namespace App\Http\Resources\Client\Notification;
 
-use App\Http\Resources\Client\Forum\TopicResource;
-use App\Http\Resources\Client\Post\PostResource;
-use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class BanNotificationResource extends JsonResource

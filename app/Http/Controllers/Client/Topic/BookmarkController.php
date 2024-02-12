@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Client\Topic;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Client\Topic\TopicResource;
+use App\Http\Resources\Forum\Topic\TopicResource;
 use App\Models\Topic;
 use App\Services\AuthService;
 use Illuminate\Http\Request;

@@ -121,13 +121,11 @@ export default {
 
     computed: {
         ...mapGetters({
-            //topics: 'adminTopic/getTopics',
             topics: 'rejectedTopic/getTopics',
         })
     },
 
     mounted() {
-        //this.$store.dispatch('adminTopic/getTopics');
         this.$store.dispatch('rejectedTopic/getTopics');
     },
 }

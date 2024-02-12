@@ -24,11 +24,11 @@
 
                 <!-- TODO: сделать показ уведомлений и поиск -->
                 <div class="d-flex flex-row">
-                    <div class="nav-item mx-2">
-                        <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
-                            <i class="far fa-comments" style="font-size: 1.3em"></i>
-                        </a>
-                    </div>
+<!--                    <div class="nav-item mx-2">-->
+<!--                        <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">-->
+<!--                            <i class="far fa-comments" style="font-size: 1.3em"></i>-->
+<!--                        </a>-->
+<!--                    </div>-->
 
                     <div class="nav-item mx-2">
                         <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">

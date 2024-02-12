@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Client\Post;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Client\Post\PostResource;
+use App\Http\Resources\Forum\Post\PostResource;
 use App\Models\Post;
 use App\Models\User;
 use App\Notifications\PostLiked;

@@ -53,6 +53,7 @@
                         <td>{{ permission.created_at }}</td>
                         <td>
                             <span @click="deletePermission(permission.id)" role="button" class="text-danger mx-2"
+                                  style="font-size: 1.3em"
                                   title="Delete">
                                 <i class="fas fa-trash"></i>
                             </span>
@@ -72,43 +73,26 @@
 </template>
 
 <script>
-import AddRoleModal from "../../components/admin/AddRoleModal.vue";
-import axios from "axios";
-import api from "../../api/api";
-import VueMultiselect from "vue-multiselect";
-import {useToast} from "vue-toastification";
 import CreatePermissionModal from "../../components/admin/CreatePermissionModal.vue";
+import {mapGetters} from "vuex";
 
 export default {
     name: "Role",
-    components: {CreatePermissionModal,},
+    components: {CreatePermissionModal},
 
-    setup() {
-        return {
-            t$: useToast(),
-        }
+    computed: {
+        ...mapGetters({
+            permissions: 'permissions/getPermission'
+        })
     },
 
     mounted() {
         this.getPermissions();
     },
 
-    data() {
-        return {
-            permissions: [],
-        }
-    },
-
-
     methods: {
         getPermissions() {
-            api.get('/api/admin/permission')
-                .then(res => {
-                    this.permissions = res.data.permissions;
-                })
-                .catch(error => {
-                    console.log(error);
-                })
+            this.$store.dispatch('permissions/getPermissions');
         },
 
         renamePermission(event, id, permissionName) {
@@ -118,27 +102,11 @@ export default {
                 this.t$.error("Min length 6.");
                 return;
             }
-            api.patch(`/api/admin/permission/${id}`, {
-                name: name,
-            })
-                .then(res => {
-                    this.t$.success("Permission rename successfully.")
-                })
-                .catch(error => {
-                    console.log(error)
-                    this.t$.error("Error!");
-                })
+            this.$store.dispatch('permissions/renamePermission', name);
         },
 
         deletePermission(id) {
-            api.delete(`/api/admin/permission/${id}`)
-                .then(res => {
-                    this.t$.success("Permission delete successfully.");
-                    this.getPermissions();
-                })
-                .catch(error => {
-                    this.t$.error(error.response.data.message ?? "Error!");
-                })
+            this.$store.dispatch('permissions/deletePermission', id);
         },
     }
 }

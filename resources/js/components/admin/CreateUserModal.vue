@@ -25,6 +25,30 @@
                     </div>
 
                     <div class="mb-3">
+                        <div :class="{ error: v$.registrationForm.firstName.$errors.length }">
+                            <label for="firstName" class="col-form-label">First name:</label>
+                            <input @blur="v$.registrationForm.firstName.$touch" type="text" v-model="registrationForm.firstName"
+                                   class="form-control" id="firstName">
+                            <div class="input-errors" v-for="error of v$.registrationForm.firstName.$errors"
+                                 :key="error.$uid">
+                                <div class="error-msg text-danger">{{ error.$message }}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <div :class="{ error: v$.registrationForm.lastName.$errors.length }">
+                            <label for="lastName" class="col-form-label">Last name:</label>
+                            <input @blur="v$.registrationForm.lastName.$touch" type="text" v-model="registrationForm.lastName"
+                                   class="form-control" id="lastName">
+                            <div class="input-errors" v-for="error of v$.registrationForm.lastName.$errors"
+                                 :key="error.$uid">
+                                <div class="error-msg text-danger">{{ error.$message }}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
                         <label for="role" class="col-form-label">Role</label>
                         <select @change="selectedRole = $event.target.value" id="role" class="form-control">
                             <option v-for="role in roles" :value="role.id">{{ role.name }}</option>
@@ -57,16 +81,20 @@
 <script>
 import {useVuelidate} from '@vuelidate/core'
 import {required, minLength, maxLength, email, sameAs} from '@vuelidate/validators'
-import api from "../../api/api";
-import {useToast} from "vue-toastification";
+import {mapGetters} from "vuex";
 
 export default {
     name: "CreateUserModal",
 
+    computed: {
+        ...mapGetters({
+            roles: 'adminUsers/getRoles',
+        }),
+    },
+
     setup() {
         return {
             v$: useVuelidate(),
-            t$: useToast(),
         }
     },
 
@@ -82,7 +110,6 @@ export default {
                 lastName: null,
                 email: null,
             },
-            roles: [],
             selectedRole: null,
         }
     },
@@ -91,8 +118,8 @@ export default {
         return {
             registrationForm: {
                 login: {required, minLength: minLength(5), maxLength: maxLength(32)},
-                firstName: {minLength:minLength(2), maxLength:maxLength(64)},
-                lastName: {minLength:minLength(2), maxLength:maxLength(64)},
+                firstName: {required, minLength:minLength(2), maxLength:maxLength(64)},
+                lastName: {required, minLength:minLength(2), maxLength:maxLength(64)},
                 email: {required, email, minLength: minLength(7), maxLength: maxLength(32)},
             },
         }
@@ -107,22 +134,12 @@ export default {
                     data.append(key, value)
                 }
                 data.append('roleId', this.selectedRole);
-                api.post('/api/admin/user/register', data)
-                    .then(res => {
-                        this.t$.success(res.data.message)
-                    })
-                    .catch(error => {
-                        this.t$.error(error.response.data.message ?? "Error!");
-                        console.log(error);
-                    })
+                this.$store.dispatch('adminUsers/createUser', data);
             }
         },
 
         getRoles() {
-            api.get('/api/admin/role')
-                .then(res => {
-                    this.roles = res.data.roles;
-                })
+            this.$store.dispatch('adminUsers/getRoles');
         },
     }
 }

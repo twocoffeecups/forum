@@ -4,10 +4,9 @@ namespace App\Http\Controllers\Client\UserProfile;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Paginate\PaginateRequest;
-use App\Http\Resources\Client\Forum\TopicResource;
-use App\Http\Resources\Client\Post\PostResource;
-use App\Http\Resources\Client\Profile\UserResource;
 use App\Http\Resources\Client\UserProfile\UserProfileResource;
+use App\Http\Resources\Forum\Forum\TopicResource;
+use App\Http\Resources\Forum\Post\PostResource;
 use App\Models\Post;
 use App\Models\Topic;
 use App\Models\User;

@@ -3,17 +3,15 @@
 namespace App\Http\Controllers\Client\Topic;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Client\Topic\TopicEditResource;
-use App\Http\Resources\Client\Topic\TopicForumTreeResource;
-use App\Http\Resources\Client\Topic\TopicResource;
-use App\Http\Resources\Client\Topic\TopicTagFormResource;
+use App\Http\Resources\Forum\Topic\TopicEditResource;
+use App\Http\Resources\Forum\Topic\TopicForumTreeResource;
+use App\Http\Resources\Forum\Topic\TopicResource;
+use App\Http\Resources\Forum\Topic\TopicTagFormResource;
 use App\Libraries\TreeBuilder;
 use App\Models\Forum;
 use App\Models\Tag;
 use App\Models\Topic;
 use App\Models\TopicView;
-use App\Notifications\TopicLiked;
-use App\Services\AuthService;
 use Illuminate\Http\Request;
 
 class TopicController extends Controller

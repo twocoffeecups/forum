@@ -3,11 +3,10 @@
 namespace App\Http\Controllers\Client\Topic;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\Client\Topic\TopicStoreRequest;
-use App\Http\Resources\Client\Topic\TopicResource;
+use App\Http\Requests\Client\Topic\TopicStoreRequest;
+use App\Http\Resources\Forum\Topic\TopicResource;
 use App\Services\AuthService;
 use App\Services\Forum\Topic\CreateTopic;
-use Illuminate\Support\Facades\DB;
 
 class StoreController extends Controller
 {

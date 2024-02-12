@@ -35,7 +35,6 @@
 <script>
 import {useVuelidate} from '@vuelidate/core'
 import {required, minLength, maxLength,} from '@vuelidate/validators'
-import api from "../../api/api";
 import {useToast} from "vue-toastification";
 
 export default {
@@ -64,17 +63,7 @@ export default {
         create() {
             this.v$.$validate();
             if (!this.v$.$error) {
-                api.post('/api/admin/permission', {
-                    name: this.name
-                })
-                    .then(res => {
-                        this.t$.success(res.data.message)
-                    })
-                    .catch(error => {
-                        this.t$.error(error.data.message ?? "Error!");
-                    })
-            } else {
-                this.t$.error("Validation error!");
+                this.$store.dispatch('permissions/createPermission', this.name);
             }
         },
     }

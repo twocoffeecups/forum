@@ -3,12 +3,8 @@
 namespace App\Http\Controllers\Client\Topic;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Client\Stats\ForumStatsResource;
-use App\Http\Resources\Client\Stats\LastUserResource;
-use App\Http\Resources\Client\Topic\ActiveTopicResource;
-use App\Models\Post;
+use App\Http\Resources\Forum\Topic\ActiveTopicResource;
 use App\Models\Topic;
-use App\Models\User;
 
 class ActiveTopicsController extends Controller
 {

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api\Auth;
 
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\Client\Profile\RegisterRequest;
+use App\Http\Requests\Client\Profile\RegisterRequest;
 use App\Http\Resources\Client\Profile\UserResource;
 use App\Models\Role;
 use App\Models\User;

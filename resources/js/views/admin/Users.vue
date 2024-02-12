@@ -98,27 +98,25 @@
 <script>
 import api from "../../api/api";
 import CreateUserModal from "../../components/admin/CreateUserModal.vue";
+import {mapGetters} from "vuex";
 
 export default {
     name: "Users",
     components: {CreateUserModal},
 
+    computed: {
+        ...mapGetters({
+            users: 'adminUsers/getUsers',
+        }),
+    },
+
     mounted() {
         this.getUsers();
     },
 
-    data() {
-        return {
-            users: [],
-        }
-    },
-
     methods: {
         getUsers() {
-            api.get('/api/admin/user')
-                .then(res => {
-                    this.users = res.data.users;
-                })
+            this.$store.dispatch('adminUsers/getUsers');
         }
     },
 }

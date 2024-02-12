@@ -26,86 +26,86 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum']], function (
      * Forums
      */
     Route::group(['prefix' => 'forum'], function () {
-        Route::post('/all', [\App\Http\Controllers\Admin\Forum\ForumController::class, 'index']);
-        Route::post('/', [\App\Http\Controllers\Admin\Forum\ForumController::class, 'store']);
-        Route::get('/{forum}', [\App\Http\Controllers\Admin\Forum\ForumController::class, 'show']);
-        Route::patch('/{forum}', [\App\Http\Controllers\Admin\Forum\ForumController::class, 'update']);
-        Route::delete('/{forum}', [\App\Http\Controllers\Admin\Forum\ForumController::class, 'delete']);
-        Route::patch('/{forum}/change-status', [\App\Http\Controllers\Admin\Forum\ForumController::class, 'status']);
-        Route::patch('/{forum}/change-parent-forum', [\App\Http\Controllers\Admin\Forum\ForumController::class, 'changeParentForum']);
-        Route::patch('/{forum}/change-type', [\App\Http\Controllers\Admin\Forum\ForumController::class, 'changeForumType']);
-        Route::get('/forum-tree', [\App\Http\Controllers\Admin\Forum\ForumController::class, 'forumFormTree']);
+        Route::post('/all', [\App\Http\Controllers\Dashboard\Forum\ForumController::class, 'index']);
+        Route::post('/', [\App\Http\Controllers\Dashboard\Forum\ForumController::class, 'store']);
+        Route::get('/{forum}', [\App\Http\Controllers\Dashboard\Forum\ForumController::class, 'show']);
+        Route::patch('/{forum}', [\App\Http\Controllers\Dashboard\Forum\ForumController::class, 'update']);
+        Route::delete('/{forum}', [\App\Http\Controllers\Dashboard\Forum\ForumController::class, 'delete']);
+        Route::patch('/{forum}/change-status', [\App\Http\Controllers\Dashboard\Forum\ForumController::class, 'status']);
+        Route::patch('/{forum}/change-parent-forum', [\App\Http\Controllers\Dashboard\Forum\ForumController::class, 'changeParentForum']);
+        Route::patch('/{forum}/change-type', [\App\Http\Controllers\Dashboard\Forum\ForumController::class, 'changeForumType']);
+        Route::get('/forum-tree', [\App\Http\Controllers\Dashboard\Forum\ForumController::class, 'forumFormTree']);
     });
 
     /**
      * Tags
      */
     Route::group(['prefix' => 'tag'], function () {
-        Route::get('/', [\App\Http\Controllers\Admin\Forum\TagController::class, 'index']);
-        Route::post('/', [\App\Http\Controllers\Admin\Forum\TagController::class, 'store'])
+        Route::get('/', [\App\Http\Controllers\Dashboard\Tag\TagController::class, 'index']);
+        Route::post('/', [\App\Http\Controllers\Dashboard\Tag\TagController::class, 'store'])
             ->middleware('permissions:can-create-tag');
-        Route::get('/{tag}', [\App\Http\Controllers\Admin\Forum\TagController::class, 'show']);
-        Route::patch('/{tag}', [\App\Http\Controllers\Admin\Forum\TagController::class, 'update']);
-        Route::delete('/{tag}', [\App\Http\Controllers\Admin\Forum\TagController::class, 'delete']);
-        Route::patch('/{tag}/status', [\App\Http\Controllers\Admin\Forum\TagController::class, 'status']);
+        Route::get('/{tag}', [\App\Http\Controllers\Dashboard\Tag\TagController::class, 'show']);
+        Route::patch('/{tag}', [\App\Http\Controllers\Dashboard\Tag\TagController::class, 'update']);
+        Route::delete('/{tag}', [\App\Http\Controllers\Dashboard\Tag\TagController::class, 'delete']);
+        Route::patch('/{tag}/status', [\App\Http\Controllers\Dashboard\Tag\TagController::class, 'status']);
     });
 
     /**
      * Topics
      */
     Route::group(['prefix' => 'topic'], function () {
-        Route::get('/', [\App\Http\Controllers\Admin\Topic\TopicController::class, 'index']);
-        Route::get('/{topic}', [\App\Http\Controllers\Admin\Topic\TopicController::class, 'show']);
-        Route::patch('/{topic}/resolve', [\App\Http\Controllers\Admin\Topic\TopicController::class, 'resolve']);
-        Route::post('/{topic}/reject', [\App\Http\Controllers\Admin\Topic\TopicController::class, 'reject']);
-        Route::delete('/{topic}', [\App\Http\Controllers\Admin\Topic\TopicController::class, 'delete']);
+        Route::get('/', [\App\Http\Controllers\Dashboard\Topic\TopicController::class, 'index']);
+        Route::get('/{topic}', [\App\Http\Controllers\Dashboard\Topic\TopicController::class, 'show']);
+        Route::patch('/{topic}/resolve', [\App\Http\Controllers\Dashboard\Topic\TopicController::class, 'resolve']);
+        Route::post('/{topic}/reject', [\App\Http\Controllers\Dashboard\Topic\TopicController::class, 'reject']);
+        Route::delete('/{topic}', [\App\Http\Controllers\Dashboard\Topic\TopicController::class, 'delete']);
     });
-    Route::get('/rejected-topics', [\App\Http\Controllers\Admin\Topic\TopicController::class, 'rejectedTopic']);
+    Route::get('/rejected-topics', [\App\Http\Controllers\Dashboard\Topic\TopicController::class, 'rejectedTopic']);
 
 
     Route::group(['prefix' => 'topic-reject-type'], function () {
-        Route::get('/', [\App\Http\Controllers\Admin\TopicRejectType\TopicRejectTypeController::class, 'index']);
-        Route::post('/', [\App\Http\Controllers\Admin\TopicRejectType\TopicRejectTypeController::class, 'store']);
-        Route::get('/{rejectType}', [\App\Http\Controllers\Admin\TopicRejectType\TopicRejectTypeController::class, 'show']);
-        Route::post('/{rejectType}', [\App\Http\Controllers\Admin\TopicRejectType\TopicRejectTypeController::class, 'update']);
-        Route::delete('/{rejectType}', [\App\Http\Controllers\Admin\TopicRejectType\TopicRejectTypeController::class, 'delete']);
-        Route::patch('/{rejectType}/change-status', [\App\Http\Controllers\Admin\TopicRejectType\TopicRejectTypeController::class, 'status']);
+        Route::get('/', [\App\Http\Controllers\Dashboard\TopicRejectType\TopicRejectTypeController::class, 'index']);
+        Route::post('/', [\App\Http\Controllers\Dashboard\TopicRejectType\TopicRejectTypeController::class, 'store']);
+        Route::get('/{rejectType}', [\App\Http\Controllers\Dashboard\TopicRejectType\TopicRejectTypeController::class, 'show']);
+        Route::post('/{rejectType}', [\App\Http\Controllers\Dashboard\TopicRejectType\TopicRejectTypeController::class, 'update']);
+        Route::delete('/{rejectType}', [\App\Http\Controllers\Dashboard\TopicRejectType\TopicRejectTypeController::class, 'delete']);
+        Route::patch('/{rejectType}/change-status', [\App\Http\Controllers\Dashboard\TopicRejectType\TopicRejectTypeController::class, 'status']);
     });
 
     /**
      * Report reason types
      */
     Route::group(['prefix' => 'report-reason-type'], function () {
-        Route::post('/', [\App\Http\Controllers\Admin\Report\ReportReasonTypeController::class, 'index']);
-        Route::get('/for-form', [\App\Http\Controllers\Admin\Report\ReportReasonTypeController::class, 'allForForm']);
-        Route::post('/store', [\App\Http\Controllers\Admin\Report\ReportReasonTypeController::class, 'store']);
-        Route::get('/{reportReason}', [\App\Http\Controllers\Admin\Report\ReportReasonTypeController::class, 'show']);
-        Route::patch('/{reportReason}', [\App\Http\Controllers\Admin\Report\ReportReasonTypeController::class, 'update']);
-        Route::delete('/{reportReason}', [\App\Http\Controllers\Admin\Report\ReportReasonTypeController::class, 'delete']);
-        Route::patch('/{reportReason}/change-status', [\App\Http\Controllers\Admin\Report\ReportReasonTypeController::class, 'status']);
+        Route::post('/', [\App\Http\Controllers\Dashboard\Report\ReportReasonTypeController::class, 'index']);
+        Route::get('/for-form', [\App\Http\Controllers\Dashboard\Report\ReportReasonTypeController::class, 'allForForm']);
+        Route::post('/store', [\App\Http\Controllers\Dashboard\Report\ReportReasonTypeController::class, 'store']);
+        Route::get('/{reportReason}', [\App\Http\Controllers\Dashboard\Report\ReportReasonTypeController::class, 'show']);
+        Route::patch('/{reportReason}', [\App\Http\Controllers\Dashboard\Report\ReportReasonTypeController::class, 'update']);
+        Route::delete('/{reportReason}', [\App\Http\Controllers\Dashboard\Report\ReportReasonTypeController::class, 'delete']);
+        Route::patch('/{reportReason}/change-status', [\App\Http\Controllers\Dashboard\Report\ReportReasonTypeController::class, 'status']);
     });
 
     /**
      * Reports
      */
     Route::group(['prefix' => 'report'], function () {
-        Route::post('/', [\App\Http\Controllers\Admin\Report\ReportController::class, 'index']);
-        Route::get('/{report}', [\App\Http\Controllers\Admin\Report\ReportController::class, 'show']);
-        Route::post('/{report}/reject', \App\Http\Controllers\Admin\Report\ReportRejectController::class);
-        Route::post('/{report}/processing', \App\Http\Controllers\Admin\Report\ReportProcessingController::class);
+        Route::post('/', [\App\Http\Controllers\Dashboard\Report\ReportController::class, 'index']);
+        Route::get('/{report}', [\App\Http\Controllers\Dashboard\Report\ReportController::class, 'show']);
+        Route::post('/{report}/reject', \App\Http\Controllers\Dashboard\Report\ReportRejectController::class);
+        Route::post('/{report}/processing', \App\Http\Controllers\Dashboard\Report\ReportProcessingController::class);
     });
 
     /**
      * Users
      */
     Route::group(['prefix' => 'user'], function () {
-        Route::get('/', [\App\Http\Controllers\Admin\User\UserController::class, 'index']);
-        Route::post('/register', [\App\Http\Controllers\Admin\User\UserController::class, 'register']);
-        Route::get('/{user}', [\App\Http\Controllers\Admin\User\UserController::class, 'show']);
+        Route::get('/', [\App\Http\Controllers\Dashboard\User\UserController::class, 'index']);
+        Route::post('/register', [\App\Http\Controllers\Dashboard\User\UserController::class, 'register']);
+        Route::get('/{user}', [\App\Http\Controllers\Dashboard\User\UserController::class, 'show']);
 
         Route::group(['prefix' => '{user}'], function () {
-            Route::patch('/{role}/change-role', \App\Http\Controllers\Admin\User\RoleController::class);
-            Route::put('/change-permissions', [\App\Http\Controllers\Admin\User\PermissionController::class, 'changePermission']);
+            Route::patch('/{role}/change-role', \App\Http\Controllers\Dashboard\User\RoleController::class);
+            Route::put('/change-permissions', [\App\Http\Controllers\Dashboard\User\PermissionController::class, 'changePermission']);
         });
     });
 
@@ -113,56 +113,56 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum']], function (
      * Roles
      */
     Route::group(['prefix' => 'role'], function () {
-        Route::get('/', [\App\Http\Controllers\Admin\Role\RoleController::class, 'index']);
-        Route::post('/', [\App\Http\Controllers\Admin\Role\RoleController::class, 'store']);
-        Route::get('/{role}', [\App\Http\Controllers\Admin\Role\RoleController::class, 'show']);
-        Route::patch('/{role}', [\App\Http\Controllers\Admin\Role\RoleController::class, 'update']);
-        Route::delete('/{role}', [\App\Http\Controllers\Admin\Role\RoleController::class, 'delete']);
-        Route::post('/{role}/status', [\App\Http\Controllers\Admin\Role\RoleController::class, 'status']);
-        Route::put('/{role}/change-permissions', [\App\Http\Controllers\Admin\Role\RoleController::class, 'changePermissions']);
+        Route::get('/', [\App\Http\Controllers\Dashboard\Role\RoleController::class, 'index']);
+        Route::post('/', [\App\Http\Controllers\Dashboard\Role\RoleController::class, 'store']);
+        Route::get('/{role}', [\App\Http\Controllers\Dashboard\Role\RoleController::class, 'show']);
+        Route::patch('/{role}', [\App\Http\Controllers\Dashboard\Role\RoleController::class, 'update']);
+        Route::delete('/{role}', [\App\Http\Controllers\Dashboard\Role\RoleController::class, 'delete']);
+        Route::post('/{role}/status', [\App\Http\Controllers\Dashboard\Role\RoleController::class, 'status']);
+        Route::put('/{role}/change-permissions', [\App\Http\Controllers\Dashboard\Role\RoleController::class, 'changePermissions']);
     });
 
     /**
      * Permissions
      */
     Route::group(['prefix' => 'permission'], function () {
-        Route::get('/', [\App\Http\Controllers\Admin\Permission\PermissionController::class, 'index']);
-        Route::get('/permission-for-form', [\App\Http\Controllers\Admin\Permission\PermissionController::class, 'getPermissionsForForm']);
-        Route::post('/', [\App\Http\Controllers\Admin\Permission\PermissionController::class, 'store']);
-        Route::get('/{permission}', [\App\Http\Controllers\Admin\Permission\PermissionController::class, 'show']);
-        Route::patch('/{permission}', [\App\Http\Controllers\Admin\Permission\PermissionController::class, 'update']);
-        Route::delete('/{permission}', [\App\Http\Controllers\Admin\Permission\PermissionController::class, 'delete']);
-        Route::post('/{permission}/status', [\App\Http\Controllers\Admin\Permission\PermissionController::class, 'status']);
+        Route::get('/', [\App\Http\Controllers\Dashboard\Permission\PermissionController::class, 'index']);
+        Route::get('/permission-for-form', [\App\Http\Controllers\Dashboard\Permission\PermissionController::class, 'getPermissionsForForm']);
+        Route::post('/', [\App\Http\Controllers\Dashboard\Permission\PermissionController::class, 'store']);
+        Route::get('/{permission}', [\App\Http\Controllers\Dashboard\Permission\PermissionController::class, 'show']);
+        Route::patch('/{permission}', [\App\Http\Controllers\Dashboard\Permission\PermissionController::class, 'update']);
+        Route::delete('/{permission}', [\App\Http\Controllers\Dashboard\Permission\PermissionController::class, 'delete']);
+        Route::post('/{permission}/status', [\App\Http\Controllers\Dashboard\Permission\PermissionController::class, 'status']);
     });
 
     /**
      * Settings
      */
     Route::group(['prefix' => 'settings'], function () {
-        Route::get('/get-all', \App\Http\Controllers\Admin\Setting\SettingController::class);
+        Route::get('/get-all', \App\Http\Controllers\Dashboard\Setting\SettingController::class);
         /** Forum name */
         Route::group(['prefix' => 'forum-name'], function () {
-            Route::patch('/', \App\Http\Controllers\Admin\Setting\General\ForumName\ChangeForumNameController::class);
+            Route::patch('/', \App\Http\Controllers\Dashboard\Setting\General\ForumName\ChangeForumNameController::class);
         });
         /** Forum meta (description, keywords) */
         Route::group(['prefix' => 'meta'], function () {
-            Route::patch('/', \App\Http\Controllers\Admin\Setting\General\Meta\ChangeMetaController::class);
+            Route::patch('/', \App\Http\Controllers\Dashboard\Setting\General\Meta\ChangeMetaController::class);
         });
         /** Max posts on topic page */
-        Route::patch('/posts-on-page', \App\Http\Controllers\Admin\Setting\Topic\ChangePostsOnPageController::class);
+        Route::patch('/posts-on-page', \App\Http\Controllers\Dashboard\Setting\Topic\ChangePostsOnPageController::class);
         /** Max topics on forum page */
-        Route::patch('/topics-on-page', \App\Http\Controllers\Admin\Setting\Topic\ChangeTopicOnPageController::class);
+        Route::patch('/topics-on-page', \App\Http\Controllers\Dashboard\Setting\Topic\ChangeTopicOnPageController::class);
         /** Logo */
         Route::group(['prefix' => 'logo'], function () {
-            Route::patch('/', \App\Http\Controllers\Admin\Setting\Styles\Logo\UpdateLogoController::class);
+            Route::patch('/', \App\Http\Controllers\Dashboard\Setting\Styles\Logo\UpdateLogoController::class);
         });
         /** Background */
         Route::group(['prefix' => 'background'], function () {
-            Route::patch('/', \App\Http\Controllers\Admin\Setting\Styles\Background\UpdateBackgroundController::class);
+            Route::patch('/', \App\Http\Controllers\Dashboard\Setting\Styles\Background\UpdateBackgroundController::class);
         });
         /** Show only logo */
         Route::group(['prefix' => 'show-only-logo'], function () {
-            Route::patch('/', \App\Http\Controllers\Admin\Setting\General\ForumName\DontShowForumNameController::class);
+            Route::patch('/', \App\Http\Controllers\Dashboard\Setting\General\ForumName\DontShowForumNameController::class);
         });
     });
 });

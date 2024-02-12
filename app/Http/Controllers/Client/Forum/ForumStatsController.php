@@ -3,8 +3,7 @@
 namespace App\Http\Controllers\Client\Forum;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Client\Stats\ForumStatsResource;
-use App\Http\Resources\Client\Stats\LastUserResource;
+use App\Http\Resources\Forum\Stats\LastUserResource;
 use App\Models\Post;
 use App\Models\Topic;
 use App\Models\User;

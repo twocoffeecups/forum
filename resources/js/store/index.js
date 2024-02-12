@@ -22,6 +22,10 @@ import dashboardProfile from  "./modules/admin/profile/profile";
 import search from "./modules/forum/search";
 import forumSettings from "./modules/settings/settings";
 import adminSettings from "./modules/admin/settings/settings";
+import permissions from "./modules/admin/permission/permission";
+import role from "./modules/admin/role/role";
+import tag from "./modules/admin/tag/tag";
+import adminUsers from "./modules/admin/user/user";
 
 const store = createStore({
     //namespaced: true,
@@ -49,6 +53,10 @@ const store = createStore({
         search,
         forumSettings,
         adminSettings,
+        permissions,
+        role,
+        tag,
+        adminUsers,
     },
 });
 

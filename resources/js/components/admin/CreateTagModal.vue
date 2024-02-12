@@ -50,8 +50,6 @@
 <script>
 import {useVuelidate} from '@vuelidate/core';
 import {required, minLength, maxLength,} from '@vuelidate/validators';
-import api from "../../api/api";
-import {useToast} from "vue-toastification";
 
 export default {
     name: "CreateTagModal",
@@ -59,7 +57,6 @@ export default {
     setup() {
         return {
             v$: useVuelidate(),
-            t$: useToast(),
         }
     },
 
@@ -81,16 +78,7 @@ export default {
         createTag() {
             this.v$.$validate();
             if (!this.v$.$error) {
-                api.post('/api/admin/tag', {
-                    name: this.name,
-                    description: this.description
-                })
-                    .then(res => {
-                        this.t$.success("Tag create successfully");
-                    })
-                    .catch(error => {
-                        this.t$.error(error.response.data.message ?? "Error!");
-                    })
+                this.$store.dispatch('tag/createTag', [this.name, this.description]);
             }
         }
     }

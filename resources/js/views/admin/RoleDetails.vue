@@ -7,12 +7,13 @@
             <div class="card-body">
                 <dl class="row">
                     <dt class="col-sm-4">Name</dt>
-                    <dd contenteditable @focusout.prevent="renameRole($event, role.id, role.name)" class="col-sm-8">
+                    <dd contenteditable @focusout.prevent="renameRole($event, role.name)" class="col-sm-8">
                         {{ role.name }}
                     </dd>
                     <dt class="col-sm-4">Permissions</dt>
                     <dd class="col-sm-8">
                         <VueMultiselect
+                            v-if="permissions"
                             id="permissions"
                             v-model="selectedPermissions"
                             :options="permissions"
@@ -29,9 +30,9 @@
                     <dd class="col-sm-8">{{ role.created_at }}</dd>
                     <dt class="col-sm-4">Actions</dt>
                     <dd class="col-sm-8">
-                        <span @click.prevent="deleteRole()" role="button" class="text-danger mx-2" title="Delete">
-                            <i class="fas fa-trash"></i>
-                        </span>
+                        <button @click.prevent="deleteRole()" role="button" class="btn btn-danger">
+                            Delete
+                        </button>
                     </dd>
                 </dl>
             </div>
@@ -134,10 +135,18 @@ import EditForumModal from "../../components/admin/EditForumModal.vue";
 import VueMultiselect from "vue-multiselect";
 import {useToast} from "vue-toastification";
 import api from "../../api/api";
+import {mapGetters} from "vuex";
 
 export default {
     name: "ForumDetail",
     components: {EditForumModal, CreateForumModal, VueMultiselect,},
+
+    computed: {
+        ...mapGetters({
+            role: 'role/getRole',
+            selectedPermissions: 'role/getRolePermissions',
+        }),
+    },
 
     setup() {
         return {
@@ -152,53 +161,40 @@ export default {
 
     data() {
         return {
-            role: [],
             permissions: [],
-            selectedPermissions: [],
         }
     },
 
     methods: {
         getRole() {
-            api.get(`/api/admin/role/${this.$route.params.id}`)
-                .then(res => {
-                    console.log("ROLE DETAILS", res);
-                    this.role = res.data.role;
-                    this.selectedPermissions = res.data.role.permissions;
-                })
-                .catch(error => {
-                    console.log(error);
-                })
+            this.$store.dispatch('role/getRole', this.$route.params.id);
         },
 
         getPermissions() {
-            api.get('/api/admin/permission/permission-for-form')
-                .then(res => {
-                    this.permissions = res.data.permissions
-                })
-                .catch(error => {
-                    console.log(error)
-                })
+            return new Promise((resolve, reject) => {
+                api.get('/api/admin/permission/permission-for-form')
+                    .then(response => {
+                        if(response.data){
+                            this.permissions = response.data.permissions;
+                            resolve(response);
+                        }else{
+                            reject(response);
+                        }
+                    })
+                    .catch(error => {
+                        reject(error)
+                    })
+            });
         },
 
-        renameRole(event, roleId, roleName) {
+        renameRole(event, roleName) {
             let name = event.target.innerText;
             if (name === roleName) return;
             if (name.length < 3) {
                 this.t$.error("Min length 3.");
                 return;
             }
-            api.patch(`/api/admin/role/${roleId}`, {
-                name: name,
-            })
-                .then(res => {
-                    console.log(res)
-                    this.t$.success("Role rename successfully.")
-                })
-                .catch(error => {
-                    console.log(error)
-                    this.t$.error("Error!");
-                })
+            this.$store.dispatch('role/renameRole', [this.$route.params.id, name]);
         },
 
         changePermissions() {
@@ -211,29 +207,15 @@ export default {
                 data.append("permissions[]", permission.value)
             })
             data.append('_method', 'put');
-            api.post(`/api/admin/role/${this.role.id}/change-permissions`, data)
-                .then(response => {
-                    this.t$.success("Permissions change successfully.")
-                })
-                .catch(error => {
-                    this.t$.error("Error!");
-                })
+            this.$store.dispatch('role/changeRolePermissions', [this.$route.params.id, data]);
         },
 
         deleteRole() {
-            console.log('delete role');
             if (this.role.users != 0) {
                 this.t$.error("You cannot delete this role because there are users associated with it. Assign users a different role.");
                 return;
             }
-            api.delete(`/api/admin/role/${this.role.id}/`)
-                .then(res => {
-                    this.t$.success("Role delete successfully.")
-                    this.$router.push({name:'admin.role'})
-                })
-                .catch(error => {
-                    this.t$.error("Error!");
-                })
+            this.$store.dispatch('role/deleteRole', this.role.id);
         },
     }
 }

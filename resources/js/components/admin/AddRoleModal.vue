@@ -49,7 +49,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button @click.prevent="addRole" type="button" class="btn btn-primary" data-bs-dismiss="modal">Add
+                    <button @click.prevent="createRole" type="button" class="btn btn-primary" data-bs-dismiss="modal">Add
                     </button>
                 </div>
             </div>
@@ -61,17 +61,21 @@
 import {useVuelidate} from '@vuelidate/core'
 import {required, minLength, maxLength,} from '@vuelidate/validators'
 import VueMultiselect from "vue-multiselect";
+import {mapGetters} from "vuex";
 import api from "../../api/api";
-import {useToast} from "vue-toastification";
-
 export default {
     name: "AddRoleModal",
     components: {VueMultiselect,},
 
+    computed: {
+        ...mapGetters({
+
+        }),
+    },
+
     setup() {
         return {
             v$: useVuelidate(),
-            t$: useToast(),
         }
     },
 
@@ -95,7 +99,7 @@ export default {
     },
 
     methods: {
-        addRole() {
+        createRole() {
             this.v$.$validate();
             if (!this.v$.$error) {
                 let data = new FormData();
@@ -104,31 +108,30 @@ export default {
                 permissions.forEach(permission => {
                     data.append("permissions[]", permission.value)
                 })
-                api.post('/api/admin/role', data)
-                    .then(res => {
-                        this.t$.success(res.data.message)
-                    })
-                    .catch(error => {
-                        this.t$.error(error.data.message ?? "Error!");
-                    })
-            } else {
-                this.t$.error("Validation error!");
+                this.$store.dispatch('role/createRole', data);
             }
         },
 
         getPermissions() {
-            api.get('/api/admin/permission/permission-for-form')
-                .then(res => {
-                    this.permissions = res.data.permissions
-                })
-                .catch(error => {
-                    console.log(error)
-                })
+            return new Promise((resolve, reject) => {
+                api.get('/api/admin/permission/permission-for-form')
+                    .then(response => {
+                        if(response.data){
+                            this.permissions = response.data.permissions;
+                            resolve(response);
+                        }else{
+                            reject(response);
+                        }
+                    })
+                    .catch(error => {
+                        reject(error)
+                    })
+            });
         },
     }
 }
 </script>
 
-<style scoped>
+<style src="vue-multiselect/dist/vue-multiselect.css">
 
 </style>

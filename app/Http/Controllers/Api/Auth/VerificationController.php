@@ -2,10 +2,9 @@
 namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\Client\Profile\ResendMailRequest;
+use App\Http\Requests\Client\Profile\ResendMailRequest;
 use App\Mail\Client\User\VerifyMail;
 use App\Models\User;
-use Illuminate\Auth\Events\Verified;
 use Illuminate\Support\Facades\Mail;
 
 class VerificationController extends Controller

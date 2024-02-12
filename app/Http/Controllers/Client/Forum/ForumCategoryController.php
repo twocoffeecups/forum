@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Client\Forum;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Client\ForumCategory\ForumCategoryResource;
-use App\Http\Resources\Client\Topic\TopicForumTreeResource;
-use App\Http\Resources\Client\Topic\TopicTagFormResource;
+use App\Http\Resources\Forum\ForumCategory\ForumCategoryResource;
+use App\Http\Resources\Forum\Topic\TopicForumTreeResource;
+use App\Http\Resources\Forum\Topic\TopicTagFormResource;
 use App\Libraries\TreeBuilder;
 use App\Models\Forum;
 use App\Models\Tag;

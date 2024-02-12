@@ -97,17 +97,16 @@
 
 <script>
 import CreateTagModal from "../../components/admin/CreateTagModal.vue";
-import api from "../../api/api";
-import {useToast} from "vue-toastification";
+import {mapGetters} from "vuex";
 
 export default {
     name: "Tag",
     components: {CreateTagModal},
 
-    setup(){
-        return{
-            t$: useToast(),
-        }
+    computed: {
+        ...mapGetters({
+            tags: 'tag/getTags',
+        })
     },
 
     mounted() {
@@ -116,18 +115,13 @@ export default {
 
     data() {
         return {
-            tags: [],
             visibility: null,
-
         }
     },
 
     methods: {
         getTags() {
-            api.get('/api/admin/tag')
-                .then(res => {
-                    this.tags = res.data.tags
-                })
+            this.$store.dispatch('tag/getTags');
         },
 
         renameTag(event, id, tagName){
@@ -137,40 +131,16 @@ export default {
                 this.t$.error("Min length 3.");
                 return;
             }
-            api.patch(`/api/admin/tag/${id}`, {
-                name: name,
-            })
-                .then(res => {
-                    this.t$.success("Tag rename successfully.")
-                })
-                .catch(error => {
-                    this.t$.error(error.response.data.message ?? "Error!");
-                })
+            this.$store.dispatch('tag/renameTag', [id, name]);
         },
 
         deleteTag(id) {
-            api.delete(`/api/admin/tag/${id}`)
-                .then(res => {
-                    this.t$.success("Tag delete successfully");
-                    this.getTags();
-                })
-                .catch(error => {
-                    this.t$.error(error.response.data.message ?? "Error!");
-                })
+            this.$store.dispatch('tag/deleteTag', id);
         },
 
-        changeVisibility(event, tagId) {
+        changeVisibility(event, id) {
             let value = event.target.value;
-            api.patch(`/api/admin/tag/${tagId}/status`, {
-                visibility: value,
-            })
-                .then(res => {
-                    this.t$.success("Tag visibility change successfully!");
-                })
-                .catch(error => {
-                    this.t$.error(error.response.data.message ?? "Error!");
-                })
-
+            this.$store.dispatch('tag/changeVisibility', [id, value]);
         },
     }
 }

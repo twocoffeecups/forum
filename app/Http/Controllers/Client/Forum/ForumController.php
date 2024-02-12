@@ -3,12 +3,9 @@
 namespace App\Http\Controllers\Client\Forum;
 
 use App\Http\Controllers\Controller;
-use App\Http\Filters\Forum\TopicFilter;
-use App\Http\Requests\Api\Client\Topic\FilterRequest;
-use App\Http\Resources\Client\Forum\ForumResource;
-use App\Http\Resources\Client\Forum\TopicResource;
+use App\Http\Requests\Client\Topic\FilterRequest;
+use App\Http\Resources\Forum\Forum\ForumResource;
 use App\Models\Forum;
-use App\Models\Topic;
 
 
 class ForumController extends Controller

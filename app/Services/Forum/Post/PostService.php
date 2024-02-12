@@ -2,7 +2,7 @@
 
 namespace App\Services\Forum\Post;
 
-use App\Http\Resources\Client\Post\PostResource;
+use App\Http\Resources\Forum\Post\PostResource;
 use App\Models\Post;
 use App\Models\Topic;
 use App\Models\User;

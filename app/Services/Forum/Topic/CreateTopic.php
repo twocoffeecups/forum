@@ -2,7 +2,7 @@
 
 namespace App\Services\Forum\Topic;
 
-use App\Http\Resources\Client\Topic\TopicResource;
+use App\Http\Resources\Forum\Topic\TopicResource;
 use App\Models\Topic;
 use App\Models\TopicImage;
 use App\Models\User;

@@ -4,7 +4,7 @@
 namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\Client\Profile\LoginRequest;
+use App\Http\Requests\Client\Profile\LoginRequest;
 use App\Http\Resources\Client\Profile\UserResource;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;

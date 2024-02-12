@@ -1,4 +1,5 @@
 <template>
+    <hr class="border border-secondary border-1 opacity-50 mt-2 mb-3 mx-3">
     <div class="mx-3 my-2 text-white d-flex justify-content-between align-content-center" style="font-size: 1.1em;">
         <div class="d-flex">
             <img
@@ -13,6 +14,7 @@
                 </span>
         </div>
     </div>
+    <hr class="border border-secondary border-1 opacity-50 mt-3 mb-2 mx-3">
 </template>
 
 <script>

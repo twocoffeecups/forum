@@ -4,11 +4,10 @@
 namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\Client\Profile\ForgotPasswordRequest;
+use App\Http\Requests\Client\Profile\ForgotPasswordRequest;
 use App\Mail\Client\User\ResetPasswordMail;
 use App\Models\PasswordReset;
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 

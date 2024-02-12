@@ -2,8 +2,6 @@
 
 namespace App\Http\Resources\Client\UserProfile;
 
-use App\Http\Resources\Client\Forum\TopicResource;
-use App\Http\Resources\Client\Post\PostResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Carbon;
 

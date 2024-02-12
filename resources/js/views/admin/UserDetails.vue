@@ -30,7 +30,7 @@
                         </dl>
                     </div>
                     <div class="col-6">
-                        <dl class="row">
+                        <dl v-if="stats" class="row">
                             <dt class="col-sm-4">Carma</dt>
                             <dd class="col-sm-8">{{ stats.carma ?? 0 }}</dd>
                             <dt class="col-sm-4">Total topics</dt>
@@ -64,7 +64,7 @@
                 <div class="mb-3 row">
                     <label class="col-sm-2 col-form-label">Change role:</label>
                     <div class="col-sm-9 mb-3">
-                        <select @change="selectedRole = $event.target.value" class="form-select">
+                        <select v-if="roles" @change="selectedRole = $event.target.value" class="form-select">
                             <option v-for="role in roles" :value="role.id" :selected="role.id==user.roleId">{{
                                     role.name
                                 }}
@@ -87,7 +87,7 @@
 <!--                                Warning!-->
 <!--                            </div>-->
 <!--                        </div>-->
-                        <span class="font-italic">Warning!</span>
+<!--                        <span class="font-italic">Warning!</span>-->
                     </label>
 
                     <div class="col-sm-9 mb-3">
@@ -112,7 +112,7 @@
         </div>
     </div>
 
-    <div class="row" v-if="userTopics.length !==0">
+    <div class="row" v-if="userTopics">
         <div class="card my-3">
             <div class="card-header">
                 <h4>User topics</h4>
@@ -133,7 +133,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr v-for="topic in userTopics">
+                    <tr v-if="userTopics" v-for="topic in userTopics">
                         <th scope="row">{{ topic.id }}</th>
                         <td>{{ topic.forum }}</td>
                         <td>{{ topic.title }}</td>
@@ -173,18 +173,22 @@
 </template>
 
 <script>
-import {useToast} from "vue-toastification";
 import api from "../../api/api";
 import VueMultiselect from "vue-multiselect";
+import {mapGetters} from "vuex";
 
 export default {
     name: "ForumDetails",
     components: {VueMultiselect,},
 
-    setup() {
-        return {
-            t$: useToast(),
-        }
+    computed: {
+        ...mapGetters({
+            user: 'adminUsers/getUser',
+            userTopics: 'adminUsers/getUserTopics',
+            stats: 'adminUsers/getUserStats',
+            userPermissions: 'adminUsers/getUserPermissions',
+            roles: 'adminUsers/getRoles',
+        }),
     },
 
     mounted() {
@@ -195,11 +199,6 @@ export default {
 
     data() {
         return {
-            user: [],
-            userPermissions: [],
-            userTopics: [],
-            stats: [],
-            roles: [],
             permissions: [],
             selectedRole: null,
         }
@@ -207,45 +206,32 @@ export default {
 
     methods: {
         getUser() {
-            api.get(`/api/admin/user/${this.$route.params.id}`)
-                .then(res => {
-                    this.user = res.data.user;
-                    this.stats = res.data.user.stats;
-                    this.userTopics = res.data.user.topics
-                    this.userPermissions = res.data.user.permissions;
-                })
+            this.$store.dispatch('adminUsers/getUser', this.$route.params.id);
         },
 
         getRoles() {
-            api.get('/api/admin/role')
-                .then(res => {
-                    this.roles = res.data.roles;
-                })
+            this.$store.dispatch('adminUsers/getRoles');
         },
 
         getPermissions() {
-            api.get('/api/admin/permission/permission-for-form')
-                .then(res => {
-                    this.permissions = res.data.permissions;
-                })
-                .catch(error => {
-                    console.log(error)
-                })
+            return new Promise((resolve, reject) => {
+                api.get('/api/admin/permission/permission-for-form')
+                    .then(response => {
+                        if(response.data){
+                            this.permissions = response.data.permissions;
+                        }else{
+                            reject(response);
+                        }
+                    })
+                    .catch(error => {
+                        reject(error);
+                    })
+            })
         },
 
         changeRole() {
             if(this.selectedRole){
-                api.patch(`/api/admin/user/${this.user.id}/${this.selectedRole}/change-role`, {
-                    roleId: this.selectedRole,
-                })
-                    .then(res => {
-                        console.log(res)
-                        this.t$.success(res.data.message);
-                    })
-                    .catch(error => {
-                        console.log(error);
-                        this.t$.error(error.response.data.message ?? "Error!");
-                    })
+                this.$store.dispatch('adminUsers/changeRole', [this.$route.params.id, this.selectedRole]);
             }
         },
 
@@ -256,13 +242,7 @@ export default {
                 data.append("permissions[]", permission.value);
             })
             data.append('_method', 'put')
-            api.post(`/api/admin/user/${this.user.id}/change-permissions`, data)
-                .then(res => {
-                    this.t$.success(res.data.message);
-                })
-                .catch(error => {
-                    this.t$.error(error.response.data.message ?? "Error!");
-                })
+            this.$store.dispatch('adminUsers/changePermissions', [this.$route.params.id, data]);
         }
     }
 }

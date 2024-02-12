@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Client\Post;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\Client\Post\PostUpdateRequest;
+use App\Http\Requests\Client\Post\PostUpdateRequest;
 use App\Models\Post;
 use App\Services\Forum\Post\PostService;
 

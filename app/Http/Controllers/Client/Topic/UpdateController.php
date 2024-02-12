@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Client\Topic;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\Client\Topic\TopicUpdateRequest;
+use App\Http\Requests\Client\Topic\TopicUpdateRequest;
 use App\Models\Topic;
 use App\Services\Forum\Topic\UpdateTopic;
 

@@ -14,7 +14,7 @@
     <!-- Card -->
     <div class="row mb-3">
         <div class="col-12 col-sm-12 col-md-6 col-lg-3">
-            <div class="card text-bg-primary bg-gradient mb-3 col" style="max-width: 360px; max-height: 145px;">
+            <div class="card text-bg-primary bg-gradient mb-3 col mx-auto" style="max-width: 360px; max-height: 145px;">
                 <div class="card-body">
                     <div class="d-flex">
                         <div class="col">
@@ -34,7 +34,7 @@
         </div>
 
         <div class="col-12 col-sm-12 col-md-6 col-lg-3">
-            <div class="card text-bg-secondary bg-gradient mb-3 col" style="max-width: 360px; max-height: 145px;">
+            <div class="card text-bg-secondary bg-gradient mb-3 col mx-auto" style="max-width: 360px; max-height: 145px;">
                 <div class="card-body">
                     <div class="d-flex">
                         <div class="col">
@@ -54,7 +54,7 @@
         </div>
 
         <div class="col-12 col-sm-12 col-md-6 col-lg-3">
-            <div class="card text-bg-danger bg-gradient mb-3 col" style="max-width: 360px; max-height: 145px;">
+            <div class="card text-bg-danger bg-gradient mb-3 col mx-auto" style="max-width: 360px; max-height: 145px;">
                 <div class="card-body">
                     <div class="d-flex">
                         <div class="col">
@@ -74,7 +74,7 @@
         </div>
 
         <div class="col-12 col-sm-12 col-md-6 col-lg-3">
-            <div class="card text-bg-success bg-gradient mb-3 col" style="max-width: 360px; max-height: 145px;">
+            <div class="card text-bg-success bg-gradient mb-3 col mx-auto" style="max-width: 360px; max-height: 145px;">
                 <div class="card-body">
                     <div class="d-flex">
                         <div class="col">
@@ -97,7 +97,6 @@
     <!-- Table -->
     <div class="row mb-3">
         <div class="container-fluid">
-
             <!-- Table card -->
             <div class="card">
                 <div class="card-header">
@@ -204,20 +203,13 @@
                     </div>
                 </div>
             </div>
-
-
         </div>
     </div>
-
 </template>
 
 <script>
-import AddRoleModal from "../../components/admin/AddRoleModal.vue";
-import api from "../../api/api";
-
 export default {
     name: "Main",
-    components: {AddRoleModal,},
 }
 </script>
 

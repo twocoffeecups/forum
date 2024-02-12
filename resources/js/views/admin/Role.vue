@@ -78,58 +78,36 @@
 
 <script>
 import AddRoleModal from "../../components/admin/AddRoleModal.vue";
-import axios from "axios";
-import api from "../../api/api";
 import VueMultiselect from "vue-multiselect";
-import {useToast} from "vue-toastification";
 import CreatePermissionModal from "../../components/admin/CreatePermissionModal.vue";
+import {mapGetters} from "vuex";
 
 export default {
     name: "Role",
     components: {CreatePermissionModal, VueMultiselect, AddRoleModal},
 
-    setup(){
-        return{
-            t$: useToast(),
-        }
+    computed: {
+        ...mapGetters({
+            roles: 'role/getRoles'
+        }),
     },
 
     mounted() {
         this.getRoles();
     },
 
-    data() {
-        return {
-            roles: [],
-        }
-    },
-
-
     methods: {
         getRoles() {
-            api.get('/api/admin/role')
-                .then(res => {
-                    this.roles = res.data.roles;
-                })
-                .catch(error => {
-                    console.log(error);
-                })
+            this.$store.dispatch('role/getRoles');
         },
 
         deleteRole(id) {
-            api.delete(`/api/admin/role/${id}/`)
-                .then(res => {
-                    this.t$.success("Role delete successfully.")
-                    this.$router.push({name:'admin.role'})
-                })
-                .catch(error => {
-                    this.t$.error("Error!");
-                })
+            this.$store.dispatch('role/deleteRole', id)
         },
     }
 }
 </script>
 
-<style src="vue-multiselect/dist/vue-multiselect.css">
+<style>
 
 </style>
