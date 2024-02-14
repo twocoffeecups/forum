@@ -176,12 +176,11 @@ export default {
         },
 
         deleteForum(forumId) {
-            console.log('delete forum, id:', forumId);
             this.$store.dispatch('adminForum/deleteForum', forumId);
         },
 
         selectPage(page){
-            this.$store.dispatch('adminForum/getForums', [page, this.entriesOnPage])
+            this.$store.dispatch('adminForum/getForums', page);
         }
     }
 

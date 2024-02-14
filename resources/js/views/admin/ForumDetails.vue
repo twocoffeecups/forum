@@ -91,7 +91,7 @@
                         <dd class="col-sm-8">
                             <button @click.prevent="deleteForum" class="btn btn-danger bg-gradient">Delete</button>
 
-                            <router-link v-if="forum.type===1" :to="{name:'forum', params:{id:this.$route.params.id}}" class="btn btn-primary bg-gradient mx-1">Show on site</router-link>
+                            <a v-if="forum.type===1" :href="`/forum/${this.$route.params.id}`" class="btn btn-primary bg-gradient mx-1">Show on site</a>
                         </dd>
                     </dl>
                 </div>
@@ -126,7 +126,7 @@
                 <div class="d-flex justify-content-between my-2">
                     <h4>Children forum</h4>
                     <div>
-                        <CreateForumModal :parent-id="forum.id"/>
+                        <CreateForumModal :forums="forums" :parent-id="forum.id"/>
                     </div>
                 </div>
             </div>
@@ -268,6 +268,7 @@ export default {
     computed: {
         ...mapGetters({
             forum: 'adminForum/getForum',
+            forums: 'adminForum/getForums',
             childrenForums: 'adminForum/getChildrenForums',
             forumStats: 'adminForum/getForumStats',
             parentForum: 'adminForum/getParentForum',
@@ -276,6 +277,7 @@ export default {
 
     mounted() {
         this.$store.dispatch('adminForum/getForum', this.$route.params.id);
+        this.getForums();
         this.getForums();
 
     },
@@ -286,7 +288,6 @@ export default {
             showChangeType: null,
             selectedForum: null,
             selectedType: null,
-            forums: [],
         }
     },
 
@@ -314,10 +315,7 @@ export default {
         },
 
         getForums(){
-            api.get(`/api/admin/forum`)
-                .then(res => {
-                    this.forums = res.data.forums
-                })
+            this.$store.dispatch('adminForum/getForums');
         },
 
         changeForumType(){

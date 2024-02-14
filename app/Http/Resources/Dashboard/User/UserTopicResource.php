@@ -2,7 +2,11 @@
 
 namespace App\Http\Resources\Dashboard\User;
 
+use App\Http\Resources\Forum\Forum\LatestPostResource;
+use App\Http\Resources\Forum\Forum\PostAuthorResource;
+use App\Http\Resources\Forum\Forum\TopicTagResource;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Carbon;
 
 class UserTopicResource extends JsonResource
 {
@@ -16,13 +20,15 @@ class UserTopicResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'forum' => $this->forum->name,
             'title' => $this->title,
-            'posts' => $this->posts->count(),
             'status' => $this->status,
-            'created_at' => $this->created_at->format("Y-m-d"),
-            'topics' => $this->topics,
-
+            'rating' => $this->likes->count(),
+            'postsCount' => $this->posts->count(),
+            'views' => 1,
+            'latestPost' => new LatestPostResource($this->latestPost()),
+            'tags' => TopicTagResource::collection($this->tags),
+            'author' => new PostAuthorResource($this->author),
+            'created_at' => Carbon::parse($this->created_at)->diffForHumans(),
         ];
     }
 }

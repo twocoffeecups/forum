@@ -89,6 +89,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Topic::class, 'userId', 'id')->where('status', '=', 0);
     }
 
+    public function reports()
+    {
+        return $this->hasMany(Report::class, 'senderId', 'id');
+    }
+
     public function isWarned(): bool
     {
         return $this->isWarned;

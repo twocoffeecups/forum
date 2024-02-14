@@ -9,10 +9,6 @@
 export default {
     name: "App",
 
-    beforeCreate() {
-        //this.getSettings();
-    },
-
     created() {
         this.getSettings();
         this.checkUserInState();

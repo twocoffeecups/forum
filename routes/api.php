@@ -99,11 +99,14 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum']], function (
      * Users
      */
     Route::group(['prefix' => 'user'], function () {
-        Route::get('/', [\App\Http\Controllers\Dashboard\User\UserController::class, 'index']);
+        Route::post('/', [\App\Http\Controllers\Dashboard\User\UserController::class, 'index']);
         Route::post('/register', [\App\Http\Controllers\Dashboard\User\UserController::class, 'register']);
-        Route::get('/{user}', [\App\Http\Controllers\Dashboard\User\UserController::class, 'show']);
+
 
         Route::group(['prefix' => '{user}'], function () {
+            Route::get('/', [\App\Http\Controllers\Dashboard\User\UserController::class, 'show']);
+            Route::put('/update', \App\Http\Controllers\Dashboard\User\UpdateProfileController::class);
+            Route::patch('/change-avatar', \App\Http\Controllers\Dashboard\User\ChangeAvatarController::class);
             Route::patch('/{role}/change-role', \App\Http\Controllers\Dashboard\User\RoleController::class);
             Route::put('/change-permissions', [\App\Http\Controllers\Dashboard\User\PermissionController::class, 'changePermission']);
         });

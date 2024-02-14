@@ -1,8 +1,8 @@
 <template>
     <div class="card">
         <div class="card-header">
-            <div class="d-flex justify-content-between my-2">
-                <h4>All Users</h4>
+            <div class="d-flex justify-content-between">
+                <h3><i class="fas fa-users"></i> Users list</h3>
                 <CreateUserModal/>
             </div>
         </div>
@@ -14,7 +14,7 @@
                         <span class="form-text">
                           Show
                         </span>
-                        <select class="form-select form-select-sm mx-2" aria-label="Select entries">
+                        <select v-model="entriesOnPage" class="form-select form-select-sm mx-2" aria-label="Select entries">
                             <option value="10" selected>10</option>
                             <option value="30">30</option>
                             <option value="50">50</option>
@@ -32,7 +32,7 @@
                     <thead class="table-primary">
                     <tr></tr>
                     <tr>
-                        <th scope="col">#</th>
+                        <th scope="col">Avatar</th>
                         <th scope="col">Login</th>
                         <th scope="col">Name</th>
                         <th scope="col">Email</th>
@@ -50,36 +50,37 @@
                     </thead>
                     <tbody>
                     <tr v-for="user in users">
-                        <th scope="row">{{ user.id }}</th>
+                        <th scope="row">
+                            <img :src="user.avatar" class="img-thumbnail" width="70">
+                        </th>
                         <td>{{ user.login }}</td>
                         <td>{{ user.name }}</td>
                         <td>{{ user.email }}</td>
                         <td>{{ user.lastVisit }}</td>
                         <td>
-                            <span v-if="user.status" class="text-success">Online</span>
-                            <span v-if="!user.status" class="text-danger">Offline</span>
+                            <span v-if="user.status" class="badge bg-success">Online</span>
+                            <span v-if="!user.status" class="badge bg-danger">Offline</span>
                         </td>
                         <td>{{ user.stats.topics }}</td>
                         <td>{{ user.stats.posts }}</td>
-                        <td>{{ user.stats.reports }}</td>
+                        <td>{{ user.stats.reports ?? 0 }}</td>
                         <td>{{ user.inBanList ? 'Yes' : 'No' }}</td>
                         <td>
-                            <button disabled class="btn btn-primary">
+                            <span class="badge bg-primary rounded-pill ">
                                 {{ user.role }}
-                            </button>
+                            </span>
                         </td>
                         <td>{{ user.email_verified_at }}</td>
                         <td>{{ user.register_at }}</td>
                         <td>
-                            <span class="text-primary mx-2" title="Show">
-                                <router-link :to="{ name:'admin.user.details', params:{id:user.id} }">
-                                  <i class="fas fa-eye"></i>
+                            <div class="d-flex justify-content-around">
+                                <router-link class="btn btn-success" :to="{ name:'admin.user.details', params:{id:user.id} }">
+                                    Show
                                 </router-link>
-                            </span>
-                            <button class="btn btn-danger mx-2" title="Ban">
-                                <i class="fas fa-ban"></i>
-                            </button>
-
+                                <button class="btn btn-danger">
+                                    Ban
+                                </button>
+                            </div>
                         </td>
                     </tr>
                     </tbody>
@@ -89,6 +90,13 @@
                     <h4>You haven't users.</h4>
                 </div>
 
+                <TablePagination
+                    @selectPageEmit="selectPage"
+                    :total-entries="paginate.total"
+                    :total-pages="paginate.last_page"
+                    :links="paginate.links"
+                    :current-page="paginate.current_page"
+                    :last-page="paginate.last_page" />
             </div>
 
         </div>
@@ -99,24 +107,43 @@
 import api from "../../api/api";
 import CreateUserModal from "../../components/admin/CreateUserModal.vue";
 import {mapGetters} from "vuex";
+import TablePagination from "../../components/admin/TablePagination.vue";
 
 export default {
     name: "Users",
-    components: {CreateUserModal},
+    components: {TablePagination, CreateUserModal},
 
     computed: {
         ...mapGetters({
             users: 'adminUsers/getUsers',
+            paginate: 'adminUsers/getPaginate',
         }),
+    },
+
+    data() {
+        return {
+            entriesOnPage: 3,
+        }
     },
 
     mounted() {
         this.getUsers();
     },
 
+    watch: {
+        entriesOnPage(val){
+            this.$store.commit('adminUsers/setEntriesOnPage', val);
+            this.$store.dispatch('adminUsers/getUsers')
+        }
+    },
+
     methods: {
         getUsers() {
             this.$store.dispatch('adminUsers/getUsers');
+        },
+
+        selectPage(page){
+            this.$store.dispatch('adminUsers/getUsers', page)
         }
     },
 }

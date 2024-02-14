@@ -9,6 +9,9 @@ export default {
         users: {},
         user: {},
         roles: {},
+        paginate: {},
+
+        entriesOnPage: 10,
     },
 
     getters: {
@@ -24,6 +27,14 @@ export default {
             return state.user.topics;
         },
 
+        getUserPosts(state){
+            return state.user.posts;
+        },
+
+        getUserReports(state){
+            return state.user.reports;
+        },
+
         getUserStats(state){
             return state.user.stats;
         },
@@ -34,16 +45,24 @@ export default {
 
         getRoles(state){
             return state.roles;
+        },
+
+        getPaginate(state){
+            return state.paginate;
         }
     },
 
     actions: {
-        getUsers({dispatch, commit}){
+        getUsers({dispatch, commit, state}, page = 1){
             return new Promise((resolve, reject) => {
-                api.get('/api/admin/user')
+                api.post('/api/admin/user', {
+                    page: page,
+                    entriesOnPage: state.entriesOnPage,
+                })
                     .then(response => {
                         if(response.data){
-                            commit('setUsers', response.data.users);
+                            commit('setUsers', response.data.data);
+                            commit('setPaginate', response.data.meta);
                             resolve(response);
                         }else{
                             reject(response);
@@ -77,6 +96,44 @@ export default {
                 api.post('/api/admin/user/register', data)
                     .then(response => {
                         if(response.data){
+                            toast.success(response.data.message);
+                            resolve(response);
+                        }else{
+                            reject(response);
+                        }
+                    })
+                    .catch(error => {
+                        toast.error(error.response.data.message ?? "Error!");
+                        reject(error);
+                    })
+            });
+        },
+
+        updateProfile({dispatch, commit}, [id, data]){
+            return new Promise((resolve, reject) => {
+                api.post(`/api/admin/user/${id}/update`, data)
+                    .then(response => {
+                        if(response.data){
+                            commit('setUser', response.data.user);
+                            toast.success(response.data.message);
+                            resolve(response);
+                        }else{
+                            reject(response);
+                        }
+                    })
+                    .catch(error => {
+                        toast.error(error.response.data.message ?? "Error!");
+                        reject(error);
+                    })
+            });
+        },
+
+        changeAvatar({dispatch, commit}, [id, data]){
+            return new Promise((resolve, reject) => {
+                api.post(`/api/admin/user/${id}/change-avatar`, data)
+                    .then(response => {
+                        if(response.data){
+                            commit('setUser', response.data.user);
                             toast.success(response.data.message);
                             resolve(response);
                         }else{
@@ -157,5 +214,13 @@ export default {
         setRoles(state, payload){
             state.roles = payload;
         },
+
+        setPaginate(state, payload){
+            state.paginate = payload;
+        },
+
+        setEntriesOnPage(state, payload){
+            state.entriesOnPage = payload;
+        }
     }
 }

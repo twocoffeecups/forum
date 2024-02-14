@@ -9,7 +9,7 @@
                         <div class="media flex-wrap w-100 align-items-center">
                             <img :src="topic.author.avatar" width="64" class="d-block ui-w-40 rounded-circle" alt="Avatar">
                             <div class="media-body ml-3">
-                                <router-link v-if="topic.author.id" :to="{name:'user.profile', params:{id:topic.author.id}}" data-abc="true">{{ topic.author.name }}</router-link>
+                                <a v-if="topic.author.id" :href="`/user-profile/${topic.author.id}`" data-abc="true">{{ topic.author.name }}</a>
                                 <div class="text-muted small">Offline</div>
                             </div>
                             <div class="text-muted small ml-3">
@@ -68,7 +68,7 @@
 import TopicMainPostHeader from '../../components/client/TopicMainPostHeader.vue';
 import {mapGetters,} from "vuex";
 export default {
-    name: "ReportDetailsTopic",
+    name: "TopicMainPostComponent",
     components: {TopicMainPostHeader},
     props: ['topic', 'images'],
 

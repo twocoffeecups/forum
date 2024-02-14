@@ -4,7 +4,7 @@ namespace App\Http\Requests\Dashboard\User;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class RegisterRequest extends FormRequest
+class UpdateProfileRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,11 +24,8 @@ class RegisterRequest extends FormRequest
     public function rules()
     {
         return [
-            'login' => 'required|min:3|max:64|unique:users',
-            'firstName' => 'required|min:3|max:64|string|nullable',
-            'lastName' => 'required|min:3|max:64|string|nullable',
-            'email' => 'required|email|unique:users|min:7|max:64',
-            'roleId' => 'integer|exists:roles,id|nullable',
+            'firstName' => 'min:3|max:64|string|nullable',
+            'lastName' => 'min:3|max:64|string|nullable',
         ];
     }
 }

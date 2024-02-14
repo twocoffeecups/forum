@@ -28,12 +28,12 @@
                         <label class="form-check-label" for="type">Type</label>
                         <select @change="this.forumType = $event.target.value" class="form-control">
                             <option value="0">Forum category</option>
-                            <option value="1">Forum</option>
+                            <option :selected="parentId" value="1">Forum</option>
                         </select>
                     </div>
 
                     <div class="mb-3 form-check">
-                        <input v-model="isChild" type="checkbox" :disabled="forumType==0" class="form-check-input"
+                        <input :checked="parentId" v-model="isChild" type="checkbox" :disabled="forumType==0" class="form-check-input"
                                id="is-child">
                         <label class="form-check-label" for="is-child">Child category</label>
                     </div>
@@ -73,15 +73,12 @@ import {useVuelidate} from '@vuelidate/core';
 import {required, minLength, maxLength,} from '@vuelidate/validators';
 import ForumOptionTree from "./ForumOptionTree.vue";
 import api from "../../api/api";
+import {mapGetters} from "vuex";
 
 export default {
     name: "CreateForumModal",
     components: {ForumOptionTree,},
-    props: ['parentId'],
-
-    mounted() {
-        this.getForums();
-    },
+    props: ['forums', 'parentId'],
 
     setup() {
         return {
@@ -109,7 +106,6 @@ export default {
             isSelected: null,
             showCategory: null,
             selectedForum: null,
-            forums: [],
         }
     },
 
@@ -135,13 +131,6 @@ export default {
                 this.description = null;
                 this.forumType = 0;
             }
-        },
-
-        getForums() {
-            api.get(`/api/admin/forum`)
-                .then(res => {
-                    this.forums = res.data.forums
-                })
         },
 
         changeForum(e) {

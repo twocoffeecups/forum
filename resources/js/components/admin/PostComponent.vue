@@ -7,7 +7,7 @@
                         <div class="media flex-wrap w-100 align-items-center">
                             <img :src="avatar" width="64" class="d-block ui-w-40 rounded-circle" alt="">
                             <div class="media-body ml-3">
-                                <router-link v-if="post.author.id" :to="{name:'user.profile', params:{id:post.author.id}}" data-abc="true">{{ post.author.name }}</router-link>
+                                <a v-if="post.author.id" :href="`/user-profile/${post.author.id}`" data-abc="true">{{ post.author.name }}</a>
                                 <div class="text-muted small">Offline</div>
                             </div>
                             <div class="text-muted small ml-3">
@@ -58,6 +58,7 @@
                             </div>
                             <div class="flex-sm-row d-md-flex d-lg-flex d-xl-flex text-center">
                                 <button class="btn btn-secondary">Edit</button>
+                                <a v-if="post" :href="`/topic/${post.topicId}`" class="btn btn-primary mx-1">Show</a>
                             </div>
                         </div>
                     </div>
@@ -69,7 +70,7 @@
 
 <script>
 export default {
-    name: "ReportDetailsPost",
+    name: "PostComponent",
     props: ['post'],
 
     data() {

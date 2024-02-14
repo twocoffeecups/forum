@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard\User;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Dashboard\Paginate\PaginateRequest;
 use App\Http\Requests\Dashboard\User\RegisterRequest;
 use App\Http\Resources\Dashboard\User\UserResource;
 use App\Mail\Client\User\PasswordMail;
@@ -15,13 +16,12 @@ use Illuminate\Support\Str;
 class UserController extends Controller
 {
 
-    /**
-     * @return \Illuminate\Http\JsonResponse
-     */
-    protected function index(): \Illuminate\Http\JsonResponse
+
+    protected function index(PaginateRequest $request)
     {
-        $users = User::all();
-        return response()->json(['users' => UserResource::collection($users)]);
+        $paginate = $request->validated();
+        $users = User::paginate($paginate['entriesOnPage'], ['*'], 'page', $paginate['page']);
+        return UserResource::collection($users);
     }
 
     protected function show(User $user)

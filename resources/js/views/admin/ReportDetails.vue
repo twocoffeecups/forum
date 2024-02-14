@@ -30,9 +30,9 @@
 
                     <dd v-if="showObj" class="col-sm-8 offset-sm-4">
                         <!-- Topic -->
-                        <ReportDetailsTopic v-if="report.type==='topic'" :topic="report.object" :images="report.object.images" />
+                        <TopicMainPostComponent v-if="report.type==='topic'" :topic="report.object" :images="report.object.images" />
                         <!-- Post -->
-                        <ReportDetailsPost v-if="report.type==='post'" :post="report.object"/>
+                        <PostComponent v-if="report.type==='post'" :post="report.object"/>
                     </dd>
 
                     <dt v-if="!report.closed" class="col-sm-4">Actions</dt>
@@ -162,12 +162,11 @@ import {useToast} from "vue-toastification";
 import Post from "../../components/client/Post.vue";
 import {mapGetters} from "vuex";
 import api from "../../api/api";
-import ReportDetailsPost from "../../components/admin/ReportDetailsPost.vue";
-import ReportDetailsTopic from "../../components/admin/ReportDetailsTopic.vue";
-
+import PostComponent from "../../components/admin/PostComponent.vue";
+import TopicMainPostComponent from "../../components/admin/TopicMainPostComponent.vue";
 export default {
     name: "ForumDetails",
-    components: {ReportDetailsTopic, ReportDetailsPost, Post, EditForumModal, CreateForumModal},
+    components: {TopicMainPostComponent, PostComponent, Post, EditForumModal, CreateForumModal},
 
     setup() {
         return {
