@@ -10,7 +10,7 @@
             <div class="table-responsive mb-1">
                 <div v-if="users!==0"
                     class="d-flex mt-2 flex-column flex-md-row flex-lg-row flex-xl-row justify-content-center justify-content-md-between justify-content-lg-between mb-3">
-                    <div class="d-none d-md-flex d-lg-flex d-xl-flex my-2">
+                    <div v-if="users.length > 10" class="d-none d-md-flex d-lg-flex d-xl-flex my-2">
                         <span class="form-text">
                           Show
                         </span>

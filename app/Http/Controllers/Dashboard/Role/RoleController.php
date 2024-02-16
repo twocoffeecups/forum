@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard\Role;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Dashboard\Paginate\PaginateRequest;
 use App\Http\Requests\Dashboard\Role\RoleEditNameRequest;
 use App\Http\Requests\Dashboard\Role\RoleRequest;
 use App\Http\Requests\Dashboard\Role\RoleUpdatePermissionsRequest;
@@ -12,12 +13,11 @@ use App\Models\Role;
 class RoleController extends Controller
 {
 
-    /**
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function index(): \Illuminate\Http\JsonResponse
+    public function index(PaginateRequest $request)
     {
-        return response()->json(['roles' => RoleResource::collection(Role::all())]);
+        $paginate = $request->validated();
+        $roles = Role::paginate($paginate['entriesOnPage'], '*', 'page', $paginate['page']);
+        return RoleResource::collection($roles);
     }
 
     /**

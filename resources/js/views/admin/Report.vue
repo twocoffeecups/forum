@@ -3,10 +3,10 @@
         <div class="container-fluid">
 
             <!-- Table card -->
-            <div class="card">
+            <div class="card" style="border-top: 5px solid #0c63e4">
                 <div class="card-header">
                     <div class="d-flex justify-content-between my-2">
-                        <h4>Reports</h4>
+                        <h4>Reports list</h4>
                     </div>
                 </div>
                 <div class="card-body">
@@ -37,45 +37,42 @@
                         <table v-if="reports!==0" class="table table-striped table-hover table-bordered">
                             <thead class="table-primary">
                             <tr></tr>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Type</th>
-                                <th scope="col">Object</th>
-                                <th scope="col">Reason</th>
-                                <th scope="col">Sender</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Created date</th>
-                                <th scope="col">Actions</th>
-                            </tr>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Type</th>
+                                    <th scope="col">Object</th>
+                                    <th scope="col">Reason</th>
+                                    <th scope="col">Sender</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Created date</th>
+                                    <th scope="col">Actions</th>
+                                </tr>
                             </thead>
                             <tbody>
-                            <tr v-for="report in reports">
-                                <th scope="row">{{ report.id }}</th>
-                                <td>{{ report.type }}</td>
-                                <td>
-<!--                                    <span v-if="report.object">-->
-<!--                                        <router-link v-if="report.type=='topic'"-->
-<!--                                                                            :to="{name:'topic', params:{id:report.object.id}}">{{-->
-<!--                                            report.object.title-->
-<!--                                        }}</router-link></span>-->
-                                    <a v-if="report.type=='topic'" :href="`/topic/${report.object.id}`">{{ report.object.title }}</a>
-                                    <a v-if="report.type=='post'" href="#">Post for topic</a>
-                                </td>
-                                <td>{{ report.reason.name }}</td>
-                                <td>{{ report.sender.login }}</td>
-                                <td>{{ !report.closed ? 'New' : 'Closed' }}</td>
-                                <td>{{ report.created_at }}</td>
-                                <td>
-                                        <span class="text-primary mx-2" title="Show">
-                                            <router-link :to="{ name:'admin.report.details', params:{id:report.id} }">
-                                              <i class="fas fa-eye"></i>
+                                <tr v-for="report in reports">
+                                    <th scope="row">{{ report.id }}</th>
+                                    <td>{{ report.type }}</td>
+                                    <td>
+                                        <a v-if="report.type=='topic'" :href="`/topic/${report.object.id}`">{{ report.object.title }}</a>
+                                        <a v-if="report.type=='post'" href="#">Post for topic</a>
+                                    </td>
+                                    <td>{{ report.reason.name }}</td>
+                                    <td>{{ report.sender.login }}</td>
+                                    <td>
+                                        <span :class="`badge ${!report.closed ? 'bg-danger' : 'bg-success'}`">{{ !report.closed ? 'New' : 'Closed' }}</span>
+                                    </td>
+                                    <td>{{ report.created_at }}</td>
+                                    <td>
+                                        <div class="flex-row">
+                                            <router-link class="btn btn-success" :to="{ name:'admin.report.details', params:{id:report.id} }">
+                                                Show
                                             </router-link>
-                                        </span>
-                                    <span role="button" class="text-danger mx-2" title="Edit">
-                                            <i class="fas fa-trash"></i>
-                                        </span>
-                                </td>
-                            </tr>
+                                            <button role="button" class="btn btn-danger mx-2" title="Edit">
+                                                Delete
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
 

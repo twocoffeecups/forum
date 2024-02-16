@@ -18,6 +18,7 @@ class Topic extends Model
         'forumId',
         'title',
         'content',
+        'userId',
     ];
 
     public function forum(): \Illuminate\Database\Eloquent\Relations\BelongsTo

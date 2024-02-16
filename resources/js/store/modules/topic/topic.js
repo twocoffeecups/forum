@@ -13,6 +13,7 @@ export default {
         posts: {},
         mainPost: {},
         images: {},
+        paginate: {},
     },
 
     getters: {
@@ -30,6 +31,10 @@ export default {
 
         getPosts(state) {
             return state.posts;
+        },
+
+        getPaginate(state){
+            return state.paginate;
         },
 
         getMainPost(state) {
@@ -53,7 +58,7 @@ export default {
                         if (response.data) {
                             commit('setTopic', response.data.topic);
                             commit('setTopicAuthor', response.data.topic.author);
-                            commit('setPosts', response.data.topic.posts);
+                            //commit('setPosts', response.data.topic.posts);
                             commit('setImages', response.data.topic.images);
                             resolve(response);
                         } else {
@@ -64,6 +69,26 @@ export default {
                         if(error.response.status===404){
                             router.push({ name:'main' });
                         }
+                        reject(error);
+                    })
+            });
+        },
+
+        getTopicPosts({dispatch, commit}, [id, page = 1]) {
+            return new Promise((resolve, reject) => {
+                axios.post(`/api/topic/${id}/posts`, {
+                    page: page
+                })
+                    .then(response => {
+                        if (response.data) {
+                            commit('setPosts', response.data.data);
+                            commit('setPaginate', response.data.meta);
+                            resolve(response);
+                        } else {
+                            reject(response);
+                        }
+                    })
+                    .catch(error => {
                         reject(error);
                     })
             });
@@ -133,6 +158,10 @@ export default {
 
         updateTopicRating(state, payload){
             state.topic.rating = payload.rating;
+        },
+
+        setPaginate(state, payload){
+            state.paginate = payload;
         },
 
         updatePostRating(state, payload){

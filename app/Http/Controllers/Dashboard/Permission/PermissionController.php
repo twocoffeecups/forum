@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard\Permission;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Dashboard\Paginate\PaginateRequest;
 use App\Http\Requests\Dashboard\Permission\PermissionRequest;
 use App\Http\Resources\Dashboard\Permission\PermissionResource;
 use App\Http\Resources\Dashboard\Role\RolePermissionResource;
@@ -10,11 +11,11 @@ use App\Models\Permission;
 
 class PermissionController extends Controller
 {
-
-    public function index()
+    public function index(PaginateRequest $request)
     {
-        $permissions = Permission::all();
-        return response()->json(['permissions' => PermissionResource::collection($permissions)]);
+        $paginate = $request->validated();
+        $permissions = Permission::paginate($paginate['entriesOnPage'], '*', 'page', $paginate['page']);
+        return PermissionResource::collection($permissions);
     }
 
     public function getPermissionsForForm()

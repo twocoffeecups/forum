@@ -69,26 +69,15 @@
 
                 <!-- Role and Permission -->
                 <h5 class="text-muted mt-3 mb-2">Roles and Permissions</h5>
-                <li class="nav-item w-100">
-                    <a class="nav-link sidebar_nav_link  align-middle px-0" data-bs-toggle="collapse" href="#sub-menu-2"
-                       role="button" aria-expanded="false" aria-controls="sub_menu2">
-                        <i class="fab fa-forumbee"></i> <span class="ms-1 d-sm-inline">Roles & Permissions</span>
-                        <span class="fa-pull-right sidebar_icon"><i class="fas fa-chevron-down"></i></span>
-                    </a>
-                    <div class="collapse" id="sub-menu-2">
-                        <ul class="collapse ps-3 show nav flex-column ms-1">
-                            <li class="w-100" data-bs-dismiss="offcanvas">
-                                <router-link :to="{ name:'admin.role' }" class="nav-link sidebar_nav_link px-0"><i
-                                    class="fas fa-hashtag"></i> Roles
-                                </router-link>
-                            </li>
-                            <li class="w-100" data-bs-dismiss="offcanvas">
-                                <router-link :to="{ name: 'admin.permission' }" class="nav-link sidebar_nav_link px-0">
-                                    <i class="fas fa-hashtag"></i> Permissions
-                                </router-link>
-                            </li>
-                        </ul>
-                    </div>
+                <li class="nav-item w-100" data-bs-dismiss="offcanvas">
+                    <router-link :to="{ name:'admin.role' }" class="nav-link sidebar_nav_link px-0"><i
+                        class="fas fa-hashtag"></i> Roles
+                    </router-link>
+                </li>
+                <li class="nav-item w-100" data-bs-dismiss="offcanvas">
+                    <router-link :to="{ name: 'admin.permission' }" class="nav-link sidebar_nav_link px-0">
+                        <i class="fas fa-hashtag"></i> Permissions
+                    </router-link>
                 </li>
 
                 <!-- Users -->

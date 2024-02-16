@@ -41,8 +41,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum']], function (
      * Tags
      */
     Route::group(['prefix' => 'tag'], function () {
-        Route::get('/', [\App\Http\Controllers\Dashboard\Tag\TagController::class, 'index']);
-        Route::post('/', [\App\Http\Controllers\Dashboard\Tag\TagController::class, 'store'])
+        Route::post('/', [\App\Http\Controllers\Dashboard\Tag\TagController::class, 'index']);
+        Route::post('/store', [\App\Http\Controllers\Dashboard\Tag\TagController::class, 'store'])
             ->middleware('permissions:can-create-tag');
         Route::get('/{tag}', [\App\Http\Controllers\Dashboard\Tag\TagController::class, 'show']);
         Route::patch('/{tag}', [\App\Http\Controllers\Dashboard\Tag\TagController::class, 'update']);
@@ -54,18 +54,20 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum']], function (
      * Topics
      */
     Route::group(['prefix' => 'topic'], function () {
-        Route::get('/', [\App\Http\Controllers\Dashboard\Topic\TopicController::class, 'index']);
+        Route::post('/', [\App\Http\Controllers\Dashboard\Topic\TopicController::class, 'index']);
+        Route::get('reject-types', [\App\Http\Controllers\Dashboard\Topic\TopicController::class, 'getRejectTypes']);
+        //Route::post('/store', [\App\Http\Controllers\Dashboard\Topic\TopicController::class, 'store']);
         Route::get('/{topic}', [\App\Http\Controllers\Dashboard\Topic\TopicController::class, 'show']);
         Route::patch('/{topic}/resolve', [\App\Http\Controllers\Dashboard\Topic\TopicController::class, 'resolve']);
         Route::post('/{topic}/reject', [\App\Http\Controllers\Dashboard\Topic\TopicController::class, 'reject']);
         Route::delete('/{topic}', [\App\Http\Controllers\Dashboard\Topic\TopicController::class, 'delete']);
     });
-    Route::get('/rejected-topics', [\App\Http\Controllers\Dashboard\Topic\TopicController::class, 'rejectedTopic']);
+    Route::post('/rejected-topics', [\App\Http\Controllers\Dashboard\Topic\TopicController::class, 'rejectedTopic']);
 
 
     Route::group(['prefix' => 'topic-reject-type'], function () {
-        Route::get('/', [\App\Http\Controllers\Dashboard\TopicRejectType\TopicRejectTypeController::class, 'index']);
-        Route::post('/', [\App\Http\Controllers\Dashboard\TopicRejectType\TopicRejectTypeController::class, 'store']);
+        Route::post('/', [\App\Http\Controllers\Dashboard\TopicRejectType\TopicRejectTypeController::class, 'index']);
+        Route::post('/store', [\App\Http\Controllers\Dashboard\TopicRejectType\TopicRejectTypeController::class, 'store']);
         Route::get('/{rejectType}', [\App\Http\Controllers\Dashboard\TopicRejectType\TopicRejectTypeController::class, 'show']);
         Route::post('/{rejectType}', [\App\Http\Controllers\Dashboard\TopicRejectType\TopicRejectTypeController::class, 'update']);
         Route::delete('/{rejectType}', [\App\Http\Controllers\Dashboard\TopicRejectType\TopicRejectTypeController::class, 'delete']);
@@ -116,8 +118,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum']], function (
      * Roles
      */
     Route::group(['prefix' => 'role'], function () {
-        Route::get('/', [\App\Http\Controllers\Dashboard\Role\RoleController::class, 'index']);
-        Route::post('/', [\App\Http\Controllers\Dashboard\Role\RoleController::class, 'store']);
+        Route::post('/', [\App\Http\Controllers\Dashboard\Role\RoleController::class, 'index']);
+        Route::post('/store', [\App\Http\Controllers\Dashboard\Role\RoleController::class, 'store']);
         Route::get('/{role}', [\App\Http\Controllers\Dashboard\Role\RoleController::class, 'show']);
         Route::patch('/{role}', [\App\Http\Controllers\Dashboard\Role\RoleController::class, 'update']);
         Route::delete('/{role}', [\App\Http\Controllers\Dashboard\Role\RoleController::class, 'delete']);
@@ -129,9 +131,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum']], function (
      * Permissions
      */
     Route::group(['prefix' => 'permission'], function () {
-        Route::get('/', [\App\Http\Controllers\Dashboard\Permission\PermissionController::class, 'index']);
+        Route::post('/', [\App\Http\Controllers\Dashboard\Permission\PermissionController::class, 'index']);
         Route::get('/permission-for-form', [\App\Http\Controllers\Dashboard\Permission\PermissionController::class, 'getPermissionsForForm']);
-        Route::post('/', [\App\Http\Controllers\Dashboard\Permission\PermissionController::class, 'store']);
+        Route::post('/store', [\App\Http\Controllers\Dashboard\Permission\PermissionController::class, 'store']);
         Route::get('/{permission}', [\App\Http\Controllers\Dashboard\Permission\PermissionController::class, 'show']);
         Route::patch('/{permission}', [\App\Http\Controllers\Dashboard\Permission\PermissionController::class, 'update']);
         Route::delete('/{permission}', [\App\Http\Controllers\Dashboard\Permission\PermissionController::class, 'delete']);
@@ -261,7 +263,7 @@ Route::group(['prefix' => 'topic'], function () {
         Route::put('/', \App\Http\Controllers\Client\Topic\UpdateController::class);
         Route::delete('/', [\App\Http\Controllers\Client\Topic\TopicController::class, 'delete']);
         Route::group(['prefix' => 'posts'], function () {
-            Route::get('/', [\App\Http\Controllers\Client\Topic\TopicPostController::class, 'index']);
+            Route::post('/', \App\Http\Controllers\Client\Topic\TopicPostController::class);
         });
     });
     // Unapproved topics

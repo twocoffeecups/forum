@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard\Tag;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Dashboard\Paginate\PaginateRequest;
 use App\Http\Requests\Dashboard\Tag\TagStoreRequest;
 use App\Http\Requests\Dashboard\Tag\TagUpdateRequest;
 use App\Http\Resources\Dashboard\Forum\TagResource;
@@ -12,13 +13,11 @@ use App\Services\AuthService;
 class TagController extends Controller
 {
 
-    /**
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function index(): \Illuminate\Http\JsonResponse
+    public function index(PaginateRequest $request)
     {
-        $tags = Tag::all();
-        return response()->json(['tags' => TagResource::collection($tags)]);
+        $paginate = $request->validated();
+        $tags = Tag::paginate($paginate['entriesOnPage'], ['*'], 'page', $paginate['page']);
+        return TagResource::collection($tags);
     }
 
     /**

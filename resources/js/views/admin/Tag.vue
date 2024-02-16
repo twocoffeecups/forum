@@ -1,26 +1,22 @@
 <template>
     <div class="row mb-3">
-        <div class="container-fluid">
-
+        <div class="col-md-8 mb-3">
             <!-- Table card -->
-            <div class="card">
+            <div class="card" style="border-top: 5px solid green">
                 <div class="card-header">
-                    <div class="d-flex justify-content-between my-2">
-                        <h4>All Tags</h4>
-                        <div>
-                            <CreateTagModal/>
-                        </div>
+                    <div class="d-flex justify-content-between">
+                        <h4><i class="fas fa-tags"></i> Tags list</h4>
                     </div>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive mb-1">
                         <div v-if="tags!==0"
-                            class="d-flex mt-2 flex-column flex-md-row flex-lg-row flex-xl-row justify-content-center justify-content-md-between justify-content-lg-between mb-3">
-                            <div class="d-none d-md-flex d-lg-flex d-xl-flex my-2">
-                            <span class="form-text">
-                              Show
-                            </span>
-                                <select class="form-select form-select-sm mx-2" aria-label="Select entries">
+                             class="d-flex mt-2 flex-column flex-md-row flex-lg-row flex-xl-row justify-content-center justify-content-md-between justify-content-lg-between mb-3">
+                            <div v-if="tags.length > 10" class="d-none d-md-flex d-lg-flex d-xl-flex my-2">
+                                    <span class="form-text">
+                                      Show
+                                    </span>
+                                <select v-model="entriesOnPage" class="form-select form-select-sm mx-2" aria-label="Select entries">
                                     <option value="10" selected>10</option>
                                     <option value="30">30</option>
                                     <option value="50">50</option>
@@ -56,7 +52,7 @@
                                 </td>
                                 <td>{{ tag.topics }}</td>
                                 <td>{{ tag.created_at }}</td>
-                                <th>
+                                <td>
                                     <div class="btn-group  btn-group-sm" role="group"
                                          aria-label="Basic radio toggle button group"
                                          @change.prevent="changeVisibility($event, tag.id)">
@@ -71,16 +67,23 @@
                                         <label class="btn btn-outline-success" :for="tag.id+'published'">Publish</label>
                                     </div>
 
-                                </th>
+                                </td>
                                 <td>
-                                    <span @click="deleteTag(tag.id)" role="button" class="text-danger mx-2"
-                                          title="Edit">
-                                        <i class="fas fa-trash"></i>
-                                    </span>
+                                    <button @click="deleteTag(tag.id)" role="button" class="btn btn-danger bg-gradient mx-2"
+                                            title="Edit"> Delete
+                                    </button>
                                 </td>
                             </tr>
                             </tbody>
                         </table>
+
+                        <TablePagination
+                            @selectPageEmit="selectPage"
+                            :total-entries="paginate.total"
+                            :total-pages="paginate.last_page"
+                            :links="paginate.links"
+                            :current-page="paginate.current_page"
+                            :last-page="paginate.last_page" />
 
                         <div v-if="tags===0" class="text-center mx-1">
                             <h4>You haven't rejected tags.</h4>
@@ -89,24 +92,34 @@
 
                 </div>
             </div>
-
-
+        </div>
+        <div class="col-md-4">
+            <CreateTagCard />
         </div>
     </div>
+
 </template>
 
 <script>
-import CreateTagModal from "../../components/admin/CreateTagModal.vue";
 import {mapGetters} from "vuex";
-
+import TablePagination from "../../components/admin/TablePagination.vue";
+import CreateTagCard from "../../components/admin/CreateTagCard.vue";
 export default {
     name: "Tag",
-    components: {CreateTagModal},
+    components: {CreateTagCard, TablePagination, },
 
     computed: {
         ...mapGetters({
             tags: 'tag/getTags',
+            paginate: 'tag/getPaginate',
         })
+    },
+
+    watch: {
+        entriesOnPage(val){
+            this.$store.commit('tag/setEntriesOnPage', val);
+            this.$store.dispatch('tag/getTags')
+        }
     },
 
     mounted() {
@@ -116,6 +129,7 @@ export default {
     data() {
         return {
             visibility: null,
+            entriesOnPage: 10,
         }
     },
 
@@ -142,6 +156,10 @@ export default {
             let value = event.target.value;
             this.$store.dispatch('tag/changeVisibility', [id, value]);
         },
+
+        selectPage(page){
+            this.$store.dispatch('tag/getTags', page)
+        }
     }
 }
 </script>

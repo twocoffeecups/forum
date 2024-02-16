@@ -45,14 +45,22 @@
                         <Post v-for="post in posts" :post="post" @report="report" @reply="reply"/>
                         <!-- ./ Posts-->
 
+                        <!-- Pagination -->
+                        <Pagination v-if="paginate.last_page > 1"
+                                    @selectPageEmit="selectPage"
+                                    :total-pages="totalPages"
+                                    :links="paginate.links"
+                                    :forum-id="this.$route.params.id"
+                                    :current-page="paginate.current_page"
+                                    :last-page="paginate.last_page" />
+
                         <!-- Create post form -->
                         <PostCreationForm :reply="replyPost" :reply-id="replyPost.id" @cancelReply="cancelReply"/>
 
                         <!-- Topic footer -->
                         <TopicFooter v-if="isLoggedIn" :topic-id="this.$route.params.id" />
 
-                        <!-- Pagination -->
-<!--                        <Pagination/>-->
+
                     </div>
                 </div>
 
@@ -88,12 +96,17 @@ export default {
         this.$store.dispatch('topic/getTopic', this.$route.params.id);
     },
 
+    mounted() {
+        this.$store.dispatch('topic/getTopicPosts', this.$route.params.id);
+    },
+
     computed: {
         ...mapGetters({
             topic: 'topic/getTopic',
             posts: 'topic/getPosts',
             images: 'topic/getImages',
             isLoggedIn: 'auth/isLoggedIn',
+            paginate: 'topic/getPaginate',
         }),
     },
 
@@ -125,7 +138,11 @@ export default {
         },
         cancelReply() {
             this.replyPost = [];
-        }
+        },
+
+        selectPage(page){
+            this.$store.dispatch('topic/getTopicPosts', [this.$route.params.id, page]);
+        },
     },
 }
 </script>

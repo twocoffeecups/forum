@@ -1,14 +1,11 @@
 <template>
     <div class="row mb-3">
-        <div class="container-fluid">
-
+        <div class="col-md-8">
             <!-- Table card -->
-            <div class="card">
+            <div class="card" style="border-top: 5px solid #0c63e4">
                 <div class="card-header">
-                    <div class="d-flex justify-content-between my-2">
-                        <h4>Report reason types</h4>
-
-                        <CreateReportReasonTypeModal />
+                    <div class="d-flex justify-content-between">
+                        <h4>Report reason types list</h4>
                     </div>
                 </div>
                 <div class="card-body">
@@ -69,9 +66,9 @@
                                     </td>
                                     <td>{{ reportType.created_at }}</td>
                                     <td>
-                                        <span @click.prevent="deleteReportReason(reportType.id)" role="button" class="text-danger mx-2" title="Edit">
-                                            <i class="fas fa-trash"></i>
-                                        </span>
+                                        <button @click.prevent="deleteReportReason(reportType.id)" class="btn btn-danger mx-2" title="Edit">
+                                            Delete
+                                        </button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -92,8 +89,10 @@
                         :last-page="paginate.last_page" />
                 </div>
             </div>
+        </div>
 
-
+        <div class="col-md-4">
+            <CreateReportReasonTypeComponent />
         </div>
     </div>
 </template>
@@ -101,11 +100,10 @@
 <script>
 import {mapGetters} from "vuex";
 import TablePagination from "../../components/admin/TablePagination.vue";
-import CreateReportReasonTypeModal from "../../components/admin/CreateReportReasonTypeModal.vue";
-
+import CreateReportReasonTypeComponent from "../../components/admin/CreateReportReasonTypeComponent.vue";
 export default {
     name: "ReportReasonTypes",
-    components: {CreateReportReasonTypeModal, TablePagination},
+    components: {CreateReportReasonTypeComponent, TablePagination},
 
     computed: {
         ...mapGetters({

@@ -49,7 +49,7 @@ export default {
                     .then(response => {
                         if (response.data) {
                             toast.success(response.data.message ?? "Success.");
-                            commit('pushReportReasonTypes', response.data.reportReason);
+                            commit('push', response.data.reportReason);
                             resolve(response);
                         } else {
                             reject(response);
@@ -137,7 +137,7 @@ export default {
             state.entriesOnPage = payload;
         },
 
-        pushReportReasonTypes(state, payload){
+        push(state, payload){
             state.reportReasonTypes.push(payload);
         }
     },

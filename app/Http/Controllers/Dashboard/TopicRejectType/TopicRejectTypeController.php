@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard\TopicRejectType;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Dashboard\Paginate\PaginateRequest;
 use App\Http\Requests\Dashboard\TopicRejectType\TopicRejectTypeStoreRequest;
 use App\Http\Requests\Dashboard\TopicRejectType\TopicRejectTypeUpdateRequest;
 use App\Http\Resources\Dashboard\TopicRejectType\TopicRejectTypeResource;
@@ -12,12 +13,14 @@ use App\Services\AuthService;
 class TopicRejectTypeController extends Controller
 {
     /**
-     * @return \Illuminate\Http\JsonResponse
+     * @param PaginateRequest $request
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
-    protected function index(): \Illuminate\Http\JsonResponse
+    protected function index(PaginateRequest $request): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
     {
-        $rejectTypes = TopicRejectType::all();
-        return response()->json(['rejectTypes' => TopicRejectTypeResource::collection($rejectTypes)]);
+        $paginate = $request->validated();
+        $rejectTypes = TopicRejectType::paginate($paginate['entriesOnPage'], '*', 'page', $paginate['page']);
+        return TopicRejectTypeResource::collection($rejectTypes);
     }
 
     /**
@@ -30,7 +33,10 @@ class TopicRejectTypeController extends Controller
         $user = AuthService::getAuthorizedUser($request);
         $data['userId'] = $user->id;
         $rejectType = TopicRejectType::firstOrCreate($data);
-        return response()->json(['message' => 'Topic reject type created.']);
+        return response()->json([
+            'message' => 'Topic reject type created.',
+            'rejectedType' => new TopicRejectTypeResource($rejectType),
+        ]);
     }
 
     /**
@@ -50,9 +56,7 @@ class TopicRejectTypeController extends Controller
     protected function update(TopicRejectTypeUpdateRequest $request, TopicRejectType $rejectType): \Illuminate\Http\JsonResponse
     {
         $data = $request->validated();
-        foreach($data as $key => $value) {
-            $rejectType->$key = $value;
-        }
+        $rejectType->fill($data);
         $rejectType->save();
         return response()->json(['message' => 'Topic reject type updated.']);
 

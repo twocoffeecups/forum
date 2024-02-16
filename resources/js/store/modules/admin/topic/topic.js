@@ -9,6 +9,8 @@ export default {
         topics: {},
         topic: {},
         topicTags: {},
+        paginate: {},
+        entriesOnPage: 10,
     },
 
     getters: {
@@ -22,16 +24,24 @@ export default {
 
         getTopicTags(state){
             return state.topicTags;
-        }
+        },
+
+        getPaginate(state){
+            return state.paginate;
+        },
     },
 
     actions: {
-        getTopics({dispatch, commit}) {
+        getTopics({dispatch, commit, state}, page = 1) {
             return new Promise((resolve, reject) => {
-                api.get('/api/admin/topic')
+                api.post('/api/admin/topic', {
+                   page: page,
+                   entriesOnPage:  state.entriesOnPage,
+                })
                     .then(response => {
                         if (response.data) {
-                            commit('setTopics', response.data.topics);
+                            commit('setTopics', response.data.data);
+                            commit('setPaginate', response.data.meta);
                             resolve(response);
                         } else {
                             reject(response);
@@ -130,6 +140,14 @@ export default {
         setTopicTags(state, payload){
             state.topicTags = payload;
         },
+
+        setPaginate(state, payload){
+            state.paginate = payload;
+        },
+
+        setEntriesOnPage(state, payload){
+            state.entriesOnPage = payload;
+        }
     }
 
 

@@ -8,20 +8,27 @@ export default {
 
     state: {
         rejectTypes: {},
+        paginate: {},
+        entriesOnPage: 10,
     },
 
     getters: {
         getRejectTypes(state){
             return state.rejectTypes;
-        }
+        },
+
+        getPaginate(state){
+            return state.paginate;
+        },
     },
 
     actions: {
-        createRejectType({dispatch}, data){
+        createRejectType({dispatch, commit}, data){
             return new Promise((resolve, reject) => {
-                api.post('/api/admin/topic-reject-type', data)
+                api.post('/api/admin/topic-reject-type/store', data)
                     .then(response => {
                         if(response.data){
+                            commit('push', response.data.rejectedType);
                             toast.success(response.data.message ?? "Success.");
                             resolve(response);
                         }else{
@@ -35,12 +42,16 @@ export default {
             });
         },
 
-        getRejectTypes({dispatch, commit}) {
+        getRejectTypes({dispatch, commit, state}, page = 1) {
             return new Promise((resolve, reject) => {
-                api.get('/api/admin/topic-reject-type')
+                api.post('/api/admin/topic-reject-type', {
+                    page: page,
+                    entriesOnPage: state.entriesOnPage,
+                })
                     .then(response => {
                         if(response.data){
-                            commit('setRejectTypes', response.data.rejectTypes);
+                            commit('setRejectTypes', response.data.data);
+                            commit('setPaginate', response.data.meta);
                             resolve(response);
                         }else{
                             resolve(response);
@@ -114,6 +125,18 @@ export default {
     mutations: {
         setRejectTypes(state, payload){
             state.rejectTypes = payload;
-        }
+        },
+
+        setPaginate(state, payload){
+            state.paginate = payload;
+        },
+
+        setEntriesOnPage(state, payload){
+            state.entriesOnPage = payload;
+        },
+
+        push(state, payload){
+            state.rejectTypes.push(payload);
+        },
     },
 }

@@ -8,6 +8,8 @@ export default {
     state: {
         topics: {},
         topic: {},
+        entriesOnPage: 10,
+        paginate: {},
     },
 
     getters: {
@@ -19,15 +21,23 @@ export default {
             return state.topic;
         },
 
+        getPaginate(state){
+            return state.paginate;
+        },
+
     },
 
     actions: {
-        getTopics({dispatch, commit}) {
+        getTopics({dispatch, commit, state}, page = 1) {
             return new Promise((resolve, reject) => {
-                api.get('/api/admin/rejected-topics')
+                api.post('/api/admin/rejected-topics', {
+                    page: page,
+                    entriesOnPage: state.entriesOnPage,
+                })
                     .then(response => {
                         if (response.data) {
-                            commit('setTopics', response.data.topics);
+                            commit('setTopics', response.data.data);
+                            commit('setPaginate', response.data.meta);
                             resolve(response);
                         } else {
                             reject(response);
@@ -49,6 +59,13 @@ export default {
             state.topic = payload;
         },
 
+        setPaginate(state, payload){
+            state.paginate = payload;
+        },
+
+        setEntriesOnPage(state, payload){
+            state.entriesOnPage = payload;
+        },
     }
 
 

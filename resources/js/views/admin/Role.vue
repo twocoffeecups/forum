@@ -1,99 +1,129 @@
 <template>
-    <div class="card">
-        <div class="card-header">
-            <div class="d-flex justify-content-between my-2">
-                <h4>All Roles</h4>
-                <div class="d-flex">
-                    <CreatePermissionModal />
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card" style="border-top: 5px solid green">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between">
+                        <h4>All Roles</h4>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive mb-1">
+                        <div v-if="roles!==0"
+                             class="d-flex mt-2 flex-column flex-md-row flex-lg-row flex-xl-row justify-content-center justify-content-md-between justify-content-lg-between mb-3">
+                            <div class="d-none d-md-flex d-lg-flex d-xl-flex my-2">
+                                <span class="form-text">
+                                  Show
+                                </span>
+                                <select v-model="entriesOnPage" class="form-select form-select-sm mx-2" aria-label="Select entries">
+                                    <option value="10" selected>10</option>
+                                    <option value="30">30</option>
+                                    <option value="50">50</option>
+                                </select>
+                                <span class="form-text">entries</span>
+                            </div>
+                            <div class="d-flex mx-2 my-2">
+                                <label class="form-text mx-1">Search: </label>
+                                <input type="search" class="form-control" id="search" style="max-height: 20px;"/>
+                            </div>
+                        </div>
 
-                    <AddRoleModal/>
+                        <!-- Table -->
+                        <table v-if="roles!==0" class="table table-striped table-hover table-bordered">
+                            <thead class="table-primary">
+                            <tr></tr>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Users count</th>
+                                <th scope="col">Permissions</th>
+                                <th scope="col">Created AT</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="role in roles">
+                                    <th scope="row">{{ role.id }}</th>
+                                    <td>{{ role.name }}</td>
+                                    <td>{{ role.usersCount }}</td>
+                                    <td>
+                                        <div class="flex-row">
+                                            <span class="badge mx-1 p-1 bg-primary bg-gradient" v-for="permission in role.permissions">{{ permission.option }}</span>
+                                        </div>
+                                    </td>
+                                    <td>{{ role.created_at }}</td>
+                                    <td>
+                                        <div class="d-flex justify-content-around">
+                                            <router-link class="btn btn-success" :to="{ name:'admin.role.details', params:{id:role.id} }">
+                                                Show
+                                            </router-link>
+                                            <button @click="deleteRole(role.id)" role="button" class="btn btn-danger mx-2">
+                                                Delete
+                                            </button>
+                                        </div>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <TablePagination
+                            @selectPageEmit="selectPage"
+                            :total-entries="paginate.total"
+                            :total-pages="paginate.last_page"
+                            :links="paginate.links"
+                            :current-page="paginate.current_page"
+                            :last-page="paginate.last_page" />
+
+                        <div v-if="roles===0" class="text-center mx-1">
+                            <h4>You haven't done a roles.</h4>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
-        <div class="card-body">
-            <div class="table-responsive mb-1">
-                <div v-if="roles!==0"
-                    class="d-flex mt-2 flex-column flex-md-row flex-lg-row flex-xl-row justify-content-center justify-content-md-between justify-content-lg-between mb-3">
-                    <div class="d-none d-md-flex d-lg-flex d-xl-flex my-2">
-                        <span class="form-text">
-                          Show
-                        </span>
-                        <select class="form-select form-select-sm mx-2" aria-label="Select entries">
-                            <option value="10" selected>10</option>
-                            <option value="30">30</option>
-                            <option value="50">50</option>
-                        </select>
-                        <span class="form-text">entries</span>
-                    </div>
-                    <div class="d-flex mx-2 my-2">
-                        <label class="form-text mx-1">Search: </label>
-                        <input type="search" class="form-control" id="search" style="max-height: 20px;"/>
-                    </div>
-                </div>
 
-                <!-- Table -->
-                <table v-if="roles!==0" class="table table-striped table-hover table-bordered">
-                    <thead class="table-primary">
-                    <tr></tr>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Users count</th>
-                        <th scope="col">Permissions</th>
-                        <th scope="col">Created AT</th>
-                        <th scope="col">Actions</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="role in roles">
-                            <th scope="row">{{ role.id }}</th>
-                            <td>{{ role.name }}</td>
-                            <td>{{ role.usersCount }}</td>
-                            <td class="flex-row d-flex">
-                                <span class="d-flex mx-1 p-1 bg-success bg-gradient text-white rounded-1" v-for="permission in role.permissions">{{ permission.option }}</span>
-                            </td>
-                            <td>{{ role.created_at }}</td>
-                            <td>
-                                <span class="text-primary mx-2" title="Show">
-                                    <router-link :to="{ name:'admin.role.details', params:{id:role.id} }">
-                                        <i class="fas fa-eye"></i>
-                                    </router-link>
-                                </span>
-                                <span @click="deleteRole(role.id)" role="button" class="text-danger mx-2" title="Delete">
-                                    <i class="fas fa-trash"></i>
-                                </span>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <div v-if="roles===0" class="text-center mx-1">
-                    <h4>You haven't done a roles.</h4>
-                </div>
-            </div>
-
+        <div class="col-md-4">
+            <CreateRoleComponent />
         </div>
     </div>
+
 </template>
 
 <script>
-import AddRoleModal from "../../components/admin/AddRoleModal.vue";
 import VueMultiselect from "vue-multiselect";
-import CreatePermissionModal from "../../components/admin/CreatePermissionModal.vue";
+import CreatePermissionModal from "../../components/admin/CreatePermissionComponent.vue";
 import {mapGetters} from "vuex";
+import CreateRoleComponent from "../../components/admin/CreateRoleComponent.vue";
+import TablePagination from "../../components/admin/TablePagination.vue";
 
 export default {
     name: "Role",
-    components: {CreatePermissionModal, VueMultiselect, AddRoleModal},
+    components: {TablePagination, CreateRoleComponent, CreatePermissionModal, VueMultiselect},
 
     computed: {
         ...mapGetters({
-            roles: 'role/getRoles'
+            roles: 'role/getRoles',
+            paginate: 'role/getPaginate',
         }),
     },
 
     mounted() {
         this.getRoles();
+    },
+
+    data() {
+        return {
+            entriesOnPage: 10,
+        }
+    },
+
+    watch: {
+        entriesOnPage(val){
+            this.$store.commit('role/setEntriesOnPage', val);
+            this.$store.dispatch('role/getRoles');
+        },
     },
 
     methods: {
@@ -104,7 +134,11 @@ export default {
         deleteRole(id) {
             this.$store.dispatch('role/deleteRole', id)
         },
-    }
+
+        selectPage(page){
+            this.$store.dispatch('role/getRoles', page);
+        }
+    },
 }
 </script>
 

@@ -3,28 +3,33 @@
 namespace App\Http\Controllers\Dashboard\Topic;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Dashboard\Paginate\PaginateRequest;
 use App\Http\Requests\Dashboard\Topic\RejectTopicRequest;
 use App\Http\Requests\Dashboard\Topic\TopicDeleteRequest;
 use App\Http\Resources\Dashboard\Topic\RejectedTopicResource;
 use App\Http\Resources\Dashboard\Topic\TopicDetailsResource;
 use App\Http\Resources\Dashboard\Topic\TopicResource;
+use App\Http\Resources\Dashboard\TopicRejectType\TopicRejectTypeResource;
 use App\Models\Topic;
 use App\Models\RejectedTopic;
+use App\Models\TopicRejectType;
 use App\Notifications\TopicRejected;
 
 class TopicController extends Controller
 {
 
-    public function index()
+    public function index(PaginateRequest $request)
     {
-        $topics = Topic::all();
-        return response()->json(['topics' => TopicResource::collection($topics)]);
+        $paginate = $request->validated();
+        $topics = Topic::paginate($paginate['entriesOnPage'], '*', 'page', $paginate['page']);
+        return TopicResource::collection($topics);
     }
 
-    public function rejectedTopic()
+    public function rejectedTopic(PaginateRequest $request)
     {
-        $topics = RejectedTopic::all();
-        return response()->json(['topics' => RejectedTopicResource::collection($topics)]);
+        $paginate = $request->validated();
+        $topics = RejectedTopic::paginate($paginate['entriesOnPage'], '*', 'page', $paginate['page']);
+        return RejectedTopicResource::collection($topics);
     }
 
     public function show(Topic $topic)
@@ -53,7 +58,6 @@ class TopicController extends Controller
         $data = $request->validated();
         $data['userId'] = $topic->userId;
         $data['topicId'] = $topic->id;
-        //dd($data);
         $rejectedTopic = RejectedTopic::firstOrCreate(['topicId' => $data['topicId']], $data);
         // user notification
         $topic->author->notify(new TopicRejected($topic, $data['message']));
@@ -71,5 +75,14 @@ class TopicController extends Controller
         }
         $topic->delete();
         return response()->json(['message' => 'The topic deleted.']);
+    }
+
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getRejectTypes(): \Illuminate\Http\JsonResponse
+    {
+        $rejectTypes = TopicRejectType::all();
+        return response()->json(['rejectTypes' => TopicRejectTypeResource::collection($rejectTypes)]);
     }
 }

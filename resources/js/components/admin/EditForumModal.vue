@@ -1,8 +1,7 @@
 <template>
-    <span role="button" class="text-primary" data-bs-toggle="modal" :data-bs-target="`#edit-forum-${id}-modal`" style="font-size: 1.3em"
-          title="Edit">
-        <i class="fas fa-edit"></i>
-    </span>
+    <button class="btn btn-primary" data-bs-toggle="modal" :data-bs-target="`#edit-forum-${id}-modal`" title="Edit">
+        Edit
+    </button>
 
     <div class="modal fade" :id="`edit-forum-${id}-modal`" tabindex="-1" :aria-labelledby="`edit-forum-${id}-modal`"
          aria-hidden="true">

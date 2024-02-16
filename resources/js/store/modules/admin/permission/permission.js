@@ -7,21 +7,31 @@ export default {
 
     state: {
         permissions: {},
+        paginate: {},
+        entriesOnPage: 10,
     },
 
     getters: {
         getPermission(state){
             return state.permissions;
-        }
+        },
+
+        getPaginate(state){
+            return state.paginate;
+        },
     },
 
     actions: {
-        getPermissions({dispatch, commit}) {
+        getPermissions({dispatch, commit, state}, page = 1) {
             return new Promise((resolve, reject) => {
-                api.get('/api/admin/permission')
+                api.post('/api/admin/permission', {
+                    page: page,
+                    entriesOnPage: state.entriesOnPage
+                })
                     .then(response => {
                         if(response.data){
-                            commit('setPermissions', response.data.permissions);
+                            commit('setPermissions', response.data.data);
+                            commit('setPaginate', response.data.meta)
                             resolve(response);
                         }else{
                             reject(response);
@@ -35,7 +45,7 @@ export default {
 
         createPermission({dispatch, commit}, name){
             return new Promise((resolve, reject) => {
-                api.post('/api/admin/permission', {
+                api.post('/api/admin/permission/store', {
                     name: name
                 })
                     .then(response => {
@@ -101,6 +111,14 @@ export default {
 
         pushPermission(state, payload){
             state.permissions.push(payload);
+        },
+
+        setPaginate(state, payload){
+            state.paginate = payload;
+        },
+
+        setEntriesOnPage(state, payload){
+            state.entriesOnPage = payload;
         },
     },
 }

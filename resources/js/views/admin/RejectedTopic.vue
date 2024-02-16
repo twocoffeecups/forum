@@ -53,7 +53,7 @@
                                 <span class="form-text">
                                   Show
                                 </span>
-                                <select class="form-select form-select-sm mx-2" aria-label="Select entries">
+                                <select v-model="entriesOnPage" class="form-select form-select-sm mx-2" aria-label="Select entries">
                                     <option value="10" selected>10</option>
                                     <option value="30">30</option>
                                     <option value="50">50</option>
@@ -70,35 +70,40 @@
                         <table v-if="topics!==0" class="table table-striped table-hover table-bordered">
                             <thead class="table-primary">
                             <tr></tr>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Topic title</th>
-                                <th scope="col">Reason</th>
-                                <th scope="col">Author</th>
-                                <th scope="col">Posts</th>
-                                <th scope="col">Created AT</th>
-                                <th scope="col">Actions</th>
-                            </tr>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Topic title</th>
+                                    <th scope="col">Reason</th>
+                                    <th scope="col">Author</th>
+                                    <th scope="col">Posts</th>
+                                    <th scope="col">Created AT</th>
+                                    <th scope="col">Actions</th>
+                                </tr>
                             </thead>
                             <tbody>
-                            <tr v-for="topic in topics">
-                                <th scope="row">{{ topic.id }}</th>
-                                <td>{{ topic.title }}</td>
-                                <td>{{ topic.reason }}</td>
-                                <td>{{ topic.author }}</td>
-                                <td>{{ topic.posts }}</td>
-                                <td>{{ topic.created_at }}</td>
-                                <td>
-                                    <span role="button" class="text-primary mx-2" title="Show">
-                                        <span class="mx-2">ID: {{topic.id}}</span>
-                                        <router-link :to="{name:'admin.topic.details', params:{id: topic.topicId}}">
-                                            <i class="far fa-eye"></i>
+                                <tr v-for="topic in topics">
+                                    <th scope="row">{{ topic.id }}</th>
+                                    <td>{{ topic.title }}</td>
+                                    <td>{{ topic.reason }}</td>
+                                    <td>{{ topic.author }}</td>
+                                    <td>{{ topic.posts }}</td>
+                                    <td>{{ topic.created_at }}</td>
+                                    <td>
+                                        <router-link class="btn btn-success" :to="{name:'admin.topic.details', params:{id: topic.topicId}}">
+                                            Show
                                         </router-link>
-                                    </span>
-                                </td>
-                            </tr>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
+
+                        <TablePagination
+                            @selectPageEmit="selectPage"
+                            :total-entries="paginate.total"
+                            :total-pages="paginate.last_page"
+                            :links="paginate.links"
+                            :current-page="paginate.current_page"
+                            :last-page="paginate.last_page" />
 
                         <div v-if="topics===0" class="text-center mx-1">
                             <h4>You haven't rejected topics.</h4>
@@ -115,19 +120,41 @@
 
 <script>
 import {mapGetters} from "vuex";
+import TablePagination from "../../components/admin/TablePagination.vue";
 
 export default {
     name: "RejectedTopic",
+    components: {TablePagination},
 
     computed: {
         ...mapGetters({
             topics: 'rejectedTopic/getTopics',
+            paginate: 'rejectedTopic/getPaginate',
         })
+    },
+
+    data() {
+        return {
+            entriesOnPage: 10,
+        }
+    },
+
+    watch: {
+        entriesOnPage(val){
+            this.$store.commit('rejectedTopic/setEntriesOnPage', val);
+            this.$store.dispatch('rejectedTopic/getTopics');
+        }
     },
 
     mounted() {
         this.$store.dispatch('rejectedTopic/getTopics');
     },
+
+    methods: {
+        selectPage(page){
+            this.$store.dispatch('rejectedTopic/getTopics', page);
+        },
+    }
 }
 </script>
 

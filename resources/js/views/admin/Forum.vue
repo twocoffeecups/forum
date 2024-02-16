@@ -1,12 +1,11 @@
 <template>
     <div class="row mb-3">
         <div class="container-fluid">
-
             <!-- Table card -->
-            <div class="card">
+            <div class="card" style="border-top: 5px solid green">
                 <div class="card-header">
                     <div class="d-flex justify-content-between my-2">
-                        <h4>All Forums</h4>
+                        <h4><i class="fas fa-tag"></i> Forums list</h4>
 <!--                        <div v-if="checkHasPermissions([AccessPermissions.CAN_CREATE_FORUM])">-->
                         <div>
                             <CreateForumModal :forums="this.forums"/>
@@ -18,19 +17,22 @@
                         <div
                             class="d-flex mt-2 flex-column flex-md-row flex-lg-row flex-xl-row justify-content-center justify-content-md-between justify-content-lg-between mb-3">
                             <!-- Change showing count entries -->
-                            <div v-if="forums!==0" class="d-none d-md-flex d-lg-flex d-xl-flex my-2">
-                                <span class="form-text">
-                                  Show
-                                </span>
-                                <select v-model="entriesOnPage" class="form-select form-select-sm mx-2" aria-label="Select entries">
-                                    <option value="10" selected>10</option>
-                                    <option value="30">30</option>
-                                    <option value="50">50</option>
-                                </select>
-                                <span class="form-text">entries</span>
+                            <div class="d-flex">
+                                <div v-if="forums.length > 10" class="d-none d-md-flex d-lg-flex d-xl-flex my-2">
+                                    <span class="form-text">
+                                      Show
+                                    </span>
+                                    <select v-model="entriesOnPage" class="form-select form-select-sm mx-2" aria-label="Select entries">
+                                        <option value="10" selected>10</option>
+                                        <option value="30">30</option>
+                                        <option value="50">50</option>
+                                    </select>
+                                    <span class="form-text">entries</span>
+                                </div>
                             </div>
+
                             <!-- ./ -->
-                            <div class="d-flex mx-2 my-2">
+                            <div class="d-flex fa-pull-right mx-2 my-2">
                                 <label class="form-text mx-1">Search: </label>
                                 <input type="search" class="form-control" id="search" style="max-height: 20px;"/>
                             </div>
@@ -86,19 +88,14 @@
                                         <EditForumModal :id="forum.id" :forum-name="forum.name"
                                                         :forum-description="forum.description"/>
 
-                                        <span class="text-primary mx-2" title="Show" style="font-size: 1.3em">
-                                        <router-link :to="{ name:'admin.forum.details', params:{id: forum.id} }">
-                                          <i class="fas fa-eye"></i>
+                                        <router-link class="btn btn-success mx-1" :to="{ name:'admin.forum.details', params:{id: forum.id} }">
+                                            Show
                                         </router-link>
-                                    </span>
 
-
-                                        <span v-if="checkHasPermissions([AccessPermissions.CAN_DELETE_FORUM])"
-                                              @click="deleteForum(forum.id)" role="button" class="text-danger mx-2"
-                                              style="font-size: 1.3em"
-                                              title="Edit">
-                                      <i class="fas fa-trash"></i>
-                                  </span>
+                                        <button v-if="checkHasPermissions([AccessPermissions.CAN_DELETE_FORUM])"
+                                              @click="deleteForum(forum.id)" class="btn btn-danger mx-1" title="Edit">
+                                                Delete
+                                        </button>
                                     </div>
 
                                 </td>
@@ -120,8 +117,6 @@
                         :last-page="paginate.last_page" />
                 </div>
             </div>
-
-
         </div>
     </div>
 </template>
@@ -134,6 +129,7 @@ import AccessPermissions from "../../access/permissions";
 import {mapGetters} from "vuex";
 import TablePagination from "../../components/admin/TablePagination.vue";
 import Pagination from "../../components/client/Pagination.vue";
+import permissions from "../../access/permissions";
 
 export default {
     name: "Forum",

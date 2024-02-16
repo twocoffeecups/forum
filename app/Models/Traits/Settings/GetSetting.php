@@ -38,4 +38,14 @@ trait GetSetting
     {
         return $this->where('variable', '=', 'showOnlyLogo')->first();
     }
+
+    public static function getPostsOnPageValue(): int
+    {
+        return (int) json_decode(self::where('variable', '=', 'postsOnPage')->first()->variableData, true)['value'];
+    }
+
+    public static function getTopicsOnPageValue(): int
+    {
+        return (int) json_decode(self::where('variable', '=', 'topicsOnPage')->first()->variableData, true)['value'];
+    }
 }
