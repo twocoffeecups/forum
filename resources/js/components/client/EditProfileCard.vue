@@ -18,30 +18,14 @@
                         </div>
                     </div>
                 </div>
-                <!-- Form Row-->
-                <div class="row gx-3 mb-3">
-                    <!-- Form Group (first name)-->
-                    <div class="col-md-6">
-                        <label class="small mb-1" for="firstName">{{ $t('component.signUp.firstName') }}</label>
-                        <div :class="{ error: v$.user.firstName.$errors.length }">
-                            <input @blur="v$.user.firstName.$touch" v-model.trim="user.firstName" type="text"
-                                   class="form-control form-control-lg" id="firstName">
-                            <div class="input-errors my-2 text-danger small text-start"
-                                 v-for="error of v$.user.firstName.$errors" :key="error.$uid">
-                                <div class="error-msg">{{ error.$message }}</div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Form Group (last name)-->
-                    <div class="col-md-6">
-                        <label class="small mb-1" for="lastName">{{ $t('component.signUp.lastName') }}</label>
-                        <div :class="{ error: v$.user.lastName.$errors.length }">
-                            <input @blur="v$.user.lastName.$touch" v-model.trim="user.lastName" type="text"
-                                   class="form-control form-control-lg" id="lastName">
-                            <div class="input-errors my-2 text-danger small text-start"
-                                 v-for="error of v$.user.lastName.$errors" :key="error.$uid">
-                                <div class="error-msg">{{ error.$message }}</div>
-                            </div>
+                <div class="mb-3">
+                    <label class="small mb-1" for="name">{{ $t('component.signUp.firstName') }}</label>
+                    <div :class="{ error: v$.user.name.$errors.length }">
+                        <input @blur="v$.user.name.$touch" v-model.trim="user.name" type="text"
+                               class="form-control form-control-lg" id="name">
+                        <div class="input-errors my-2 text-danger small text-start"
+                             v-for="error of v$.user.name.$errors" :key="error.$uid">
+                            <div class="error-msg">{{ error.$message }}</div>
                         </div>
                     </div>
                 </div>
@@ -90,8 +74,7 @@ export default {
             user: {
                 login: this.userDetails.login,
                 email: this.userDetails.email,
-                firstName: this.userDetails.firstName,
-                lastName: this.userDetails.lastName,
+                name: this.userDetails.name,
             },
         }
     },
@@ -101,8 +84,7 @@ export default {
             user: {
                 login: {required, minLength: minLength(6), maxLength: maxLength(32), $lazy: true},
                 email: {required, email, minLength: minLength(8), maxLength: maxLength(32), $lazy: true},
-                firstName: {required, minLength: minLength(2), maxLength: maxLength(32), $lazy: true},
-                lastName: {required, minLength: minLength(2), maxLength: maxLength(32), $lazy: true},
+                name: {required, minLength: minLength(6), maxLength: maxLength(128), $lazy: true},
             },
         }
     },
@@ -111,7 +93,7 @@ export default {
         async updateProfile() {
             this.v$.$validate();
             if (!this.v$.$error) {
-                this.$store.dispatch('updateProfile', this.user);
+                this.$store.dispatch('profile/updateProfile', this.user);
             }
         }
     }

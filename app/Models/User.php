@@ -22,8 +22,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $fillable = [
         'login',
-        'firstName',
-        'lastName',
+        'name',
         'email',
         'lastVisit',
         'roleId',
@@ -49,9 +48,9 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
-    public function getFullName()
+    public function socialAccountInfo()
     {
-        return $this->firstName . " " . $this->lastName;
+        return $this->hasMany(SocialAccount::class, 'userId', 'id');
     }
 
     public function topics(): \Illuminate\Database\Eloquent\Relations\HasMany

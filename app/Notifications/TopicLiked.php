@@ -43,7 +43,7 @@ class TopicLiked extends Notification
     {
         return [
             'userId' => $this->user->id,
-            'userName' => $this->user->getFullName(),
+            'userName' => $this->user->name,
             'topicId' => $this->topic->id,
             'topicTitle' => $this->topic->title,
         ];

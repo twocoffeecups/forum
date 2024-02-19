@@ -46,7 +46,7 @@ class ReportProcessed extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            'userName' => $this->report->sender->getFullName(),
+            'userName' => $this->report->sender->name,
             'reportReasonType' => $this->report->reason->name,
             'action' => $this->action,
             'object' => $this->report->object,
@@ -54,7 +54,7 @@ class ReportProcessed extends Notification
             'topic' => $this->report->topic,
             'author' => [
                 'id' => $this->report->userId,
-                'name' => $this->report->user->getFullName(),
+                'name' => $this->report->user->name,
             ],
             'warn' => $this->warn,
             'totalBanDays' => $this->totalBanDays,

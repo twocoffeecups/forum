@@ -16,7 +16,7 @@ class ForumDetailsAuthorResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->firstName . ' '. $this->lastName ?? $this->login,
+            'name' => $this->name,
         ];
     }
 }

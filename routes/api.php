@@ -201,9 +201,9 @@ Route::group(['prefix' => 'client'], function () {
                 Route::post('/', \App\Http\Controllers\Client\Topic\StoreController::class)
                     ->middleware('permissions:can-create-topic');
                 Route::group(['prefix' => '{topic}/post'], function () {
-                    Route::post('/', [\App\Http\Controllers\Client\Post\StoreController::class, 'store'])
+                    Route::post('/', \App\Http\Controllers\Client\Post\StoreController::class)
                         ->middleware('permissions:can-create-post');
-                    Route::patch('/', [\App\Http\Controllers\Client\Post\UpdateController::class, 'update']);
+                    Route::patch('/', \App\Http\Controllers\Client\Post\UpdateController::class);
                 });
             });
         });
@@ -288,4 +288,9 @@ Route::group(['prefix' => 'auth'], function () {
     Route::get('/email/resend', [\App\Http\Controllers\Api\Auth\VerificationController::class, 'resend']);
     Route::post('/password/forgot', \App\Http\Controllers\Api\Auth\ForgotPasswordController::class);
     Route::post('/password/reset', \App\Http\Controllers\Api\Auth\ResetPasswordController::class);
+
+
 });
+
+Route::get('/authorize/{provider}/redirect', [\App\Http\Controllers\Api\Auth\SocialAuthController::class, 'redirectToProvider'])->name('api.social.redirect');
+Route::get('/authorize/{provider}/callback', [\App\Http\Controllers\Api\Auth\SocialAuthController::class, 'handleProviderCallback'])->name('api.social.callback');

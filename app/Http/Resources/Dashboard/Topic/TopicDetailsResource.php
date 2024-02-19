@@ -18,7 +18,7 @@ class TopicDetailsResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'forum' => $this->forum->name,
-            'author' => $this->author->getFullName(),
+            'author' => $this->author->name,
             'status' => $this->status,
             'created_at' => $this->created_at->format('Y-m-d'),
             'posts' => $this->posts()->count(),

@@ -18,7 +18,7 @@ class ReportReasonResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'description' => $this->description,
-            'author' => $this->author->getFullName(),
+            'author' => $this->author->name,
             'status' => $this->status,
             'created_at' => $this->created_at,
         ];

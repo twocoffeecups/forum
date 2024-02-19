@@ -132,6 +132,15 @@ const routes = [
         },
     },
     {
+        path: '/authorize/:provider/callback',
+        name: 'auth.provider',
+        component: () => import('../../views/auth/AuthWithProvider.vue'),
+        meta: {
+            layout: Auth,
+            middleware: [Middleware.guest]
+        },
+    },
+    {
         path: '/:catchAll(.*)',
         name: 'error.404',
         component: () => import('../../views/auth/404.vue'),

@@ -28,8 +28,8 @@
 
         <!-- Checkbox -->
         <div class="form-check d-flex justify-content-start mb-4">
-            <input class="form-check-input" type="checkbox" value="" id="rememberPass"/>
-            <label class="form-check-label mx-3" for="rememberPass"> Remember password </label>
+            <input v-model="user.remember" class="form-check-input" type="checkbox" value="" id="rememberMe"/>
+            <label class="form-check-label mx-3" for="rememberMe"> Remember me </label>
         </div>
 
 
@@ -55,12 +55,12 @@
         <hr class="my-4">
 
         <div class="d-grid gap-2">
-            <button class="btn btn-lg border-0 btn-block btn-primary mb-2 bg-gradient"
+            <button @click.prevent="redirectToSocial('yandex')" class="btn btn-lg border-0 btn-block btn-primary mb-2 bg-gradient"
                     style="background-color: #dd4b39;"
                     type="submit"><i class="fab fa-yandex-international me-2"></i>Sign in with Yandex
             </button>
 
-            <button class="btn btn-lg border-0 btn-block btn-primary bg-gradient"
+            <button @click.prevent="redirectToSocial('google')" class="btn btn-lg border-0 btn-block btn-primary bg-gradient"
                     style="background-color:  #3b5998;"
                     type="submit"><i class="fab fa-google me-2"></i> Sign in with google
             </button>
@@ -94,6 +94,7 @@ export default {
             user: {
                 email: null,
                 password: null,
+                remember: false,
             },
         }
     },
@@ -120,6 +121,9 @@ export default {
             this.$store.dispatch('auth/setLoggedInstate', this.user);
         },
 
+        redirectToSocial(provider){
+            this.$store.dispatch('auth/redirectToSocial', provider);
+        },
     }
 }
 </script>

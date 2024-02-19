@@ -20,7 +20,7 @@ class UserProfileResource extends JsonResource
         return [
             'id' => $this->id,
             'login' => $this->login,
-            'name' => $this->getFullname(),
+            'name' => $this->name,
             'email' => $this->email,
             'avatar' => $this->avatar, // TODO: сделать аватар по умолчанию
             'role' => $this->role->slug,

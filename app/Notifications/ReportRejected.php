@@ -45,7 +45,7 @@ class ReportRejected extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            'userName' => $this->report->sender->getFullName(),
+            'userName' => $this->report->sender->name,
             'reportReasonType' => $this->report->reason->name,
             'object' => $this->report->object,
             'post' => [
@@ -56,7 +56,7 @@ class ReportRejected extends Notification
             'topic' => $this->report->topic,
             'author' => [
                 'id' => $this->report->userId,
-                'name' => $this->report->user->getFullName(),
+                'name' => $this->report->user->name,
             ],
             'message' => $this->message,
         ];

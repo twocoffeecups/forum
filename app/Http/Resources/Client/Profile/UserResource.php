@@ -22,9 +22,7 @@ class UserResource extends JsonResource
         return [
             'id' => $this->id,
             'login' => $this->login,
-            'firstName' => $this->firstName,
-            'lastName' => $this->lastName,
-            'name' => $this->firstName . ' ' . $this->lastName,
+            'name' => $this->name,
             'email' => $this->email,
             'status' => $this->checkOnlineStatus(),
             'lastVisit' => Carbon::parse($this->lastVisit)->diffForHumans(),

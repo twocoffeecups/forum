@@ -25,23 +25,11 @@
                     </div>
 
                     <div class="mb-3">
-                        <div :class="{ error: v$.registrationForm.firstName.$errors.length }">
-                            <label for="firstName" class="col-form-label">First name:</label>
-                            <input @blur="v$.registrationForm.firstName.$touch" type="text" v-model="registrationForm.firstName"
+                        <div :class="{ error: v$.registrationForm.name.$errors.length }">
+                            <label for="firstName" class="col-form-label">Name:</label>
+                            <input @blur="v$.registrationForm.name.$touch" type="text" v-model="registrationForm.name"
                                    class="form-control" id="firstName">
-                            <div class="input-errors" v-for="error of v$.registrationForm.firstName.$errors"
-                                 :key="error.$uid">
-                                <div class="error-msg text-danger">{{ error.$message }}</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="mb-3">
-                        <div :class="{ error: v$.registrationForm.lastName.$errors.length }">
-                            <label for="lastName" class="col-form-label">Last name:</label>
-                            <input @blur="v$.registrationForm.lastName.$touch" type="text" v-model="registrationForm.lastName"
-                                   class="form-control" id="lastName">
-                            <div class="input-errors" v-for="error of v$.registrationForm.lastName.$errors"
+                            <div class="input-errors" v-for="error of v$.registrationForm.name.$errors"
                                  :key="error.$uid">
                                 <div class="error-msg text-danger">{{ error.$message }}</div>
                             </div>
@@ -106,8 +94,7 @@ export default {
         return {
             registrationForm: {
                 login: null,
-                firstName: null,
-                lastName: null,
+                name: null,
                 email: null,
             },
             selectedRole: null,
@@ -118,8 +105,7 @@ export default {
         return {
             registrationForm: {
                 login: {required, minLength: minLength(5), maxLength: maxLength(32)},
-                firstName: {required, minLength:minLength(2), maxLength:maxLength(64)},
-                lastName: {required, minLength:minLength(2), maxLength:maxLength(64)},
+                name: {required, minLength:minLength(6), maxLength:maxLength(128)},
                 email: {required, email, minLength: minLength(7), maxLength: maxLength(32)},
             },
         }

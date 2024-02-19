@@ -16,7 +16,7 @@ class UserReadingTopicResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->getFullName() ?? $this->login(),
+            'name' => $this->name,
         ];
     }
 }

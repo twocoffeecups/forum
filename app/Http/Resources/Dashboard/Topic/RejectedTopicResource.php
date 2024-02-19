@@ -18,7 +18,7 @@ class RejectedTopicResource extends JsonResource
             'id' => $this->id,
             'topicId' => $this->topicId,
             'title' => $this->topic->title,
-            'author' => $this->topic->author->getFullName(),
+            'author' => $this->topic->author->name,
             'reason' => $this->reason->title,
             'created_at' => $this->created_at->format('Y-m-d'),
             'posts' => $this->topic->posts()->count(),

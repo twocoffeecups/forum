@@ -47,7 +47,7 @@ class PostLiked extends Notification
     {
         return [
             'userId'    => $this->user->id,
-            'userName'  => $this->user->getFullName(),
+            'userName'  => $this->user->name,
             'postId'    => $this->post->id,
             'topicId'   => $this->topic->id,
             'topicTitle' => $this->topic->title,

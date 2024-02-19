@@ -18,7 +18,7 @@ class ActiveTopicResource extends JsonResource
         return [
             'id' => $this->id,
             'title' => $this->title,
-            'author' => $this->author->getFullName(),
+            'author' => $this->author->name,
             //'latestPost' => new LatestPostResource($this->latestPost()),
             'created_at' => Carbon::parse($this->created_at)->diffForHumans(),
         ];

@@ -15,24 +15,12 @@
         </div>
 
         <div class="form-outline mb-4">
-            <div :class="{ error: v$.signUpForm.firstName.$errors.length }">
-                <input @blur="v$.signUpForm.firstName.$touch" v-model.trim="signUpForm.firstName"
+            <div :class="{ error: v$.signUpForm.name.$errors.length }">
+                <input @blur="v$.signUpForm.name.$touch" v-model.trim="signUpForm.name"
                        type="text" :placeholder="$t('component.signUp.firstName')"
                        class="form-control form-control-lg" id="firstName">
                 <div class="input-errors my-2 text-danger small text-start"
-                     v-for="error of v$.signUpForm.firstName.$errors" :key="error.$uid">
-                    <div class="error-msg">{{ error.$message }}</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="form-outline mb-4">
-            <div :class="{ error: v$.signUpForm.lastName.$errors.length }">
-                <input @blur="v$.signUpForm.lastName.$touch" v-model.trim="signUpForm.lastName"
-                       type="text" :placeholder="$t('component.signUp.lastName')"
-                       class="form-control form-control-lg" id="lastName">
-                <div class="input-errors my-2 text-danger small text-start"
-                     v-for="error of v$.signUpForm.lastName.$errors" :key="error.$uid">
+                     v-for="error of v$.signUpForm.name.$errors" :key="error.$uid">
                     <div class="error-msg">{{ error.$message }}</div>
                 </div>
             </div>
@@ -98,12 +86,12 @@
         <hr class="my-4">
 
         <div class="d-grid gap-2">
-            <button class="btn btn-lg border-0 btn-block btn-primary mb-2 bg-gradient"
+            <button @click.prevent="redirectToSocial('yandex')" class="btn btn-lg border-0 btn-block btn-primary mb-2 bg-gradient"
                     style="background-color: #dd4b39;"
                     type="submit"><i class="fab fa-yandex-international me-2"></i>Sign in with Yandex
             </button>
 
-            <button class="btn btn-lg border-0 btn-block btn-primary bg-gradient"
+            <button @click.prevent="redirectToSocial('google')" class="btn btn-lg border-0 btn-block btn-primary bg-gradient"
                     style="background-color:  #3b5998;"
                     type="submit"><i class="fab fa-google me-2"></i> Sign in with google
             </button>
@@ -133,8 +121,7 @@ export default {
             signUpForm: {
                 login: null,
                 email: null,
-                firstName: null,
-                lastName: null,
+                name: null,
                 password: null,
                 password_confirmation: null,
             },
@@ -146,8 +133,7 @@ export default {
             signUpForm: {
                 login: {required, minLength: minLength(6), maxLength: maxLength(32), $lazy: true},
                 email: {required, email, minLength: minLength(8), maxLength: maxLength(32), $lazy: true},
-                firstName: {required, minLength: minLength(2), maxLength: maxLength(32), $lazy: true},
-                lastName: {required, minLength: minLength(2), maxLength: maxLength(32), $lazy: true},
+                name: {required, minLength: minLength(6), maxLength: maxLength(128), $lazy: true},
                 password: {required, minLength: minLength(8), maxLength: maxLength(32), $lazy: true},
                 password_confirmation: {
                     required,
@@ -170,6 +156,10 @@ export default {
                 }
                 this.$store.dispatch('auth/register', data);
             }
+        },
+
+        redirectToSocial(provider){
+            this.$store.dispatch('auth/redirectToSocial', provider);
         },
     }
 }

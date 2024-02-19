@@ -24,8 +24,7 @@ class UpdateProfileRequest extends FormRequest
     public function rules()
     {
         return [
-            'firstName' => 'min:3|max:64|string|nullable',
-            'lastName' => 'min:3|max:64|string|nullable',
+            'name' => 'min:6|max:128|string|nullable',
         ];
     }
 }

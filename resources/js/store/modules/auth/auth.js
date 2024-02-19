@@ -71,6 +71,48 @@ export default {
             })
         },
 
+        redirectToSocial({dispatch, commit}, provider){
+            return new Promise((resolve, reject) => {
+                axios.get(`/api/authorize/${provider}/redirect`)
+                    .then(response => {
+                        if(response.data.url){
+                            window.location.href = response.data.url;
+                            resolve(response);
+                        }else{
+                            reject(response);
+                        }
+                    })
+                    .catch(error => {
+                        toast.error(error.response.data.message ?? 'Access error!');
+                        reject(error);
+                    })
+            });
+        },
+
+        authWithSocial({dispatch, commit}, [provider, code]){
+            return new Promise((resolve, reject) => {
+                axios.get(`/api/authorize/${provider}/callback`, {
+                    params: {code: code}
+                })
+                    .then(response => {
+                        if(response.data.accessToken){
+                            toast.success('Login successfully!');
+                            commit('middleware/setToken', response.data.accessToken, {root: true});
+                            commit('setLoggedIn', true);
+                            dispatch('profile/getUserDetails', '',{root: true});
+                            router.push({name: 'main'});
+                            resolve(response);
+                        }else{
+                            reject(response);
+                        }
+                    })
+                    .catch(error => {
+                        toast.error(error.response.data.message ?? 'Error!');
+                        reject(error);
+                    })
+            });
+        },
+
         login({dispatch, commit}, user) {
             return new Promise((resolve, reject) => {
                 axios.get('/sanctum/csrf-cookie')
