@@ -2,8 +2,9 @@
     <nav class="navbar navbar-expand-lg  bg-body-tertiary" style="background: #f7f7f7">
         <div class="container py-3">
             <a class="navbar-brand" href="#">
-                <img v-if="logo" :src="logo.imageUrl ?? '../../assets/img/logo.png'" class="img-fluid" alt="Bootstrap" width="115" height="40">
-                <span v-if="!showOnlyLogo.value" class="mx-1 p-1 h4 fw-bold">{{ forumName.value ?? 'Forum' }}</span>
+                <img v-if="logo.imageUrl" :src="logo.imageUrl" class="img-fluid" alt="Logo" width="125" height="45">
+                <img v-if="!logo.imageUrl" src="../../assets/img/logo.png" class="img-fluid" alt="Logo" width="125" height="50">
+                <span v-if="!showOnlyLogo.value" class="mx-1 mt-2 p-1 h4 fw-bold">{{ forumName.value }}</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#navbarOffcanvasLg"
                     aria-controls="navbarOffcanvasLg" aria-label="Toggle navigation">

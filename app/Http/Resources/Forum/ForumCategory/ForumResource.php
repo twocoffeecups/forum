@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Forum\ForumCategory;
 
+use App\Http\Resources\Forum\Forum\LatestPostResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ForumResource extends JsonResource
@@ -18,9 +19,9 @@ class ForumResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'rating' => 14,
-            'posts' => 31,
+            'posts' => $this->totalPosts(),
             'views' => 3,
-            'latestPost' => 'Post text...',
+            'latestPost' => new LatestPostResource($this->latestPost()),
             'created_at' => $this->created_at->format('Y-d-m'),
         ];
     }

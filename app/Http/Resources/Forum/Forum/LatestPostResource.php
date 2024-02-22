@@ -17,6 +17,10 @@ class LatestPostResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'topic' => [
+                'id' => $this->topic->id,
+                'name' => $this->topic->title,
+            ],
             'author' => new PostAuthorResource($this->author),
             'created_at' => Carbon::parse($this->created_at)->diffForHumans(),
         ];

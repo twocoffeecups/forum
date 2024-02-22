@@ -23,6 +23,20 @@ class Forum extends Model
     {
         return $this->hasManyThrough(Post::class, Topic::class, 'forumId', 'topicId', 'id', 'id');
     }
+    public function allPosts()
+    {
+        $posts = collect();
+        $children = self::allDescendantsAndMe($this);
+        foreach ($children as $child){
+            $posts->push($child->posts);
+        }
+        return $posts->flatten(1);
+    }
+
+    public function totalPosts()
+    {
+        return $this->allPosts()->count();
+    }
 
     public function author()
     {
@@ -44,5 +58,9 @@ class Forum extends Model
         return $this->type === 0 && $this->parent === null ;
     }
 
+    public function latestPost(): Post
+    {
+        return $this->allPosts()->sortBy('created_at')->last();
+    }
 
 }

@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('report_reason_types', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->unsignedTinyInteger('status')->default(0);
             $table->foreignId('authorId')->index('authorIdx')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
             $table->timestamps();

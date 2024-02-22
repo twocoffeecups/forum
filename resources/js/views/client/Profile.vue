@@ -5,9 +5,7 @@
         <div class="row">
             <!-- Main content -->
             <div class="col-lg-9 mb-3">
-
-
-                <div class="container px-4 mt-2">
+                <div class="card px-4">
                     <!--  Profile navigation-->
                     <ProfileNavigation/>
 
@@ -15,15 +13,12 @@
 
                     <router-view/>
                 </div>
-
-
             </div>
 
             <!-- Sidebar content -->
             <div class="col-lg-3 ml-3 mb-4 mb-lg-0 px-lg-0 mt-lg-0">
                 <Sidebar/>
             </div>
-
 
         </div>
     </div>

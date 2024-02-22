@@ -4,7 +4,6 @@
         <div class="row">
             <!-- Main content -->
             <div class="col-lg-9 mb-3">
-
                 <div class="card">
                     <div class="card-header">
                         <!-- Forum head -->
@@ -92,7 +91,6 @@
 
                     </div>
                 </div>
-
             </div>
 
             <!-- Sidebar content -->
@@ -138,6 +136,7 @@ export default {
             immediate: true,
             handler() {
                 this.$store.dispatch('forum/getForum', this.$route.params.id);
+                this.$store.dispatch('forumTopics/getTopics', this.$route.params.id);
             },
         },
     },
@@ -151,7 +150,9 @@ export default {
 </script>
 
 <style scoped>
-
+.card-header{
+    background-color: white;
+}
 li {
     color: white;
 }

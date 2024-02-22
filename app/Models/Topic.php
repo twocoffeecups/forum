@@ -53,7 +53,7 @@ class Topic extends Model
 
     public function latestPost()
     {
-        return $this->posts()->latest('updated_at')->first();
+        return $this->posts()->latest('created_at')->first();
     }
 
     public function images()

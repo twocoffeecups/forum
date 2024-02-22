@@ -17,6 +17,7 @@ class ForumCategoryResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
+            //'posts' => $this->posts,
             'children' => ForumResource::collection($this->children),
         ];
     }

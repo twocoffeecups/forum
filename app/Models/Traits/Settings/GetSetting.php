@@ -41,11 +41,11 @@ trait GetSetting
 
     public static function getPostsOnPageValue(): int
     {
-        return (int) json_decode(self::where('variable', '=', 'postsOnPage')->first()->variableData, true)['value'];
+        return (int) json_decode(self::where('variable', '=', 'postsOnPage')->first()->data, true)['value'];
     }
 
     public static function getTopicsOnPageValue(): int
     {
-        return (int) json_decode(self::where('variable', '=', 'topicsOnPage')->first()->variableData, true)['value'];
+        return (int) json_decode(self::where('variable', '=', 'topicsOnPage')->first()->data, true)['value'];
     }
 }

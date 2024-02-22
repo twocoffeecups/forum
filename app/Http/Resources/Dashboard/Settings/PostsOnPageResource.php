@@ -14,6 +14,6 @@ class PostsOnPageResource extends JsonResource
      */
     public function toArray($request)
     {
-        return json_decode($this->variableData);
+        return json_decode($this->data);
     }
 }

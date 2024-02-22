@@ -18,8 +18,8 @@ return new class extends Migration
             $table->unsignedTinyInteger('type')->default(0);
             $table->foreignId('parentId')->nullable()->index('parentIdx')->constrained('forums')->cascadeOnUpdate()->cascadeOnDelete();
             $table->string('name');
-            $table->string('description');
-            $table->unsignedTinyInteger('status');
+            $table->string('description')->nullable();
+            $table->unsignedTinyInteger('status')->default(0);
             $table->foreignId('authorId')->index('authorIdx')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
             $table->timestamps();
         });

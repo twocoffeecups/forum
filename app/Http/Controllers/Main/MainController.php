@@ -11,7 +11,7 @@ class MainController extends Controller
     public function __invoke()
     {
         $settings = new Settings();
-        $meta = json_decode($settings->getMeta()->variableData, true);
+        $meta = json_decode($settings->getMeta()->data, true);
         $description = $meta['description'];
         $keywords = $meta['keywords'];
         return view('layouts.app', compact('description', 'keywords'));

@@ -124,6 +124,7 @@ export default {
             immediate: true,
             handler() {
                 this.$store.dispatch('topic/getTopic', this.$route.params.id);
+                this.$store.dispatch('topic/getTopicPosts', this.$route.params.id);
             },
         },
     },

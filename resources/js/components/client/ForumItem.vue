@@ -1,44 +1,42 @@
 <template>
-    <div class="forum-item py-2 px-3 mb-0 border-bottom" style="font-size: 0.8em">
+    <div class="forum-item py-2 px-2 mb-0 border-bottom" style="font-size: 0.8em">
         <div class="d-flex flex-column flex-md-column flex-lg-row flex-xl-row flex-xxl-row justify-content-between">
-            <div class="d-flex">
+            <div class="d-flex mx-2 p-1" style="min-width: 300px">
                 <router-link :to="{name:'forum', params:{ id: forum.id}}" class="forum-nav-link"
                              style="font-size: 1.2em">
                     {{ forum.name }}
                 </router-link>
             </div>
-
-            <div
-                class="d-flex mt-3 mt-lg-0 text-center op-7 justify-content-between flex-row flex-sm-row flex-md-row flex-lg-column flex-xl-row flex-xxl-row">
-                <div class="d-flex flex-column text-center mx-1">
+            <div class="d-flex mx-2 mt-3 mt-lg-0 text-center op-7 justify-content-between flex-row flex-sm-row flex-md-row flex-lg-column flex-xl-row flex-xxl-row">
+                <div class="d-flex text-start flex-column mx-1">
                     <h4 class="h6 font-weight-bold">
                         {{ $t('component.childForum.categories') }}
                     </h4>
                     <span>141</span>
                 </div>
-                <div class="d-flex flex-column text-center mx-1">
+                <div class="d-flex text-start flex-column mx-1">
                     <h4 class="h6 font-weight-bold">
                         {{ $t('component.topic.posts') }}
                     </h4>
                     <span>122</span>
                 </div>
-                <div class="d-flex flex-column text-center mx-1">
+                <div class="d-flex text-start flex-column mx-1">
                     <h4 class="h6 font-weight-bold">
                         {{ $t('component.topic.views') }}
                     </h4>
                     <span>290</span>
                 </div>
-
             </div>
-
-            <div
-                class="align-items-start justify-content-between mt-3 mx-2 mt-lg-0 d-flex flex-row flex-md-row flex-lg-column flex-xl-column flex-xxl-column">
-                <h4 class="h6 font-weight-bold">Latest comment: </h4>
-                <h6 class="h6 mb-0 font-weight-bold">
-                    <router-link :to="{name:'topic', params:{id:1}}">Post name</router-link>
-                </h6>
-                <div>by <a href="#0">Author name</a></div>
-                <div>05 Apr 2017, 20:07</div>
+            <div class="mx-2 align-items-start justify-content-between mt-3 mt-lg-0 d-none d-sm-none d-md-flex d-xl-flex d-xxl-flex flex-row   flex-md-none flex-lg-column flex-xl-column flex-xxl-column" style="min-width: 350px">
+                <h4 class="h6 font-weight-bold"><b>Latest comment: </b></h4>
+                <div>
+                    <h6 v-if="forum.latestPost" class="h6 mb-1 font-weight-bold">
+                        <router-link :to="{name:'topic', params:{id:forum.latestPost.topic.id}}">{{ forum.latestPost.topic.name.substring(0, 15) }}... </router-link>
+                        <span>by <router-link :to="{name:'user.profile', params:{id:forum.latestPost.author.id}}"> {{ forum.latestPost.author.name }} </router-link> </span>
+                        <span> {{' ' + forum.latestPost.created_at }}</span>
+                    </h6>
+                    <h6 v-if="!forum.latestPost">There are no posts on this forum.</h6>
+                </div>
             </div>
         </div>
     </div>

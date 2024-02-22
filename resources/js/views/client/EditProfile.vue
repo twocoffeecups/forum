@@ -22,7 +22,7 @@
 
         <div class="col-xl-8">
             <!-- Account details card-->
-            <EditProfileCard :user-details="this.userDetails" />
+            <EditProfileCard/>
 
             <!-- Change password card-->
             <EditPasswordCard/>

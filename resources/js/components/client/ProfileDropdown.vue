@@ -3,9 +3,12 @@
     <div class="dropdown w-100 mx-1" v-if="isLoggedIn">
         <a class="nav-link dropdown-toggle-split d-flex" href="#" id="offcanvas-profile" role="button"
            data-bs-toggle="dropdown" aria-expanded="false">
-            <img
+            <img v-if="avatar"
                 :src="avatar"
-                alt="mdo" width="32" height="32" class="rounded-circle">
+                alt="Avatar" width="32" height="32" class="rounded-circle">
+            <img v-if="!avatar"
+                 src="../../assets/img/default-avatar.png"
+                 alt="Avatar" width="32" height="32" class="rounded-circle">
             <span class="d-sm-block mx-3 d-md-block d-lg-none">User profile</span>
         </a>
         <ul class="dropdown-menu dropdown-profile" aria-labelledby="offcanvas-profile">

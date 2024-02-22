@@ -84,13 +84,8 @@ export default {
             });
         },
 
-        updateProfile({dispatch}, user) {
+        updateProfile({dispatch}, data) {
             return new Promise((resolve, reject) => {
-                let data = new FormData();
-                data.append('_method', 'put')
-                for (let [key, value] of Object.entries(user)) {
-                    data.append(key, value);
-                }
                 api.post(`/api/client/profile/profile-update`, data)
                     .then(res => {
                         if (res.data) {

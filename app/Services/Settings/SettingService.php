@@ -15,7 +15,7 @@ class SettingService
     {
         $settings = new Settings();
         $forumName = $settings->getForumName();
-        $forumName->variableData = $data;
+        $forumName->data = $data;
         return $forumName->save();
     }
 
@@ -23,7 +23,7 @@ class SettingService
     {
         $settings = new Settings();
         $meta = $settings->getMeta();
-        $meta->variableData = $data;
+        $meta->data = $data;
         return $meta->save();
 
     }
@@ -32,7 +32,7 @@ class SettingService
     {
         $settings = new Settings();
         $postsOnPage = $settings->getPostsOnPage();
-        $postsOnPage->variableData = $data;
+        $postsOnPage->data = $data;
         return $postsOnPage->save();
     }
 
@@ -40,7 +40,7 @@ class SettingService
     {
         $settings = new Settings();
         $postsOnPage = $settings->getTopicsOnPage();
-        $postsOnPage->variableData = $data;
+        $postsOnPage->data = $data;
         return $postsOnPage->save();
     }
 
@@ -48,15 +48,18 @@ class SettingService
     {
         $settings = new Settings();
         $logo = $settings->getLogoImage();
-        $oldLogoPath = json_decode($logo->variableData, true)['imagePath'];
+        if(json_decode($logo->data, true)['value']!=='default'){
+            $oldLogoPath = json_decode($logo->data, true)['imagePath'];
+            Storage::disk('public')->delete($oldLogoPath);
+        }
         $imageName = 'logo_' . md5(Carbon::now() . '_' . $data->getClientOriginalName()) . '.' . $data->getClientOriginalExtension();
         $imagePath = Storage::disk('public')->putFileAs('/assets/images/logo', $data, $imageName);
-        $logo->variableData = [
+        $logo->data = [
             'imageName' => $imageName,
             'imagePath' => $imagePath,
             'imageUrl' => url('/storage/' .$imagePath),
         ];
-        Storage::disk('public')->delete($oldLogoPath);
+
         return $logo->save();
     }
 
@@ -64,15 +67,17 @@ class SettingService
     {
         $settings = new Settings();
         $background = $settings->getBackgroundImage();
-        $oldBackgroundPath = json_decode($background->variableData, true)['imagePath'];
+        if(json_decode($background->data, true)['value']!=='default'){
+            $oldBackgroundPath = json_decode($background->data, true)['imagePath'];
+            Storage::disk('public')->delete($oldBackgroundPath);
+        }
         $imageName = 'background_' . md5(Carbon::now() . '_' . $data->getClientOriginalName()) . '.' . $data->getClientOriginalExtension();
         $imagePath = Storage::disk('public')->putFileAs('/assets/images/background', $data, $imageName);
-        $background->variableData = [
+        $background->data = [
             'imageName' => $imageName,
             'imagePath' => $imagePath,
             'imageUrl' => url('/storage/' . $imagePath),
         ];
-        Storage::disk('public')->delete($oldBackgroundPath);
         return $background->save();
     }
 
@@ -85,7 +90,7 @@ class SettingService
     {
         $settings = new Settings();
         $show = $settings->getShowOnlyLogo();
-        $show->variableData = $data;
+        $show->data = $data;
         return $show->save();
     }
 }

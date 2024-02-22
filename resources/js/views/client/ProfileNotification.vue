@@ -1,6 +1,6 @@
 <template>
     <div class="container" id="notifications">
-        <div class="card">
+        <div v-if="notifications.length!==0" class="card">
             <div class="card-body">
 
                 <!-- Notification messages -->
@@ -16,6 +16,9 @@
                 </div>
 
             </div>
+        </div>
+        <div v-if="notifications.length===0" class="my-4 text-center">
+            <h4>You don't have any notifications.</h4>
         </div>
     </div>
 </template>

@@ -15,7 +15,7 @@ class BackgroundResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'data' => json_decode($this->variableData),
+            'data' => json_decode($this->data),
             'updated_at' => $this->updated_at->format('Y-m-d'),
         ];
     }

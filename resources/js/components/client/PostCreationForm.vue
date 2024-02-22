@@ -88,7 +88,14 @@ export default {
     watch: {
         replyId(val) {
             this.post.replyId = val;
-        }
+        },
+
+        '$route.params.id': {
+            immediate: true,
+            handler() {
+                this.post.topicId = this.$route.params.id;
+            },
+        },
     },
 
     data() {

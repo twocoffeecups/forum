@@ -13,6 +13,20 @@ class Role extends Model
     protected $guarded = false;
     protected $table = 'roles';
 
+    public static function getAdminRole()
+    {
+        return self::where('slug', '=', 'admin')->first();
+    }
+
+    public static function getModerRole()
+    {
+        return self::where('slug', '=', 'moderator')->first();
+    }
+
+    public static function getUserRole()
+    {
+        return self::where('slug', '=', 'user')->first();
+    }
 
     public function permissions()
     {

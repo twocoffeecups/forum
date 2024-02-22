@@ -21,7 +21,7 @@ return new class extends Migration
             $table->timestamp('lastVisit')->nullable();
             $table->string('avatarPath')->nullable();
             $table->string('avatarUrl')->nullable();
-            $table->foreignId('roleId')->default(2)->index('roleIdx')->constrained('roles')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('roleId')->default(3)->index('roleIdx')->constrained('roles')->cascadeOnUpdate()->cascadeOnDelete();
             $table->unsignedTinyInteger('isWarned')->default(0);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

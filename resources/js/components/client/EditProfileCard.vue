@@ -9,22 +9,22 @@
                 <div class="mb-3">
                     <label class="small mb-1" for="login">{{ $t('component.signUp.login') }} (how your name will appear
                         to other users on the site)</label>
-                    <div :class="{ error: v$.user.login.$errors.length }">
-                        <input @blur="v$.user.login.$touch" v-model.trim="user.login" type="text"
+                    <div v-if="userDetails" :class="{ error: v$.userDetails.login.$errors.length }">
+                        <input @blur="v$.userDetails.login.$touch" v-model.trim="userDetails.login" type="text"
                                class="form-control form-control-lg" id="login">
                         <div class="input-errors my-2 text-danger small text-start"
-                             v-for="error of v$.user.login.$errors" :key="error.$uid">
+                             v-for="error of v$.userDetails.login.$errors" :key="error.$uid">
                             <div class="error-msg">{{ error.$message }}</div>
                         </div>
                     </div>
                 </div>
                 <div class="mb-3">
                     <label class="small mb-1" for="name">{{ $t('component.signUp.firstName') }}</label>
-                    <div :class="{ error: v$.user.name.$errors.length }">
-                        <input @blur="v$.user.name.$touch" v-model.trim="user.name" type="text"
+                    <div v-if="userDetails" :class="{ error: v$.userDetails.name.$errors.length }">
+                        <input @blur="v$.userDetails.name.$touch" v-model.trim="userDetails.name" type="text"
                                class="form-control form-control-lg" id="name">
                         <div class="input-errors my-2 text-danger small text-start"
-                             v-for="error of v$.user.name.$errors" :key="error.$uid">
+                             v-for="error of v$.userDetails.name.$errors" :key="error.$uid">
                             <div class="error-msg">{{ error.$message }}</div>
                         </div>
                     </div>
@@ -32,13 +32,13 @@
                 <!-- Form row -->
                 <div class="row gx-3 mb-3">
                     <!-- Form Group (email address)-->
-                    <div class="col-md-12">
+                    <div v-if="userDetails" class="col-md-12">
                         <label class="small mb-1" for="email">{{ $t('component.signUp.email') }}</label>
-                        <div :class="{ error: v$.user.email.$errors.length }">
-                            <input @blur="v$.user.email.$touch" v-model.trim="user.email" type="email"
+                        <div :class="{ error: v$.userDetails.email.$errors.length }">
+                            <input @blur="v$.userDetails.email.$touch" v-model.trim="userDetails.email" type="email"
                                    class="form-control form-control-lg" id="email">
                             <div class="input-errors my-2 text-danger small text-start"
-                                 v-for="error of v$.user.email.$errors" :key="error.$uid">
+                                 v-for="error of v$.userDetails.email.$errors" :key="error.$uid">
                                 <div class="error-msg">{{ error.$message }}</div>
                             </div>
                         </div>
@@ -57,10 +57,16 @@
 import {useVuelidate} from '@vuelidate/core'
 import {required, email, minLength, maxLength,} from '@vuelidate/validators'
 import {useToast} from "vue-toastification";
+import {mapGetters} from "vuex";
 
 export default {
     name: "EditProfileCard",
-    props:['userDetails'],
+
+    computed: {
+        ...mapGetters({
+            userDetails: 'auth/userDetails',
+        }),
+    },
 
     setup() {
         return {
@@ -69,20 +75,10 @@ export default {
         }
     },
 
-    data() {
-        return {
-            user: {
-                login: this.userDetails.login,
-                email: this.userDetails.email,
-                name: this.userDetails.name,
-            },
-        }
-    },
-
     validations() {
         return {
-            user: {
-                login: {required, minLength: minLength(6), maxLength: maxLength(32), $lazy: true},
+            userDetails: {
+                login: {required, minLength: minLength(5), maxLength: maxLength(32), $lazy: true},
                 email: {required, email, minLength: minLength(8), maxLength: maxLength(32), $lazy: true},
                 name: {required, minLength: minLength(6), maxLength: maxLength(128), $lazy: true},
             },
@@ -93,7 +89,12 @@ export default {
         async updateProfile() {
             this.v$.$validate();
             if (!this.v$.$error) {
-                this.$store.dispatch('profile/updateProfile', this.user);
+                const data = new FormData();
+                data.append('login', this.userDetails.login);
+                data.append('name', this.userDetails.name);
+                data.append('email', this.userDetails.email);
+                data.append('_method', 'put')
+                this.$store.dispatch('profile/updateProfile', data);
             }
         }
     }

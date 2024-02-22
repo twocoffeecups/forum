@@ -21,7 +21,6 @@ use Illuminate\Support\Facades\Route;
  * Admin dashboard routes
  */
 Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum']], function () {
-//Route::group(['prefix' => 'admin'], function () {
     /**
      * Forums
      */
@@ -199,10 +198,10 @@ Route::group(['prefix' => 'client'], function () {
             // is user not banned
             Route::group(['middleware' => 'isNotBanList'], function () {
                 Route::post('/', \App\Http\Controllers\Client\Topic\StoreController::class)
-                    ->middleware('permissions:can-create-topic');
+                    ->middleware('permissions:can_create_topic');
                 Route::group(['prefix' => '{topic}/post'], function () {
                     Route::post('/', \App\Http\Controllers\Client\Post\StoreController::class)
-                        ->middleware('permissions:can-create-post');
+                        ->middleware('permissions:can_create_post');
                     Route::patch('/', \App\Http\Controllers\Client\Post\UpdateController::class);
                 });
             });
