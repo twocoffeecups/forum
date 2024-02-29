@@ -5,7 +5,7 @@
             <div class="col-lg-9 col-md-12 col-sm-12 mb-3">
 
                 <!-- Main content -->
-                <div class="card" style="border-radius: 1rem;">
+                <div class="card rounded-0" style="border-radius: 1rem;">
                     <div class="card-header">
                         <!-- Page head -->
                         <div class="container-fluid">

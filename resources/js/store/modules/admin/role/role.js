@@ -22,6 +22,10 @@ export default {
             return state.role;
         },
 
+        getRoleUsers(state){
+            return state.role.users;
+        },
+
         getRolePermissions(state){
             return state.role.permissions;
         },

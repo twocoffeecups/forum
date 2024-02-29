@@ -5,7 +5,7 @@
             <!-- Main content -->
             <div class="col-lg-9 mb-3">
 
-                <div class="card py-4">
+                <div class="card rounded-0 py-4">
                     <!-- Create topic form -->
                     <div class="container mt-2">
                         <div class="row">
@@ -16,7 +16,7 @@
                                 </div>
 
                                 <!-- Form -->
-                                <form class="container pe-2">
+                                <form v-if="topic" class="container pe-2">
                                     <!-- Title -->
                                     <div class="row mb-3">
                                         <label for="title" class="col-sm-2 col-form-label">{{

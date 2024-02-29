@@ -73,7 +73,7 @@ class Topic extends Model
 
     public function numberOfViews(): int
     {
-        return (int) $this->views()->count();
+        return (int) $this->views->count();
     }
 
     public static function allApprovedTopics()

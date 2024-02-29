@@ -17,15 +17,19 @@ class TopicView extends Model
 
     public static function saveView(Request $request, Topic $topic)
     {
-        //dd($request);
         $user = AuthService::getAuthorizedUser($request);
-        $view =  self::firstOrCreate(['ip' => $request->getClientIp()], [
-            'topicId' => $topic->id,
-            'url' => $request->url(),
-            'sessionId' => $request->getSession()->getId(),
-            'userId' => $user->id ?? null,
-            'ip' => $request->getClientIp(),
-            'agent' => $request->header('user-agent'),
-        ]);
+        $view = TopicView::where('topicId', '=', $topic->id)->where('ip', '=', $request->getClientIp())->first();
+        //dd($view);
+        if(!$view){
+            $view = TopicView::create([
+                'topicId' => $topic->id,
+                'url' => $request->url(),
+                'sessionId' => $request->getSession()->getId(),
+                'userId' => $user->id ?? null,
+                'ip' => $request->getClientIp(),
+                'agent' => $request->header('user-agent'),
+            ]);
+        }
+        return $view;
     }
 }

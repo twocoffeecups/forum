@@ -4,7 +4,7 @@
             <a class="navbar-brand" href="#">
                 <img v-if="logo.imageUrl" :src="logo.imageUrl" class="img-fluid" alt="Logo" width="125" height="45">
                 <img v-if="!logo.imageUrl" src="../../assets/img/logo.png" class="img-fluid" alt="Logo" width="125" height="50">
-                <span v-if="!showOnlyLogo.value" class="mx-1 mt-2 p-1 h4 fw-bold">{{ forumName.value }}</span>
+                <span v-if="!showOnlyLogo" class="mx-4 my-auto h4 fw-bold">{{ forumName }}</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#navbarOffcanvasLg"
                     aria-controls="navbarOffcanvasLg" aria-label="Toggle navigation">
@@ -18,7 +18,7 @@
                 </div>
                 <div class="offcanvas-body justify-content-end">
 
-                    <ul class="navbar-nav justify-content-end align-items-start align-items-lg-end align-items-md-start align-items-lg-center align-items-sm-start pe-3"
+                    <ul class="navbar-nav my-auto justify-content-end align-items-start align-items-lg-end align-items-md-start align-items-lg-center align-items-sm-start pe-3"
                         style="height: 100%;">
 
                         <li class="nav-item" data-bs-dismiss="offcanvas">
@@ -123,6 +123,5 @@ export default {
     .navbar {
         font-size: 1.2em;
     }
-
 }
 </style>

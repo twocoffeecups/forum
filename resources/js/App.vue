@@ -13,6 +13,7 @@ export default {
         this.getSettings();
         this.checkUserInState();
         this.getUserInfo();
+        this.$store.dispatch('report/getReportType');
     },
 
     methods:{

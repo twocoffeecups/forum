@@ -1,5 +1,5 @@
 <template>
-    <div class="card mb-3">
+    <div class="card rounded-0 mb-3">
         <div class="card-body">
             <div class="py-2 pe-3 mb-3"
                  style="top: 85px; background-color: white; border-radius: 1rem;  margin-top: 6px;">

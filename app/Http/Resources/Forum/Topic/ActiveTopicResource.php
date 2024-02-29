@@ -19,7 +19,7 @@ class ActiveTopicResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'author' => $this->author->name,
-            //'latestPost' => new LatestPostResource($this->latestPost()),
+            'authorId' => $this->author->id,
             'created_at' => Carbon::parse($this->created_at)->diffForHumans(),
         ];
     }

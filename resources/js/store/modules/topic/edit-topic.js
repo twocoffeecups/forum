@@ -25,7 +25,7 @@ export default {
         },
 
         getTags(state) {
-            return state.tags;
+            return state.topic.tags;
         },
 
         getSelectedForum(state) {
@@ -36,9 +36,10 @@ export default {
     actions: {
         getTopic({dispatch, commit}, id) {
             return new Promise((resolve, reject) => {
-                axios.get(`/api/client/topic/${id}/edit`)
+                api.get(`/api/client/topic/${id}/edit`)
                     .then(response => {
                         if (response.data) {
+                            console.log("EDIT TOPIC", response);
                             commit('setTopic', response.data.topic);
                             commit('setTags', response.data.topic.tags);
                             commit('setImages', response.data.topic.images);

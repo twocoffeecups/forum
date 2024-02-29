@@ -42,15 +42,6 @@
 
 </head>
 <body>
-<!-- if user can read dashboard -->
-@can('view', Auth::user())
-    <div class="position-absolute bg-danger bg-gradient d-flex justify-content-between" style="z-index: 100; width: 100%">
-        <h5 class="mx-3 text-white my-2">You can log in to the forum control panel.</h5>
-        <a href="/admin" class="mx-3 my-1 text-white">Go to dashboard</a>
-    </div>
-@endcan
-<!-- ./ End -->
-
 <!-- App -->
 <div id="app" style="height: 100%">
 

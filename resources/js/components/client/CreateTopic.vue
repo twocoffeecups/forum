@@ -3,7 +3,7 @@
         <router-link
             v-if="checkHasPermissions([AccessPermissions.CAN_CREATE_TOPIC])"
             :to="{name:'topic.create'}"
-            class="btn btn-block btn-success rounded-0 py-4 mb-3 bg-op-6 roboto-bold">
+            class="btn btn-block btn-success rounded-0 py-4 mb-3 bg-op-6 roboto-bold" style="min-width: 130px">
             {{ $t('component.createTopic.btn') }}
         </router-link>
     </div>

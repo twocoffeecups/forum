@@ -1,11 +1,12 @@
 <template>
     <div class="container-fluid mt-100 m mb-2">
-        <div class="card">
+        <div class="card rounded-0">
             <div class="row g-0">
                 <div class="col-md-3">
                     <div class="card-header h-100">
                         <div class="media flex-wrap w-100 align-items-center">
-                            <img :src="avatar" width="64" class="d-block ui-w-40 rounded-circle" alt="">
+                            <img v-if="avatar" :src="avatar" width="64" class="d-block ui-w-40 rounded-circle" alt="">
+                            <img v-if="!avatar" src="../../assets/img/default-avatar.png" width="64" class="d-block ui-w-40 rounded-circle" alt="">
                             <div class="media-body ml-3">
                                 <router-link v-if="post.author.id"
                                              :to="{name:'user.profile', params:{id:post.author.id}}" data-abc="true">
@@ -29,9 +30,9 @@
                     </div>
                 </div>
                 <div class="col-md-9">
-                    <div class="card-body" style="height: 100%">
-                        <div class="d-block">
-                            <p class="card-text text-muted"><small class="text-muted">Last updated: {{
+                    <div class="card-body d-flex flex-column" style="height: 100%">
+                        <div class="d-flex flex-column">
+                            <p class="d-flex card-text text-muted"><small class="text-muted">Last updated: {{
                                     post.updated_at
                                 }}</small></p>
 
@@ -63,16 +64,17 @@
                         </div>
 
 
-                        <div class="mt-2 d-block d-md-flex d-lg-flex d-xl-flex justify-content-between align-items-end">
+                        <div class="d-flex justify-content-between align-items-end" style="margin-top: auto">
                             <div class="flex-sm-row d-md-flex d-lg-flex d-xl-flex text-center">
                                 <LikeButton :id="post.id"
                                             :type="`post`"
                                             :author-id="post.author.id"
                                             :rating="post.rating"/>
-                                <span class="text-muted d-inline-flex align-items-center align-middle ml-4">
-                                  <i class="fa fa-eye text-muted fsize-3"></i>&nbsp; <span
-                                    class="align-middle"> {{ post.views }}</span>
-                                </span>
+                                <!-- TODO: сделать счётчик просмотров сообщения -->
+<!--                                <span class="text-muted d-inline-flex align-items-center align-middle ml-4">-->
+<!--                                  <i class="fa fa-eye text-muted fsize-3"></i>&nbsp; <span-->
+<!--                                    class="align-middle"> {{ post.views }}</span>-->
+<!--                                </span>-->
                             </div>
                             <div class="flex-sm-row d-md-flex d-lg-flex d-xl-flex text-center">
                                 <button v-if="userId!==post.author.id && isLoggedIn" @click.capture="report(post.id)"

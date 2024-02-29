@@ -34,10 +34,11 @@ class TopicController extends Controller
     {
         // TODO: сделать доступ только автору и админу/модератору
         /** save topic view */
-        TopicView::saveView($request, $topic);
+        $view = TopicView::saveView($request, $topic);
         if ($topic->status === 0) {
             return response()->json(['message' => "Topic not found"], 404);
         }
+        //dd($topic->numberOfViews());
         return response()->json(['topic' => new TopicResource($topic)]);
     }
 

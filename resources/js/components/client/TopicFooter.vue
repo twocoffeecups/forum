@@ -1,6 +1,6 @@
 <template>
     <div class="container-fluid">
-        <div class="card mb-3">
+        <div class="card rounded-0 mb-3">
             <div class="card-header d-flex justify-content-start">
                 <span class="card-text d-flex">
                     {{ $t('component.topicFooter.usersOnline') }}

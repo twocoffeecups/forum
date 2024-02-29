@@ -1,5 +1,5 @@
 <template>
-    <div class="card mb-4">
+    <div class="card rounded-0 mb-4">
         <div class="card-header">{{ $t('view.editAccount.changePass') }}</div>
         <div class="card-body">
             <form>

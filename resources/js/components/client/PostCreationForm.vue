@@ -1,6 +1,6 @@
 <template>
     <div v-if="isLoggedIn" class="container-fluid mt-100 mb-2">
-        <div class="card">
+        <div class="card rounded-0">
             <div class="card-header">
                 {{ $t('component.postCreationForm.addPostForm') }}
 
@@ -18,17 +18,19 @@
                         </div>
                     </div>
 
-                    <div>
+                    <div class="position-relative">
+                        <div ref="emoji-button" id="emoji-container" class="d-flex position-absolute mx-auto" style="top: 0; right: 0;">
+                            <span class="p-2 mx-2" role="button" id="emoji" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 1.3em">😄</span>
+                            <div class="dropdown">
+                                <div class="dropdown-menu">
+                                    <Emoji @emoji_click="addEmoji" />
+                                </div>
+                            </div>
+                        </div>
                         <QuillEditor v-model:content="post.message"
                                      toolbar="essential"
-                                     contentType="html" id="message"
-                                     theme="snow"/>
-                    </div>
+                                     contentType="html" theme="snow" id="message"/>
 
-
-                    <div class="container" style="position:relative;">
-                        <h2>Editor</h2>
-                        <div id="quill-editor" style="max-height: 300px;"></div>
                     </div>
                 </div>
                 <div class="mb-1 d-flex justify-content-between">
@@ -36,15 +38,6 @@
                         <button type="submit" @click.prevent="createPost" class="btn btn-primary">
                             {{ $t('component.postCreationForm.addPost') }}
                         </button>
-                    </div>
-
-                    <div id="emoji-container" class="d-flex">
-                        <span class="p-2 mx-2" role="button" id="emoji" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 1.3em">😄 Add Emoji</span>
-                        <div class="dropdown">
-                            <div class="dropdown-menu">
-                                <Emoji @emoji_click="addEmoji" />
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -65,11 +58,10 @@
 import {useToast} from "vue-toastification";
 import {mapGetters} from "vuex";
 import Emoji from "../../components/client/Emoji.vue";
-import {Quill} from "@vueup/vue-quill";
 export default {
     name: "PostCreationForm",
     components: {Emoji,},
-    props: ['reply', 'replyId'],
+    props: ['reply', 'replyId', 'lastPage'],
     emits: ['cancelReply'],
 
     computed:{
@@ -81,7 +73,6 @@ export default {
     setup() {
         return {
             t$: useToast(),
-
         }
     },
 
@@ -103,15 +94,16 @@ export default {
             post: {
                 topicId: this.$route.params.id,
                 replyId: this.replyId,
-                message: '',
+                message: null,
             },
         }
     },
 
     methods: {
         createPost() {
-            //console.log(this.post)
             this.$store.dispatch('createPost', this.post);
+            this.post.message = null;
+            this.post.replyId = null;
         },
 
         cancelReply() {
@@ -119,13 +111,12 @@ export default {
         },
 
         addEmoji(emoji){
-            console.log('click on emoji!', emoji);
             this.post.message += emoji;
         },
     }
 }
 </script>
 
-<style scoped>
+<style src="quill-emoji/dist/quill-emoji.css">
 
 </style>

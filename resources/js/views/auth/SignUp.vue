@@ -131,9 +131,9 @@ export default {
     validations() {
         return {
             signUpForm: {
-                login: {required, minLength: minLength(6), maxLength: maxLength(32), $lazy: true},
+                login: {required, minLength: minLength(5), maxLength: maxLength(32), $lazy: true},
                 email: {required, email, minLength: minLength(8), maxLength: maxLength(32), $lazy: true},
-                name: {required, minLength: minLength(6), maxLength: maxLength(128), $lazy: true},
+                name: {required, minLength: minLength(5), maxLength: maxLength(128), $lazy: true},
                 password: {required, minLength: minLength(8), maxLength: maxLength(32), $lazy: true},
                 password_confirmation: {
                     required,
@@ -154,6 +154,7 @@ export default {
                 for (let [key, value] of Object.entries(this.signUpForm)) {
                     data.append(key, value);
                 }
+                console.log(data);
                 this.$store.dispatch('auth/register', data);
             }
         },

@@ -61,7 +61,7 @@ export default {
                                 resolve(response);
                             })
                             .catch(error => {
-                                this.t$.error(error.response.data.message ?? 'Error!');
+                                toast.error(error.response.data.message ?? 'Error!');
                                 reject(error)
                             })
                     })

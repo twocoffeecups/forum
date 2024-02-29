@@ -102,7 +102,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum']], function (
     Route::group(['prefix' => 'user'], function () {
         Route::post('/', [\App\Http\Controllers\Dashboard\User\UserController::class, 'index']);
         Route::post('/register', [\App\Http\Controllers\Dashboard\User\UserController::class, 'register']);
-
+        Route::get('/roles', \App\Http\Controllers\Dashboard\User\GetRoleController::class);
 
         Route::group(['prefix' => '{user}'], function () {
             Route::get('/', [\App\Http\Controllers\Dashboard\User\UserController::class, 'show']);
@@ -194,6 +194,8 @@ Route::group(['prefix' => 'client'], function () {
             Route::group(['prefix' => '{topic}'], function () {
                 Route::patch('/like', \App\Http\Controllers\Client\Topic\LikeController::class);
                 Route::patch('/bookmarks', \App\Http\Controllers\Client\Topic\BookmarkController::class);
+                Route::get('/edit', [\App\Http\Controllers\Client\Topic\TopicController::class, 'edit']);
+                Route::put('/', \App\Http\Controllers\Client\Topic\UpdateController::class);
             });
             // is user not banned
             Route::group(['middleware' => 'isNotBanList'], function () {
@@ -258,8 +260,8 @@ Route::group(['prefix' => 'topic'], function () {
     Route::get('/', [\App\Http\Controllers\Client\Topic\TopicController::class, 'index']);
     Route::group(['prefix' => '{topic}'], function () {
         Route::get('/', [\App\Http\Controllers\Client\Topic\TopicController::class, 'show']);
-        Route::get('/edit', [\App\Http\Controllers\Client\Topic\TopicController::class, 'edit']);
-        Route::put('/', \App\Http\Controllers\Client\Topic\UpdateController::class);
+//        Route::get('/edit', [\App\Http\Controllers\Client\Topic\TopicController::class, 'edit']);
+//        Route::put('/', \App\Http\Controllers\Client\Topic\UpdateController::class);
         Route::delete('/', [\App\Http\Controllers\Client\Topic\TopicController::class, 'delete']);
         Route::group(['prefix' => 'posts'], function () {
             Route::post('/', \App\Http\Controllers\Client\Topic\TopicPostController::class);

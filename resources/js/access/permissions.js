@@ -1,6 +1,6 @@
 const AccessPermissions = {
 
-    CAN_READ_ADMIN_DASHBOARD: 'can_read_dashboard',
+    CAN_READ_DASHBOARD: 'can_read_dashboard',
 
     CAN_CREATE_FORUM: "can_create_forum",
     CAN_UPDATE_FORUM: "can_update_forum",

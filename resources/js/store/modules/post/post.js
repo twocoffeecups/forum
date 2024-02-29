@@ -1,13 +1,13 @@
 import {useToast} from "vue-toastification";
 import axios from "axios";
 import api from "../../../api/api";
-
+import router from "../../../router/forum";
 const toast = useToast();
 
 export default {
 
     actions: {
-        createPost({dispatch, commit}, post) {
+        createPost({dispatch, commit, getters}, post) {
             return new Promise((resolve, reject) => {
                 api.post(`/api/client/topic/${post.topicId}/post`, {
                     replyId: post.replyId,
@@ -17,7 +17,8 @@ export default {
                     .then(response => {
                         if (response.data) {
                             resolve(response);
-                            commit('topic/pushPost', response.data.post);
+                            const lastPage = getters['topic/getPaginate'].last_page;
+                            dispatch('topic/getTopicPosts', [post.topicId, lastPage], {root: true});
                             toast.success( response.data.message ?? "Post created.");
                         } else {
                             reject(response);

@@ -1,10 +1,10 @@
 <template>
-    <div class="card mb-4 mb-xl-0">
+    <div class="card rounded-0 mb-4 mb-xl-0">
         <div class="card-header">{{ $t('view.editAccount.avatar') }}</div>
         <div class="card-body text-center position-relative">
             <!-- Avatar -->
-            <img class="img-account-profile rounded-circle mb-2" :src="defaultAvatar ?? '../../../../public/assets/images/user/default-avatar.png'" alt="">
-<!--            <img class="img-account-profile rounded-circle mb-2" src="../../../../public/assets/images/user/default-avatar.png" alt="">-->
+            <img v-if="defaultAvatar" class="img-account-profile rounded-circle mb-2" width="160" :src="defaultAvatar" alt="avatar">
+            <img v-if="!defaultAvatar" class="img-account-profile rounded-circle mb-2" width="160" src="../../assets/img/default-avatar.png" alt="avatar">
             <div class="overlay">
                 <div v-if="isFileUpload">
                     <span class="mx-2 text-success" title="Upload"><i class="fas fa-check"

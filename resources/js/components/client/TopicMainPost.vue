@@ -2,33 +2,14 @@
     <TopicMainPostHeader :topic-title="mainPost.title" :created-at="mainPost.created_at" categoryTitle="News"/>
 
     <div class="container-fluid mt-100 mb-2">
-        <div class="card">
+        <div class="card rounded-0">
             <div class="row g-0">
                 <div class="col-md-3">
                     <div class="card-header h-100">
-<!--                        <div class="media flex-wrap w-100 align-items-center">-->
-<!--                            <img :src="topicAuthor.avatar" width="64" class="d-block ui-w-40 rounded-circle"-->
-<!--                                 alt="Avatar">-->
-<!--                            <div class="media-body ml-3">-->
-<!--                                <router-link v-if="topicAuthor.id"-->
-<!--                                             :to="{name:'user.profile', params:{id:topicAuthor.id}}" data-abc="true">-->
-<!--                                    {{ topicAuthor.name }}-->
-<!--                                </router-link>-->
-<!--                                <div class="text-muted small">-->
-<!--                                    <span v-if="topicAuthor.status" class="text-success">Online</span>-->
-<!--                                    <span v-if="!topicAuthor.status" class="text-danger">Offline</span>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <div class="text-muted small ml-3">-->
-<!--                                <div>{{ $t('component.post.registerDate') }} <strong>{{-->
-<!--                                        topicAuthor.register_at-->
-<!--                                    }}</strong></div>-->
-<!--                                <div><strong>{{ topicAuthor.totalPosts }}</strong> {{ $t('component.post.messages') }}-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
                         <div v-if="mainPost.author" class="media flex-wrap w-100 align-items-center">
-                            <img v-if="mainPost.author.id" :src="mainPost.author.avatar" width="64" class="d-block ui-w-40 rounded-circle"
+                            <img v-if="mainPost.author.avatar" :src="mainPost.author.avatar" width="64" class="d-block ui-w-40 rounded-circle"
+                                 alt="Avatar">
+                            <img v-if="!mainPost.author.avatar" src="../../assets/img/default-avatar.png" width="64" class="d-block ui-w-40 rounded-circle"
                                  alt="Avatar">
                             <div class="media-body ml-3">
                                 <router-link v-if="mainPost.author.id"
@@ -51,14 +32,14 @@
                     </div>
                 </div>
                 <div class="col-md-9">
-                    <div class="card-body">
-                        <p class="card-text text-muted"><small class="text-muted">Last updated {{
+                    <div class="card-body d-flex flex-column">
+                        <p class="d-flex card-text text-muted"><small class="text-muted">Last updated {{
                                 mainPost.updated_at
                             }}</small></p>
 
-                        <p class="card-text" v-html="mainPost.content"></p>
+                        <p class="d-flex card-text" v-html="mainPost.content"></p>
 
-                        <div v-if="images.length!==0" class="card">
+                        <div v-if="images.length!==0" class="card d-flex">
                             <div class="card-header img-card-header" role="button" @click="toggleImageContainer()"
                                  style="background-color: #bab5a9">
                                 <i>Images</i>
@@ -74,7 +55,7 @@
                             </div>
                         </div>
 
-                        <div class="mt-2 d-block d-md-flex d-lg-flex d-xl-flex justify-content-between">
+                        <div class="mt-auto d-flex justify-content-between">
                             <div class="flex-sm-row d-md-flex d-lg-flex d-xl-flex text-center">
                                 <LikeButton :id="this.$route.params.id"
                                             :type="`topic`"

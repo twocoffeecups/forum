@@ -5,7 +5,7 @@
             <EditAvatarCard/>
 
             <!-- Use notification -->
-            <div class="card mt-4 mb-4">
+            <div class="card rounded-0 mt-4 mb-4">
                 <div class="card-header"> Уведомления</div>
                 <div class="card-body">
                     <p>Ходите ли вы чтобы уведомлдения приходили вам на электронную почту?</p>
@@ -35,24 +35,10 @@ import EditProfileCard from "../../components/client/EditProfileCard.vue";
 import EditPasswordCard from "../../components/client/EditPasswordCard.vue";
 import DeleteAccountCard from "../../components/client/DeleteAccountCard.vue";
 import EditAvatarCard from "../../components/client/EditAvatarCard.vue";
-import {mapGetters} from "vuex";
 
 export default {
     name: 'EditAccount',
     components: {EditAvatarCard, DeleteAccountCard, EditPasswordCard, EditProfileCard},
-
-    computed: {
-        ...mapGetters({
-            userDetails: 'auth/userDetails',
-        })
-    },
-
-    // data(){
-    //     return{
-    //         userDetails: JSON.parse(localStorage.getItem('user-details')),
-    //     }
-    // },
-
 }
 </script>
 

@@ -1,6 +1,6 @@
 <template>
-    <main class="mt-3 pe-3">
-        <div class="container-fluid">
+    <main class="mt-3 pe-3" style="height: 100%">
+        <div class="container-fluid" style="height: 100%">
 
             <!-- Main header -->
             <MainHeader />

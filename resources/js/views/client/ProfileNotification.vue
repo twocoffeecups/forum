@@ -1,6 +1,6 @@
 <template>
     <div class="container" id="notifications">
-        <div v-if="notifications.length!==0" class="card">
+        <div v-if="notifications.length!==0" class="card rounded-0">
             <div class="card-body">
 
                 <!-- Notification messages -->

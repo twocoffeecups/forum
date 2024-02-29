@@ -48,7 +48,7 @@ class SettingService
     {
         $settings = new Settings();
         $logo = $settings->getLogoImage();
-        if(json_decode($logo->data, true)['value']!=='default'){
+        if(empty(json_decode($logo->data, true)['value'])){
             $oldLogoPath = json_decode($logo->data, true)['imagePath'];
             Storage::disk('public')->delete($oldLogoPath);
         }
@@ -67,7 +67,7 @@ class SettingService
     {
         $settings = new Settings();
         $background = $settings->getBackgroundImage();
-        if(json_decode($background->data, true)['value']!=='default'){
+        if(empty(json_decode($logo->data, true)['value'])){
             $oldBackgroundPath = json_decode($background->data, true)['imagePath'];
             Storage::disk('public')->delete($oldBackgroundPath);
         }

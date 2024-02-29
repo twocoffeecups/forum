@@ -54,13 +54,13 @@
                 </div>
                 <div class="card-body">
                     <div class="row align-items-start mb-2">
-                        <div class="col-5">
+                        <div class="row">
                             <b>Change permissions</b>
                         </div>
-                        <div class="col-7">
+                        <div class="row">
                             <div class="flex-row mb-2">
                                 <VueMultiselect
-                                    v-if="permissions && selectedPermissions"
+                                    v-if="permissions"
                                     id="permissions"
                                     v-model="selectedPermissions"
                                     :options="permissions"
@@ -73,10 +73,9 @@
 <!--                                @close="changePermissions"-->
 <!--                                @remove="changePermissions"-->
                             </div>
-
-                            <div>
-                                <button @click.prevent="changePermissions" class="btn btn-primary bg-gradient">Save</button>
-                            </div>
+                        </div>
+                        <div class="">
+                            <button @click.prevent="changePermissions" class="btn btn-primary bg-gradient">Save</button>
                         </div>
                     </div>
                 </div>
@@ -90,11 +89,11 @@
                         <h4>Users</h4>
                     </div>
                 </div>
-                <div v-if="role.users!=0" class="card-body">
+                <div v-if="users" class="card-body">
                     <div class="table-responsive mb-1">
-                        <div
-                            class="d-flex mt-2 flex-column flex-md-row flex-lg-row flex-xl-row justify-content-center justify-content-md-between justify-content-lg-between mb-3">
-                            <div class="d-none d-md-flex d-lg-flex d-xl-flex my-2">
+<!--                        <div-->
+<!--                            class="d-flex mt-2 flex-column flex-md-row flex-lg-row flex-xl-row justify-content-center justify-content-md-between justify-content-lg-between mb-3">-->
+<!--                            <div class="d-none d-md-flex d-lg-flex d-xl-flex my-2">-->
 <!--                                <span class="form-text">-->
 <!--                                  Users-->
 <!--                                </span>-->
@@ -104,15 +103,15 @@
 <!--                                    <option value="50">50</option>-->
 <!--                                </select>-->
 <!--                                <span class="form-text">entries</span>-->
-                            </div>
-                            <div class="d-flex mx-2 my-2">
-                                <label class="form-text mx-1">Search: </label>
-                                <input type="search" class="form-control" id="search" style="max-height: 20px;"/>
-                            </div>
-                        </div>
+<!--                            </div>-->
+<!--                            <div class="d-flex mx-2 my-2">-->
+<!--                                <label class="form-text mx-1">Search: </label>-->
+<!--                                <input type="search" class="form-control" id="search" style="max-height: 20px;"/>-->
+<!--                            </div>-->
+<!--                        </div>-->
 
                         <!-- Table -->
-                        <table class="table table-striped table-hover table-bordered">
+                        <table v-if="users.length!=0" class="table table-striped table-hover table-bordered">
                             <thead class="table-primary">
                             <tr></tr>
                             <tr>
@@ -124,7 +123,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr v-for="user in role.users">
+                            <tr v-for="user in users">
                                 <th scope="row"></th>
                                 <td>{{ user.login }}</td>
                                 <td>{{ user.email }}</td>
@@ -135,12 +134,14 @@
                             </tr>
                             </tbody>
                         </table>
+                    </div>
 
-                        <div v-if="role.users==0" class="card-body">
-                            There are no users who have this role.
-                        </div>
+                    <div v-if="users.length==0" class="card-body text-center">
+                        <h4>There are no users who have this role.</h4>
                     </div>
                 </div>
+
+
 
             </div>
         </div>
@@ -162,7 +163,8 @@ export default {
     computed: {
         ...mapGetters({
             role: 'role/getRole',
-            selectedPermissions: 'role/getRolePermissions',
+            users: 'role/getRoleUsers',
+            rolePermissions: 'role/getRolePermissions',
         }),
     },
 
@@ -177,10 +179,16 @@ export default {
         this.getPermissions();
     },
 
+    watch: {
+        rolePermissions(val){
+            this.selectedPermissions = val;
+        }
+    },
+
     data() {
         return {
             permissions: [],
-            selected: this.$store.getters['role/getRolePermissions']
+            selectedPermissions: []
         }
     },
 

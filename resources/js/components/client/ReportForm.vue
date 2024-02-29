@@ -55,10 +55,6 @@ export default {
         }),
     },
 
-    mounted() {
-        this.$store.dispatch('report/getReportType');
-    },
-
     setup() {
         return {
             t$: useToast(),

@@ -25,7 +25,7 @@ class UpdateProfileRequest extends FormRequest
     {
         return [
             'login' => 'min:5|max:64|unique:users',
-            'name' => 'min:6|max:128|string',
+            'name' => 'min:5|max:128|string',
             'email' => 'email|unique:users|min:7|max:64',
         ];
     }

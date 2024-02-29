@@ -5,7 +5,7 @@
             <!-- Main content -->
             <div class="col-lg-9 mb-3">
 
-                <div class="card py-4">
+                <div class="card rounded-0 py-4">
                     <!-- Create topic form -->
                     <div class="container mt-2">
                         <div class="row">
@@ -98,14 +98,6 @@
                                         </div>
 
                                     </div>
-
-                                    <!-- Files -->
-                                    <!--                  <div class="mb-3 row">-->
-                                    <!--                    <label for="files" class="col-sm-2 col-form-label">{{ $t('view.createTopic.files') }}</label>-->
-                                    <!--                    <div class="col-sm-10">-->
-                                    <!--                      <input disabled type="file" class="form-control" id="files">-->
-                                    <!--                    </div>-->
-                                    <!--                  </div>-->
 
                                 </form>
 

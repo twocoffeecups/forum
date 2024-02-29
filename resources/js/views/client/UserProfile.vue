@@ -12,13 +12,14 @@
                         <div class="row">
                             <div class="col-xl-12 mb-4">
                                 <!-- Profile picture card-->
-                                <div class="card mb-4 mb-xl-0">
+                                <div class="card rounded-0 mb-4 mb-xl-0">
                                     <div class="card-header">{{ $t('view.accountDetail.profile') }}</div>
                                     <div class="card-body text-center">
                                         <div class="d-flex flex-row">
-                                            <img class="img-account-profile rounded-circle mb-2"
-                                                 :src="userDetails.avatar" width="60" alt="">
-
+                                            <img v-if="userDetails.avatar" class="img-account-profile mx-auto rounded-circle mb-2"
+                                                 :src="userDetails.avatar" width="70" alt="">
+                                            <img v-if="!userDetails.avatar" class="img-account-profile mx-auto rounded-circle mb-2"
+                                                 src="../../assets/img/default-avatar.png" width="70" alt="">
                                             <div class="w-100">
                                                 <div class="row">
                                                     <div class="col-6">
@@ -44,7 +45,7 @@
                                 </div>
 
                                 <!-- Stats -->
-                                <div class="card mt-3 mb-4 mb-xl-0">
+                                <div class="card rounded-0 mt-3 mb-4 mb-xl-0">
                                     <div class="card-header">{{ $t('view.accountDetail.accountStats') }}</div>
                                     <div class="card-body text-center">
                                         <div class="row">
@@ -78,12 +79,30 @@
                                 </div>
 
 
-                                <div class="card mt-3 mb-4 mb-xl-0">
+                                <div class="card rounded-0 mt-3 mb-4 mb-xl-0">
+                                    <div class="card-header text-center">
+                                        <h4>User Activity</h4>
+                                        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                                            <li class="nav-item" role="presentation">
+                                                <button class="nav-link active" id="pills-topics-tab" data-bs-toggle="pill"
+                                                        data-bs-target="#pills-topics" type="button" role="tab"
+                                                        aria-controls="pills-topics" aria-selected="true">
+                                                    {{ $t('view.accountDetail.topics') }}
+                                                </button>
+                                            </li>
+                                            <li class="nav-item" role="presentation">
+                                                <button class="nav-link" id="pills-posts-tab" data-bs-toggle="pill"
+                                                        data-bs-target="#pills-posts" type="button" role="tab" aria-controls="pills-posts"
+                                                        aria-selected="false">{{ $t('view.accountDetail.posts') }}
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </div>
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="tab-content" id="pills-tabContent">
-                                                <div class="tab-pane fade" id="pills-user-topics" role="tabpanel"
-                                                     aria-labelledby="pills-user-topics-tab" tabindex="0">
+                                                <div class="tab-pane show active fade" id="pills-topics" role="tabpanel"
+                                                     aria-labelledby="pills-topics-tab" tabindex="0">
                                                     <Topic v-if="topics.length!==0" v-for="topic in topics"
                                                            :topic="topic"/>
                                                     <Pagination v-if="topicsPaginate.last_page > 1"
@@ -99,7 +118,7 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="tab-pane fade" id="pills-user-posts" role="tabpanel"
+                                                <div class="tab-pane fade" id="pills-posts" role="tabpanel"
                                                      aria-labelledby="pills-user-posts-tab"
                                                      tabindex="0">
                                                     <Post v-if="posts.length!==0" v-for="like in posts" :post="like"/>
@@ -110,7 +129,7 @@
                                                                 :id="this.$route.params.id"
                                                                 :current-page="postsPaginate.current_page"
                                                                 :last-page="postsPaginate.last_page"/>
-                                                    <div v-if="posts.length===0" class="text-center m-1 p-1">
+                                                    <div v-if="posts.length==0" class="text-center m-1 p-1">
                                                         <h5>You haven't liked posts or topics.</h5>
                                                     </div>
                                                 </div>

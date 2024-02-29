@@ -4,7 +4,7 @@
         <div class="row">
             <!-- Main content -->
             <div class="col-lg-9 mb-3">
-                <div class="card">
+                <div class="card rounded-0">
                     <div class="card-header">
                         <!-- Forum head -->
                         <div class="">
@@ -28,13 +28,13 @@
 
 
                         <!-- Child categories -->
-                        <div v-if="childrenForums.length !== 0" class="card mt-2 mb-2">
+                        <div v-if="childrenForums.length !== 0" class="card rounded-0 mt-2 mb-2">
                             <ForumItem v-for="childForum in childrenForums" :forum="childForum"/>
                         </div>
                         <!-- End child -->
 
                         <!-- Topic -->
-                        <div v-if="totalTopics !== 0" class="card m-sm-0 mt-1 mb-2">
+                        <div v-if="totalTopics !== 0" class="card rounded-0 m-sm-0 mt-1 mb-2">
                             <div class="card-header">
                                 <div class="row">
                                     <div class="d-flex justify-content-between">
@@ -127,8 +127,8 @@ export default {
     },
 
     mounted() {
-        this.$store.dispatch('forum/getForum', this.$route.params.id);
-        this.$store.dispatch('forumTopics/getTopics', this.$route.params.id);
+        // this.$store.dispatch('forum/getForum', this.$route.params.id);
+        // this.$store.dispatch('forumTopics/getTopics', this.$route.params.id);
     },
 
     watch: {

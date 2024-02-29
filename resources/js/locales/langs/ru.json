@@ -105,8 +105,8 @@
             "topics": "Тем"
         },
         "childForum": {
-            "categories": "Категорий",
-            "posts": "Сообщений",
+            "categories": "Тем",
+            "posts": "Постов",
             "views": "Просмотры"
         },
         "topicFooter":{

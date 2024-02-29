@@ -164,8 +164,8 @@
                             </div>
                         </div>
                         <!-- Reports -->
-                        <div class="tab-pane fade" id="pills-reports" role="tabpanel" aria-labelledby="pills-reports-tab" tabindex="0">
-                            <table v-if="reports" class="table">
+                        <div v-if="reports" class="tab-pane fade" id="pills-reports" role="tabpanel" aria-labelledby="pills-reports-tab" tabindex="0">
+                            <table v-if="reports.length!=0" class="table">
                                 <thead>
                                 <tr>
                                     <th scope="col">#</th>
@@ -196,28 +196,20 @@
                                 </tr>
                                 </tbody>
                             </table>
-                            <div v-if="!reports" class="my-3 mx-2 p-1">
+                            <div v-if="reports.length==0" class="my-4 text-center mx-2 p-1">
                                 <h4>The user dont create any reports.</h4>
                             </div>
                         </div>
                         <!-- Edit profile -->
                         <div class="tab-pane fade" id="pills-edit" role="tabpanel" aria-labelledby="pills-edit-tab" tabindex="0">
                             <div class="mb-3">
-                                <div v-if="user" :class="{ error: v$.firstName.$errors.length }">
+                                <div v-if="user" :class="{ error: v$.name.$errors.length }">
                                     <label for="firstName" class="col-form-label">User name:</label>
                                     <div class="row">
-                                        <div class="col-md-5">
-                                            <input @blur="v$.firstName.$touch" type="text" v-model="user.firstName"
+                                        <div class="">
+                                            <input @blur="v$.name.$touch" type="text" v-model="user.name"
                                                    class="form-control" id="firstName">
-                                            <div class="input-errors" v-for="error of v$.firstName.$errors"
-                                                 :key="error.$uid">
-                                                <div class="error-msg text-danger">{{ error.$message }}</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <input @blur="v$.lastName.$touch" type="text" v-model="user.lastName"
-                                                   class="form-control" id="lastName">
-                                            <div class="input-errors" v-for="error of v$.lastName.$errors"
+                                            <div class="input-errors" v-for="error of v$.name.$errors"
                                                  :key="error.$uid">
                                                 <div class="error-msg text-danger">{{ error.$message }}</div>
                                             </div>
@@ -291,7 +283,8 @@
                                     <div class="col-sm-9 mb-3">
                                         <VueMultiselect
                                             id="permissions"
-                                            v-model="userPermissions"
+                                            v-if="permissions"
+                                            v-model="selectedPermissions"
                                             :options="permissions"
                                             :multiple="true"
                                             :close-on-select="false"
@@ -356,15 +349,21 @@ export default {
     data() {
         return {
             permissions: [],
+            selectedPermissions: [],
             selectedRole: null,
             newAvatar: null,
         }
     },
 
+    watch: {
+        userPermissions(val){
+            this.selectedPermissions = val;
+        }
+    },
+
     validations() {
         return {
-            firstName: {minLength:minLength(2), maxLength:maxLength(64)},
-            lastName: {minLength:minLength(2), maxLength:maxLength(64)},
+            name: {minLength:minLength(5), maxLength:maxLength(64)},
         }
     },
 
@@ -395,8 +394,7 @@ export default {
 
         updateProfile(){
             const data = new FormData();
-            data.append('firstName', this.user.firstName);
-            data.append('lastName', this.user.lastName);
+            data.append('name', this.user.name);
             data.append('_method', 'put');
             this.$store.dispatch('adminUsers/updateProfile', [this.$route.params.id, data]);
         },
@@ -420,7 +418,7 @@ export default {
 
         changePermissions() {
             let data = new FormData();
-            const permissions = this.userPermissions;
+            const permissions = this.selectedPermissions;
             permissions.forEach(permission => {
                 data.append("permissions[]", permission.value);
             })

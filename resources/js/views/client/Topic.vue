@@ -5,7 +5,7 @@
             <div class="col-lg-9 col-md-12 col-sm-12 mb-3">
 
                 <!-- Main content -->
-                <div class="card" style="border-radius: 1rem;">
+                <div class="card rounded-0" style="border-radius: 1rem;">
                     <div class="card-header">
                         <!-- Page head -->
                         <div class="container-fluid">
@@ -92,12 +92,9 @@ export default {
     name: "Topic",
     components: {ReportForm, PostCreationForm, Post, Sidebar, TopicFooter, Pagination, TopicMainPost},
 
-    created() {
-        this.$store.dispatch('topic/getTopic', this.$route.params.id);
-    },
-
     mounted() {
-        this.$store.dispatch('topic/getTopicPosts', this.$route.params.id);
+        // this.$store.dispatch('topic/getTopic', this.$route.params.id);
+        // this.$store.dispatch('topic/getTopicPosts', this.$route.params.id);
     },
 
     computed: {

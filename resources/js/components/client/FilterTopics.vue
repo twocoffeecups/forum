@@ -108,7 +108,7 @@ export default {
         },
 
         applyFilters(){
-            this.$store.dispatch('forumTopics/getTopics', this.forumId);
+            this.$store.dispatch('forumTopics/getTopics', [this.forumId, 1]);
         },
 
         resetFilters(){
@@ -116,7 +116,7 @@ export default {
             this.$store.commit('forumTopics/setFilterTags', [])
             this.$store.commit('forumTopics/setFilterBy', '');
             this.selectedTags = [];
-            this.$store.dispatch('forumTopics/getTopics', this.forumId);
+            this.$store.dispatch('forumTopics/getTopics', [this.forumId, 1]);
         }
     },
 }

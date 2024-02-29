@@ -4,7 +4,7 @@
             <!-- Main content -->
             <div class="col-lg-9 mb-3">
 
-                <div class="card">
+                <div class="card rounded-0">
                     <div class="card-header">
                         <!-- Forum head -->
                         <div class="">

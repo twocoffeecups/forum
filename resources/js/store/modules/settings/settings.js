@@ -11,7 +11,7 @@ export default {
 
     getters: {
         getForumName(state) {
-            return state.forumName;
+            return state.forumName.value;
         },
 
         getLogo(state){
@@ -23,7 +23,7 @@ export default {
         },
 
         getShowOnlyLogo(state){
-            return state.showOnlyLogo;
+            return state.showOnlyLogo.value;
         }
     },
 

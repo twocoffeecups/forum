@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Client\UserProfile;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\Paginate\PaginateRequest;
+use App\Http\Requests\Dashboard\Paginate\PaginateRequest;
 use App\Http\Resources\Client\UserProfile\UserProfileResource;
 use App\Http\Resources\Forum\Forum\TopicResource;
 use App\Http\Resources\Forum\Post\PostResource;
@@ -25,7 +25,7 @@ class UserProfileController extends Controller
     }
 
     /**
-     * @param PaginateRequest $request
+
      * @param User $user
      * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
@@ -33,11 +33,12 @@ class UserProfileController extends Controller
     {
         $data = $request->validated();
         $topics = Topic::where('userId', $user->id)->paginate(5, ['*'], 'page', $data['page']);
+        //dd($topics);
         return TopicResource::collection($topics);
     }
 
     /**
-     * @param PaginateRequest $request
+
      * @param User $user
      * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */

@@ -149,7 +149,7 @@ export default {
 
         getRoles({dispatch, commit}){
             return new Promise((resolve, reject) => {
-                api.get('/api/admin/role')
+                api.get('/api/admin/user/roles')
                     .then(response => {
                         if(response.data){
                             commit('setRoles', response.data.roles);
@@ -186,7 +186,7 @@ export default {
 
         changePermissions({dispatch}, [id, data]){
             return new Promise((resolve, reject) => {
-                api.post(`/api/admin/user/${this.user.id}/change-permissions`, data)
+                api.post(`/api/admin/user/${id}/change-permissions`, data)
                     .then(response => {
                         if(response.data){
                             toast.success(response.data.message);

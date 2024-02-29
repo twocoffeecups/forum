@@ -20,7 +20,7 @@ class TopicAuthorResource extends JsonResource
             'name' => $this->name,
             'status' => $this->checkOnlineStatus(),
             'lastVisit' => Carbon::parse($this->lastVisit)->diffForHumans(),
-            'avatar' => url($this->getAvatar()),
+            'avatar' => $this->getAvatar(),
             'totalPosts' => $this->posts->count(),
             'register_at' => $this->created_at->format('Y-d-m'),
         ];

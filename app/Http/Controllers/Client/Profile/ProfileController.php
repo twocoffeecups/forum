@@ -33,12 +33,11 @@ class ProfileController extends Controller
      * @param UpdateProfileRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
-    protected function update(User $user, UpdateProfileRequest $request): \Illuminate\Http\JsonResponse
+    protected function update(UpdateProfileRequest $request): \Illuminate\Http\JsonResponse
     {
         $data = $request->validated();
-        foreach ($data as $key => $value){
-            $user->$key = $value;
-        }
+        $user = AuthService::getAuthorizedUser($request);
+        $user->fill($data);
         $user->save();
         return response()->json(['message' => 'You profile updated!']);
     }
