@@ -14,7 +14,7 @@
                         <div
                             class="d-flex mt-2 flex-column flex-md-row flex-lg-row flex-xl-row justify-content-center justify-content-md-between justify-content-lg-between mb-3">
                             <!-- Change showing count entries -->
-                            <div v-if="reports!==0" class="d-none d-md-flex d-lg-flex d-xl-flex my-2">
+                            <div v-if="reports.length!==0" class="d-none d-md-flex d-lg-flex d-xl-flex my-2">
                                 <span class="form-text">
                                   Show
                                 </span>
@@ -27,14 +27,10 @@
                                 <span class="form-text">entries</span>
                             </div>
                             <!-- ./ -->
-                            <div class="d-flex mx-2 my-2">
-                                <label class="form-text mx-1">Search: </label>
-                                <input type="search" class="form-control" id="search" style="max-height: 20px;"/>
-                            </div>
                         </div>
 
                         <!-- Table -->
-                        <table v-if="reports!==0" class="table table-striped table-hover table-bordered">
+                        <table v-if="reports.length!==0" class="table table-striped table-hover table-bordered">
                             <thead class="table-primary">
                             <tr></tr>
                                 <tr>
@@ -76,7 +72,7 @@
                             </tbody>
                         </table>
 
-                        <div v-if="reports===0" class="text-center mx-1">
+                        <div v-if="reports.length===0" class="text-center mx-1">
                             <h4>You haven't been sent reports.</h4>
                         </div>
                     </div>

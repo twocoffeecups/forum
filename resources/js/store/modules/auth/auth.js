@@ -191,6 +191,7 @@ export default {
                         localStorage.removeItem('access-token');
                         commit('setLoggedIn', false);
                         commit('setUserDetails', {});
+                        commit('middleware/setTokenNullForDelete', null, {root: true});
                         commit('middleware/setPermissions', null, {root: true});
                         //toast.success("You have successfully logout.")
                         resolve(response);
@@ -209,6 +210,7 @@ export default {
                 } else {
                     commit('setLoggedIn', false);
                     commit('setUserDetails', {});
+                    commit('middleware/setTokenNullForDelete', null, {root: true});
                     commit('middleware/setPermissions', null, {root: true});
                     resolve(false);
                 }

@@ -43,6 +43,10 @@ export default {
         }),
     },
 
+    mounted() {
+        this.$store.dispatch('auth/setLoggedInstate');
+    },
+
     data() {
         return {
             user: false,

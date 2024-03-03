@@ -58,7 +58,7 @@ class Forum extends Model
         return $this->type === 0 && $this->parent === null ;
     }
 
-    public function latestPost(): Post
+    public function latestPost(): Post|null
     {
         return $this->allPosts()->sortBy('created_at')->last();
     }

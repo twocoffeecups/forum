@@ -20,7 +20,7 @@ class ChildrenForumResource extends JsonResource
             'rating' => 14,
             'posts' => $this->totalPosts(),
             'views' => 3,
-            'latestPost' => new LatestPostResource($this->latestPost()),
+            'latestPost' => $this->latestPost() ? new LatestPostResource($this->latestPost()) : false,
             'created_at' => date('d.m.Y H:i', strtotime($this->created_at)),
         ];
     }

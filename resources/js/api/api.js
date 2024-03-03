@@ -17,8 +17,8 @@ api.interceptors.response.use(
     (error) => {
     if(error.response.status === 401 || error.response.status === 419){
         localStorage.removeItem('access-token');
-        // store.dispatch('auth/setLoggedInstate');
-        store.dispatch('auth/logout');
+        store.dispatch('auth/setLoggedInstate');
+        //store.dispatch('auth/logout');
         router.push({name:'main'});
     }
     return Promise.reject(error);

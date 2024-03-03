@@ -1,24 +1,12 @@
 <template>
-    <!-- Text -->
-    <div class="row mb-3">
-        <div class="container">
-            <h4>Content</h4>
-            <p class="lead">
-                An example 2-level sidebar with collasible menu items. The menu functions like an "accordion" where only
-                a single
-                menu is be open at a time. While the sidebar itself is not toggle-able, it does responsively shrink in
-                width on smaller screens.</p>
-        </div>
-    </div>
-
     <!-- Card -->
-    <div class="row mb-3">
+    <div v-if="stats" class="row mb-3">
         <div class="col-12 col-sm-12 col-md-6 col-lg-3">
             <div class="card text-bg-primary bg-gradient mb-3 col mx-auto" style="max-width: 360px; max-height: 145px;">
                 <div class="card-body">
                     <div class="d-flex">
                         <div class="col">
-                            <h2>123</h2>
+                            <h2>{{ stats.forums }}</h2>
                             <span class="fst-italic">Forums</span>
                         </div>
                         <div class="col d-flex justify-content-center align-items-center">
@@ -27,7 +15,8 @@
                     </div>
                 </div>
                 <div class="card-footer">
-                    <p class="card-text text-center" role="button">More info <i class="fas fa-arrow-circle-right"></i>
+                    <p class="card-text text-center" role="button">
+                        <router-link class="text-white" :to="{name:'admin.forum'}">More info <i class="fas fa-arrow-circle-right"></i></router-link>
                     </p>
                 </div>
             </div>
@@ -38,7 +27,7 @@
                 <div class="card-body">
                     <div class="d-flex">
                         <div class="col">
-                            <h2>43</h2>
+                            <h2>{{ stats.users }}</h2>
                             <span class="fst-italic">Users</span>
                         </div>
                         <div class="col d-flex justify-content-center align-items-center">
@@ -47,7 +36,8 @@
                     </div>
                 </div>
                 <div class="card-footer">
-                    <p class="card-text text-center" role="button">More info <i class="fas fa-arrow-circle-right"></i>
+                    <p class="card-text text-center" role="button">
+                        <router-link class="text-white" :to="{name:'admin.users'}">More info <i class="fas fa-arrow-circle-right"></i></router-link>
                     </p>
                 </div>
             </div>
@@ -58,7 +48,7 @@
                 <div class="card-body">
                     <div class="d-flex">
                         <div class="col">
-                            <h2>21</h2>
+                            <h2>{{ stats.reports }}</h2>
                             <span class="fst-italic">Reports</span>
                         </div>
                         <div class="col d-flex justify-content-center align-items-center">
@@ -67,7 +57,8 @@
                     </div>
                 </div>
                 <div class="card-footer">
-                    <p class="card-text text-center" role="button">More info <i class="fas fa-arrow-circle-right"></i>
+                    <p class="card-text text-center" role="button">
+                        <router-link class="text-white" :to="{name:'admin.reports'}">More info <i class="fas fa-arrow-circle-right"></i></router-link>
                     </p>
                 </div>
             </div>
@@ -78,8 +69,8 @@
                 <div class="card-body">
                     <div class="d-flex">
                         <div class="col">
-                            <h2>14</h2>
-                            <span class="fst-italic">Categories</span>
+                            <h2>{{ stats.users }}</h2>
+                            <span class="fst-italic">Topics}</span>
                         </div>
                         <div class="col d-flex justify-content-center align-items-center">
                             <i class="fas fa-tags" style="font-size: 2.3em"></i>
@@ -87,8 +78,47 @@
                     </div>
                 </div>
                 <div class="card-footer">
-                    <p class="card-text text-center" role="button">More info <i class="fas fa-arrow-circle-right"></i>
+                    <p class="card-text text-center" role="button">
+                        <router-link class="text-white" :to="{name:'admin.topic'}">More info <i class="fas fa-arrow-circle-right"></i></router-link>
                     </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chart -->
+    <div class="row mb-3">
+        <div class="col-md-8">
+            <div class="card rounded-0">
+                <div class="card-header">
+                    <h3 class="mb-3">Daily Visitors</h3>
+                </div>
+                <div class="card-body">
+                    <Bar
+                        v-if="show"
+                        id="daily-visitors-chart"
+                        :options="chartOptions"
+                        :data="dailyVisitors"
+                    />
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="mx-auto col-md-4">
+            <div class="card rounded-0">
+                <div class="card-header">
+                    <h3>Most popular categories</h3>
+                </div>
+                <div class="card-body">
+                    <div class="">
+                        <Doughnut
+                            v-if="show"
+                            :data="topicForums"
+                            :options="options"
+                        />
+                    </div>
                 </div>
             </div>
         </div>
@@ -96,17 +126,12 @@
 
     <!-- Table -->
     <div class="row mb-3">
-        <div class="container-fluid">
+        <div class="col-md-7">
             <!-- Table card -->
-            <div class="card">
+            <div class="card rounded-0">
                 <div class="card-header">
-                    <div class="d-flex justify-content-between my-2">
-                        <h4>All users</h4>
-                        <div>
-                            <button class="btn btn-sm btn-success" title="Add new user">
-                                <i class="fas fa-user-plus"></i>
-                            </button>
-                        </div>
+                    <div class="d-flex justify-content-between">
+                        <h4>New topics</h4>
                     </div>
                 </div>
                 <div class="card-body">
@@ -124,52 +149,42 @@
                                 </select>
                                 <span class="form-text">entries</span>
                             </div>
-                            <div class="d-flex mx-2 my-2">
-                                <label class="form-text mx-1">Search: </label>
-                                <input type="search" class="form-control" id="search" style="max-height: 20px;"/>
-                            </div>
                         </div>
 
                         <!-- Table -->
-                        <table class="table table-striped table-hover table-bordered">
+                        <table v-if="newTopics!==0" class="table table-striped table-hover table-bordered">
                             <thead class="table-primary">
                             <tr></tr>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Login</th>
-                                <th scope="col">Full Name</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Role</th>
+                                <th scope="col">Forum</th>
+                                <th scope="col">Title</th>
+                                <th scope="col">Author</th>
                                 <th scope="col">Status</th>
-                                <th scope="col">Forums</th>
-                                <th scope="col">Messages</th>
-                                <th scope="col">Violations</th>
-                                <th scope="col">Register date</th>
+                                <th scope="col">Created AT</th>
                                 <th scope="col">Actions</th>
                             </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="user in 8">
-                                    <th scope="row">1</th>
-                                    <td>tot@H</td>
-                                    <td>Tod Howard</td>
-                                    <td>tot@gmail.com</td>
-                                    <td>User</td>
-                                    <td>1</td>
-                                    <td>2</td>
-                                    <td>36</td>
-                                    <td>0</td>
-                                    <td>08.09.2023</td>
-                                    <td>
-                                          <span role="button" class="text-primary mx-2" title="Edit">
-                                            <i class="fas fa-edit"></i>
-                                          </span>
-
-                                        <span role="button" class="text-danger mx-2" title="Edit">
-                                            <i class="fas fa-trash"></i>
-                                          </span>
-                                    </td>
-                                </tr>
+                            <tr v-for="topic in newTopics">
+                                <th scope="row">{{ topic.id }}</th>
+                                <td>{{ topic.forum }}</td>
+                                <td>{{ topic.title }}</td>
+                                <td>{{ topic.author }}</td>
+                                <td>
+                                    <span class="badge bg-danger">
+                                        {{ topic.status ? 'Published' : 'Unpublished' }}
+                                    </span>
+                                </td>
+                                <td>{{ topic.created_at }}</td>
+                                <td>
+                                    <div class="d-flex justify-content-start mx-auto">
+                                        <router-link class="btn btn-primary mx-2" :to="{name:'admin.topic.details', params:{id: topic.id}}">
+                                            Show
+                                        </router-link>
+                                    </div>
+                                </td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>
@@ -204,12 +219,91 @@
                 </div>
             </div>
         </div>
+
+        <div class="col-md-5">
+            <div class="card rounded-0">
+                <div class="card-header">
+                    <h4>Latest registered users</h4>
+                </div>
+                <div class="card-body">
+                    <div v-if="latestUsers" class="table-responsive mb-1">
+                        <!-- Table -->
+                        <table v-if="latestUsers.length!==0" class="table table-striped table-hover table-bordered">
+                            <thead class="table-primary">
+                            <tr></tr>
+                                <tr>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Last visit</th>
+                                    <th scope="col">Register AT</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="user in latestUsers">
+                                    <td>{{ user.name }}</td>
+                                    <td>{{ user.email }}</td>
+                                    <td>{{ user.status }}</td>
+                                    <td>{{ user.lastVisit }}</td>
+                                    <td>{{ user.register_at }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
+import { Bar } from 'vue-chartjs'
+import { Chart as ChartJS,  ArcElement, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
+import { Doughnut } from 'vue-chartjs'
+import api from "../../api/api";
+
+ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, ArcElement)
 export default {
     name: "Main",
+    components: {Bar,Doughnut},
+
+    mounted() {
+        this.getStatistics();
+    },
+
+    methods: {
+        async getStatistics(){
+            this.show = false;
+            try {
+                const response  = await api.get('/api/admin/statistics');
+                this.dailyVisitors = response.data.dailyVisitors;
+                this.topicForums = response.data.topicForums;
+                this.stats = response.data.stats;
+                this.newTopics = response.data.newTopics;
+                this.latestUsers = response.data.latestUsers
+                this.show = true;
+            } catch (error){
+                console.log(error);
+            }
+        }
+    },
+
+    data() {
+        return {
+            show: false,
+            dailyVisitors: null,
+            topicForums: null,
+            stats: null,
+            newTopics: null,
+            latestUsers: null,
+            chartOptions: {
+                responsive: true,
+            },
+            options: {
+                responsive: true,
+            },
+        }
+    }
 }
 </script>
 

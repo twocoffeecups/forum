@@ -41,6 +41,10 @@ export default {
             localStorage.setItem('access-token', payload);
         },
 
+        setTokenNullForDelete(state, payload){
+            state.token = null;
+        },
+
         setPermissions(state, payload){
             state.permissions = payload;
         },

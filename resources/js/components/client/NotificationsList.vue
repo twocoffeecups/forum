@@ -6,7 +6,7 @@
             <i class="fas fa-bell dropdown-toggle-split mx-2" style="font-size: 1.2em" role="button"
                data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false"></i>
 
-            <ul v-if="notifications.length!==0" class="dropdown-menu notifications overflow-x-hidden" style="position: absolute">
+            <ul v-if="notifications && notifications.length!==0" class="dropdown-menu notifications overflow-x-hidden" style="position: absolute">
                 <li class="notifications-header">
                     <div class="text-center" style="padding-bottom: 4px">{{ $t('component.notificationsList.youHave') }}
                         <b v-if="notifications">{{ notifications.length }}</b> {{ $t('component.notificationsList.unreadMess') }}
@@ -36,7 +36,7 @@
                 </li>
             </ul>
 
-            <ul v-if="notifications.length===0" class="dropdown-menu notifications overflow-x-hidden" style="position: absolute">
+            <ul v-if="notifications && notifications.length===0" class="dropdown-menu notifications overflow-x-hidden" style="position: absolute">
                 <li class="my-2 mx-2 p-1 text-center">
                     <h5>You don't have notifications.</h5>
                 </li>

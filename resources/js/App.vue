@@ -11,9 +11,12 @@ export default {
 
     created() {
         this.getSettings();
-        this.checkUserInState();
         this.getUserInfo();
+    },
+
+    mounted() {
         this.$store.dispatch('report/getReportType');
+        this.checkUserInState();
     },
 
     methods:{

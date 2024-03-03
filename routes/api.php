@@ -140,6 +140,13 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum']], function (
     });
 
     /**
+     * Statistics
+     */
+    Route::group(['prefix' => 'statistics'], function () {
+        Route::get('/', \App\Http\Controllers\Dashboard\Statistics\IndexController::class);
+    });
+
+    /**
      * Settings
      */
     Route::group(['prefix' => 'settings'], function () {
