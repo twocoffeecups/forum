@@ -3,7 +3,7 @@
         <div class="card-header">
             <div class="d-flex justify-content-between">
                 <h3><i class="fas fa-users"></i> Users list</h3>
-                <CreateUserModal/>
+                <CreateUserModal v-if="checkHasPermissions([AccessPermissions.CAN_CREATE_USER])"/>
             </div>
         </div>
         <div class="card-body">
@@ -77,7 +77,7 @@
                                 <router-link class="btn btn-success" :to="{ name:'admin.user.details', params:{id:user.id} }">
                                     Show
                                 </router-link>
-                                <button class="btn btn-danger">
+                                <button v-if="checkHasPermissions([AccessPermissions.CAN_BAN_USER])" class="btn btn-danger">
                                     Ban
                                 </button>
                             </div>
@@ -108,6 +108,8 @@ import api from "../../api/api";
 import CreateUserModal from "../../components/admin/CreateUserModal.vue";
 import {mapGetters} from "vuex";
 import TablePagination from "../../components/admin/TablePagination.vue";
+import {checkHasPermissions} from "../../access/service";
+import AccessPermissions from "../../access/permissions";
 
 export default {
     name: "Users",
@@ -118,6 +120,13 @@ export default {
             users: 'adminUsers/getUsers',
             paginate: 'adminUsers/getPaginate',
         }),
+    },
+
+    setup() {
+        return {
+            checkHasPermissions,
+            AccessPermissions,
+        }
     },
 
     data() {

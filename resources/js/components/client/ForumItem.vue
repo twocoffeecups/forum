@@ -10,7 +10,7 @@
                     {{ forum.name }}
                 </router-link>
             </div>
-            <div class="d-flex my-auto mx-2 mt-lg-0 text-center op-7 justify-content-between flex-row flex-sm-row flex-md-row flex-lg-column flex-xl-row flex-xxl-row">
+            <div class="d-flex my-auto mx-2 mt-lg-0 text-center op-7 justify-content-between flex-row flex-sm-row flex-md-row flex-lg-column flex-xl-row flex-xxl-row" style="width: 190px">
                 <div class="d-flex text-start flex-column mx-1">
                     <h4 class="h6 font-weight-bold">
                         {{ $t('component.childForum.categories') }}
@@ -32,7 +32,7 @@
             </div>
 
 
-            <div class="mx-2 d-flex" style="min-width: 370px">
+            <div class="mx-2 d-flex" style="width: 380px">
                 <div class="mx-2 my-auto">
                     <img src="../../assets/img/default-avatar.png" class="rounded-circle" width="40" alt="avatar">
                 </div>

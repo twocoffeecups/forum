@@ -1,11 +1,11 @@
 <template>
     <div class="container" id="notifications">
-        <div v-if="notifications.length!==0" class="card rounded-0">
+        <div v-if="notifications.length!==0" class="card mb-4 rounded-0">
             <div class="card-body">
 
                 <!-- Notification messages -->
                 <!-- TODO: Сделать один динамический компонент -->
-                <div v-if="notifications" v-for="notification in notifications">
+                <div v-if="notifications" v-for="notification in notifications" class="p-1 mb-3">
                     <TopicLiked v-if="notification.type==='TopicLiked'" :notification="notification" :close="true"/>
                     <PostLiked v-if="notification.type==='PostLiked'" :notification="notification" :close="true"/>
                     <ReplyPost v-if="notification.type==='ReplyPost'" :notification="notification" :close="true"/>

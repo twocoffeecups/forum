@@ -39,7 +39,7 @@
                                 <th scope="col">Author</th>
                                 <th scope="col">Topics</th>
                                 <th scope="col">Created date</th>
-                                <th scope="col">Visibility</th>
+                                <th v-if="checkHasPermissions([AccessPermissions.CAN_UPDATE_TAG])" scope="col">Visibility</th>
                                 <th scope="col">Actions</th>
                             </tr>
                             </thead>
@@ -52,7 +52,7 @@
                                 </td>
                                 <td>{{ tag.topics }}</td>
                                 <td>{{ tag.created_at }}</td>
-                                <td>
+                                <td  v-if="checkHasPermissions([AccessPermissions.CAN_UPDATE_TAG])" >
                                     <div class="btn-group  btn-group-sm" role="group"
                                          aria-label="Basic radio toggle button group"
                                          @change.prevent="changeVisibility($event, tag.id)">
@@ -69,7 +69,7 @@
 
                                 </td>
                                 <td>
-                                    <button @click="deleteTag(tag.id)" role="button" class="btn btn-danger bg-gradient mx-2"
+                                    <button  v-if="checkHasPermissions([AccessPermissions.CAN_DELETE_TAG])"  @click="deleteTag(tag.id)" role="button" class="btn btn-danger bg-gradient mx-2"
                                             title="Edit"> Delete
                                     </button>
                                 </td>
@@ -104,6 +104,8 @@
 import {mapGetters} from "vuex";
 import TablePagination from "../../components/admin/TablePagination.vue";
 import CreateTagCard from "../../components/admin/CreateTagCard.vue";
+import {checkHasPermissions} from "../../access/service";
+import AccessPermissions from "../../access/permissions";
 export default {
     name: "Tag",
     components: {CreateTagCard, TablePagination, },
@@ -113,6 +115,13 @@ export default {
             tags: 'tag/getTags',
             paginate: 'tag/getPaginate',
         })
+    },
+
+    setup() {
+        return {
+            checkHasPermissions,
+            AccessPermissions,
+        }
     },
 
     watch: {
@@ -139,6 +148,9 @@ export default {
         },
 
         renameTag(event, id, tagName){
+            if(!checkHasPermissions([AccessPermissions.CAN_UPDATE_TAG])){
+                return false;
+            }
             let name = event.target.innerText;
             if (name == tagName) return;
             if (name.length < 3) {

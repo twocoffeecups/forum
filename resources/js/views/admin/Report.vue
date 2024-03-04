@@ -63,7 +63,7 @@
                                             <router-link class="btn btn-success" :to="{ name:'admin.report.details', params:{id:report.id} }">
                                                 Show
                                             </router-link>
-                                            <button role="button" class="btn btn-danger mx-2" title="Edit">
+                                            <button v-if="checkHasPermissions([AccessPermissions.CAN_DELETE_REPORT])" role="button" class="btn btn-danger mx-2" title="Edit">
                                                 Delete
                                             </button>
                                         </div>
@@ -96,10 +96,19 @@
 <script>
 import {mapGetters} from "vuex";
 import TablePagination from "../../components/admin/TablePagination.vue";
+import {checkHasPermissions} from "../../access/service";
+import AccessPermissions from "../../access/permissions";
 
 export default {
     name: "Report",
     components: {TablePagination},
+
+    setup() {
+        return {
+            checkHasPermissions,
+            AccessPermissions,
+        }
+    },
 
     computed: {
         ...mapGetters({

@@ -114,7 +114,7 @@
                                             <router-link class="btn btn-primary mx-2" :to="{name:'admin.topic.details', params:{id: topic.id}}">
                                                 Show
                                             </router-link>
-                                            <button class="btn btn-danger mx-2">
+                                            <button v-if="checkHasPermissions(AccessPermissions.CAN_DELETE_TOPIC)" class="btn btn-danger mx-2">
                                                 Delete
                                             </button>
                                         </div>
@@ -147,10 +147,19 @@
 <script>
 import {mapGetters} from "vuex";
 import TablePagination from "../../components/admin/TablePagination.vue";
+import {checkHasPermissions} from "../../access/service";
+import AccessPermissions from "../../access/permissions";
 
 export default {
     name: "Topic",
     components: {TablePagination},
+
+    setup() {
+        return {
+            checkHasPermissions,
+            AccessPermissions,
+        }
+    },
 
     computed: {
         ...mapGetters({

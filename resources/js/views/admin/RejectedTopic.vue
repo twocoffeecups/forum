@@ -1,23 +1,6 @@
 <template>
     <div class="row mb-3">
         <div class="col-12 col-sm-12 col-md-6 col-lg-6">
-            <div class="card text-bg-primary bg-gradient mb-3 col" style="max-width: 360px; max-height: 145px;">
-                <div class="card-body">
-                    <div class="d-flex">
-                        <div class="col">
-                            <h2>123</h2>
-                            <span class="fst-italic">Rejected topics</span>
-                        </div>
-                        <div class="col d-flex justify-content-center align-items-center">
-                            <i class="fas fa-comments" style="font-size: 2.3em"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="col-12 col-sm-12 col-md-6 col-lg-6">
             <div class="card text-bg-danger bg-gradient mb-3 col" style="max-width: 360px; max-height: 145px;">
                 <div class="card-body">
                     <div class="d-flex">
@@ -47,7 +30,7 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive mb-1">
-                        <div v-if="topics!==0"
+                        <div v-if="topics.length!==0"
                             class="d-flex mt-2 flex-column flex-md-row flex-lg-row flex-xl-row justify-content-center justify-content-md-between justify-content-lg-between mb-3">
                             <div class="d-none d-md-flex d-lg-flex d-xl-flex my-2">
                                 <span class="form-text">
@@ -67,7 +50,7 @@
                         </div>
 
                         <!-- Table -->
-                        <table v-if="topics!==0" class="table table-striped table-hover table-bordered">
+                        <table v-if="topics.length!==0" class="table table-striped table-hover table-bordered">
                             <thead class="table-primary">
                             <tr></tr>
                                 <tr>
@@ -105,7 +88,7 @@
                             :current-page="paginate.current_page"
                             :last-page="paginate.last_page" />
 
-                        <div v-if="topics===0" class="text-center mx-1">
+                        <div v-if="topics.length===0" class="text-center mx-1">
                             <h4>You haven't rejected topics.</h4>
                         </div>
                     </div>

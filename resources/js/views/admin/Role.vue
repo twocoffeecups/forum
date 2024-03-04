@@ -57,7 +57,7 @@
                                             <router-link class="btn btn-success" :to="{ name:'admin.role.details', params:{id:role.id} }">
                                                 Show
                                             </router-link>
-                                            <button @click="deleteRole(role.id)" role="button" class="btn btn-danger mx-2">
+                                            <button v-if="checkHasPermissions([AccessPermissions.CAN_DELETE_ROLE])" @click="deleteRole(role.id)" role="button" class="btn btn-danger mx-2">
                                                 Delete
                                             </button>
                                         </div>
@@ -97,6 +97,8 @@ import CreatePermissionModal from "../../components/admin/CreatePermissionCompon
 import {mapGetters} from "vuex";
 import CreateRoleComponent from "../../components/admin/CreateRoleComponent.vue";
 import TablePagination from "../../components/admin/TablePagination.vue";
+import {checkHasPermissions} from "../../access/service";
+import AccessPermissions from "../../access/permissions";
 
 export default {
     name: "Role",
@@ -107,6 +109,13 @@ export default {
             roles: 'role/getRoles',
             paginate: 'role/getPaginate',
         }),
+    },
+
+    setup() {
+        return {
+            checkHasPermissions,
+            AccessPermissions,
+        }
     },
 
     mounted() {

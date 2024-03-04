@@ -272,8 +272,8 @@ class PermissionSeeder extends Seeder
             ],
             [
                 'id' => 33,
-                'name' => 'Update settings',
-                'slug' => 'can_update_settings',
+                'name' => 'Delete report',
+                'slug' => 'can_delete_report',
                 'status' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),

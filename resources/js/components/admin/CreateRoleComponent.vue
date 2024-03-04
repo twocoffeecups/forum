@@ -1,5 +1,5 @@
 <template>
-    <div class="card mb-3" style="border-top: 5px solid #0c63e4">
+    <div v-if="checkHasPermissions([AccessPermissions.CAN_CREATE_ROLE])" class="card mb-3" style="border-top: 5px solid #0c63e4">
         <div class="card-header">
             <h4>Create role</h4>
         </div>
@@ -54,6 +54,8 @@ import {required, minLength, maxLength,} from '@vuelidate/validators'
 import VueMultiselect from "vue-multiselect";
 import {mapGetters} from "vuex";
 import api from "../../api/api";
+import {checkHasPermissions} from "../../access/service";
+import AccessPermissions from "../../access/permissions";
 export default {
     name: "CreateRoleComponent",
     components: {VueMultiselect,},
@@ -67,6 +69,8 @@ export default {
     setup() {
         return {
             v$: useVuelidate(),
+            checkHasPermissions,
+            AccessPermissions,
         }
     },
 

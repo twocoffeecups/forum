@@ -1,5 +1,5 @@
 <template>
-    <div class="card" style="border-top: 5px solid #0c63e4">
+    <div  v-if="checkHasPermissions([AccessPermissions.CAN_CREATE_TAG])"  class="card" style="border-top: 5px solid #0c63e4">
         <div class="card-header">
             <h4>Create new tag</h4>
         </div>
@@ -38,6 +38,8 @@
 <script>
 import {useVuelidate} from '@vuelidate/core';
 import {required, minLength, maxLength,} from '@vuelidate/validators';
+import {checkHasPermissions} from "../../access/service";
+import AccessPermissions from "../../access/permissions";
 
 export default {
     name: "CreateTagCard",
@@ -45,6 +47,8 @@ export default {
     setup() {
         return {
             v$: useVuelidate(),
+            checkHasPermissions,
+            AccessPermissions,
         }
     },
 

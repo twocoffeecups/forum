@@ -61,7 +61,7 @@
                 </div>
             </div>
 
-            <div class="card mb-3" style="border-top: 5px solid #0c63e4">
+            <div v-if="checkHasPermissions([AccessPermissions.CAN_RESOLVE_TOPIC, AccessPermissions.CAN_REJECT_TOPIC])" class="card mb-3" style="border-top: 5px solid #0c63e4">
                 <div class="card-header">
                     <h4>Published / Unpublished</h4>
                 </div>
@@ -151,10 +151,10 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="col-5">
+                        <div v-if="checkHasPermissions([AccessPermissions.CAN_DELETE_TOPIC])" class="col-5">
                             <b>Delete</b>
                         </div>
-                        <div class="col-7">
+                        <div v-if="checkHasPermissions([AccessPermissions.CAN_DELETE_TOPIC])" class="col-7">
                             <div class="d-flex flex-row">
                                 <div class="col">
                                     <textarea v-model="deleteReason" class="form-control my-1"
@@ -175,6 +175,8 @@
 <script>
 import {mapGetters} from "vuex";
 import api from "../../api/api";
+import {checkHasPermissions} from "../../access/service";
+import AccessPermissions from "../../access/permissions";
 
 export default {
     name: "ForumDetails",
@@ -184,6 +186,13 @@ export default {
             topic: 'adminTopic/getTopic',
             topicTags: 'adminTopic/getTopicTags',
         }),
+    },
+
+    setup() {
+        return {
+            checkHasPermissions,
+            AccessPermissions,
+        }
     },
 
     data() {

@@ -21,7 +21,7 @@ return new class extends Migration
             $table->foreignId('topicId')->nullable()->index('topicIdx')->constrained('topics')->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('userId')->index('userIdx')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('senderId')->index('senderIdx')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
-            $table->foreignId('moderId')->index('moderIdx')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('moderId')->nullable()->index('moderIdx')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
             $table->unsignedTinyInteger('status')->default(0);
             $table->unsignedTinyInteger('closed')->default(0);
             $table->string('message')->nullable();

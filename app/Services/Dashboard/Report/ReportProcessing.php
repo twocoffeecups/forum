@@ -2,7 +2,7 @@
 
 namespace App\Services\Dashboard\Report;
 
-use App\Http\Resources\Admin\Report\ReportResource;
+use App\Http\Resources\Dashboard\Report\ReportResource;
 use App\Models\BanList;
 use App\Models\Post;
 use App\Models\RejectedTopic;

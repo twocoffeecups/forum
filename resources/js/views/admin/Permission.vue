@@ -51,7 +51,7 @@
                                 </td>
                                 <td>{{ permission.created_at }}</td>
                                 <td>
-                                    <button @click="deletePermission(permission.id)" class="btn btn-danger bg-gradient mx-2"
+                                    <button v-if="checkHasPermissions([AccessPermissions.CAN_DELETE_PERMISSION])" @click="deletePermission(permission.id)" class="btn btn-danger bg-gradient mx-2"
                                           title="Delete">
                                         Delete
                                     </button>
@@ -79,7 +79,7 @@
         </div>
 
         <div class="col-md-4">
-            <CreatePermissionComponent />
+            <CreatePermissionComponent v-if="checkHasPermissions([AccessPermissions.CAN_CREATE_PERMISSION])" />
         </div>
     </div>
 
@@ -89,6 +89,8 @@
 import {mapGetters} from "vuex";
 import TablePagination from "../../components/admin/TablePagination.vue";
 import CreatePermissionComponent from "../../components/admin/CreatePermissionComponent.vue";
+import {checkHasPermissions} from "../../access/service";
+import AccessPermissions from "../../access/permissions";
 
 export default {
     name: "Role",
@@ -99,6 +101,13 @@ export default {
             permissions: 'permissions/getPermission',
             paginate: 'permissions/getPaginate',
         })
+    },
+
+    setup() {
+        return {
+            checkHasPermissions,
+            AccessPermissions,
+        }
     },
 
     mounted() {
@@ -128,6 +137,9 @@ export default {
         },
 
         renamePermission(event, id, permissionName) {
+            if(!checkHasPermissions([AccessPermissions.CAN_UPDATE_PERMISSION])){
+                return false;
+            }
             let name = event.target.innerText;
             if (name == permissionName) return;
             if (name.length < 6) {

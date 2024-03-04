@@ -35,7 +35,7 @@
                             {{ role.created_at }}
                         </div>
                     </div>
-                    <div class="row align-items-start mb-2">
+                    <div v-if="checkHasPermissions([AccessPermissions.CAN_DELETE_ROLE])" class="row align-items-start mb-2">
                         <div class="col-5">
                             <b>Delete</b>
                         </div>
@@ -48,7 +48,7 @@
                 </div>
             </div>
 
-            <div class="card mb-3" style="border-top: 5px solid #0c63e4">
+            <div v-if="checkHasPermissions([AccessPermissions.CAN_CHANGE_ROLE_PERMISSION])" class="card mb-3" style="border-top: 5px solid #0c63e4">
                 <div class="card-header">
                     <h4>Change role permission</h4>
                 </div>
@@ -114,24 +114,24 @@
                         <table v-if="users.length!=0" class="table table-striped table-hover table-bordered">
                             <thead class="table-primary">
                             <tr></tr>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">login</th>
-                                <th scope="col">email</th>
-                                <th scope="col">role</th>
-                                <th scope="col">Register AT</th>
-                            </tr>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">login</th>
+                                    <th scope="col">email</th>
+                                    <th scope="col">role</th>
+                                    <th scope="col">Register AT</th>
+                                </tr>
                             </thead>
                             <tbody>
-                            <tr v-for="user in users">
-                                <th scope="row"></th>
-                                <td>{{ user.login }}</td>
-                                <td>{{ user.email }}</td>
-                                <td>
-                                    {{ user.role }}
-                                </td>
-                                <td>{{ user.register_at }}</td>
-                            </tr>
+                                <tr v-for="user in users">
+                                    <th scope="row"></th>
+                                    <td>{{ user.login }}</td>
+                                    <td>{{ user.email }}</td>
+                                    <td>
+                                        {{ user.role }}
+                                    </td>
+                                    <td>{{ user.register_at }}</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -155,6 +155,8 @@ import VueMultiselect from "vue-multiselect";
 import {useToast} from "vue-toastification";
 import api from "../../api/api";
 import {mapGetters} from "vuex";
+import {checkHasPermissions} from "../../access/service";
+import AccessPermissions from "../../access/permissions";
 
 export default {
     name: "ForumDetail",
@@ -171,6 +173,8 @@ export default {
     setup() {
         return {
             t$: useToast(),
+            checkHasPermissions,
+            AccessPermissions,
         }
     },
 
@@ -215,6 +219,9 @@ export default {
         },
 
         renameRole(event, roleName) {
+            if(!checkHasPermissions([AccessPermissions.CAN_UPDATE_ROLE])){
+                return false;
+            }
             let name = event.target.innerText;
             if (name === roleName) return;
             if (name.length < 3) {

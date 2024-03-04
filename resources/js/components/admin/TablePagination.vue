@@ -1,9 +1,9 @@
 <template>
     <div class="d-flex flex-column flex-md-row flex-lg-row justify-content-between">
         <div class="d-flex mt-1 d-none d-md-block d-lg-block d-xl-block align-items-center">
-            <div class="table-info" id="table-info" role="status" aria-live="polite">Showing 4 to 10 of
-                {{ totalEntries }} entries
-            </div>
+<!--            <div class="table-info" id="table-info" role="status" aria-live="polite">Showing 4 to 10 of-->
+<!--                {{ totalEntries }} entries-->
+<!--            </div>-->
         </div>
         <div v-if="totalPages !==1" class="d-flex justify-content-center mt-1">
             <nav>

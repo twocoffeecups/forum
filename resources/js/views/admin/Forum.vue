@@ -8,7 +8,7 @@
                         <h4><i class="fas fa-tag"></i> Forums list</h4>
 <!--                        <div v-if="checkHasPermissions([AccessPermissions.CAN_CREATE_FORUM])">-->
                         <div>
-                            <CreateForumModal :forums="this.forums"/>
+                            <CreateForumModal v-if="checkHasPermissions([AccessPermissions.CAN_CREATE_FORUM])" :forums="this.forums"/>
                         </div>
                     </div>
                 </div>
@@ -68,7 +68,7 @@
                                 <td>{{ forum.stats.posts }}</td>
                                 <td>{{ forum.created_at }}</td>
                                 <th>
-                                    <div class="btn-group  btn-group-sm" role="group"
+                                    <div v-if="checkHasPermissions([AccessPermissions.CAN_UPDATE_FORUM])" class="btn-group  btn-group-sm" role="group"
                                          aria-label="Basic radio toggle button group"
                                          @change.prevent="changeVisibility($event, forum.id)">
                                         <input type="radio" class="btn-check" :name="forum.id+'isPublished'"
@@ -85,7 +85,7 @@
                                 </th>
                                 <td>
                                     <div class="d-flex justify-content-around">
-                                        <EditForumModal :id="forum.id" :forum-name="forum.name"
+                                        <EditForumModal v-if="checkHasPermissions([AccessPermissions.CAN_UPDATE_FORUM])" :id="forum.id" :forum-name="forum.name"
                                                         :forum-description="forum.description"/>
 
                                         <router-link class="btn btn-success mx-1" :to="{ name:'admin.forum.details', params:{id: forum.id} }">

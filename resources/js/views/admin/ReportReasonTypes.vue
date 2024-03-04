@@ -39,7 +39,7 @@
                                 <th scope="col">#</th>
                                 <th scope="col">Name</th>
                                 <th scope="col">Author</th>
-                                <th scope="col">Status</th>
+                                <th v-if="checkHasPermissions([AccessPermissions.CAN_CREATE_REPORT_REASON_TYPE])" scope="col">Status</th>
                                 <th scope="col">Created date</th>
                                 <th scope="col">Actions</th>
                             </tr>
@@ -49,7 +49,7 @@
                                     <th scope="row">{{ reportType.id }}</th>
                                     <td contenteditable @focusout.prevent="update($event, reportType.id, reportType.name)">{{ reportType.name }}</td>
                                     <td>{{ reportType.author }}</td>
-                                    <td>
+                                    <td  v-if="checkHasPermissions([AccessPermissions.CAN_UPDATE_REPORT_REASON_TYPE])">
                                         <div class="btn-group  btn-group-sm" role="group"
                                              aria-label="Basic radio toggle button group"
                                              @change.prevent="changeVisibility($event, reportType.id)">
@@ -66,7 +66,7 @@
                                     </td>
                                     <td>{{ reportType.created_at }}</td>
                                     <td>
-                                        <button @click.prevent="deleteReportReason(reportType.id)" class="btn btn-danger mx-2" title="Edit">
+                                        <button  v-if="checkHasPermissions([AccessPermissions.CAN_DELETE_REPORT_REASON_TYPE])" @click.prevent="deleteReportReason(reportType.id)" class="btn btn-danger mx-2" title="Edit">
                                             Delete
                                         </button>
                                     </td>
@@ -92,7 +92,7 @@
         </div>
 
         <div class="col-md-4">
-            <CreateReportReasonTypeComponent />
+            <CreateReportReasonTypeComponent v-if="checkHasPermissions([AccessPermissions.CAN_CREATE_REPORT_REASON_TYPE])" />
         </div>
     </div>
 </template>
@@ -101,6 +101,8 @@
 import {mapGetters} from "vuex";
 import TablePagination from "../../components/admin/TablePagination.vue";
 import CreateReportReasonTypeComponent from "../../components/admin/CreateReportReasonTypeComponent.vue";
+import {checkHasPermissions} from "../../access/service";
+import AccessPermissions from "../../access/permissions";
 export default {
     name: "ReportReasonTypes",
     components: {CreateReportReasonTypeComponent, TablePagination},
@@ -110,6 +112,13 @@ export default {
             reportReasons: 'reportReason/getReportReasonType',
             paginate: 'reportReason/getPaginate',
         }),
+    },
+
+    setup() {
+        return {
+            checkHasPermissions,
+            AccessPermissions,
+        }
     },
 
     mounted() {

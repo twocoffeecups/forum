@@ -14,7 +14,7 @@
                             <div class="mb-2">
                                 <input type="text" v-if="forumName" v-model="forumName.value" class="form-control" id="forum-name">
                             </div>
-                            <div class="mt-1">
+                            <div v-if="checkHasPermissions([AccessPermissions.CAN_UPDATE_SETTINGS])" class="mt-1">
                                 <button @click.prevent="changeForumName" class="btn btn-primary bg-gradient" type="button" id="addName">Save</button>
                             </div>
                         </div>
@@ -26,7 +26,7 @@
                             <label class="text-muted text-small mx-2" for="flexCheckChecked">
                                 Name will not be displayed in the forum's header.
                             </label>
-                            <div class="mt-1">
+                            <div v-if="checkHasPermissions([AccessPermissions.CAN_UPDATE_SETTINGS])" class="mt-1">
                                 <button @click.prevent="changeShowSiteName" class="btn btn-primary bg-gradient" type="button" id="addName">Save</button>
                             </div>
                         </div>
@@ -45,7 +45,7 @@
                                 <input type="text" v-if="meta" v-model="meta.keywords" class="form-control" id="meta-keywords" placeholder="Max range - 255">
                                 <label for="meta-keywords" class="text-muted">Keywords</label>
                             </div>
-                            <div class="">
+                            <div v-if="checkHasPermissions([AccessPermissions.CAN_UPDATE_SETTINGS])" class="">
                                 <button @click.prevent="changeMeta" class="btn btn-primary bg-gradient">Save</button>
                             </div>
                         </div>
@@ -62,7 +62,7 @@
                     <h4>Upload new logo:</h4>
                 </div>
                 <div class="card-body">
-                    <div class="mb-3 row">
+                    <div v-if="checkHasPermissions([AccessPermissions.CAN_UPDATE_SETTINGS])" class="mb-3 row">
                         <label for="inputPassword" class="col-sm-2 h5">Logo:</label>
                         <div class="col-sm-10">
                             <div class=" input-group">
@@ -107,7 +107,7 @@
                             <div class="mb-2">
                                 <input v-if="topicsOnPage" v-model="topicsOnPage.value" type="number" min="10" max="50" class="form-control" id="topic-post-on-page">
                             </div>
-                            <div class="">
+                            <div v-if="checkHasPermissions([AccessPermissions.CAN_UPDATE_SETTINGS])" class="">
                                 <button @click.prevent="changeTopicsOnPage" class="btn btn-primary bg-gradient" type="button" id="addName">Save</button>
                             </div>
                         </div>
@@ -119,7 +119,7 @@
                             <div class="mb-2">
                                 <input v-if="postsOnPage" v-model="postsOnPage.value" type="number" min="10" max="50" class="form-control" id="topic-post-on-page">
                             </div>
-                            <div class="">
+                            <div v-if="checkHasPermissions([AccessPermissions.CAN_UPDATE_SETTINGS])" class="">
                                 <button @click.prevent="changePostsOnPage" class="btn btn-primary bg-gradient" type="button" id="addName">Save</button>
                             </div>
                         </div>
@@ -135,7 +135,7 @@
                     <h4>Background</h4>
                 </div>
                 <div class="card-body">
-                    <div class="mb-3 row">
+                    <div v-if="checkHasPermissions([AccessPermissions.CAN_UPDATE_SETTINGS])" class="mb-3 row">
                         <label for="forum-background" class="col-sm-2 h5">Forum background:</label>
                         <div class="col-sm-10">
                             <div class="input-group">
@@ -169,9 +169,18 @@
 
 <script>
 import {mapGetters} from "vuex";
+import {checkHasPermissions} from "../../access/service";
+import AccessPermissions from "../../access/permissions";
 
 export default {
     name: "Settings",
+
+    setup() {
+        return {
+            checkHasPermissions,
+            AccessPermissions,
+        }
+    },
 
     data() {
         return {

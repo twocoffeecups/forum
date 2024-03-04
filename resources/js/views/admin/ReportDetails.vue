@@ -73,11 +73,11 @@
                                 <PostComponent v-if="report.type==='post'" :post="report.object"/>
                             </div>
                         </div>
-                        <div v-if="!report.closed"  class="row align-items-start mb-2">
+                        <div v-if="checkHasPermissions([AccessPermissions.CAN_PROCESS_REPORT, AccessPermissions.CAN_REJECT_REPORT])" class="row align-items-start mb-2">
                             <div class="col-5">
                                 <b>Actions</b>
                             </div>
-                            <div class="col-7">
+                            <div v-if="!report.closed" class="col-7">
                                 <div class="d-flex justify-content-start">
                                     <div class="mx-3">
                                         <input @click="this.reportProcessForm=true" type="radio" class="btn-check mx-3"
@@ -94,13 +94,16 @@
                                     </div>
                                 </div>
                             </div>
+                            <div v-if="report.closed" class="col-7">
+                                <span>Report closed</span>
+                            </div>
                         </div>
                     </dl>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-7">
+        <div  v-if="checkHasPermissions([AccessPermissions.CAN_PROCESS_REPORT, AccessPermissions.CAN_REJECT_REPORT])" class="col-md-7">
             <!-- Forms -->
             <div v-if="!report.closed">
                 <div v-if="reportProcessForm" class="card mb-3" style="border-top: 5px solid #0c63e4">
@@ -219,6 +222,8 @@ import {mapGetters} from "vuex";
 import api from "../../api/api";
 import PostComponent from "../../components/admin/PostComponent.vue";
 import TopicMainPostComponent from "../../components/admin/TopicMainPostComponent.vue";
+import {checkHasPermissions} from "../../access/service";
+import AccessPermissions from "../../access/permissions";
 export default {
     name: "ForumDetails",
     components: {TopicMainPostComponent, PostComponent, Post, EditForumModal, CreateForumModal},
@@ -226,6 +231,8 @@ export default {
     setup() {
         return {
             t$: useToast(),
+            checkHasPermissions,
+            AccessPermissions,
         }
     },
 

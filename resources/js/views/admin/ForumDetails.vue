@@ -24,12 +24,12 @@
                         <div class="col-7">
                             <div class="d-flex justify-content-between">
                                 <span>{{ forum.type===0 ? 'Category' : 'Forum' }}</span>
-                                <span role="button" class="fa-pull-right text-primary mx-2"
+                                <span v-if="checkHasPermissions([AccessPermissions.CAN_UPDATE_FORUM])" role="button" class="fa-pull-right text-primary mx-2"
                                       @click="this.showChangeType = !this.showChangeType">
                                     Change <i class="fas fa-arrow-down"></i>
                                 </span>
                             </div>
-                            <div id="type-changed-field" v-if="showChangeType" class="d-flex flex-row">
+                            <div v-if="showChangeType" id="type-changed-field" class="d-flex flex-row">
                                 <select v-model="forum.type" class="form-select fa-pull-right my-2">
                                     <option :selected="forum.type==0" value="0">Category</option>
                                     <option :selected="forum.type==1" value="1">Forum</option>
@@ -51,7 +51,7 @@
                                 <span v-if="parentForum!==null">{{ parentForum.name }}</span>
                                 <span v-if="parentForum===null">Not parent forum</span>
 
-                                <span role="button" class="fa-pull-right text-primary mx-2"
+                                <span v-if="checkHasPermissions([AccessPermissions.CAN_UPDATE_FORUM])" role="button" class="fa-pull-right text-primary mx-2"
                                       @click="this.showSelect = !this.showSelect">
                                     Change <i class="fas fa-arrow-down"></i>
                                 </span>
@@ -85,7 +85,7 @@
                             {{ forum.created_at }}
                         </div>
                     </div>
-                    <div class="row align-items-start mb-2">
+                    <div v-if="checkHasPermissions([AccessPermissions.CAN_UPDATE_FORUM])" class="row align-items-start mb-2">
                         <div class="col-5">
                             <b>Change status</b>
                         </div>
@@ -111,7 +111,7 @@
                             <b>Actions</b>
                         </div>
                         <div class="col-7">
-                            <button @click.prevent="deleteForum" class="btn btn-danger bg-gradient">Delete</button>
+                            <button v-if="checkHasPermissions([AccessPermissions.CAN_DELETE_FORUM])" @click.prevent="deleteForum" class="btn btn-danger bg-gradient">Delete</button>
 
                             <a v-if="forum.type===1" :href="`/forum/${this.$route.params.id}`" class="btn btn-primary bg-gradient mx-1">Show on site</a>
                         </div>
@@ -166,7 +166,7 @@
                     <div class="d-flex justify-content-between my-2">
                         <h4>Children forum</h4>
                         <div>
-                            <CreateForumModal :forums="forums" :parent-id="forum.id"/>
+                            <CreateForumModal v-if="checkHasPermissions([AccessPermissions.CAN_CREATE_FORUM])" :forums="forums" :parent-id="forum.id"/>
                         </div>
                     </div>
                 </div>
@@ -180,7 +180,6 @@
                                     <th scope="col">#</th>
                                     <th scope="col">Name</th>
                                     <th scope="col">Type</th>
-                                    <th scope="col">Description</th>
                                     <th scope="col">Child forums</th>
                                     <th scope="col">Topics</th>
                                     <th scope="col">Posts</th>
@@ -194,15 +193,12 @@
                                     <th scope="row">{{ forum.id }}</th>
                                     <td>{{ forum.name }}</td>
                                     <td>{{ forum.type }}</td>
-                                    <td>
-                                        {{ forum.description }}
-                                    </td>
-                                    <td>{{ forum.categories }}</td>
-                                    <td>{{ forum.topics }}</td>
-                                    <td>{{ forum.posts }}</td>
-                                    <td>{{ forum.createdAt }}</td>
+                                    <td>{{ forum.stats.children }}</td>
+                                    <td>{{ forum.stats.topics }}</td>
+                                    <td>{{ forum.stats.posts }}</td>
+                                    <td>{{ forum.created_at }}</td>
                                     <th>
-                                        <div class="btn-group  btn-group-sm" role="group"
+                                        <div v-if="checkHasPermissions([AccessPermissions.CAN_UPDATE_FORUM])" class="btn-group  btn-group-sm" role="group"
                                              aria-label="Basic radio toggle button group"
                                              @change.prevent="changeVisibility($event, forum.id)">
                                             <input type="radio" class="btn-check" :name="forum.id+'isPublished'"
@@ -219,10 +215,10 @@
                                     </th>
                                     <td>
                                         <div class="d-flex justify-content-around">
-                                            <EditForumModal :id="forum.id" :forum-name="forum.name"
+                                            <EditForumModal v-if="checkHasPermissions([AccessPermissions.CAN_UPDATE_FORUM])" :id="forum.id" :forum-name="forum.name"
                                                             :forum-description="forum.description"/>
 
-                                            <button @click="deleteForum(forum.id)" class="btn btn-danger mx-2" title="Edit">
+                                            <button v-if="checkHasPermissions([AccessPermissions.CAN_DELETE_FORUM])" @click="deleteForum(forum.id)" class="btn btn-danger mx-2" title="Edit">
                                                 Delete
                                             </button>
                                         </div>
@@ -248,6 +244,8 @@ import {useToast} from "vue-toastification";
 import {mapGetters} from "vuex";
 import ForumOptionTree from "../../components/admin/ForumOptionTree.vue";
 import api from "../../api/api";
+import {checkHasPermissions} from "../../access/service";
+import AccessPermissions from "../../access/permissions";
 
 export default {
     name: "ForumDetails",
@@ -256,6 +254,8 @@ export default {
     setup() {
         return {
             t$: useToast(),
+            checkHasPermissions,
+            AccessPermissions,
         }
     },
 
@@ -294,6 +294,9 @@ export default {
         },
 
         updateContent(e, key) {
+            if(!checkHasPermissions([AccessPermissions.CAN_UPDATE_FORUM])){
+                return false;
+            }
             let value = e.target.innerText
             let data = new FormData();
             data.append(key, value);

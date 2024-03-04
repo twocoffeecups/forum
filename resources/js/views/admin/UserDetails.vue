@@ -144,10 +144,10 @@
                         <li class="nav-item" role="presentation">
                             <button class="nav-link" id="pills-reports-tab" data-bs-toggle="pill" data-bs-target="#pills-reports" type="button" role="tab" aria-controls="pills-reports" aria-selected="false">Reports</button>
                         </li>
-                        <li class="nav-item" role="presentation">
+                        <li v-if="checkHasPermissions([AccessPermissions.CAN_UPDATE_USER])" class="nav-item" role="presentation">
                             <button class="nav-link" id="pills-edit-tab" data-bs-toggle="pill" data-bs-target="#pills-edit" type="button" role="tab" aria-controls="pills-edit" aria-selected="false">Edit profile</button>
                         </li>
-                        <li class="nav-item" role="presentation">
+                        <li v-if="checkHasPermissions([AccessPermissions.CAN_CHANGE_USER_ROLE, AccessPermissions.CAN_CHANGE_USER_PERMISSION])" class="nav-item" role="presentation">
                             <button class="nav-link" id="pills-access-tab" data-bs-toggle="pill" data-bs-target="#pills-access" type="button" role="tab" aria-controls="pills-access" aria-selected="false">Access Permissions</button>
                         </li>
                     </ul>
@@ -201,7 +201,7 @@
                             </div>
                         </div>
                         <!-- Edit profile -->
-                        <div class="tab-pane fade" id="pills-edit" role="tabpanel" aria-labelledby="pills-edit-tab" tabindex="0">
+                        <div v-if="checkHasPermissions([AccessPermissions.CAN_UPDATE_USER])" class="tab-pane fade" id="pills-edit" role="tabpanel" aria-labelledby="pills-edit-tab" tabindex="0">
                             <div class="mb-3">
                                 <div v-if="user" :class="{ error: v$.name.$errors.length }">
                                     <label for="firstName" class="col-form-label">User name:</label>
@@ -249,9 +249,9 @@
                             </div>
                         </div>
                         <!-- Access -->
-                        <div class="tab-pane fade" id="pills-access" role="tabpanel" aria-labelledby="pills-access-tab" tabindex="0">
+                        <div v-if="checkHasPermissions([AccessPermissions.CAN_CHANGE_USER_ROLE, AccessPermissions.CAN_CHANGE_USER_PERMISSION])" class="tab-pane fade" id="pills-access" role="tabpanel" aria-labelledby="pills-access-tab" tabindex="0">
                             <div class="">
-                                <div class="mb-3 row">
+                                <div v-if="checkHasPermissions([AccessPermissions.CAN_CHANGE_USER_ROLE])" class="mb-3 row">
                                     <label class="col-sm-2 col-form-label">Change role:</label>
                                     <div class="col-sm-9 mb-3">
                                         <select v-if="roles" @change="selectedRole = $event.target.value" class="form-select">
@@ -268,7 +268,7 @@
                                     </div>
                                 </div>
 
-                                <div class="mb-3 row">
+                                <div v-if="checkHasPermissions([AccessPermissions.CAN_CHANGE_USER_PERMISSION])" class="mb-3 row">
                                     <label class="col-sm-2 col-form-label">
                                         Change permissions:
                                         <!--                        <div class="alert alert-warning d-flex align-items-center" role="alert">-->
@@ -317,6 +317,8 @@ import PostComponent from "../../components/admin/PostComponent.vue";
 import TopicComponent from "../../components/admin/TopicComponent.vue";
 import {useVuelidate} from "@vuelidate/core";
 import {email, maxLength, minLength, required} from "@vuelidate/validators";
+import {checkHasPermissions} from "../../access/service";
+import AccessPermissions from "../../access/permissions";
 
 export default {
     name: "ForumDetails",
@@ -325,6 +327,8 @@ export default {
     setup() {
         return {
             v$: useVuelidate(),
+            checkHasPermissions,
+            AccessPermissions,
         }
     },
 

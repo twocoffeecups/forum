@@ -27,7 +27,7 @@
                         <TopicRejected v-if="notification.type==='TopicRejected'" :notification="notification"/>
                     </div>
                 </li>
-                <li v-if="!notifications.length" class="notifications-footer mt-1">
+                <li v-if="notifications.length!=0" class="notifications-footer mt-1">
                     <div class="text-center mt-2" style="padding-bottom: 4px">
                         <router-link :to="{name:'profile.notification'}">
                             {{ $t('component.notificationsList.viewAll') }}
