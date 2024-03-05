@@ -2,7 +2,7 @@
     <!-- Card -->
     <div v-if="stats" class="row mb-3">
         <div class="col-12 col-sm-12 col-md-6 col-lg-3">
-            <div class="card text-bg-primary bg-gradient mb-3 col mx-auto" style="max-width: 360px; max-height: 145px;">
+            <div class="card text-bg-primary bg-gradient mb-3" style="max-width: 360px; max-height: 145px;">
                 <div class="card-body">
                     <div class="d-flex">
                         <div class="col">
@@ -23,7 +23,7 @@
         </div>
 
         <div class="col-12 col-sm-12 col-md-6 col-lg-3">
-            <div class="card text-bg-secondary bg-gradient mb-3 col mx-auto" style="max-width: 360px; max-height: 145px;">
+            <div class="card text-bg-secondary bg-gradient mb-3" style="max-width: 360px; max-height: 145px;">
                 <div class="card-body">
                     <div class="d-flex">
                         <div class="col">
@@ -44,7 +44,7 @@
         </div>
 
         <div class="col-12 col-sm-12 col-md-6 col-lg-3">
-            <div class="card text-bg-danger bg-gradient mb-3 col mx-auto" style="max-width: 360px; max-height: 145px;">
+            <div class="card text-bg-danger bg-gradient mb-3" style="max-width: 360px; max-height: 145px;">
                 <div class="card-body">
                     <div class="d-flex">
                         <div class="col">
@@ -65,12 +65,12 @@
         </div>
 
         <div class="col-12 col-sm-12 col-md-6 col-lg-3">
-            <div class="card text-bg-success bg-gradient mb-3 col mx-auto" style="max-width: 360px; max-height: 145px;">
+            <div class="card text-bg-success bg-gradient mb-3" style="max-width: 360px; max-height: 145px;">
                 <div class="card-body">
                     <div class="d-flex">
                         <div class="col">
                             <h2>{{ stats.users }}</h2>
-                            <span class="fst-italic">Topics}</span>
+                            <span class="fst-italic">Topics</span>
                         </div>
                         <div class="col d-flex justify-content-center align-items-center">
                             <i class="fas fa-tags" style="font-size: 2.3em"></i>
@@ -102,12 +102,10 @@
                     />
                 </div>
             </div>
-
-
         </div>
 
-        <div class="mx-auto col-md-4">
-            <div class="card rounded-0">
+        <div class="col-md-4">
+            <div class="card rounded-0 h-100">
                 <div class="card-header">
                     <h3>Most popular categories</h3>
                 </div>
@@ -221,7 +219,7 @@
         </div>
 
         <div class="col-md-5">
-            <div class="card rounded-0">
+            <div class="card rounded-0 h-100">
                 <div class="card-header">
                     <h4>Latest registered users</h4>
                 </div>

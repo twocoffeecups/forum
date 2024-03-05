@@ -18,14 +18,11 @@
                         <i class="fas fa-home"></i> <span class="ms-1">Dashboard</span>
                     </router-link>
                 </li>
-
-                <!-- Statistics -->
-                <!-- TODO: Сделать страницу -->
-<!--                <li class="nav-item w-100">-->
-<!--                    <a href="#" class="nav-link sidebar_nav_link align-middle px-0">-->
-<!--                        <i class="fas fa-signal"></i> <span class="ms-1 d-sm-inline">Statistics</span>-->
-<!--                    </a>-->
-<!--                </li>-->
+                <li class="nav-item w-100" data-bs-dismiss="offcanvas">
+                    <router-link :to="{name:'admin.notifications'}" class="nav-link sidebar_nav_link align-middle px-0">
+                        <i class="far fa-envelope"></i> <span class="ms-1">Notifications</span>
+                    </router-link>
+                </li>
 
                 <!-- Forum -->
                 <h5 class="text-muted mt-3 mb-2">Forum</h5>

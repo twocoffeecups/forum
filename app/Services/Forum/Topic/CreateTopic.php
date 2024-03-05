@@ -2,6 +2,7 @@
 
 namespace App\Services\Forum\Topic;
 
+use App\Events\CreatedNewTopic;
 use App\Http\Resources\Forum\Topic\TopicResource;
 use App\Models\Topic;
 use App\Models\TopicImage;
@@ -26,6 +27,7 @@ trait CreateTopic
         if (!empty($data['images'])) {
             $this->saveTopicImages($topic, $user, $data['images']);
         }
+        $this->sendNotificationsToAdministrators($topic, $user);
         DB::commit();
         return $topic;
     }
@@ -38,6 +40,11 @@ trait CreateTopic
             'title' => $data['title'],
             'content' => $data['content'],
         ]);
+    }
+
+    protected function sendNotificationsToAdministrators(Topic $topic, User $user)
+    {
+        event(new CreatedNewTopic($user, $topic));
     }
 
     protected function saveTopicImages(Topic $topic, User $user, $images)

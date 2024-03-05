@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Events\CreatedNewReport;
+use App\Events\CreatedNewTopic;
+use App\Listeners\UserCreateNewReport;
+use App\Listeners\UserCreateNewTopic;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -17,6 +21,12 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         Registered::class => [
             SendEmailVerificationNotification::class,
+        ],
+        CreatedNewTopic::class => [
+            UserCreateNewTopic::class,
+        ],
+        CreatedNewReport::class => [
+            UserCreateNewReport::class,
         ],
         \SocialiteProviders\Manager\SocialiteWasCalled::class => [
             // ... other providers

@@ -15,27 +15,15 @@
                         <router-link :to="{name:'forum.main'}" href="#" class="nav-link px-2 link-body-emphasis">
                             Go to Forum
                         </router-link>
-<!--                        <a href="/" class="nav-link px-2 link-body-emphasis">-->
-<!--                            Go to Forum-->
-<!--                        </a>-->
                     </li>
                 </ul>
 
 
-                <!-- TODO: сделать показ уведомлений и поиск -->
+                <!-- TODO: сделать поиск -->
                 <div class="d-flex flex-row">
-<!--                    <div class="nav-item mx-2">-->
-<!--                        <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">-->
-<!--                            <i class="far fa-comments" style="font-size: 1.3em"></i>-->
-<!--                        </a>-->
-<!--                    </div>-->
-
                     <div class="nav-item mx-2">
-                        <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
-                            <i class="far fa-bell" style="font-size: 1.3em"></i>
-                        </a>
+                        <Notifications />
                     </div>
-
                     <div class="nav-item mx-2">
                         <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
                             <i class="fas fa-search" style="font-size: 1.3em"></i>
@@ -49,8 +37,11 @@
 </template>
 
 <script>
+import Notifications from "./Notifications.vue";
+
 export default {
     name: "Header",
+    components: {Notifications},
 }
 </script>
 

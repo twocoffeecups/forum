@@ -2,6 +2,7 @@
 
 namespace App\Services\Forum\Report;
 
+use App\Events\CreatedNewReport;
 use App\Models\Report;
 use App\Models\User;
 
@@ -15,7 +16,14 @@ trait SendReport
         if($this->checkIfReportExists($user, $data)){
             return $this->userHasAlreadySentReport();
         }
-        return $this->store($user, $data);
+        $report = $this->store($user, $data);
+        if ($report) $this->sendNotificationsToAdministrators($report, $user);
+        return $report;
+    }
+
+    protected function sendNotificationsToAdministrators(Report $report, User $user)
+    {
+        event(new CreatedNewReport($report, $user));
     }
 
     protected function store(User $user, array $data)

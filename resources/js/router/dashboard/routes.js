@@ -11,6 +11,11 @@ const routes = [
                 component: () => import('../../views/admin/Users.vue'),
             },
             {
+                path: 'notifications',
+                name: 'admin.notifications',
+                component: () => import('../../views/admin/Notifications.vue'),
+            },
+            {
                 path: 'users/:id',
                 name: 'admin.user.details',
                 component: () => import('../../views/admin/UserDetails.vue'),
