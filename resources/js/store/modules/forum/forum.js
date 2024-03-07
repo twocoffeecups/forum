@@ -24,7 +24,11 @@ export default {
 
         getTotalTopics(state) {
             return state.totalTopics;
-        }
+        },
+
+        getAdministrationsTopics(state){
+            return state.forum.administrationTopics;
+        },
     },
 
     actions: {

@@ -7,6 +7,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Laravel\Sanctum\PersonalAccessToken;
 
 class AuthService
@@ -36,25 +37,23 @@ class AuthService
         return $user;
     }
 
-    // TODO: переделать
     public static function checkEndOfBan($user)
     {
-        $bannedUser = BanList::where('userId', $user->id)->first();
-        $nowDate = Carbon::parse(Carbon::now());
-        $endBanTime = Carbon::parse($bannedUser->banEnd);
-        if ($nowDate >= $endBanTime) {
-            $bannedUser->banExclude = 1;
-            $bannedUser->save();
-            $bannedUser->delete();
-            return true;
+        $ban = BanList::where('userId', $user->id)->first();
+        if(!$ban) return true;
+        $banEnded = Carbon::parse($ban->banEnd)->lessThanOrEqualTo(now());
+        if ($banEnded) {
+            return self::deleteFromBanList($ban);
         } else {
             return false;
         }
     }
 
-    public static function deleteFromBanList()
+    protected static function deleteFromBanList($ban): bool
     {
-
+        $ban->banExclude = 1;
+        $ban->save();
+        $ban->delete();
+        return true;
     }
-
 }

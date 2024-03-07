@@ -18,6 +18,7 @@ class TopicAuthorResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'role' => $this->role->name,
             'status' => $this->checkOnlineStatus(),
             'lastVisit' => Carbon::parse($this->lastVisit)->diffForHumans(),
             'avatar' => $this->getAvatar(),

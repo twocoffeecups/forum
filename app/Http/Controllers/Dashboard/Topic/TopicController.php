@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard\Topic;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Dashboard\Paginate\PaginateRequest;
 use App\Http\Requests\Dashboard\Topic\RejectTopicRequest;
+use App\Http\Requests\Dashboard\Topic\StoreTopicRequest;
 use App\Http\Requests\Dashboard\Topic\TopicDeleteRequest;
 use App\Http\Resources\Dashboard\Topic\RejectedTopicResource;
 use App\Http\Resources\Dashboard\Topic\TopicDetailsResource;
@@ -14,15 +15,33 @@ use App\Models\Topic;
 use App\Models\RejectedTopic;
 use App\Models\TopicRejectType;
 use App\Notifications\TopicRejected;
+use App\Services\AuthService;
+use App\Services\Forum\Topic\CreateTopic;
 
 class TopicController extends Controller
 {
+    use CreateTopic;
 
     public function index(PaginateRequest $request)
     {
         $paginate = $request->validated();
         $topics = Topic::paginate($paginate['entriesOnPage'], '*', 'page', $paginate['page']);
         return TopicResource::collection($topics);
+    }
+
+    public function store(StoreTopicRequest $request)
+    {
+        $data = $request->validated();
+        if((int) $data['type']!=1 && isset($data['closeComments'])){
+           unset($data['closeComments']);
+        }
+        $user = AuthService::getAuthorizedUser($request);
+        $topic = $this->createTopic($user, $data);
+        return response()->json([
+            'message' => 'Topic created',
+            'topicId' => $topic->id,
+            'topic' => new \App\Http\Resources\Forum\Topic\TopicResource($topic),
+        ]);
     }
 
     public function rejectedTopic(PaginateRequest $request)

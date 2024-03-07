@@ -28,17 +28,30 @@
 
 
                         <!-- Child categories -->
-                        <div v-if="childrenForums.length !== 0" class="card rounded-0 mt-2 mb-2">
-                            <ForumItem v-for="childForum in childrenForums" :forum="childForum"/>
+                        <div v-if="childrenForums!= 0" class="card rounded-0 my-2">
+                            <div class="card-header">
+                                <h5 class="fw-bold">Children forums</h5>
+                            </div>
+                            <ForumItem v-if="childrenForums" v-for="childForum in childrenForums" :forum="childForum"/>
                         </div>
                         <!-- End child -->
+
+                        <!-- Administration topics -->
+                        <div v-if="administrationTopics!=0" class="card rounded-0 my-2">
+                            <div class="card-header p-3">
+                                <h5 class="fw-bold">Administration's topics</h5>
+                            </div>
+                            <div class="card-body p-0 bg-body-tertiary bg-gradient">
+                                <AdministrationsTopic v-if="administrationTopics" v-for="administrationTopic in administrationTopics" :topic="administrationTopic" />
+                            </div>
+                        </div>
 
                         <!-- Topic -->
                         <div v-if="totalTopics !== 0" class="card rounded-0 m-sm-0 mt-1 mb-2">
                             <div class="card-header">
                                 <div class="row">
                                     <div class="d-flex justify-content-between">
-                                        <h4>Topics</h4>
+                                        <h5 class="fw-bold">Topics</h5>
                                         <div class="d-flex">
                                             <h2 class="accordion-header" id="flush-headingOne">
                                                 <button class="filter-btn accordion-button collapsed p-2" type="button"
@@ -110,10 +123,11 @@ import Topic from '../../components/client/Topic.vue';
 import Pagination from "../../components/client/Pagination.vue";
 import ForumItem from "../../components/client/ForumItem.vue";
 import {mapGetters} from "vuex";
+import AdministrationsTopic from "../../components/client/AdministrationsTopic.vue";
 
 export default {
     name: "Forum",
-    components: {Sidebar, FilterTopics, Topic, Pagination, ForumItem},
+    components: {AdministrationsTopic, Sidebar, FilterTopics, Topic, Pagination, ForumItem},
 
     computed: {
         ...mapGetters({
@@ -123,6 +137,7 @@ export default {
             totalTopics: 'forum/getTotalTopics',
             totalPages: 'forumTopics/getTotalPages',
             paginate: 'forumTopics/getPaginate',
+            administrationTopics: 'forum/getAdministrationsTopics',
         }),
     },
 

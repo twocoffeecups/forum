@@ -19,6 +19,11 @@ class Forum extends Model
         return $this->hasMany(Topic::class, 'forumId', 'id');
     }
 
+    public function administrationTopics()
+    {
+        return $this->topics->where('type', '=', 1);
+    }
+
     public function posts()
     {
         return $this->hasManyThrough(Post::class, Topic::class, 'forumId', 'topicId', 'id', 'id');

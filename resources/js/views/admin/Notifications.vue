@@ -23,11 +23,8 @@
 import {mapGetters} from "vuex";
 import NewReportNotification from "../../components/admin/notifications/NewReportNotification.vue";
 import NewTopicNotification from "../../components/admin/notifications/NewTopicNotification.vue";
-import {not} from "@vuelidate/validators";
-
 export default {
     name: "ForumDetail",
-    methods: {not},
     components: {NewTopicNotification, NewReportNotification},
 
     computed: {

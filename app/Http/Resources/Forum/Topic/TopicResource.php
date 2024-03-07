@@ -21,6 +21,8 @@ class TopicResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'content' => $this->content,
+            'type' => $this->type,
+            'closeComments' => $this->closeComments,
             'rating' => $this->likes->count(),
             'likes' => TopicLikeResource::collection($this->likes),
             'status' => $this->status,

@@ -19,6 +19,9 @@ class Topic extends Model
         'title',
         'content',
         'userId',
+        'type',
+        'status',
+        'closeComments'
     ];
 
     public function forum(): \Illuminate\Database\Eloquent\Relations\BelongsTo

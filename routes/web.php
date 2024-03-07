@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Auth::routes(['verify' => true]);
+
 
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
@@ -27,3 +27,5 @@ Route::get('{page}', \App\Http\Controllers\Main\MainController::class)
     ->where('page', '(.*)')
     ->name('forum.main')
     ->middleware('daily.visitors');
+
+Auth::routes(['verify' => true]);

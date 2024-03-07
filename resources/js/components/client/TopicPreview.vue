@@ -1,19 +1,19 @@
 <template>
     <div class="preview-container hide mt-2 mb-3">
 
-        <div class="card mb-1">
+        <div class="card rounded-0">
             <div class="card-header d-flex justify-content-between">
                 <div class="d-flex">
                     <h5 class="card-text">{{ title }}</h5> <small class="mx-2 p-1" style="font-size: 0.8em">{{
                         $t('component.topicHeader.byCategory')
-                    }} {{ category.title }}</small>
+                    }} {{ category.name }}</small>
                 </div>
                 <span class="card-text d-flex">{{ $t('component.topicHeader.created') }}: 01/01/2023</span>
             </div>
         </div>
 
 
-        <div class="card">
+        <div class="card rounded-0">
             <div class="card-body">
                 <p class="card-text text-muted"><small class="text-muted">Last updated 0 mins ago</small></p>
 

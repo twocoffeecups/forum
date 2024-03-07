@@ -14,8 +14,8 @@
                                 </router-link>
                                 <!-- online status -->
                                 <div class="text-muted small">
-                                    <span v-if="post.author.status" class="text-success">Online</span>
-                                    <span v-if="!post.author.status" class="text-danger">Offline</span>
+                                    <span v-if="post.author.status" class="badge bg-success">Online</span>
+                                    <span v-if="!post.author.status" class="badge bg-danger">Offline</span>
                                 </div>
                                 <div class="text-muted small">Last visit: {{ post.author.lastVisit }}</div>
                             </div>

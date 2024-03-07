@@ -39,6 +39,9 @@ trait CreateTopic
             'userId' => $user->id,
             'title' => $data['title'],
             'content' => $data['content'],
+            'type' => $data['type'] ?? 0,
+            'closeComments' => !empty($data['closeComments']) ? (int) $data['closeComments'] : 0,
+            'status' => !empty($data['status']) ? (int) $data['status'] : 0,
         ]);
     }
 

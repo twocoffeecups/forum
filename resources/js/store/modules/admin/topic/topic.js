@@ -1,5 +1,6 @@
 import api from "../../../../api/api";
 import {useToast} from "vue-toastification";
+import router from "../../../../router/dashboard";
 
 const toast = useToast();
 export default {
@@ -123,6 +124,25 @@ export default {
                     .catch(error => {
                         toast.error(error.response.data.message ?? "Error.");
                         reject(error);
+                    })
+            });
+        },
+
+        createTopic({dispatch}, data) {
+            return new Promise((resolve, reject) => {
+                api.post(`/api/admin/topic/store`, data)
+                    .then(response => {
+                        if (response.data) {
+                            toast.success(response.data.message ?? "Created.");
+                            router.push({ name:'admin.topic.details', params:{id:response.data.topicId} });
+                            resolve(response);
+                        } else {
+                            reject(response);
+                        }
+                    })
+                    .catch(error => {
+                        reject(error);
+                        toast.error(error.response.data.message ?? "Error!");
                     })
             });
         },

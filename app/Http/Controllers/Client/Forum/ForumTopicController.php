@@ -25,7 +25,7 @@ class ForumTopicController extends Controller
         $topicOnPage = Settings::getTopicsOnPageValue();
         $filters = $request->validated();
         $filtered = app()->make(TopicFilter::class, ['queryParams' => array_filter($filters)]);
-        $topics = Topic::filter($filtered)->where('forumId', '=', $forum->id)->paginate($topicOnPage, ['*'], 'page', $filters['page']);
+        $topics = Topic::filter($filtered)->where('forumId', '=', $forum->id)->where('status', '=', 1)->where('type', '!=', '1')->paginate($topicOnPage, ['*'], 'page', $filters['page']);
         return TopicResource::collection($topics);
     }
 

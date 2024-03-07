@@ -56,6 +56,11 @@ const routes = [
                 component: () => import('../../views/admin/Topic.vue'),
             },
             {
+                path: 'topic/create',
+                name: 'admin.topic.create',
+                component: () => import('../../views/admin/CreateTopic.vue'),
+            },
+            {
                 path: 'topic/:id',
                 name: 'admin.topic.details',
                 component: () => import('../../views/admin/TopicDetails.vue'),

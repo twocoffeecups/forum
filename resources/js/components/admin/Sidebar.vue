@@ -31,6 +31,19 @@
                         class="fas fa-hashtag"></i> Forums
                     </router-link>
                 </li>
+                <li class="nav-item w-100" data-bs-dismiss="offcanvas">
+                    <router-link :to="{name:'admin.tag'}" class="nav-link sidebar_nav_link px-0"><i
+                        class="fas fa-hashtag"></i> Tags
+                    </router-link>
+                </li>
+
+                <!-- Topics -->
+                <h5 class="text-muted mt-3 mb-2">Topic</h5>
+                <li class="nav-item w-100" data-bs-dismiss="offcanvas">
+                    <router-link :to="{name:'admin.topic.create'}" class="nav-link sidebar_nav_link align-middle px-0">
+                        <i class="fas fa-home"></i> <span class="ms-1">Create topic</span>
+                    </router-link>
+                </li>
                 <li class="nav-item w-100">
                     <a class="nav-link sidebar_nav_link align-middle px-0" data-bs-toggle="collapse" href="#topic-sub-menu"
                        role="button" aria-expanded="false" aria-controls="sub_menu1">
@@ -56,11 +69,6 @@
                             </li>
                         </ul>
                     </div>
-                </li>
-                <li class="nav-item w-100" data-bs-dismiss="offcanvas">
-                    <router-link :to="{name:'admin.tag'}" class="nav-link sidebar_nav_link px-0"><i
-                        class="fas fa-hashtag"></i> Tags
-                    </router-link>
                 </li>
 
 

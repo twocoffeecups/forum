@@ -20,9 +20,6 @@ class StoreController extends Controller
     {
         $data = $request->validated();
         $user = AuthService::getAuthorizedUser($request);
-        if($user->isBanned()){
-            AuthService::checkEndOfBan($user);
-        }
         $topic = $this->createTopic($user, $data);
         return response()->json([
             'message' => 'Topic created',

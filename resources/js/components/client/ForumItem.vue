@@ -32,20 +32,28 @@
             </div>
 
 
-            <div class="mx-2 d-flex" style="width: 380px">
-                <div class="mx-2 my-auto">
-                    <img src="../../assets/img/default-avatar.png" class="rounded-circle" width="40" alt="avatar">
-                </div>
-                <div class="d-flex flex-column  align-items-start justify-content-between mt-3 mt-lg-0 d-sm-none d-md-flex d-xl-flex d-xxl-flex flex-row flex-md-none flex-lg-column flex-xl-column flex-xxl-column">
+            <div class="mx-2 my-auto d-flex" style="width: 380px">
+                <div class="row">
                     <h4 class="h6 font-weight-bold"><b>Latest comment: </b></h4>
-                    <div>
-                        <h6 v-if="forum.latestPost" class="h6 mb-1 font-weight-bold">
-                            <router-link class="text-muted" :to="{name:'topic', params:{id:forum.latestPost.topic.id}}">{{ forum.latestPost.topic.name.substring(0, 15) }}... </router-link>
-                            <span>by <router-link class="text-muted" :to="{name:'user.profile', params:{id:forum.latestPost.author.id}}"> {{ forum.latestPost.author.name }} </router-link> </span>
-                            <span> {{' ' + forum.latestPost.created_at }}</span>
-                        </h6>
-                        <h6 v-if="!forum.latestPost">There are no posts on this forum.</h6>
+                </div>
+                <div class="row">
+                    <div class="d-flex">
+                        <div v-if="forum.latestPost" class="mx-2">
+                            <img v-if="forum.latestPost.author.avatar" :src="forum.latestPost.author.avatar" class="rounded-circle" width="40" alt="avatar">
+                            <img v-if="!forum.latestPost.author.avatar" src="../../assets/img/default-avatar.png" class="rounded-circle" width="40" alt="avatar">
+                        </div>
+                        <div class="d-flex flex-column align-items-start justify-content-between mt-3 mt-lg-0 d-none d-sm-none d-md-flex d-xl-flex d-xxl-flex flex-row flex-md-none flex-lg-column flex-xl-column flex-xxl-column">
+                            <div class="mb-auto">
+                                <h6 v-if="forum.latestPost" class="h6 mb-1 font-weight-bold">
+                                    <router-link class="text-muted" :to="{name:'topic', params:{id:forum.latestPost.topic.id}}">{{ forum.latestPost.topic.name.substring(0, 15) }}... </router-link>
+                                    <span>by <router-link class="text-muted" :to="{name:'user.profile', params:{id:forum.latestPost.author.id}}"> {{ forum.latestPost.author.name }} </router-link> </span>
+                                    <span> {{' ' + forum.latestPost.created_at }}</span>
+                                </h6>
+                                <h6 v-if="!forum.latestPost">There are no posts on this forum.</h6>
+                            </div>
+                        </div>
                     </div>
+
                 </div>
             </div>
         </div>

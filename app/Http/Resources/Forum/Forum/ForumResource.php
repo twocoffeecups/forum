@@ -17,6 +17,7 @@ class ForumResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'administrationTopics' => AdministrationTopicResource::collection($this->administrationTopics()),
             'children' => ChildrenForumResource::collection($this->children),
             'totalTopics' => $this->topics->where('status', '=', 1)->count(),
         ];

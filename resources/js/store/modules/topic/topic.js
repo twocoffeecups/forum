@@ -58,7 +58,6 @@ export default {
                         if (response.data) {
                             commit('setTopic', response.data.topic);
                             commit('setTopicAuthor', response.data.topic.author);
-                            //commit('setPosts', response.data.topic.posts);
                             commit('setImages', response.data.topic.images);
                             resolve(response);
                         } else {
@@ -75,6 +74,7 @@ export default {
         },
 
         getTopicPosts({dispatch, commit}, [id, page = 1]) {
+            console.log("ID", id);
             return new Promise((resolve, reject) => {
                 axios.post(`/api/topic/${id}/posts`, {
                     page: page

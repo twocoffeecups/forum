@@ -17,15 +17,17 @@
                                     {{ mainPost.author.name }}
                                 </router-link>
                                 <div class="text-muted small">
-                                    <span v-if="mainPost.author.status" class="text-success">Online</span>
-                                    <span v-if="!mainPost.author.status" class="text-danger">Offline</span>
+                                    <span v-if="mainPost.author.status" class="badge bg-success">Online</span>
+                                    <span v-if="!mainPost.author.status" class="badge bg-danger">Offline</span>
                                 </div>
                             </div>
                             <div class="text-muted small ml-3">
                                 <div>{{ $t('component.post.registerDate') }} <strong>{{
                                         mainPost.author.register_at
-                                    }}</strong></div>
-                                <div><strong>{{ mainPost.author.totalPosts }}</strong> {{ $t('component.post.messages') }}
+                                    }}</strong>
+                                </div>
+                                <div>
+                                    <strong>{{ mainPost.author.totalPosts }}</strong> {{ $t('component.post.messages') }}
                                 </div>
                             </div>
                         </div>
@@ -67,7 +69,7 @@
                               </span>
                             </div>
                             <div class="flex-sm-row d-md-flex d-lg-flex d-xl-flex text-center">
-                                <button v-if="userId!==topicAuthor.id && isLoggedIn"
+                                <button v-if="userId!==topicAuthor.id && isLoggedIn &&  mainPost.type!==1"
                                         @click.capture="report(mainPost.id)" class="btn btn-sm btn-outline-danger mx-1"
                                         data-bs-toggle="modal" data-bs-target="#report-form">
                                     {{ $t('component.post.report') }}
@@ -88,13 +90,6 @@
                                 <BookmarksButton :id="this.$route.params.id"
                                                  :type="`topic`"
                                                  :author-id="topicAuthor.id" />
-<!--                                <span v-if="userId!==topicAuthor.id && isLoggedIn" @click.prevent="addToBookmarks"-->
-<!--                                      role="button" class="mx-1 p-2">-->
-<!--                                        <i class="far fa-bookmark"-->
-<!--                                                                         style="cursor: pointer">-->
-
-<!--                                    </i>-->
-<!--                                </span>-->
                             </div>
 
                         </div>

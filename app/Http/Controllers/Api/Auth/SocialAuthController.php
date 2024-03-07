@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Api\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\SocialAccount;
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Socialite\Facades\Socialite;
@@ -22,18 +23,17 @@ class SocialAuthController extends Controller
     public function handleProviderCallback($provider)
     {
         $user = Socialite::driver($provider)->stateless()->user();
-
         // if don't token, return access error
         if (!$user->token) {
             $this->returnError();
         }
         // create or get user
         $createdUser = $this->store($user);
-
         // if user don't have social account, create new
         if ($this->checkHasSocialAccount($createdUser, $provider) !== true)
             $this->createSocialAccount($user, $provider, $createdUser);
-
+        // register event
+        event(new Registered($createdUser));
         // login and send token
         Auth::login($createdUser);
         $token = $createdUser->createToken('auth-token')->accessToken;

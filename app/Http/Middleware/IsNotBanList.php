@@ -20,7 +20,8 @@ class IsNotBanList
     public function handle(Request $request, Closure $next)
     {
         $user = AuthService::getAuthorizedUser($request);
-        if($user->isBanned()){
+        $banEnded = AuthService::checkEndOfBan($user);
+        if(!$banEnded){
             abort(403, 'You banned! Ban end: ' . $user->banDetails()->banEnd . '.');
         }
         return $next($request);

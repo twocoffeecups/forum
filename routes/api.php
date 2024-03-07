@@ -55,7 +55,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum']], function (
     Route::group(['prefix' => 'topic'], function () {
         Route::post('/', [\App\Http\Controllers\Dashboard\Topic\TopicController::class, 'index']);
         Route::get('reject-types', [\App\Http\Controllers\Dashboard\Topic\TopicController::class, 'getRejectTypes']);
-        //Route::post('/store', [\App\Http\Controllers\Dashboard\Topic\TopicController::class, 'store'])->middleware('permissions:can_create_topic');;
+        Route::post('/store', [\App\Http\Controllers\Dashboard\Topic\TopicController::class, 'store'])->middleware('permissions:can_create_topic');;
         Route::get('/{topic}', [\App\Http\Controllers\Dashboard\Topic\TopicController::class, 'show']);
         Route::patch('/{topic}/resolve', [\App\Http\Controllers\Dashboard\Topic\TopicController::class, 'resolve'])->middleware('permissions:can_resolve_topic');
         Route::post('/{topic}/reject', [\App\Http\Controllers\Dashboard\Topic\TopicController::class, 'reject'])->middleware('permissions:can_reject_topic');

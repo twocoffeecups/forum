@@ -55,12 +55,10 @@
                                     :last-page="paginate.last_page" />
 
                         <!-- Create post form -->
-                        <PostCreationForm :reply="replyPost" :reply-id="replyPost.id" @cancelReply="cancelReply"/>
+                        <PostCreationForm v-if="!topic.closeComments" :reply="replyPost" :reply-id="replyPost.id" @cancelReply="cancelReply"/>
 
                         <!-- Topic footer -->
-                        <TopicFooter v-if="isLoggedIn" :topic-id="this.$route.params.id" />
-
-
+<!--                        <TopicFooter v-if="isLoggedIn" :topic-id="this.$route.params.id" />-->
                     </div>
                 </div>
 
@@ -121,7 +119,10 @@ export default {
             immediate: true,
             handler() {
                 this.$store.dispatch('topic/getTopic', this.$route.params.id);
-                this.$store.dispatch('topic/getTopicPosts', this.$route.params.id);
+                console.log("TOPIC ID:", this.$route.params.id);
+                console.log("CLOSE COMMENTS:", this.topic.closeComments);
+                this.$store.dispatch('topic/getTopicPosts', [this.$route.params.id, 1]);
+
             },
         },
     },
