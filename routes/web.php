@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 
 
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Auth::routes(['verify' => true]);
 
 Route::group(['prefix' => 'admin', 'middleware' => 'canReadAdminDashboard'], function () {
     Route::get('/{page?}', [\App\Http\Controllers\DashboardController::class, 'index'])
@@ -28,4 +29,4 @@ Route::get('{page}', \App\Http\Controllers\Main\MainController::class)
     ->name('forum.main')
     ->middleware('daily.visitors');
 
-Auth::routes(['verify' => true]);
+

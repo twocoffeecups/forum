@@ -26,7 +26,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum']], function (
      */
     Route::group(['prefix' => 'forum'], function () {
         Route::post('/all', [\App\Http\Controllers\Dashboard\Forum\ForumController::class, 'index']);
-        Route::post('/', [\App\Http\Controllers\Dashboard\Forum\ForumController::class, 'store'])->middleware('permissions:can_create_forum');
+        Route::post('/store', [\App\Http\Controllers\Dashboard\Forum\ForumController::class, 'store'])->middleware('permissions:can_create_forum');
         Route::get('/{forum}', [\App\Http\Controllers\Dashboard\Forum\ForumController::class, 'show']);
         Route::patch('/{forum}', [\App\Http\Controllers\Dashboard\Forum\ForumController::class, 'update'])->middleware('permissions:can_create_forum');
         Route::delete('/{forum}', [\App\Http\Controllers\Dashboard\Forum\ForumController::class, 'delete'])->middleware('permissions:can_delete_forum');

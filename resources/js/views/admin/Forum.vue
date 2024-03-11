@@ -6,7 +6,6 @@
                 <div class="card-header">
                     <div class="d-flex justify-content-between my-2">
                         <h4><i class="fas fa-tag"></i> Forums list</h4>
-<!--                        <div v-if="checkHasPermissions([AccessPermissions.CAN_CREATE_FORUM])">-->
                         <div>
                             <CreateForumModal v-if="checkHasPermissions([AccessPermissions.CAN_CREATE_FORUM])" :forums="this.forums"/>
                         </div>

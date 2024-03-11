@@ -87,7 +87,7 @@ export default {
 
         createForum({dispatch, commit}, data) {
             return new Promise((resolve, reject) => {
-                api.post('/api/admin/forum/', data)
+                api.post('/api/admin/forum/store', data)
                     .then(response => {
                         if (response.data) {
                             toast.success(response.data.message ?? "Success.");

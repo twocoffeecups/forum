@@ -67,7 +67,7 @@ class SettingService
     {
         $settings = new Settings();
         $background = $settings->getBackgroundImage();
-        if(empty(json_decode($logo->data, true)['value'])){
+        if(empty(json_decode($background->data, true)['value'])){
             $oldBackgroundPath = json_decode($background->data, true)['imagePath'];
             Storage::disk('public')->delete($oldBackgroundPath);
         }
