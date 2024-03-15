@@ -17,7 +17,6 @@
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
 
     @vite(['resources/sass/app.scss', 'resources/js/dashboard.app.js', 'resources/js/assets/main.css'])
-{{--    <link rel="stylesheet" href="resources/js/assets/main.css">--}}
 </head>
 <body>
 

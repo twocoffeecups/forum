@@ -3,6 +3,7 @@
 namespace App\Http;
 
 //use App\Http\Middleware\TopicVisits;
+use App\Http\Middleware\LanguageMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -38,6 +39,7 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \App\Http\Middleware\UserLastVisit::class,
+            LanguageMiddleware::class,
         ],
 
         'api' => [
@@ -45,6 +47,7 @@ class Kernel extends HttpKernel
             'throttle:api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \App\Http\Middleware\UserLastVisit::class,
+            LanguageMiddleware::class,
         ],
     ];
 
@@ -71,7 +74,6 @@ class Kernel extends HttpKernel
         'permissions' => \App\Http\Middleware\PermissionMiddleware::class,
         'isNotBanList' => \App\Http\Middleware\IsNotBanList::class,
         'canReadAdminDashboard' => \App\Http\Middleware\CanReadAdminDashboard::class,
-//        'topicVisits' => TopicVisits::class,
         'daily.visitors' => \App\Http\Middleware\DailyVisitorsMiddleware::class,
     ];
 }

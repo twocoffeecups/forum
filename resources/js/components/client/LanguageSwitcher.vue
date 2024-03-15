@@ -9,7 +9,7 @@
 
 <script>
 import {useI18n} from 'vue-i18n';
-
+import axios from "axios";
 export default {
     name: "LanguageSwitcher",
 
@@ -30,6 +30,13 @@ export default {
         switchLanguage(lang) {
             this.locale = lang
             localStorage.setItem('lang', lang);
+            document.cookie = `lang=${lang}`;
+            axios.post('/api/language/set-locale', {
+                locale: lang,
+            })
+                .then(response => {
+                    console.log(response);
+                })
         },
     }
 }

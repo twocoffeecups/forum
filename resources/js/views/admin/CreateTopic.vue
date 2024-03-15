@@ -1,7 +1,7 @@
 <template>
     <div class="row">
         <div class="mx-auto col-md-12">
-            <div class="card mb-3" style="border-top: 5px solid #0c63e4">
+            <div class="card rounded-0 mb-3" style="border-top: 5px solid #0c63e4">
                 <div class="card-header">
                     <h4>Create topic</h4>
                 </div>

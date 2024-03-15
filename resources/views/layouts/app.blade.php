@@ -21,31 +21,9 @@
     <meta name="keywords" content="{{ $keywords }}">
 
     @vite(['resources/sass/app.scss', 'resources/js/app.js', 'resources/js/assets/main.css'])
-    {{--    <link rel="stylesheet" href="resources/js/assets/main.css">--}}
-    <style>
-        /*html,body{*/
-        /*    height: 100%;*/
-        /*    width: 100%;*/
-        /*    margin: 0;*/
-        /*    padding: 0;*/
-        /*}*/
-
-        /*.client-bg{*/
-        /*    height: 100%;*/
-        /*    overflow-y: scroll;*/
-        /*    background: url('../../js/assets/img/background.jpg');*/
-        /*    background-size: cover;*/
-
-        /*}*/
-
-    </style>
-
 </head>
 <body>
-<!-- App -->
-<div id="app" style="height: 100%">
-
-</div>
-
+    <!-- App -->
+    @yield('content')
 </body>
 </html>

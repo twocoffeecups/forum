@@ -2,7 +2,7 @@
     <div class="row mb-3">
         <div class="container-fluid">
             <!-- Table card -->
-            <div class="card" style="border-top: 5px solid green">
+            <div class="card rounded-0" style="border-top: 5px solid green">
                 <div class="card-header">
                     <div class="d-flex justify-content-between my-2">
                         <h4><i class="fas fa-tag"></i> Forums list</h4>

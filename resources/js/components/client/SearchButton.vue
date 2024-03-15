@@ -7,7 +7,8 @@
       <span v-if="!showForm" class="d-sm-block d-md-block d-lg-none">Search</span>
     </span>
 
-        <input v-if="showForm" @keydown.enter="startSearch" v-model="search" class="form-control-sm mx-auto search-form" type="search" placeholder="Search"
+        <input v-if="showForm" @keydown.enter="startSearch" v-model="search" class="form-control-sm mx-auto search-form"
+               type="search" placeholder="Search"
                aria-label="Search">
     </div>
 
@@ -46,7 +47,7 @@ export default {
         startSearch() {
             console.log("Search...");
             this.$store.dispatch('search/search', [this.search]);
-            this.$router.push({name:'forum.search', params:{search: this.search}})
+            this.$router.push({name: 'forum.search', params: {search: this.search}})
         }
     },
 

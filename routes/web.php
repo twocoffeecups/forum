@@ -14,17 +14,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
-
-//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Auth::routes(['verify' => true]);
 
+/**
+ *  Dashboard spa route
+ */
 Route::group(['prefix' => 'admin', 'middleware' => 'canReadAdminDashboard'], function () {
     Route::get('/{page?}', [\App\Http\Controllers\DashboardController::class, 'index'])
         ->where('page', '.*');
 });
 
-Route::get('{page}', \App\Http\Controllers\Main\MainController::class)
+/**
+ * Forum spa route
+ */
+Route::get('{page}', \App\Http\Controllers\Forum\Main\IndexController::class)
     ->where('page', '(.*)')
     ->name('forum.main')
     ->middleware('daily.visitors');

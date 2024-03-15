@@ -23,7 +23,7 @@
                     <div class="d-flex">
                         <div class="col">
                             <h2>43</h2>
-                            <span class="fst-italic">Not approved</span>
+                            <span class="fst-italic">Rejected</span>
                         </div>
                         <div class="col d-flex justify-content-center align-items-center">
                             <i class="far fa-user" style="font-size: 2.3em"></i>

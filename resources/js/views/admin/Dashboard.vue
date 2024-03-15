@@ -1,11 +1,10 @@
 <template>
-    <main class="mt-3 pe-3" style="height: 100%">
-        <div class="container-fluid" style="height: 100%">
+    <main class="mt-3 pe-3" style="height: 100%; overflow-y: visible">
+        <div class="container-fluid m-0" style="height: 100%">
 
             <!-- Main header -->
             <MainHeader />
             <!-- ./ Main header -->
-
 
             <!-- Content -->
             <div class="container-fluid">

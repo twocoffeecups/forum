@@ -2,7 +2,7 @@
     <div class="row mb-3">
         <div class="col-md-8">
             <!-- Table card -->
-            <div class="card" style="border-top: 5px solid #0c63e4">
+            <div class="card rounded-0" style="border-top: 5px solid #0c63e4">
                 <div class="card-header">
                     <div class="d-flex justify-content-between">
                         <h4>Report reason types list</h4>

@@ -1,6 +1,5 @@
 import api from "../../../../api/api";
 import {useToast} from "vue-toastification";
-import axios from "axios";
 
 const toast = useToast();
 export default {

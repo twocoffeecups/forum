@@ -1,5 +1,5 @@
 <template>
-    <div class="card" style="border-top: 5px solid #0c63e4">
+    <div class="card rounded-0" style="border-top: 5px solid #0c63e4">
         <div class="card-header">
             <h4>Create report reason type</h4>
         </div>

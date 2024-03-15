@@ -4,6 +4,7 @@
 /public/storage
 /storage/*.key
 /vendor
+/_docker
 .env
 .env.backup
 .env.production
@@ -16,3 +17,4 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+docker-compose.yml

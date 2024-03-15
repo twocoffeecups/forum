@@ -13,9 +13,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//    return $request->user();
-//});
+/**
+ * Language
+ */
+Route::group(['prefix' => 'language'], function () {
+    Route::post('set-locale', \App\Http\Controllers\Language\SetLocaleController::class);
+});
 
 /**
  * Admin dashboard routes

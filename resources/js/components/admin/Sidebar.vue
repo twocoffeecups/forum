@@ -134,4 +134,24 @@ export default {
 
 <style scoped>
 @import "../../assets/admin.css";
+
+.offcanvas-body{
+    overflow-y: scroll;
+}
+
+.offcanvas-body::-webkit-scrollbar {
+    width: 10px;
+    background-color: #f9f9fd;
+}
+
+.offcanvas-body::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #18aaaa;
+}
+
+.offcanvas-body::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.2);
+    border-radius: 10px;
+    background-color: #f9f9fd;
+}
 </style>

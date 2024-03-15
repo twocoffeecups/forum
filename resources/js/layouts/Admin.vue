@@ -1,17 +1,17 @@
 <template>
 
-    <!-- Header -->
-    <Header/>
-    <!-- ./ Header -->
-
     <!-- Sidebar -->
     <Sidebar/>
-    <!-- ./ Sidebar -->
 
-    <RouterView/>
+    <!-- Page -->
+    <div>
+        <!-- Dashboard Header -->
+        <Header/>
 
-    <!-- Main -->
-<!--    <PageContent/>-->
+        <!-- View -->
+        <RouterView/>
+    </div>
+
 </template>
 
 <script>
