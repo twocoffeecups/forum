@@ -14,8 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Auth::routes(['verify' => true]);
-
 /**
  *  Dashboard spa route
  */
@@ -25,11 +23,12 @@ Route::group(['prefix' => 'admin', 'middleware' => 'canReadAdminDashboard'], fun
 });
 
 /**
- * Forum spa route
+ *  Forum spa route
  */
 Route::get('{page}', \App\Http\Controllers\Forum\Main\IndexController::class)
     ->where('page', '(.*)')
     ->name('forum.main')
     ->middleware('daily.visitors');
 
-
+/** Auth */
+Auth::routes(['verify' => true]);

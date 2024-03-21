@@ -26,7 +26,7 @@ class TopicResource extends JsonResource
             'rating' => $this->likes->count(),
             'likes' => TopicLikeResource::collection($this->likes),
             'status' => $this->status,
-            'views' => $this->numberOfViews(),
+            'views' => $this->totalViews(),
             'forum' => new TopicForumResource($this->forum),
             'tags' => TopicTagResource::collection($this->tags),
             'author' => new TopicAuthorResource($this->author),

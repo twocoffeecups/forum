@@ -11,7 +11,6 @@ import report from "./modules/report/report";
 import adminForum from "./modules/admin/forum/forum";
 import adminTopic from "./modules/admin/topic/topic";
 import rejectType from "./modules/admin/topic/reject-type";
-import unapprovedTopic from "./modules/topic/unapproved-topic";
 import rejectedTopic from "./modules/admin/topic/rejected-topic";
 import editTopic from "./modules/topic/edit-topic";
 import forumTopics from "./modules/forum/forum-topics";
@@ -42,7 +41,6 @@ const store = createStore({
         adminForum,
         adminTopic,
         rejectType,
-        unapprovedTopic,
         rejectedTopic,
         editTopic,
         forumTopics,

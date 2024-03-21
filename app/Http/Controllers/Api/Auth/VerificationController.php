@@ -15,25 +15,25 @@ class VerificationController extends Controller
         $user = User::where('id', $id)->first();
 
         if(!$user){
-            return redirect('/');
+            return response()->json(['message' => 'Invalid credentials.'], 404);
         }
 
         if(!hash_equals((string) $id, (string) $user->getKey())){
-            return redirect('/');
+            return response()->json(['message' => 'Hash not equals.'], 403);
         }
 
         if(!hash_equals((string) $hash, sha1($user->getEmailForVerification()))){
-            return redirect('/');
+            return response()->json(['message' => 'Hash not equals.'], 403);
         }
 
         if($user->hasVerifiedEmail()){
-            return redirect('/');
+            return response()->json(['message' => 'Your email has already been confirmed.'], 201);
         }
 
         if($user->markEmailAsVerified()){
-            return redirect('/profile')->with('message', 'Email address has been successfully confirmed!');
+            return response()->json(['message' => 'Email address has been successfully confirmed.'], 200);
         }else{
-            return redirect('/profile')->with('message', 'Error! Email don\'t confirmed.');
+            return response()->json(['message' => 'Error! Email don\'t confirmed.'], 403);
         }
 
     }

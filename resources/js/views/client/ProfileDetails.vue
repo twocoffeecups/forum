@@ -12,8 +12,11 @@
                             <img v-if="!userDetails.avatar" class="img-account-profile rounded-circle mb-2"
                                  src="../../assets/img/default-avatar.png" alt="">
                             <div class="w-100 ms-3">
-                                <h4 class="my-0">{{ userDetails.name ?? userDetails.login }}</h4>
-                                <p class="text-muted">{{ userDetails.email }}</p>
+                                <h4 class="my-1">{{ userDetails.name ?? userDetails.login }}</h4>
+                                <div>
+                                    <p class="text-muted">{{ userDetails.email }}</p>
+                                    <p class="small" v-if="!userDetails.isEmailVerified">Your mail not verified. <a @click.prevent="resendVerifyMail" href="#">Verify?</a></p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -96,8 +99,8 @@
 
                             <!-- Topics -->
                             <div class="tab-pane fade show active" id="pills-topics" role="tabpanel" aria-labelledby="pills-topics-tab" tabindex="0">
-                                <UnapprovedTopic v-if="unapprovedTopic.length!==0" v-for="topic in unapprovedTopic"
-                                                 :topic="topic"/>
+<!--                                <UnapprovedTopic v-if="unapprovedTopic.length!==0" v-for="topic in unapprovedTopic"-->
+<!--                                                 :topic="topic"/>-->
 
                                 <Topic v-if="topics.length!==0" v-for="topic in topics" :topic="topic"/>
 
@@ -182,7 +185,7 @@ export default {
         ...mapGetters({
             userDetails: 'auth/userDetails',
             topics: 'profile/getTopics',
-            unapprovedTopic: 'profile/getUnapprovedTopic',
+            // unapprovedTopic: 'profile/getUnapprovedTopic',
             posts: 'profile/getPosts',
             likes: 'profile/getLikes',
             likedTopics: 'profile/getLikedTopics',
@@ -190,6 +193,12 @@ export default {
             topicBookmarks: 'profile/getTopicBookmarks',
         }),
     },
+
+    methods: {
+        resendVerifyMail(){
+            this.$store.dispatch('auth/resendVerifyMail');
+        }
+    }
 }
 </script>
 

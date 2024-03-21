@@ -1,5 +1,11 @@
 <template>
     <div class="forum-item p-0 mb-0 border-bottom ">
+        <div v-if="topic.status===0" class="row my-0 mx-auto">
+            <div class="alert alert-danger p-0 mx-0 text-sm" role="alert">
+                <span>Эта тема ещё не утверждена модератором!</span>
+            </div>
+        </div>
+
         <div class="d-flex flex-column my-2 flex-md-column flex-lg-row flex-xl-row flex-xxl-row justify-content-between">
             <div class="d-flex flex-column mx-3" style="width: 350px;">
                 <div class="row">

@@ -47,9 +47,9 @@ export default {
                 api.post(`/api/client/topic`, data)
                     .then(response => {
                         if (response.data) {
-                            resolve(response);
                             toast.success(response.data.message ?? "Created.");
-                            router.push({ name:'topic.unapproved', params:{id:response.data.topicId} })
+                            router.push({ name:'topic', params:{id:response.data.topicId} });
+                            resolve(response);
                         } else {
                             reject(response);
                         }

@@ -74,7 +74,7 @@ class Topic extends Model
         return $this->hasMany(TopicView::class, 'topicId', 'id');
     }
 
-    public function numberOfViews(): int
+    public function totalViews(): int
     {
         return (int) $this->views->count();
     }

@@ -15,19 +15,19 @@
                     <h4 class="h6 font-weight-bold">
                         {{ $t('component.childForum.categories') }}
                     </h4>
-                    <span>141</span>
+                    <span>{{ forum.forums }}</span>
                 </div>
                 <div class="d-flex text-start flex-column mx-1">
                     <h4 class="h6 font-weight-bold">
                         {{ $t('component.childForum.posts') }}
                     </h4>
-                    <span>122</span>
+                    <span>{{ forum.posts }}</span>
                 </div>
                 <div class="d-flex text-start flex-column mx-1">
                     <h4 class="h6 font-weight-bold">
                         {{ $t('component.childForum.views') }}
                     </h4>
-                    <span>290</span>
+                    <span>{{ forum.views }}</span>
                 </div>
             </div>
 

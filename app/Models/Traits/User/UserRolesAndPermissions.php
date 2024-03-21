@@ -105,7 +105,7 @@ trait UserRolesAndPermissions
      */
     public function hasPermissionTo($permission): bool
     {
-        return $this->hasPermissionThroughRole($permission) || $this->hasPermission($permission);
+        return (bool) $this->hasPermissionThroughRole($permission) || $this->hasPermission($permission);
     }
 
 }

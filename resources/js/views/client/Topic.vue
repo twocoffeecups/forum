@@ -38,6 +38,18 @@
                     </div>
                     <div class="card-body">
 
+                        <div v-if="topic.status===0" class="container">
+                            <div class="alert alert-info mx-auto mb-3" role="alert">
+                                The topic will appear on the forum after the administrator checks and approves it.
+                            </div>
+
+                            <div v-if="topic.isRejected!==null" class="alert alert-danger mx-auto mb-3" role="alert">
+                                <span>Topic rejected: </span>
+                                <span><b>{{ rejectedReason.reason }}</b></span>
+                                <p class="my-1" v-if="rejectedReason.message">{{ rejectedReason.message }}</p>
+                            </div>
+                        </div>
+
                         <!-- Topic main post -->
                         <TopicMainPost :main-post="topic" :images="images" @report="report"/>
 
@@ -55,7 +67,7 @@
                                     :last-page="paginate.last_page" />
 
                         <!-- Create post form -->
-                        <PostCreationForm v-if="!topic.closeComments" :reply="replyPost" :reply-id="replyPost.id" @cancelReply="cancelReply"/>
+                        <PostCreationForm v-if="!topic.closeComments && topic.status!==0" :reply="replyPost" :reply-id="replyPost.id" @cancelReply="cancelReply"/>
 
                         <!-- Topic footer -->
 <!--                        <TopicFooter v-if="isLoggedIn" :topic-id="this.$route.params.id" />-->

@@ -55,12 +55,11 @@ const routes = [
         }
     },
     {
-        path: '/unapproved-topic/:id',
-        name: 'topic.unapproved',
-        component: () => import('../../views/client/UnapprovedTopic.vue'),
+        path: '/not-found',
+        name: 'error.404',
+        component: () => import('../../views/client/NotFound.vue'),
         meta: {
             layout: Client,
-            middleware: [Middleware.auth],
         }
     },
     {
@@ -96,7 +95,7 @@ const routes = [
 
     // Auth
     {
-        path: '/sign-in',
+        path: '/login',
         name: 'auth.signIn',
         component: () => import('../../views/auth/SignIn.vue'),
         meta: {
@@ -123,7 +122,7 @@ const routes = [
         },
     },
     {
-        path: '/password/reset/:hash',
+        path: '/password/reset/:hash:expires:signature',
         name: 'auth.password.reset',
         component: () => import('../../views/auth/ResetPassword.vue'),
         meta: {
@@ -141,12 +140,33 @@ const routes = [
         },
     },
     {
-        path: '/:catchAll(.*)',
-        name: 'error.404',
-        component: () => import('../../views/auth/404.vue'),
+        path: '/email/verify/:id/:hash',
+        name: 'auth.email.verify',
+        component: () => import('../../views/auth/EmailVerified.vue'),
         meta: {
             layout: Auth,
+            // middleware: [Middleware.guest]
         },
+    },
+    // {
+    //     path: '/:catchAll(.*)',
+    //     name: 'error.404',
+    //     component: () => import('../../views/auth/404.vue'),
+    //     meta: {
+    //         layout: Auth,
+    //     },
+    // },
+    {
+        path: '/login',
+        beforeEnter: () => {
+            window.location.href = '/sign-in';
+        }
+    },
+    {
+        path: '/register',
+        beforeEnter: () => {
+            window.location.href = '/sign-up';
+        }
     },
 ];
 

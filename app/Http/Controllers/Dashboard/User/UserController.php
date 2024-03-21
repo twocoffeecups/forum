@@ -9,6 +9,7 @@ use App\Http\Resources\Dashboard\User\UserResource;
 use App\Mail\Client\User\PasswordMail;
 use App\Mail\Client\User\VerifyMail;
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
@@ -35,8 +36,9 @@ class UserController extends Controller
         $password = Str::random(12);
         $data['password'] = Hash::make($password);
         $user = User::firstOrCreate(['login' => $data['login']], $data);
-        Mail::to($user->email)->send(new VerifyMail($user->id, $user->login, sha1($user->getEmailForVerification())));
+//        Mail::to($user->email)->send(new VerifyMail($user->id, $user->login, sha1($user->getEmailForVerification())));
         Mail::to($user->email)->send(new PasswordMail($password, $user->getEmailForVerification()));
+        event(new Registered($user));
         return response()->json([
             'message' => 'New user register successfully!',
         ], 201);

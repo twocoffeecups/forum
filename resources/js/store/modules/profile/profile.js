@@ -24,9 +24,9 @@ export default {
             return state.topics;
         },
 
-        getUnapprovedTopic(state){
-            return state.unapprovedTopic;
-        },
+        // getUnapprovedTopic(state){
+        //     return state.unapprovedTopic;
+        // },
 
         getPosts(state){
             return state.posts;

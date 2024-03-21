@@ -269,7 +269,7 @@ Route::get('/settings', \App\Http\Controllers\Forum\Settings\SettingController::
 Route::group(['prefix' => 'topic'], function () {
     Route::get('/', [\App\Http\Controllers\Client\Topic\TopicController::class, 'index']);
     Route::group(['prefix' => '{topic}'], function () {
-        Route::get('/', [\App\Http\Controllers\Client\Topic\TopicController::class, 'show']);
+        Route::get('/', \App\Http\Controllers\Client\Topic\ShowController::class)->middleware('show.topic:{topic}');
 //        Route::get('/edit', [\App\Http\Controllers\Client\Topic\TopicController::class, 'edit']);
 //        Route::put('/', \App\Http\Controllers\Client\Topic\UpdateController::class);
         Route::delete('/', [\App\Http\Controllers\Client\Topic\TopicController::class, 'delete']);

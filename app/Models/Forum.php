@@ -58,6 +58,23 @@ class Forum extends Model
         return $this->hasMany(Forum::class, 'parentId', 'id');
     }
 
+    public function totalChildrenForums(): int
+    {
+        return self::allDescendants($this)->count();
+    }
+
+    public function totalTopicsViews(): int
+    {
+        $total = 0;
+        $children = self::allDescendantsAndMe($this);
+        foreach ($children as $child){
+            foreach ($child->topics as $topic){
+                $total += $topic->totalViews();
+            }
+        }
+        return $total;
+    }
+
     public function isCategory(): bool
     {
         return $this->type === 0 && $this->parent === null ;

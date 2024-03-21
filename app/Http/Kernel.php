@@ -75,5 +75,6 @@ class Kernel extends HttpKernel
         'isNotBanList' => \App\Http\Middleware\IsNotBanList::class,
         'canReadAdminDashboard' => \App\Http\Middleware\CanReadAdminDashboard::class,
         'daily.visitors' => \App\Http\Middleware\DailyVisitorsMiddleware::class,
+        'show.topic' => \App\Http\Middleware\ShowTopic::class,
     ];
 }

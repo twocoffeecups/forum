@@ -12,6 +12,7 @@ use App\Models\Forum;
 use App\Models\Tag;
 use App\Models\Topic;
 use App\Models\TopicView;
+use App\Services\AuthService;
 use Illuminate\Http\Request;
 
 class TopicController extends Controller
@@ -34,11 +35,11 @@ class TopicController extends Controller
     {
         // TODO: сделать доступ только автору и админу/модератору
         /** save topic view */
+        $user = AuthService::getAuthorizedUser($request);
         $view = TopicView::saveView($request, $topic);
-        if ($topic->status === 0) {
+        if ($topic->status === 0 && ($topic->userId != $user->id)) {
             return response()->json(['message' => "Topic not found"], 404);
         }
-        //dd($topic->numberOfViews());
         return response()->json(['topic' => new TopicResource($topic)]);
     }
 

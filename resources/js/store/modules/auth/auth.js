@@ -183,6 +183,18 @@ export default {
             });
         },
 
+        resendVerifyMail({dispatch}){
+            return new Promise((resolve, reject) => {
+                api.post('email/resend')
+                    .then(response => {
+                        console.log(response);
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    })
+            });
+        },
+
         logout({dispatch, commit}) {
             return new Promise((resolve, reject) => {
                 axios.post('/logout')

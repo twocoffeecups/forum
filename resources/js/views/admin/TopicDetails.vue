@@ -84,10 +84,7 @@
                                             <b>Show</b>
                                         </div>
                                         <div class="col-7">
-                                            <a v-if="topic.status===0" :href="`/unapproved-topic/${this.$route.params.id}`" class="btn btn-primary mx-2">
-                                                Show
-                                            </a>
-                                            <a v-if="topic.status!==0" :href="`/topic/${this.$route.params.id}`" class="btn btn-primary mx-2">
+                                            <a :href="`/topic/${this.$route.params.id}`" class="btn btn-primary mx-2">
                                                 Show
                                             </a>
                                         </div>

@@ -65,8 +65,8 @@ export default {
                         }
                     })
                     .catch(error => {
-                        if(error.response.status===404){
-                            router.push({ name:'main' });
+                        if(error.response.status==404){
+                            router.push({ name:'error.404' });
                         }
                         reject(error);
                     })
