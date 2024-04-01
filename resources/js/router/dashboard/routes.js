@@ -11,6 +11,11 @@ const routes = [
                 component: () => import('../../views/admin/Users.vue'),
             },
             {
+                path: 'ban-list',
+                name: 'admin.banList',
+                component: () => import('../../views/admin/BanList.vue'),
+            },
+            {
                 path: 'notifications',
                 name: 'admin.notifications',
                 component: () => import('../../views/admin/Notifications.vue'),

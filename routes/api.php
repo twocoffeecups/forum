@@ -117,6 +117,13 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum']], function (
     });
 
     /**
+     * Ban list
+     */
+    Route::group(['prefix' => 'ban-list'], function () {
+        Route::post('/', \App\Http\Controllers\Dashboard\BanList\IndexController::class);
+    });
+
+    /**
      * Roles
      */
     Route::group(['prefix' => 'role'], function () {

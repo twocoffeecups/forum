@@ -25,6 +25,7 @@ import permissions from "./modules/admin/permission/permission";
 import role from "./modules/admin/role/role";
 import tag from "./modules/admin/tag/tag";
 import adminUsers from "./modules/admin/user/user";
+import banList from "./modules/admin/user/ban-list";
 
 const store = createStore({
     //namespaced: true,
