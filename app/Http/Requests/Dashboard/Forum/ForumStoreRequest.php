@@ -28,6 +28,7 @@ class ForumStoreRequest extends FormRequest
             'parentId' => '',
             'name' => 'required|string',
             'description' => 'nullable|string',
+            'status' => 'nullable',
         ];
     }
 }

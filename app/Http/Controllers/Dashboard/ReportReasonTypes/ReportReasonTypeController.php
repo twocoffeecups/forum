@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Dashboard\Report;
+namespace App\Http\Controllers\Dashboard\ReportReasonTypes;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Dashboard\Paginate\PaginateRequest;

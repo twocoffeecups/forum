@@ -12,7 +12,7 @@ const routes = [
             },
             {
                 path: 'ban-list',
-                name: 'admin.banList',
+                name: 'admin.users.banList',
                 component: () => import('../../views/admin/BanList.vue'),
             },
             {

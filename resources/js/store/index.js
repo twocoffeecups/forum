@@ -56,6 +56,7 @@ const store = createStore({
         role,
         tag,
         adminUsers,
+        banList,
     },
 });
 

@@ -22,7 +22,7 @@
                                 </select>
                                 <span class="form-text">entries</span>
                             </div>
-                            <div class="d-flex mx-2 my-2">
+                            <div v-if="banList.length!==0" class="d-flex mx-2 my-2">
                                 <label class="form-text mx-1">Search: </label>
                                 <input type="search" class="form-control" id="search" style="max-height: 20px;"/>
                             </div>
@@ -74,7 +74,7 @@
                             </tbody>
                         </table>
 
-                        <div v-if="banList===0" class="text-center mx-1">
+                        <div v-if="!banList || banList.length===0" class="text-center mx-1">
                             <h4>You haven't users.</h4>
                         </div>
 

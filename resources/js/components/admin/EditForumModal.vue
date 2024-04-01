@@ -77,20 +77,11 @@ export default {
     methods: {
         async updateForum() {
             this.v$.$validate();
-            if (!this.v$.$error) {
-                await axios.patch(`/api/admin/forum/${this.id}`, {
-                    name: this.name,
-                    description: this.description
-                })
-                    .then(res => {
-                        console.log(res)
-                    })
-                    .catch(error => {
-                        console.log(error);
-                    })
-            } else {
-                console.log('error');
-            }
+            const data = new FormData();
+            data.append('name', this.name);
+            data.append('description', this.description)
+            data.append('_method', 'patch');
+            this.$store.dispatch('adminForum/updateForumContent', [this.id, data]);
         }
     }
 }

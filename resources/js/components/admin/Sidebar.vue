@@ -92,6 +92,11 @@
                         <i class="fas fa-users"></i> <span class="ms-1 d-sm-inline">Users</span>
                     </router-link>
                 </li>
+                <li class="nav-item w-100" data-bs-dismiss="offcanvas">
+                    <router-link :to="{ name:'admin.users.banList' }" class="nav-link sidebar_nav_link align-middle px-0">
+                        <i class="fas fa-users"></i> <span class="ms-1 d-sm-inline">Ban list</span>
+                    </router-link>
+                </li>
 
                 <!-- Reports -->
                 <h5 class="text-muted mt-3 mb-2">Reports</h5>

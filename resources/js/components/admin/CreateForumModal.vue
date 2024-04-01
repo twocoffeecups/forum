@@ -56,6 +56,15 @@
                         </div>
                     </div>
 
+                    <div class="mb-3 form-group">
+                        <div class="form-check">
+                            <input v-model="status" class="form-check-input" type="checkbox" id="status">
+                            <label class="form-check-label" for="status">
+                                Published
+                            </label>
+                        </div>
+                    </div>
+
 
                 </div>
                 <div class="modal-footer">
@@ -102,6 +111,7 @@ export default {
             isChild: false,
             description: null,
             forumType: 0,
+            status: false,
 
             isSelected: null,
             showCategory: null,
@@ -126,6 +136,7 @@ export default {
                 data.append('type', this.forumType);
                 data.append('name', this.name);
                 data.append('description', this.description);
+                data.append('status', this.status);
                 this.$store.dispatch('adminForum/createForum', data);
                 this.name = null;
                 this.description = null;

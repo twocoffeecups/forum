@@ -13,6 +13,12 @@ class Tag extends Model
     protected $guarded = false;
     protected $table = 'tags';
 
+    protected $fillable = [
+        'name',
+        'status',
+        'description',
+    ];
+
     public function author()
     {
         return $this->belongsTo(User::class, 'authorId', 'id');

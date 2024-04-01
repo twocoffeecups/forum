@@ -28,73 +28,73 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum']], function (
      * Forums
      */
     Route::group(['prefix' => 'forum'], function () {
-        Route::post('/all', [\App\Http\Controllers\Dashboard\Forum\ForumController::class, 'index']);
-        Route::post('/store', [\App\Http\Controllers\Dashboard\Forum\ForumController::class, 'store'])->middleware('permissions:can_create_forum');
-        Route::get('/{forum}', [\App\Http\Controllers\Dashboard\Forum\ForumController::class, 'show']);
-        Route::patch('/{forum}', [\App\Http\Controllers\Dashboard\Forum\ForumController::class, 'update'])->middleware('permissions:can_create_forum');
-        Route::delete('/{forum}', [\App\Http\Controllers\Dashboard\Forum\ForumController::class, 'delete'])->middleware('permissions:can_delete_forum');
-        Route::patch('/{forum}/change-status', [\App\Http\Controllers\Dashboard\Forum\ForumController::class, 'status'])->middleware('permissions:can_update_forum');
-        Route::patch('/{forum}/change-parent-forum', [\App\Http\Controllers\Dashboard\Forum\ForumController::class, 'changeParentForum'])->middleware('permissions:can_update_forum');
-        Route::patch('/{forum}/change-type', [\App\Http\Controllers\Dashboard\Forum\ForumController::class, 'changeForumType'])->middleware('permissions:can_update_forum');
-        Route::get('/forum-tree', [\App\Http\Controllers\Dashboard\Forum\ForumController::class, 'forumFormTree']);
+        Route::post('/all', \App\Http\Controllers\Dashboard\Forum\IndexController::class);
+        Route::post('/store', \App\Http\Controllers\Dashboard\Forum\StoreController::class)->middleware('permissions:can_create_forum');
+        Route::get('/{forum}', \App\Http\Controllers\Dashboard\Forum\ShowController::class);
+        Route::patch('/{forum}', \App\Http\Controllers\Dashboard\Forum\UpdateController::class)->middleware('permissions:can_create_forum');
+        Route::delete('/{forum}', \App\Http\Controllers\Dashboard\Forum\DeleteController::class)->middleware('permissions:can_delete_forum');
+        Route::patch('/{forum}/change-status', \App\Http\Controllers\Dashboard\Forum\ChangeStatusController::class)->middleware('permissions:can_update_forum');
+        Route::patch('/{forum}/change-parent-forum', \App\Http\Controllers\Dashboard\Forum\ChangePagerForumController::class)->middleware('permissions:can_update_forum');
+        Route::patch('/{forum}/change-type', \App\Http\Controllers\Dashboard\Forum\ChangeTypeController::class)->middleware('permissions:can_update_forum');
+        Route::get('/forum-tree', \App\Http\Controllers\Dashboard\Forum\GetFormResourceController::class);
     });
 
     /**
      * Tags
      */
     Route::group(['prefix' => 'tag'], function () {
-        Route::post('/', [\App\Http\Controllers\Dashboard\Tag\TagController::class, 'index']);
-        Route::post('/store', [\App\Http\Controllers\Dashboard\Tag\TagController::class, 'store'])
+        Route::post('/', \App\Http\Controllers\Dashboard\Tag\IndexController::class);
+        Route::post('/store', \App\Http\Controllers\Dashboard\Tag\StoreController::class)
             ->middleware('permissions:can_create_tag');
-        Route::get('/{tag}', [\App\Http\Controllers\Dashboard\Tag\TagController::class, 'show']);
-        Route::patch('/{tag}', [\App\Http\Controllers\Dashboard\Tag\TagController::class, 'update'])->middleware('permissions:can_update-tag');
-        Route::delete('/{tag}', [\App\Http\Controllers\Dashboard\Tag\TagController::class, 'delete'])->middleware('permissions:can_delete_tag');
-        Route::patch('/{tag}/status', [\App\Http\Controllers\Dashboard\Tag\TagController::class, 'status'])->middleware('permissions:can_update_tag');
+        Route::get('/{tag}', \App\Http\Controllers\Dashboard\Tag\ShowController::class);
+        Route::patch('/{tag}', \App\Http\Controllers\Dashboard\Tag\UpdateController::class)->middleware('permissions:can_update_tag');
+        Route::delete('/{tag}', \App\Http\Controllers\Dashboard\Tag\DeleteController::class)->middleware('permissions:can_delete_tag');
+        Route::patch('/{tag}/status', \App\Http\Controllers\Dashboard\Tag\ChangeStatusController::class)->middleware('permissions:can_update_tag');
     });
 
     /**
      * Topics
      */
     Route::group(['prefix' => 'topic'], function () {
-        Route::post('/', [\App\Http\Controllers\Dashboard\Topic\TopicController::class, 'index']);
-        Route::get('reject-types', [\App\Http\Controllers\Dashboard\Topic\TopicController::class, 'getRejectTypes']);
-        Route::post('/store', [\App\Http\Controllers\Dashboard\Topic\TopicController::class, 'store'])->middleware('permissions:can_create_topic');;
-        Route::get('/{topic}', [\App\Http\Controllers\Dashboard\Topic\TopicController::class, 'show']);
-        Route::patch('/{topic}/resolve', [\App\Http\Controllers\Dashboard\Topic\TopicController::class, 'resolve'])->middleware('permissions:can_resolve_topic');
-        Route::post('/{topic}/reject', [\App\Http\Controllers\Dashboard\Topic\TopicController::class, 'reject'])->middleware('permissions:can_reject_topic');
-        Route::delete('/{topic}', [\App\Http\Controllers\Dashboard\Topic\TopicController::class, 'delete'])->middleware('permissions:can_delete_topic');
+        Route::post('/', \App\Http\Controllers\Dashboard\Topic\IndexController::class);
+        Route::get('reject-types', \App\Http\Controllers\Dashboard\Topic\GetRejectTypesController::class);
+        Route::post('/store', \App\Http\Controllers\Dashboard\Topic\StoreController::class)->middleware('permissions:can_create_topic');;
+        Route::get('/{topic}', \App\Http\Controllers\Dashboard\Topic\ShowController::class);
+        Route::patch('/{topic}/resolve', \App\Http\Controllers\Dashboard\Topic\ResolveController::class)->middleware('permissions:can_resolve_topic');
+        Route::post('/{topic}/reject', \App\Http\Controllers\Dashboard\Topic\RejectController::class)->middleware('permissions:can_reject_topic');
+        Route::delete('/{topic}', \App\Http\Controllers\Dashboard\Topic\DeleteController::class)->middleware('permissions:can_delete_topic');
     });
-    Route::post('/rejected-topics', [\App\Http\Controllers\Dashboard\Topic\TopicController::class, 'rejectedTopic']);
+    Route::post('/rejected-topics', \App\Http\Controllers\Dashboard\Topic\GetRejectedTopicController::class);
 
 
     Route::group(['prefix' => 'topic-reject-type'], function () {
-        Route::post('/', [\App\Http\Controllers\Dashboard\TopicRejectType\TopicRejectTypeController::class, 'index']);
-        Route::post('/store', [\App\Http\Controllers\Dashboard\TopicRejectType\TopicRejectTypeController::class, 'store'])->middleware('permissions:can_create_topic_reject_type');;
-        Route::get('/{rejectType}', [\App\Http\Controllers\Dashboard\TopicRejectType\TopicRejectTypeController::class, 'show']);
-        Route::post('/{rejectType}', [\App\Http\Controllers\Dashboard\TopicRejectType\TopicRejectTypeController::class, 'update'])->middleware('permissions:can_create_topic_reject_type');;
-        Route::delete('/{rejectType}', [\App\Http\Controllers\Dashboard\TopicRejectType\TopicRejectTypeController::class, 'delete'])->middleware('permissions:can_delete_topic_reject_type');;
-        Route::patch('/{rejectType}/change-status', [\App\Http\Controllers\Dashboard\TopicRejectType\TopicRejectTypeController::class, 'status'])->middleware('permissions:can_update_topic_reject_type');;
+        Route::post('/', \App\Http\Controllers\Dashboard\TopicRejectType\IndexController::class);
+        Route::post('/store', \App\Http\Controllers\Dashboard\TopicRejectType\StoreController::class)->middleware('permissions:can_create_topic_reject_type');;
+        Route::get('/{rejectType}', \App\Http\Controllers\Dashboard\TopicRejectType\ShowController::class);
+        Route::post('/{rejectType}', \App\Http\Controllers\Dashboard\TopicRejectType\UpdateController::class)->middleware('permissions:can_create_topic_reject_type');;
+        Route::delete('/{rejectType}', \App\Http\Controllers\Dashboard\TopicRejectType\DeleteController::class)->middleware('permissions:can_delete_topic_reject_type');;
+        Route::patch('/{rejectType}/change-status', \App\Http\Controllers\Dashboard\TopicRejectType\ChangeStatusController::class)->middleware('permissions:can_update_topic_reject_type');;
     });
 
     /**
      * Report reason types
      */
     Route::group(['prefix' => 'report-reason-type'], function () {
-        Route::post('/', [\App\Http\Controllers\Dashboard\Report\ReportReasonTypeController::class, 'index']);
-        Route::get('/for-form', [\App\Http\Controllers\Dashboard\Report\ReportReasonTypeController::class, 'allForForm']);
-        Route::post('/store', [\App\Http\Controllers\Dashboard\Report\ReportReasonTypeController::class, 'store'])->middleware('permissions:can_create_report_reason_type');
-        Route::get('/{reportReason}', [\App\Http\Controllers\Dashboard\Report\ReportReasonTypeController::class, 'show']);
-        Route::patch('/{reportReason}', [\App\Http\Controllers\Dashboard\Report\ReportReasonTypeController::class, 'update'])->middleware('permissions:can_update_report_reason_type');
-        Route::delete('/{reportReason}', [\App\Http\Controllers\Dashboard\Report\ReportReasonTypeController::class, 'delete'])->middleware('permissions:can_delete_report_reason_type');
-        Route::patch('/{reportReason}/change-status', [\App\Http\Controllers\Dashboard\Report\ReportReasonTypeController::class, 'status'])->middleware('permissions:can_update_report_reason_type');
+        Route::post('/', [\App\Http\Controllers\Dashboard\ReportReasonTypes\ReportReasonTypeController::class, 'index']);
+        Route::get('/for-form', [\App\Http\Controllers\Dashboard\ReportReasonTypes\ReportReasonTypeController::class, 'allForForm']);
+        Route::post('/store', [\App\Http\Controllers\Dashboard\ReportReasonTypes\ReportReasonTypeController::class, 'store'])->middleware('permissions:can_create_report_reason_type');
+        Route::get('/{reportReason}', [\App\Http\Controllers\Dashboard\ReportReasonTypes\ReportReasonTypeController::class, 'show']);
+        Route::patch('/{reportReason}', [\App\Http\Controllers\Dashboard\ReportReasonTypes\ReportReasonTypeController::class, 'update'])->middleware('permissions:can_update_report_reason_type');
+        Route::delete('/{reportReason}', [\App\Http\Controllers\Dashboard\ReportReasonTypes\ReportReasonTypeController::class, 'delete'])->middleware('permissions:can_delete_report_reason_type');
+        Route::patch('/{reportReason}/change-status', [\App\Http\Controllers\Dashboard\ReportReasonTypes\ReportReasonTypeController::class, 'status'])->middleware('permissions:can_update_report_reason_type');
     });
 
     /**
      * Reports
      */
     Route::group(['prefix' => 'report'], function () {
-        Route::post('/', [\App\Http\Controllers\Dashboard\Report\ReportController::class, 'index']);
-        Route::get('/{report}', [\App\Http\Controllers\Dashboard\Report\ReportController::class, 'show']);
+        Route::post('/', \App\Http\Controllers\Dashboard\Report\IndexController::class);
+        Route::get('/{report}', \App\Http\Controllers\Dashboard\Report\ShowController::class);
         Route::post('/{report}/reject', \App\Http\Controllers\Dashboard\Report\ReportRejectController::class)->middleware('permissions:can_reject_report');
         Route::post('/{report}/processing', \App\Http\Controllers\Dashboard\Report\ReportProcessingController::class)->middleware('permissions:can_process_report');
     });
