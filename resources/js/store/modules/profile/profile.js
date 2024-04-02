@@ -24,10 +24,6 @@ export default {
             return state.topics;
         },
 
-        // getUnapprovedTopic(state){
-        //     return state.unapprovedTopic;
-        // },
-
         getPosts(state){
             return state.posts;
         },
@@ -127,20 +123,21 @@ export default {
             });
         },
 
-        updateAvatar({dispatch}, avatar) {
+        updateAvatar({dispatch, commit}, avatar) {
             return new Promise((resolve, reject) => {
                 let data = new FormData();
                 data.append('avatar', avatar);
                 data.append('_method', 'patch');
                 api.post(`/api/client/profile/update-avatar`, data)
-                    .then(res => {
-                        if (res.data) {
-                            toast.success(res.data.message);
-                            resolve(res);
+                    .then(response => {
+                        if (response.data) {
+                            toast.success(response.data.message);
+                            console.log("AVATAR: ", response.data.avatar);
+                            commit('auth/setAvatar', response.data.avatar, {root: true});
+                            resolve(response);
                         } else {
-                            reject(res);
+                            reject(response);
                         }
-
                     })
                     .catch(error => {
                         toast.error(error.response.data.message ?? 'Error!');

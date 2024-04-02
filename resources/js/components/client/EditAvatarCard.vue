@@ -27,12 +27,19 @@
 </template>
 
 <script>
+import {mapGetters} from "vuex";
+
 export default {
     name: "EditAvatarCard",
 
+    computed:{
+        ...mapGetters({
+           defaultAvatar: "auth/avatar",
+        }),
+    },
+
     data() {
         return {
-            defaultAvatar: this.$store.getters['auth/avatar'],
             newAvatar: null,
             isFileUpload: null,
             userId: 1
@@ -52,7 +59,7 @@ export default {
             const file = new FileReader();
             file.readAsDataURL(this.newAvatar);
             file.onload = () => {
-                this.defaultAvatar = file.result;
+                this.defaultAvatar = this.$store.commit('auth/setAvatar', file.result);
             };
             this.isFileUpload = 1;
         },
@@ -91,8 +98,4 @@ export default {
     font-size: 20px;
     padding: 10px;
 }
-
-/*.overlay:hover {*/
-/*  opacity: 1;*/
-/*}*/
 </style>

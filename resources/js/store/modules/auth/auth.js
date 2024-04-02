@@ -239,6 +239,9 @@ export default {
         setUserDetails(state, payload) {
             state.userDetails = payload;
         },
-    },
 
+        setAvatar(state, payload){
+            state.userDetails.avatar = payload;
+        },
+    },
 }

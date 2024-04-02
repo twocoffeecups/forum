@@ -65,14 +65,7 @@
 
 export default {
     name: "ForumItem",
-
     props: ['forum'],
-
-    data() {
-        return {
-            forum: this.forum,
-        }
-    },
 
 }
 </script>

@@ -102,11 +102,6 @@ export default {
     name: "Topic",
     components: {ReportForm, PostCreationForm, Post, Sidebar, TopicFooter, Pagination, TopicMainPost},
 
-    mounted() {
-        // this.$store.dispatch('topic/getTopic', this.$route.params.id);
-        // this.$store.dispatch('topic/getTopicPosts', this.$route.params.id);
-    },
-
     computed: {
         ...mapGetters({
             topic: 'topic/getTopic',
@@ -131,10 +126,7 @@ export default {
             immediate: true,
             handler() {
                 this.$store.dispatch('topic/getTopic', this.$route.params.id);
-                console.log("TOPIC ID:", this.$route.params.id);
-                console.log("CLOSE COMMENTS:", this.topic.closeComments);
                 this.$store.dispatch('topic/getTopicPosts', [this.$route.params.id, 1]);
-
             },
         },
     },
