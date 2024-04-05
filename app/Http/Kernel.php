@@ -76,5 +76,6 @@ class Kernel extends HttpKernel
         'canReadAdminDashboard' => \App\Http\Middleware\CanReadAdminDashboard::class,
         'daily.visitors' => \App\Http\Middleware\DailyVisitorsMiddleware::class,
         'show.topic' => \App\Http\Middleware\ShowTopic::class,
+        'private.topic' => \App\Http\Middleware\PrivateTopic::class,
     ];
 }

@@ -20,8 +20,13 @@ trait CreateTopic
         DB::beginTransaction();
         $topic = $this->storeTopic($user, $data);
         // tags
+//        dd($data, $topic);
         if (!empty($data['tags'])) {
             $topic->tags()->toggle($data['tags']);
+        }
+        // if private add users
+        if(!empty($data['selectedUsers']) && $topic->private!=0){
+            $topic->accessedUsers()->toggle($data['selectedUsers']);
         }
         // images
         if (!empty($data['images'])) {
@@ -39,6 +44,7 @@ trait CreateTopic
             'userId' => $user->id,
             'title' => $data['title'],
             'content' => $data['content'],
+            'private' => $data['private'] ?? 0,
             'type' => $data['type'] ?? 0,
             'closeComments' => !empty($data['closeComments']) ? (int) $data['closeComments'] : 0,
             'status' => !empty($data['status']) ? (int) $data['status'] : 0,

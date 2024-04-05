@@ -94,6 +94,7 @@
                                     <th scope="col">Author</th>
                                     <th scope="col">Posts</th>
                                     <th scope="col">Status</th>
+                                    <th scope="col">Attributes</th>
                                     <th scope="col">Created AT</th>
                                     <th scope="col">Actions</th>
                                 </tr>
@@ -106,7 +107,13 @@
                                     <td>{{ topic.author }}</td>
                                     <td>{{ topic.posts }}</td>
                                     <td>
-                                        <span>{{ topic.status ? 'Published' : 'Unpublished' }}</span>
+                                        <span v-if="topic.status===1" class="badge bg-primary">Published</span>
+                                        <span v-if="topic.status!==1" class="badge bg-secondary">Unpublished</span>
+                                    </td>
+                                    <td>
+                                        <span v-if="topic.private" class="badge bg-danger">Private</span>
+                                        <span v-if="topic.commentsClosed" class="badge bg-primary">Comments Closed</span>
+                                        <span v-if="topic.administrationTopic" class="badge bg-danger">Administration Topic</span>
                                     </td>
                                     <td>{{ topic.created_at }}</td>
                                     <td>

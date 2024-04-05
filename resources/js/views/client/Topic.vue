@@ -38,7 +38,25 @@
                     </div>
                     <div class="card-body">
 
-                        <div v-if="topic.status===0" class="container">
+                        <div v-if="topic.private===true" class="container-fluid">
+                            <div class="alert alert-danger mx-auto mb-3" role="alert">
+                                <div class="mb-3">
+                                    <h4>This is a private topic.</h4>
+                                </div>
+
+                                <div v-if="topic.accessedUsers.length!==0">
+                                    <p>
+                                        Users where has read this topic:
+                                        <b class="mx-1">{{ topic.author.name }}</b>
+                                        <b class="mx-1" v-for="user in topic.accessedUsers">{{ user.name }}</b>
+                                    </p>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                        <div v-if="topic.status===0" class="container-fluid">
                             <div class="alert alert-info mx-auto mb-3" role="alert">
                                 The topic will appear on the forum after the administrator checks and approves it.
                             </div>

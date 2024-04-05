@@ -42,9 +42,21 @@
                                     </div>
                                     <div class="col-7">
                                         <div class="flex-row">
-                                <span v-if="topicTags!==0" v-for="tag in topicTags" class="badge bg-primary m-1 p-1">
-                                    {{ tag.name }}
-                                </span>
+                                            <span v-if="topicTags!==0" v-for="tag in topicTags" class="badge bg-primary m-1 p-1">
+                                                {{ tag.name }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row align-items-start mb-2">
+                                    <div class="col-5">
+                                        <b>Attributes</b>
+                                    </div>
+                                    <div class="col-7">
+                                        <div class="flex-row">
+                                            <span v-if="topic.private" class="badge bg-danger">Private</span>
+                                            <span v-if="topic.commentsClosed" class="badge bg-primary">Comments Closed</span>
+                                            <span v-if="topic.administrationTopic" class="badge bg-danger">Administration Topic</span>
                                         </div>
                                     </div>
                                 </div>

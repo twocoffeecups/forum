@@ -16,7 +16,11 @@ class ActiveTopicsController extends Controller
      */
     public function __invoke(): \Illuminate\Http\JsonResponse
     {
-        $topics = Topic::with('posts')->where('status', '=', '1')->orderBy('created_at', 'desc')->limit(4)->get();
+        $topics = Topic::with('posts')
+            ->where('status', '=', '1')
+            ->where('private', '!=', 1)
+            ->orderBy('created_at', 'desc')
+            ->limit(4)->get();
         return response()->json(['topics' => ActiveTopicResource::collection($topics)]);
     }
 

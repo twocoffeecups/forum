@@ -141,11 +141,6 @@ export default {
         }),
     },
 
-    // mounted() {
-    //     this.$store.dispatch('forum/getForum', this.$route.params.id);
-    //     this.$store.dispatch('forumTopics/getTopics', this.$route.params.id);
-    // },
-
     watch: {
         '$route.params.id': {
             immediate: true,

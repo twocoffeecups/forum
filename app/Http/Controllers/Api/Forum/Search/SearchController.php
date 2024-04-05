@@ -8,6 +8,7 @@ use App\Http\Resources\Forum\Search\PostSearchResource;
 use App\Http\Resources\Forum\Search\TopicSearchResource;
 use App\Models\Post;
 use App\Models\Topic;
+use Illuminate\Support\Facades\DB;
 
 
 class SearchController extends Controller
@@ -27,9 +28,20 @@ class SearchController extends Controller
         $topics = Topic::where(function($query) use($data) {
             $query->where('title', 'LIKE', "%{$data['search']}%")
                 ->orWhere('content', 'LIKE', "%{$data['search']}%");
-        })->where('status', '=', 1)->get();
+        })
+            ->where('status', '=', 1)
+            ->where('private', '!=', 1)
+            ->get();
         // posts
-        $posts = Post::where('message', 'LIKE', "%{$data['search']}%")->get();
+        $posts = Post::where('message', 'LIKE', "%{$data['search']}%")
+            ->whereExists(function ($query) {
+                $query
+                    ->select(DB::raw('*'))
+                    ->from('topics')
+                    ->whereColumn('topics.id', 'posts.topicId')
+                    ->where('topics.private', '!=', 1);
+            })
+            ->get();
         $result = TopicSearchResource::collection($topics)
             ->concat(PostSearchResource::collection($posts));
 

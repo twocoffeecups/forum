@@ -65,6 +65,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum']], function (
      * Topics
      */
     Route::group(['prefix' => 'topic'], function () {
+        /**
+         * Get user for create topic form
+         */
+        Route::get('/get-users', \App\Http\Controllers\Api\Dashboard\Topic\GetUsersController::class);
         Route::post('/', \App\Http\Controllers\Api\Dashboard\Topic\IndexController::class);
         Route::get('reject-types', \App\Http\Controllers\Api\Dashboard\Topic\GetRejectTypesController::class);
         Route::post('/store', \App\Http\Controllers\Api\Dashboard\Topic\StoreController::class)
@@ -76,8 +80,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum']], function (
             ->middleware('permissions:can_reject_topic');
         Route::delete('/{topic}', \App\Http\Controllers\Api\Dashboard\Topic\DeleteController::class)
             ->middleware('permissions:can_delete_topic');
+
     });
     Route::post('/rejected-topics', \App\Http\Controllers\Api\Dashboard\Topic\GetRejectedTopicController::class);
+
 
 
     Route::group(['prefix' => 'topic-reject-type'], function () {
@@ -285,11 +291,11 @@ Route::group(['prefix' => 'client'], function () {
         Route::post('/', \App\Http\Controllers\Api\Client\Report\SendController::class)->middleware('auth:sanctum');
     });
     // user profile
-//    Route::group(['prefix' => 'user-profile/{user}'], function () {
-//        Route::get('/', [\App\Http\Controllers\Api\Client\UserProfile\UserProfileController::class, 'index']);
-//        Route::post('/topics', [\App\Http\Controllers\Api\Client\UserProfile\UserProfileController::class, 'getUserTopics']);
-//        Route::post('/posts', [\App\Http\Controllers\Api\Client\UserProfile\UserProfileController::class, 'getUserPosts']);
-//    });
+    Route::group(['prefix' => 'user-profile/{user}'], function () {
+        Route::get('/', \App\Http\Controllers\Api\Client\UserProfile\IndexController::class);
+        Route::post('/topics', \App\Http\Controllers\Api\Client\UserProfile\GetTopicsController::class);
+        Route::post('/posts', \App\Http\Controllers\Api\Client\UserProfile\GetPostsController::class);
+    });
 });
 
 /**
@@ -315,9 +321,9 @@ Route::get('/settings', \App\Http\Controllers\Api\Forum\Settings\SettingControll
  */
 Route::group(['prefix' => 'topic'], function () {
     Route::get('/', [\App\Http\Controllers\Api\Forum\Topic\IndexController::class, 'index']);
-    Route::group(['prefix' => '{topic}'], function () {
-        Route::get('/', \App\Http\Controllers\Api\Forum\Topic\GetController::class)
-            ->middleware('show.topic:{topic}');
+    Route::group(['prefix' => '{topic}', 'middleware' => ['show.topic:{topic}','private.topic']], function () {
+        Route::get('/', \App\Http\Controllers\Api\Forum\Topic\GetController::class);
+//            ->middleware('show.topic:{topic}');
         Route::group(['prefix' => 'posts'], function () {
             Route::post('/', \App\Http\Controllers\Api\Forum\Topic\GetPostsController::class);
         });

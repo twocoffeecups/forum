@@ -95,6 +95,31 @@
                                     </div>
                                 </div>
 
+                                <!-- Private -->
+                                <div class="mb-3 row">
+                                    <label for="private" class="col-sm-2 col-form-label">Private</label>
+                                    <div class="col">
+                                        <input v-model="topic.private" class="form-check-input mt-2" type="checkbox" id="private">
+                                    </div>
+                                </div>
+
+                                <!-- Users -->
+                                <div v-if="topic.private" class="mb-3 row">
+                                    <label for="users" class="col-sm-2 col-form-label">Add users</label>
+                                    <div class="col">
+                                        <VueMultiselect
+                                            id="users"
+                                            v-model="topic.selectedUsers"
+                                            :options="users"
+                                            :multiple="true"
+                                            :close-on-select="false"
+                                            placeholder="Add users."
+                                            label="name"
+                                            track-by="name"
+                                        />
+                                    </div>
+                                </div>
+
                                 <!-- Dropzone -->
                                 <div class="mb-3 row">
                                     <label for="images" class="col-sm-2 col-form-label">Images</label>
@@ -141,6 +166,7 @@ import CategoryTree from "../../components/client/CategoryTree.vue";
 import Dropzone from "dropzone";
 import VueMultiselect from "vue-multiselect";
 import "vue-multiselect/dist/vue-multiselect.css";
+import api from "../../api/api";
 
 export default {
     name: "ForumDetail",
@@ -155,6 +181,7 @@ export default {
 
     mounted() {
         this.$store.dispatch('createTopic/getTopicFormResources');
+        this.getUsers();
         this.getTags();
         this.dropzone = new Dropzone(this.$refs.dropzone, {
             url: '/',
@@ -193,8 +220,11 @@ export default {
                 type: 1,
                 closeComments: false,
                 status: false,
+                private: false,
+                selectedUsers: [],
             },
 
+            users: [],
             title: null,
             content: null,
             selectCategory: [],
@@ -249,8 +279,12 @@ export default {
             tags.forEach((tag) => {
                 data.append('tags[]', tag.value)
             })
+            this.topic.selectedUsers.forEach((user) => {
+                data.append('selectedUsers[]', user.value)
+            })
             this.topic.closeComments===true ? data.append('closeComments', 1) : data.append('closeComments', 0)
-            this.topic.status===true ? data.append('status', 1) : data.append('status', 0)
+            this.topic.status===true ? data.append('status', 1) : data.append('status', 0);
+            this.topic.private===true ? data.append('private', 1) : data.append('private', 0)
             this.$store.dispatch('adminTopic/createTopic', data);
         },
 
@@ -260,6 +294,16 @@ export default {
                     if (response.data) {
                         this.tags = response.data.tags;
                     }
+                })
+        },
+
+        getUsers(){
+            api.get('/api/admin/topic/get-users')
+                .then(response => {
+                    this.users = response.data.users
+                })
+                .catch(error => {
+                    console.log(error)
                 })
         },
     }

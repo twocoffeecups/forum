@@ -34,6 +34,8 @@ class TopicResource extends JsonResource
             'files' => $this->files,
             'posts' => PostResource::collection($this->posts),
             'isRejected' => new TopicRejectedReasonResource($this->isRejected),
+            'private' => $this->isPrivate(),
+            'accessedUsers' => AccessedUsersResource::collection($this->accessedUsers),
             'created_at' => $this->created_at->format('Y.d.m'),
             'updated_at' => Carbon::parse($this->updated_at)->diffForHumans(),
         ];

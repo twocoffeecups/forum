@@ -3,16 +3,16 @@
 namespace App\Http\Controllers\Api\Forum\Forum;
 
 use App\Http\Controllers\Controller;
-use App\Http\Filters\Forum\TopicFilter;
 use App\Http\Requests\Client\Topic\FilterRequest;
 use App\Http\Resources\Forum\Forum\TopicResource;
 use App\Models\Forum;
-use App\Models\Settings;
-use App\Models\Topic;
+use App\Services\Forum\Topic\GetFilteredTopics;
 
 
 class GetTopicController extends Controller
 {
+    use GetFilteredTopics;
+
     /**
      * Get forum topics
      * @param FilterRequest $request
@@ -22,11 +22,8 @@ class GetTopicController extends Controller
      */
     public function __invoke(FilterRequest $request, Forum $forum)
     {
-        $topicOnPage = Settings::getTopicsOnPageValue();
         $filters = $request->validated();
-        $filtered = app()->make(TopicFilter::class, ['queryParams' => array_filter($filters)]);
-        $topics = Topic::filter($filtered)->where('forumId', '=', $forum->id)->where('status', '=', 1)->where('type', '!=', '1')->paginate($topicOnPage, ['*'], 'page', $filters['page']);
+        $topics = $this->getTopics($filters, $forum->id, $request);
         return TopicResource::collection($topics);
     }
-
 }

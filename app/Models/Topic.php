@@ -21,6 +21,7 @@ class Topic extends Model
         'userId',
         'type',
         'status',
+        'private',
         'closeComments'
     ];
 
@@ -84,5 +85,24 @@ class Topic extends Model
         return self::all()->where('status', '=', '1');
     }
 
+    public function administrationTopic(): bool
+    {
+        return (bool) $this->type == 1;
+    }
+
+    public function commentsClosed(): bool
+    {
+        return (bool) $this->closeComments == 1;
+    }
+
+    public function isPrivate(): bool
+    {
+        return (bool) $this->private == 1;
+    }
+
+    public function accessedUsers(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'private_topic_accessed_users', 'topicId', 'userId');
+    }
 
 }

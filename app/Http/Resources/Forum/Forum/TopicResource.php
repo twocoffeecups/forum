@@ -25,6 +25,7 @@ class TopicResource extends JsonResource
             'latestPost' => new LatestPostResource($this->latestPost()),
             'tags' => TopicTagResource::collection($this->tags),
             'author' => new PostAuthorResource($this->author),
+            'isPrivate' => $this->isPrivate(),
             'created_at' => Carbon::parse($this->created_at)->diffForHumans(),
         ];
     }

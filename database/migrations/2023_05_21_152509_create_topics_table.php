@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('title');
             $table->foreignId('forumId')->index('forumIdx')->constrained('forums')->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('userId')->index('userIdx')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->unsignedTinyInteger('private')->default(0);
             $table->text('content');
             $table->unsignedTinyInteger('type')->default(0);
             $table->unsignedTinyInteger('closeComments')->default(0);

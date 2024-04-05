@@ -54,7 +54,12 @@
                         <ul class="collapse ps-3 show nav flex-column ms-1">
                             <li data-bs-dismiss="offcanvas">
                                 <router-link :to="{name:'admin.topic'}" class="nav-link sidebar_nav_link px-0"><i
-                                    class="fas fa-hashtag"></i> Topics
+                                    class="fas fa-hashtag"></i> Users topics
+                                </router-link>
+                            </li>
+                            <li data-bs-dismiss="offcanvas">
+                                <router-link :to="{name:'admin.topic'}" class="nav-link sidebar_nav_link px-0"><i
+                                    class="fas fa-hashtag"></i> Administrations Topics
                                 </router-link>
                             </li>
                             <li data-bs-dismiss="offcanvas">

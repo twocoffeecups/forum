@@ -22,8 +22,11 @@ class TopicDetailsResource extends JsonResource
             'status' => $this->status,
             'created_at' => $this->created_at->format('Y-m-d'),
             'posts' => $this->posts()->count(),
-            'views' => 1,
+            'views' => $this->totalViews(),
             'tags' => $this->tags,
+            'private' => $this->isPrivate(),
+            'commentsClosed' => $this->commentsClosed(),
+            'administrationTopic' => $this->administrationTopic(),
             'isRejected' => $this->isRejected,
         ];
     }
