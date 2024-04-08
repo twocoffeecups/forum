@@ -1,10 +1,9 @@
 <template>
-    <nav class="navbar navbar-expand-lg  bg-body-tertiary" style="background: #f7f7f7">
+    <nav class="navbar navbar-expand-lg  bg-body-tertiary" style="background: #FFFFFF">
         <div class="container py-3">
             <a class="navbar-brand" href="#">
                 <img v-if="logo.imageUrl" :src="logo.imageUrl" class="img-fluid" alt="Logo" width="125" height="45">
                 <img v-if="!logo.imageUrl" src="../../assets/img/logo.png" class="img-fluid" alt="Logo" width="125" height="50">
-                <span v-if="!showOnlyLogo" class="mx-4 my-auto h4 fw-bold">{{ forumName }}</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#navbarOffcanvasLg"
                     aria-controls="navbarOffcanvasLg" aria-label="Toggle navigation">
@@ -109,6 +108,11 @@ export default {
 </script>
 
 <style scoped>
+
+.navbar-nav{
+    font-family: 'Roboto', sans-serif;
+}
+
 .offcanvas {
     max-width: 70%;
 }

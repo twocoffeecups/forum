@@ -4,7 +4,7 @@
                 <div class="col-12">
                     <div class="card rounded-0 mb-4">
                         <div class="card-header d-flex justify-content-between">
-                            <h3>{{ forumCategory.name }}</h3>
+                            <h5>{{ forumCategory.name }}</h5>
 <!--                             <span class="d-flex align-items-center">{{ $t('view.main.totalPosts') }}: 320,800</span>-->
                         </div>
 
@@ -32,6 +32,6 @@ export default {
 
 <style scoped>
 .card-header{
-    background-color: white;
+    background-color: #FFFFFF;
 }
 </style>

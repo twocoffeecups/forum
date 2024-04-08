@@ -3,31 +3,42 @@
         <div class="card rounded-0">
             <div class="row g-0">
                 <div class="col-md-3">
+
                     <div class="card-header h-100">
-                        <div class="media flex-wrap w-100 align-items-center">
-                            <img v-if="avatar" :src="avatar" width="64" class="d-block ui-w-40 rounded-circle" alt="">
-                            <img v-if="!avatar" src="../../assets/img/default-avatar.png" width="64" class="d-block ui-w-40 rounded-circle" alt="">
-                            <div class="media-body ml-3">
-                                <router-link v-if="post.author.id"
-                                             :to="{name:'user.profile', params:{id:post.author.id}}" data-abc="true">
-                                    {{ post.author.name }}
-                                </router-link>
-                                <!-- online status -->
-                                <div class="text-muted small">
-                                    <span v-if="post.author.status" class="badge bg-success">Online</span>
-                                    <span v-if="!post.author.status" class="badge bg-danger">Offline</span>
-                                </div>
-                                <div class="text-muted small">Last visit: {{ post.author.lastVisit }}</div>
+
+                        <div class="d-flex flex-row flex-sm-row flex-md-column flex-lg-column flex-xxl-column">
+
+                            <div class="d-flex my-auto h-100">
+                                <img v-if="avatar" :src="avatar" width="64" class="rounded-circle" alt="">
+                                <img v-if="!avatar" src="../../assets/img/default-avatar.png" width="64" class="rounded-circle" alt="">
                             </div>
-                            <div class="text-muted small ml-3">
-                                <div>{{ $t('component.post.registerDate') }} <strong>{{
-                                        post.author.register_at
-                                    }}</strong></div>
-                                <div><strong>{{ post.author.totalPosts }}</strong> {{ $t('component.post.messages') }}
+
+
+                            <div class="d-flex flex-column mx-1">
+                                <div class="ml-3">
+                                    <router-link v-if="post.author.id"
+                                                 :to="{name:'user.profile', params:{id:post.author.id}}" data-abc="true">
+                                        {{ post.author.name }}
+                                    </router-link>
+                                    <!-- online status -->
+                                    <div class="text-muted small">
+                                        <span v-if="post.author.status" class="badge bg-success">Online</span>
+                                        <span v-if="!post.author.status" class="badge bg-danger">Offline</span>
+                                    </div>
+                                    <div class="text-muted small">Last visit: {{ post.author.lastVisit }}</div>
+                                </div>
+                                <div class="text-muted small ml-3">
+                                    <div class="d-none">{{ $t('component.post.registerDate') }} <strong>{{
+                                            post.author.register_at
+                                        }}</strong></div>
+                                    <div><strong>{{ post.author.totalPosts }}</strong> {{ $t('component.post.messages') }}
+                                    </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
+
                 </div>
                 <div class="col-md-9">
                     <div class="card-body d-flex flex-column" style="height: 100%">
@@ -86,12 +97,7 @@
                                         class="btn btn-sm btn-outline-primary mx-1">
                                     {{ $t('component.post.reply') }}
                                 </button>
-                                <!--                <button class="btn btn-sm btn-outline-secondary mx-1">{{ $t('component.post.edit') }}</button>-->
-<!--                                <span v-if="userId!==post.author.id && isLoggedIn"-->
-<!--                                      @click.prevent="addPostToBookmarks(post.id)" class="mx-1 p-2">-->
-<!--                                    <i class="far fa-bookmark"-->
-<!--                                       style="cursor: pointer"></i>-->
-<!--                                </span>-->
+
                                 <BookmarksButton :id="post.id"
                                                  :type="`post`"
                                                  :author-id="post.author.id" />

@@ -56,5 +56,6 @@ div {
 .client-bg {
     display: flex;
     flex-direction: column;
+    background-color: #F8F8F8;
 }
 </style>

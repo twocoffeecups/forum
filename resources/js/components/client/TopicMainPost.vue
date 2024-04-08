@@ -5,29 +5,36 @@
         <div class="card rounded-0">
             <div class="row g-0">
                 <div class="col-md-3">
+
                     <div class="card-header h-100">
-                        <div v-if="mainPost.author" class="media flex-wrap w-100 align-items-center">
-                            <img v-if="mainPost.author.avatar" :src="mainPost.author.avatar" width="64" class="d-block ui-w-40 rounded-circle"
-                                 alt="Avatar">
-                            <img v-if="!mainPost.author.avatar" src="../../assets/img/default-avatar.png" width="64" class="d-block ui-w-40 rounded-circle"
-                                 alt="Avatar">
-                            <div class="media-body ml-3">
-                                <router-link v-if="mainPost.author.id"
-                                             :to="{name:'user.profile', params:{id:mainPost.author.id}}" data-abc="true">
-                                    {{ mainPost.author.name }}
-                                </router-link>
-                                <div class="text-muted small">
-                                    <span v-if="mainPost.author.status" class="badge bg-success">Online</span>
-                                    <span v-if="!mainPost.author.status" class="badge bg-danger">Offline</span>
-                                </div>
+
+                        <div class="d-flex flex-row flex-sm-row flex-md-column flex-lg-column flex-xxl-column">
+
+                            <div class="d-flex my-auto h-100">
+                                <img v-if="avatar" :src="avatar" width="64" class="rounded-circle" alt="">
+                                <img v-if="!avatar" src="../../assets/img/default-avatar.png" width="64" class="rounded-circle" alt="">
                             </div>
-                            <div class="text-muted small ml-3">
-                                <div>{{ $t('component.post.registerDate') }} <strong>{{
-                                        mainPost.author.register_at
-                                    }}</strong>
+
+
+                            <div v-if="mainPost.author" class="d-flex flex-column mx-1">
+                                <div class="ml-3">
+                                    <router-link v-if="mainPost.author.id"
+                                                 :to="{name:'user.profile', params:{id:mainPost.author.id}}" data-abc="true">
+                                        {{ mainPost.author.name }}
+                                    </router-link>
+                                    <!-- online status -->
+                                    <div class="text-muted small">
+                                        <span v-if="mainPost.author.status" class="badge bg-success">Online</span>
+                                        <span v-if="!mainPost.author.status" class="badge bg-danger">Offline</span>
+                                    </div>
+                                    <div class="text-muted small">Last visit: {{ mainPost.author.lastVisit }}</div>
                                 </div>
-                                <div>
-                                    <strong>{{ mainPost.author.totalPosts }}</strong> {{ $t('component.post.messages') }}
+                                <div class="text-muted small ml-3">
+                                    <div class="d-none">{{ $t('component.post.registerDate') }} <strong>{{
+                                            mainPost.author.register_at
+                                        }}</strong></div>
+                                    <div><strong>{{ mainPost.author.totalPosts }}</strong> {{ $t('component.post.messages') }}
+                                    </div>
                                 </div>
                             </div>
                         </div>
