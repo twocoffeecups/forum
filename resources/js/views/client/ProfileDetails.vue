@@ -99,10 +99,10 @@
 
                             <!-- Topics -->
                             <div class="tab-pane fade show active" id="pills-topics" role="tabpanel" aria-labelledby="pills-topics-tab" tabindex="0">
-<!--                                <UnapprovedTopic v-if="unapprovedTopic.length!==0" v-for="topic in unapprovedTopic"-->
-<!--                                                 :topic="topic"/>-->
 
-                                <Topic v-if="topics.length!==0" v-for="topic in topics" :topic="topic"/>
+                                <template  v-if="topics.length!==0" v-for="topic in topics">
+                                    <Topic  :topic="topic"/>
+                                </template>
 
                                 <div
                                     v-if="(!userDetails.topics && !unapprovedTopic) || (userDetails.topics.length===0  && unapprovedTopic.length===0)"

@@ -7,7 +7,7 @@
         </div>
 
         <div class="d-flex flex-column flex-sm-column flex-md-row flex-lg-row flex-xl-row flex-xxl-row">
-            <div class="d-flex flex-column flex-grow-1 my-auto mx-3" style="width: 350px;">
+            <div class="d-flex flex-column flex-grow-1 my-auto mx-3" style="max-width: 500px">
                 <div class="row">
                     <router-link :to="{name:'topic', params:{id: topic.id}}" class="forum-nav-link text-dark" style="font-size: 1.2em">
                         {{ topic.title.substring(0, 100) }}
@@ -21,28 +21,28 @@
                     <a v-for="tag in topic.tags" class="text-black mr-2" href="#">#{{ tag.name }}</a>
                 </div>
             </div>
-            <div class="d-flex my-auto d-none d-sm-none d-md-flex d-lg-flex d-xl-flex mx-3 mt-3 mt-lg-0 text-center op-7 flex-row">
+            <div class="d-flex my-auto my-auto d-none d-sm-none d-md-flex d-lg-flex d-xl-flex mx-3 text-center op-7 flex-row" style="min-width: 75px">
                 <div class="d-flex flex-column mx-1">
                     <span>
                         <i class="fas fa-heart" :title="$t('component.topic.votes')"></i>
                     </span>
-                    <span class="mb-auto">{{ topic.rating }}</span>
+                    <span class="mb-auto mt-2">{{ topic.rating }}</span>
                 </div>
-                <div class="d-flex flex-column mx-1">
+                <div class="d-flex flex-column mx-2">
                     <span>
                         <i class="fas fa-comment" :title="$t('component.topic.posts')"></i>
                     </span>
-                    <span class="mb-auto">{{ topic.postsCount }}</span>
+                    <span class="mb-auto mt-2">{{ topic.postsCount }}</span>
                 </div>
                 <div class="d-flex flex-column mx-1">
                     <span>
                         <i class="fas fa-eye mx-auto" :title="$t('component.topic.views')"></i>
                     </span>
-                    <span class="mb-auto">{{ topic.views }}</span>
+                    <span class="mb-auto mt-2">{{ topic.views }}</span>
                 </div>
             </div>
 
-            <div class="d-inline-flex mb-auto mx-1" style="min-width: 250px;">
+            <div class="d-inline-flex my-auto mx-1" style="min-width: 250px;">
                 <!--                <div class="row">-->
                 <!--                    <h4 class="h6 font-weight-bold"><b>Latest comment: </b></h4>-->
                 <!--                </div>-->

@@ -5,7 +5,7 @@
         <div class="row">
             <!-- Main content -->
             <div class="col-lg-9 mb-3">
-                <div class="card rounded-0 px-4">
+                <div class="card rounded-0 p-0">
                     <!--  Profile navigation-->
                     <ProfileNavigation/>
 

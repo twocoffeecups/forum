@@ -106,7 +106,7 @@ const routes = [
         path: "/",
         name: "forum.main",
         beforeEnter: () => {
-            window.location.href = import.meta.env.FRONT_URL;
+            window.location.href = import.meta.env.APP_URL || '/';
         }
     }
 ];
